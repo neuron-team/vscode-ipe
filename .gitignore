@@ -1,0 +1,13 @@
+# Development files
+node_modules
+.vscode-test/
+*.vsix
+
+# Build output
+out
+/html
+
+# System Files
+.DS_Store
+Thumbs.db
+.idea/
