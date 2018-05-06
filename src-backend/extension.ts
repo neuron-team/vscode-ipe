@@ -22,14 +22,12 @@ export function activate(context: vscode.ExtensionContext) {
 
             // Execute code when new card is created
             userInteraction.onNewCard(({title, source}) => {
-                interpreter.executeCode(source,
-                    (output => {
-                        let newCard = new Card(title);
-                        newCard.sourceCode = source;
-                        newCard.interpreterOutput = output;
-                        webview.addCard(newCard);
-                    })
-                );
+                interpreter.executeCode(source).then(output => {
+                    let newCard = new Card(title);
+                    newCard.sourceCode = source;
+                    newCard.interpreterOutput = output;
+                    webview.addCard(newCard);
+                }).catch(reason => vscode.window.showErrorMessage(reason));
             });
         });
 
