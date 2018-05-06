@@ -2,6 +2,7 @@
 node_modules
 .vscode-test/
 *.vsix
+npm-debug.log
 
 # Build output
 out

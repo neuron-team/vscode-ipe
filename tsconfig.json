@@ -4,11 +4,12 @@
     "target": "es6",
     "outDir": "out",
     "lib": [
-      "es6"
+      "es6",
+      "dom"
     ],
     "sourceMap": true,
     "rootDir": "src-backend",
-    "strict": true
+    "strict": false
   },
   "include": [
     "src-backend/**/*.ts"

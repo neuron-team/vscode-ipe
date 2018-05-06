@@ -7,9 +7,6 @@ export class UserInteraction {
 
     private _onNewCard: EventEmitter<{title: string, source: string}> = new EventEmitter();
     get onNewCard(): Event<{title: string, source: string}> { return this._onNewCard.event; }
-
-    private _onAskJupyterInfo: EventEmitter<{baseUrl: string, token: string}> = new EventEmitter();
-    get onAskJupyterInfo(): Event<{baseUrl: string, token: string}> { return this._onAskJupyterInfo.event; }
     
 
     constructor(private context: vscode.ExtensionContext) {
@@ -29,28 +26,24 @@ export class UserInteraction {
                 });
             });
         }));
+    }
 
-        context.subscriptions.push(vscode.commands.registerCommand('ipe.askJupyterInfo', () => {
+    askJupyterInfo() : Promise<{baseUrl: string, token: string}> {
+        return new Promise(resolve => {
             vscode.window.showInputBox({
                 prompt: 'Provide the base address of the Jupyter notebook',
                 value: 'http://localhost:8888/'
-            }).then(url =>
-                {
-                    vscode.window.showInputBox({
-                        prompt: 'Provide the token to access to Jupyter notebook, leave blank if not used',
-                        value: ''
-                    }).then(givenToken => 
-                        {
-                            let setUrl = url ? url : '';
-                            let setToken = givenToken ? givenToken : '';
-
-                            this._onAskJupyterInfo.fire({
-                                baseUrl: setUrl,
-                                token: setToken
-                            });
-                        });
+            }).then(url => {
+                vscode.window.showInputBox({
+                    prompt: 'Provide the token to access to Jupyter notebook, leave blank if not used',
+                    value: ''
+                }).then(givenToken => {
+                    resolve({
+                        baseUrl: url ? url : '',
+                        token: givenToken ? givenToken : ''
+                    });
                 });
-        }));
-
+            });
+        });
     }
 }
