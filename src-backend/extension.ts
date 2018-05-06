@@ -7,22 +7,35 @@ import {WebviewController} from "./webviewController";
 import {Interpreter} from "./interpreter";
 import {UserInteraction} from "./userInteraction";
 
+
+
 export function activate(context: vscode.ExtensionContext) {
     let webview: WebviewController = new WebviewController(context);
     let userInteraction: UserInteraction = new UserInteraction(context);
+
+    // Ask info of interpreter
+    userInteraction.onAskJupyterInfo(({baseUrl, token}) => {
+        // Generate new interpreter instance
+        let interpreter = new Interpreter('python3', baseUrl, token);
+
+        // Execute code when new card is created
+        userInteraction.onNewCard(({title, source}) => {
+            interpreter.executeCode(source, 
+                (output => {
+                    let newCard = new Card(title);
+                    newCard.sourceCode = source;
+                    newCard.interpreterOutput = output;
+                    webview.addCard(newCard);
+                })
+            );
+        });
+    });
 
     userInteraction.onShowPane(() => {
         webview.show();
     });
 
-    userInteraction.onNewCard(({title, source}) => {
-        Interpreter.run(source).then(output => {
-            let newCard = new Card(title);
-            newCard.sourceCode = source;
-            newCard.interpreterOutput = output;
-            webview.addCard(newCard);
-        });
-    });
+    
 }
 
 
