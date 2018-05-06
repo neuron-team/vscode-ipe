@@ -64,7 +64,7 @@ export class Interpreter {
 
                 if(Interpreter.validateData(data, 'text/html')){
                   console.log('Rich output received: ' + data['text/html']);
-                  addNewCard(""+data['text/html'])
+                  addNewCard(""+data['text/html']);
                 }
               }
             }

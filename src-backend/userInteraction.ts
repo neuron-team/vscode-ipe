@@ -19,9 +19,9 @@ export class UserInteraction {
 
         context.subscriptions.push(vscode.commands.registerCommand('ipe.newCard', () => {
             vscode.window.showInputBox({prompt: 'Card title'}).then(cardTitle => {
-                if (cardTitle == undefined) return;
+                if (cardTitle === undefined) {return;}
                 vscode.window.showInputBox({prompt: 'Input code'}).then(sourceCode => {
-                    if (sourceCode == undefined) return;
+                    if (sourceCode === undefined) {return;}
                     this._onNewCard.fire({
                         title: cardTitle,
                         source: sourceCode
@@ -41,12 +41,15 @@ export class UserInteraction {
                         value: ''
                     }).then(givenToken => 
                         {
+                            let setUrl = url ? url : '';
+                            let setToken = givenToken ? givenToken : '';
+
                             this._onAskJupyterInfo.fire({
-                                baseUrl: url,
-                                token: givenToken
+                                baseUrl: setUrl,
+                                token: setToken
                             });
                         });
-                })
+                });
         }));
 
     }

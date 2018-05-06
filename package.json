@@ -26,26 +26,19 @@
       }
     ]
   },
-
   "scripts": {
     "clean": "rm -rf html/ out/",
     "vscode:prepublish": "npm run compile",
-
     "build-types": "tsc -p src-common/ && cp -r src-common/ node_modules/vscode-ipe-types/",
-
     "compile-frontend": "cd src-frontend && ng build --prod",
     "watch-frontend": "npm run build-types && cd src-frontend && ng build --watch",
-
     "compile-backend": "tsc -p ./",
     "watch-backend": "tsc -watch -p ./",
-
     "compile": "npm run build-types && npm run compile-frontend && npm run compile-backend",
     "watch": "npm run build-types && npm run watch-backend",
-
     "postinstall": "node ./node_modules/vscode/bin/install",
     "test": "npm run compile && node ./node_modules/vscode/bin/test"
   },
-  
   "devDependencies": {
     "typescript": "^2.6.1",
     "vscode": "^1.1.6",
