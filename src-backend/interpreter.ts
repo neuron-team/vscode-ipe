@@ -1,9 +1,3 @@
-// export class Interpreter {
-//    static run(code: string) : Promise<string> {
-//        return new Promise<string>(resolve => resolve("sample output result!"));
-//    }
-// }
-
 import { Kernel, ServerConnection, KernelMessage } from '@jupyterlab/services';
 import { JSONValue, JSONObject } from '@phosphor/coreutils';
 import * as vscode from 'vscode';
@@ -45,13 +39,36 @@ export class Interpreter {
   }
 
   // Resolve promise and execute given code
-  executeCode(source : string){
+  executeCode(source : string, addNewCard : (output : string) => void){
     this.kernelPromise.then(
       kernel =>
       {
-        
         // Assign message received event
-        kernel.requestExecute({code : source}).onIOPub = this.resolveContent;
+        kernel.requestExecute({code : source}).onIOPub = 
+          (
+            (msg : KernelMessage.IIOPubMessage) =>
+            {
+              // Get the Json content of the output
+              let content = msg.content;
+              // When the execution is completed extract and interpret the output
+              if ('execution_state' in content){
+                console.log('Kernel is active, its current state is ' + content['execution_state']);
+              } else if('code' in content){
+                console.log('The input code is the following ' + content['code']);
+              } else if('name' in content){
+                console.log('The output is stdout:' + content['text']);
+                addNewCard(""+content['text']);
+              } else if('data' in content){
+                console.log(content);
+                let data = msg.content.data;
+
+                if(Interpreter.validateData(data, 'text/html')){
+                  console.log('Rich output received: ' + data['text/html']);
+                  addNewCard(""+data['text/html'])
+                }
+              }
+            }
+          );
       }
     ).catch(() => vscode.window.showErrorMessage('Kernel is not available'));
   }
@@ -60,26 +77,5 @@ export class Interpreter {
   private static validateData(inputData : JSONValue, field : string): inputData is JSONObject 
   {
     return (<JSONObject>inputData)[field] !== undefined;
-  }
-
-  private resolveContent(msg : KernelMessage.IIOPubMessage)
-  {
-    // Get the Json content of the output
-    let content = msg.content;
-    // When the execution is completed extract and interpret the output
-    if ('execution_state' in content){
-      console.log('Kernel is active, its current state is ' + content['execution_state']);
-    } else if('code' in content){
-      console.log('The input code is the following ' + content['code']);
-    } else if('name' in content){
-      console.log('The output is stdout:' + content['text']);
-    } else if('data' in content){
-      console.log(content);
-      let data = msg.content.data;
-
-      if(Interpreter.validateData(data, 'text/html')){
-        console.log('Rich output received: ' + data['text/html']);
-      }
-    }
   }
 }
