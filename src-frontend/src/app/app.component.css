@@ -1,0 +1,7 @@
+.container {
+  height: 100%;
+}
+.cards-list {
+  overflow-y: scroll;
+  height: 100%;
+}
