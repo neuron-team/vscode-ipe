@@ -8,7 +8,7 @@ import {Card} from "vscode-ipe-types";
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  cards: Card[] = [new Card("test card")];
+  cards: Card[] = [new Card('sample card', 'print("Hello, world!");', 'Hello, world!')];
 
   constructor(private extension: ExtensionService) {
     extension.onAddCard.subscribe(card => {

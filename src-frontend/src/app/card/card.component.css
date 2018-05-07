@@ -4,4 +4,28 @@
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
   padding: 12px;
   margin: 20px;
+  text-align: left;
+}
+
+.separator {
+  background-color: rgba(200, 200, 200, 0.5);
+  height: 1px;
+  width: 100%;
+}
+
+.card-code {
+  display: flex;
+}
+.card-code > img {
+  width: 18px;
+  height: 18px;
+  margin: 12px 8px;
+}
+.card-code > div {
+  flex: 1;
+  overflow-x: scroll;
+}
+
+.card-output {
+  white-space: pre-wrap;
 }

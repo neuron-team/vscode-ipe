@@ -1,5 +1,16 @@
 <div class="card-container">
   <h2>{{card.title}}</h2>
-  <p>Code: {{card.sourceCode}}</p>
-  <p>output: {{card.interpreterOutput}}</p>
+
+  <div class="separator"></div>
+
+  <div class="card-code">
+    <img src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTkuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDUwMi42NjQgNTAyLjY2NCIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgNTAyLjY2NCA1MDIuNjY0OyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSIgd2lkdGg9IjY0cHgiIGhlaWdodD0iNjRweCI+CjxnPgoJPGc+CgkJPHBhdGggZD0iTTE1My44MjEsMzU4LjIyNkwwLDI3NC4zMzd2LTQ2LjQ2M2wxNTMuODIxLTgzLjQxNHY1NC41NzRMNDYuNjM2LDI1MC41MjNsMTA3LjE4NSw1My40MzEgICAgQzE1My44MjEsMzAzLjk1NCwxNTMuODIxLDM1OC4yMjYsMTUzLjgyMSwzNTguMjI2eiIgZmlsbD0iI0ZGRkZGRiIvPgoJCTxwYXRoIGQ9Ik0xODAuMDk0LDM4Ny41ODRMMjgyLjEwMywxMTUuMDhoMzIuMjI3TDIxMi4wODQsMzg3LjU4NEgxODAuMDk0eiIgZmlsbD0iI0ZGRkZGRiIvPgoJCTxwYXRoIGQ9Ik0zNDguODQzLDM1OC4yMjZ2LTU0LjI3MmwxMDcuMTY0LTUyLjk5OWwtMTA3LjE2NC01Mi41OXYtNTMuOTI3bDE1My44MjEsODMuNTIydjQ2LjE4MyAgICBMMzQ4Ljg0MywzNTguMjI2eiIgZmlsbD0iI0ZGRkZGRiIvPgoJPC9nPgoJPGc+Cgk8L2c+Cgk8Zz4KCTwvZz4KCTxnPgoJPC9nPgoJPGc+Cgk8L2c+Cgk8Zz4KCTwvZz4KCTxnPgoJPC9nPgoJPGc+Cgk8L2c+Cgk8Zz4KCTwvZz4KCTxnPgoJPC9nPgoJPGc+Cgk8L2c+Cgk8Zz4KCTwvZz4KCTxnPgoJPC9nPgoJPGc+Cgk8L2c+Cgk8Zz4KCTwvZz4KCTxnPgoJPC9nPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+Cjwvc3ZnPgo=" />
+    <div>
+      <pre>{{card.sourceCode}}</pre>
+    </div>
+  </div>
+
+  <div class="separator"></div>
+
+  <div class="card-output"><pre>{{card.interpreterOutput}}</pre></div>
 </div>
