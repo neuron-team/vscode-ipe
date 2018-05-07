@@ -27,29 +27,25 @@
     ]
   },
   "scripts": {
-    "clean": "rm -rf html/ out/",
-
+    "clean": "shx rm -rf html/ out/",
     "vscode:prepublish": "npm run compile",
-    "build-types": "tsc -p src-common/ && cp -r src-common/ node_modules/vscode-ipe-types/",
-
+    "build-types": "tsc -p src-common/ && shx cp -r src-common/ node_modules/vscode-ipe-types/",
     "compile-frontend": "cd src-frontend && ng build --prod",
     "watch-frontend": "npm run build-types && cd src-frontend && ng build --watch",
-
     "compile-backend": "tsc -p ./",
     "watch-backend": "tsc -watch -p ./",
-
     "compile": "npm run build-types && npm run compile-frontend && npm run compile-backend",
     "watch": "npm run build-types && npm run watch-backend",
-
     "postinstall": "node ./node_modules/vscode/bin/install",
     "test": "npm run compile && node ./node_modules/vscode/bin/test"
   },
   "devDependencies": {
-    "typescript": "^2.6.1",
-    "vscode": "^1.1.6",
-    "tslint": "^5.8.0",
-    "@types/node": "^7.0.43",
+    "@jupyterlab/services": "^2.0.3",
     "@types/mocha": "^2.2.42",
-    "@jupyterlab/services": "^2.0.3"
+    "@types/node": "^7.0.43",
+    "shx": "^0.2.2",
+    "tslint": "^5.8.0",
+    "typescript": "^2.6.1",
+    "vscode": "^1.1.6"
   }
 }
