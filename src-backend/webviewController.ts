@@ -3,10 +3,14 @@ import * as path from "path";
 import * as fs from "fs";
 
 import { Card } from 'vscode-ipe-types';
+import {Event, EventEmitter} from "vscode";
 
 
 export class WebviewController {
     panel: vscode.WebviewPanel | undefined = undefined;
+
+    private _onDisposed: EventEmitter<void> = new EventEmitter();
+    get onDisposed(): Event<void> { return this._onDisposed.event; }
 
     constructor(private context: vscode.ExtensionContext) {}
 
@@ -33,6 +37,7 @@ export class WebviewController {
             // Reset when the current panel is closed
             this.panel.onDidDispose(() => {
                 this.panel = undefined;
+                this._onDisposed.fire();
             }, null, this.context.subscriptions);
         }
     }

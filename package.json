@@ -22,7 +22,7 @@
       },
       {
         "command": "ipe.newCard",
-        "title": "IPE: Add output card"
+        "title": "IPE: Send code to output window"
       }
     ]
   },

@@ -9,8 +9,9 @@ To get started on developing this extension, visit [the guide for developers](DE
 
 This extension makes available several commands starting with `IPE:` to control the behaviour.
 
-To get started, run the `Show output pane` command.
-To add a card, run `Add output card`.
+To get started, run the `Show output pane` command. This will ask for the address and token of a running Jupyter notebook, so make sure you have this info ready.
+
+To add a card, select some Python code and run the `Send code to output` command.
 
 ## Requirements
 

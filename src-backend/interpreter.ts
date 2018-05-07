@@ -35,41 +35,46 @@ export class Interpreter {
         this.kernelPromise = Kernel.connectTo(kernelId, this.serverSettings);
     }
 
+    static makeCardTitle(source: string) : string {
+        let firstLine = source.split('\n')[0];
+
+        let funcName = firstLine.match(/([a-z]+)\(.*\)/i);
+        if (funcName) {
+            return funcName[1] + "()";
+        }
+
+        return firstLine;
+    }
+
     // Execute given code and return the result as a string
     executeCode(source : string) : Promise<string> {
         return new Promise((resolve, reject) => {
-            this.kernelPromise.then(
-                kernel =>
-                {
-                    // Assign message received event
-                    kernel.requestExecute({code : source}).onIOPub =
-                        (
-                            (msg : KernelMessage.IIOPubMessage) =>
-                            {
-                                // Get the Json content of the output
-                                let content = msg.content;
+            this.kernelPromise.then(kernel => {
+                // Assign message received event
+                kernel.requestExecute({code : source}, true).onIOPub =
+                    (msg : KernelMessage.IIOPubMessage) => {
+                        // Get the Json content of the output
+                        let content = msg.content;
 
-                                // When the execution is completed extract and interpret the output
-                                if ('execution_state' in content){
-                                    console.log('Kernel is active, its current state is ' + content['execution_state']);
+                        // When the execution is completed extract and interpret the output
+                        if ('execution_state' in content){
+                            console.log('Kernel is active, its current state is ' + content['execution_state']);
 
-                                } else if('code' in content){
-                                    console.log('The input code is the following ' + content['code']);
+                        } else if('code' in content){
+                            console.log('The input code is the following ' + content['code']);
 
-                                } else if('name' in content){
-                                    resolve(""+content['text']);
+                        } else if('name' in content){
+                            resolve(""+content['text']);
 
-                                } else if('data' in content){
-                                    console.log(content);
-                                    let data = msg.content.data;
-                                    if(Interpreter.validateData(data, 'text/html')){
-                                        resolve(""+data['text/html']);
-                                    }
-                                }
+                        } else if('data' in content){
+                            console.log(content);
+                            let data = msg.content.data;
+                            if(Interpreter.validateData(data, 'text/html')){
+                                resolve(""+data['text/html']);
                             }
-                        );
-                }
-            ).catch(reason => reject('Python is not available: ' + reason));
+                        }
+                    };
+            }).catch(reason => reject('Python is not available: ' + reason));
         });
     }
 

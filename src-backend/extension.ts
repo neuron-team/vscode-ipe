@@ -14,17 +14,16 @@ export function activate(context: vscode.ExtensionContext) {
     let userInteraction: UserInteraction = new UserInteraction(context);
 
     userInteraction.onShowPane(() => {
-
-        // Ask info of interpreter
+        // Ask info about the interpreter
         userInteraction.askJupyterInfo().then(({baseUrl, token}) => {
             // Generate new interpreter instance
             let interpreter = new Interpreter('python3', baseUrl, token);
 
             // Execute code when new card is created
-            userInteraction.onNewCard(({title, source}) => {
-                interpreter.executeCode(source).then(output => {
-                    let newCard = new Card(title);
-                    newCard.sourceCode = source;
+            userInteraction.onNewCard(sourceCode => {
+                interpreter.executeCode(sourceCode).then(output => {
+                    let newCard = new Card(Interpreter.makeCardTitle(sourceCode));
+                    newCard.sourceCode = sourceCode;
                     newCard.interpreterOutput = output;
                     webview.addCard(newCard);
                 }).catch(reason => vscode.window.showErrorMessage(reason));
@@ -33,8 +32,6 @@ export function activate(context: vscode.ExtensionContext) {
 
         webview.show();
     });
-
-    
 }
 
 

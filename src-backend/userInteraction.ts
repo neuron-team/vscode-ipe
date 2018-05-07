@@ -5,8 +5,8 @@ export class UserInteraction {
     private _onShowPane: EventEmitter<void> = new EventEmitter();
     get onShowPane(): Event<void> { return this._onShowPane.event; }
 
-    private _onNewCard: EventEmitter<{title: string, source: string}> = new EventEmitter();
-    get onNewCard(): Event<{title: string, source: string}> { return this._onNewCard.event; }
+    private _onNewCard: EventEmitter<string> = new EventEmitter();
+    get onNewCard(): Event<string> { return this._onNewCard.event; }
     
 
     constructor(private context: vscode.ExtensionContext) {
@@ -15,16 +15,16 @@ export class UserInteraction {
         }));
 
         context.subscriptions.push(vscode.commands.registerCommand('ipe.newCard', () => {
-            vscode.window.showInputBox({prompt: 'Card title'}).then(cardTitle => {
-                if (cardTitle === undefined) {return;}
-                vscode.window.showInputBox({prompt: 'Input code'}).then(sourceCode => {
-                    if (sourceCode === undefined) {return;}
-                    this._onNewCard.fire({
-                        title: cardTitle,
-                        source: sourceCode
-                    });
-                });
-            });
+            if (!vscode.window.activeTextEditor) {
+                vscode.window.showErrorMessage("No file open");
+                return;
+            }
+            if (vscode.window.activeTextEditor.selection.isEmpty) {
+                vscode.window.showErrorMessage("Please select some code");
+                return;
+            }
+            let sourceCode = vscode.window.activeTextEditor.document.getText(vscode.window.activeTextEditor.selection);
+            this._onNewCard.fire(sourceCode);
         }));
     }
 
