@@ -15,7 +15,13 @@ To add a card, select some Python code and run the `Send code to output` command
 
 ## Requirements
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+Note: this is for development only. It will be sorted before production.
+
+Have an instance of Jupyter running on localhost.
+
+* Install Jupyter: `pip install jupyter`
+* Run `jupyter notebook --no-browser`
+* Take note of the token, you will need to paste this into VS Code
 
 ## Release Notes
 
