@@ -25,3 +25,15 @@
 * Open a terminal and navigate to the project root (where this file is)
 * Execute `npm run compile`
 * Find the outputs in `/out` and `/html`
+
+## List of all build commands
+* `npm install` - Installs node dependencies.
+* `npm run clean` - Cleans the build output.
+* `npm run build-types` - Builds **src-common** and makes it available to the backend and frontend projects. Do this every time you edit **src-common**.
+* `npm run compile-frontend` - Compiles the Angular project for production.
+* `npm run watch-frontend` - Compiles the Angular project and watches the directory for changes, automatically recompiling any.
+* `npm run compile-backend` - Compiles the VS Code Typescript extension.
+* `npm run watch-backend` - Compiles the VS Code Typescript extension and watches the directory for changes.
+* `npm run compile` - Compiles types, backend, and frontend.
+* `npm run watch` - Compiles types, then watches backend. Does not compile frontend.
+* `npm run test` - Runs the unit tests.
