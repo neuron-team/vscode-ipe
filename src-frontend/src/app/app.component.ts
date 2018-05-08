@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, QueryList, ViewChild, ViewChildren} from '@angular/core';
 import {ExtensionService} from './classes/extension.service';
-import {Card} from "vscode-ipe-types";
+import {Card, CardOutput} from "vscode-ipe-types";
 
 @Component({
   selector: 'app-root',
@@ -9,7 +9,7 @@ import {Card} from "vscode-ipe-types";
 })
 export class AppComponent implements AfterViewInit {
   cards: Card[] = [
-    new Card('sample card', 'print("Hello, world!");', 'Hello, world!')
+    new Card(0, 'sample card', 'print("Hello, world!");', [new CardOutput('plaintext', 'Hello, world!')])
   ];
 
   constructor(private extension: ExtensionService) {

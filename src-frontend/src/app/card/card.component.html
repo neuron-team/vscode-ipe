@@ -12,5 +12,7 @@
 
   <div class="separator"></div>
 
-  <div class="card-output"><pre>{{card.interpreterOutput}}</pre></div>
+  <div class="card-output" *ngFor="let output of card.outputs">
+    <pre>{{output.output}}</pre>
+  </div>
 </div>

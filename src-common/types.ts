@@ -1,8 +1,19 @@
 
 export class Card {
+    public collapsed: boolean = false; // not implemented
+    public codeExpanded: boolean = false;
+
     constructor(
+        public id: number,
         public title: string,
-        public sourceCode: string = "",
-        public interpreterOutput: string = ""
+        public sourceCode: string,
+        public outputs: CardOutput[]
+    ) {}
+}
+
+export class CardOutput {
+    constructor(
+        public type: string,
+        public output: string
     ) {}
 }

@@ -2,7 +2,7 @@
 
 import * as vscode from 'vscode';
 
-import {Card} from 'vscode-ipe-types';
+import {Card, CardOutput} from 'vscode-ipe-types';
 import {WebviewController} from "./webviewController";
 import {Interpreter} from "./interpreter";
 import {UserInteraction} from "./userInteraction";
@@ -22,10 +22,8 @@ export function activate(context: vscode.ExtensionContext) {
             // Execute code when new card is created
             userInteraction.onNewCard(sourceCode => {
                 interpreter.executeCode(sourceCode).then(output => {
-                    let newCard = new Card(Interpreter.makeCardTitle(sourceCode));
-                    newCard.sourceCode = sourceCode;
-                    newCard.interpreterOutput = output;
-                    webview.addCard(newCard);
+                    let cardTitle = Interpreter.makeCardTitle(sourceCode);
+                    webview.addCard(new Card(0, cardTitle, sourceCode, [new CardOutput("plaintext", output)]));
                 }).catch(reason => vscode.window.showErrorMessage(reason));
             });
         });
