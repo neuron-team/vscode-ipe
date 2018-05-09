@@ -20,12 +20,11 @@ export function activate(context: vscode.ExtensionContext) {
             let interpreter = new Interpreter('python3', baseUrl, token);
 
             // Execute code when new card is created
-            userInteraction.onNewCard(sourceCode => {
-                interpreter.executeCode(sourceCode).then(output => {
-                    let cardTitle = Interpreter.makeCardTitle(sourceCode);
-                    webview.addCard(new Card(0, cardTitle, sourceCode, [new CardOutput("plaintext", output)]));
-                }).catch(reason => vscode.window.showErrorMessage(reason));
-            });
+            userInteraction.onNewCard(sourceCode => interpreter.executeCode(sourceCode));
+                // .then(output => {
+                //     let cardTitle = Interpreter.makeCardTitle(sourceCode);
+                //     webview.addCard(new Card(0, cardTitle, sourceCode, [new CardOutput("plaintext", output)]));
+                // }).catch(reason => vscode.window.showErrorMessage(reason));
         });
 
         webview.show();
