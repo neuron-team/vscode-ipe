@@ -8,6 +8,7 @@
       <button (click)="this.AppComponent.moveDown(this.card)">
           <i class="ms-Icon ms-Icon--ChevronDown" aria-hidden="true"></i>
       </button>
+      <button (click)="this.AppComponent.onSelect(this.card.id)">select</button>
       <button style="float:right" (click)="this.AppComponent.delete(this.card)">
           <i class="ms-Icon ms-Icon--Clear" aria-hidden="true"></i>
       </button>

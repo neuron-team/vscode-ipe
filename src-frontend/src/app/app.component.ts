@@ -11,6 +11,13 @@ export class AppComponent implements AfterViewInit {
   cards: Card[] = [
     new Card(0, 'sample card', 'print("Hello, world!");', [new CardOutput('plaintext', 'Hello, world!')])
   ];
+  selectedCards: number[] = [];
+
+  onSelect(id: number){
+    const index: number = this.selectedCards.indexOf(id, 1);
+    if (index > -1) this.selectedCards.splice(index);
+    else this.selectedCards.push(id);
+  }
 
   moveUp(card: Card): void {
     const index: number = this.cards.indexOf(card, 1);
