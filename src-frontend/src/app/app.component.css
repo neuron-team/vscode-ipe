@@ -1,7 +1,37 @@
 .container {
   height: 100%;
+  margin: 0px;
 }
 .cards-list {
   overflow-y: scroll;
   height: 100%;
+}
+
+.toolbar {
+  display: block;
+  height: 35px;
+  margin: 0px 0px 5px 0px;
+  background-color: var(--background-color);
+  border-radius: 1px;
+  border-color: var(--color);
+  border-style: solid;
+  border-width: 0px 0px 1px 0px;
+}
+
+button {
+  align-items: flex-start;
+  text-align: center;
+  cursor: default;
+  color: inherit;
+  background-color: rgba(0, 119, 198, 0.3);
+  box-sizing: border-box;
+  border-style: none;
+  outline: none;
+  box-shadow: none;
+}
+button:hover {
+  background-color: rgba(0, 119, 198, 0.7);
+}
+button:active {
+  background-color: rgba(0, 119, 198, 1.0);
 }
