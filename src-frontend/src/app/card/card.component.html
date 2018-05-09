@@ -22,19 +22,21 @@
 
   <div *ngIf="!showCard">
     <hr>
-    <button (click)="showSource = !showSource">
+    <button (click)="card.collapsed = !card.collapsed">
         <!-- need to show first line of code -->
         <!-- showSource hides/shows the text on click -->
-        <div *ngIf="showSource">
+        <div *ngIf="card.collapsed">
             <i class="ms-Icon ms-Icon--CaretBottomRightSolid8" aria-hidden="true"></i>
         </div>
-        <div *ngIf="!showSource">
-            <i class="ms-Icon ms-Icon--CaretRight8" aria-hidden="true"></i>      
+        <div *ngIf="!card.collapsed">
+            <i class="ms-Icon ms-Icon--CaretRight8" aria-hidden="true"></i>
+            <span>{{ card.sourceCode| slice:0:30 }} ...</span>      
         </div>
     </button>
     <div class="card-code">
-      <!-- Flip this part to intialize it to be hidden/shown -->
-      <div *ngIf="showSource">
+      <!-- Flip this part to intialize it to be hidden/shown
+        N.B this variable is not connected to anything -->
+      <div *ngIf="card.collapsed">
         <pre>{{card.sourceCode}}</pre>
       </div>
     </div>
