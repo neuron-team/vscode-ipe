@@ -12,6 +12,29 @@ export class AppComponent implements AfterViewInit {
     new Card(0, 'sample card', 'print("Hello, world!");', [new CardOutput('plaintext', 'Hello, world!')])
   ];
 
+  moveUp(card: Card): void {
+    const index: number = this.cards.indexOf(card, 1);
+    if (index > -1){
+      const tmp: Card = this.cards[index - 1];
+      this.cards[index - 1] = this.cards[index];
+      this.cards[index] = tmp;
+    }
+  }
+
+  moveDown(hero: Card): void {
+    let index: number = this.cards.indexOf(hero);
+    if(index > -1 && index < this.cards.length - 1){
+      let tmp: Card = this.cards[index+1];
+      this.cards[index+1] = this.cards[index];
+      this.cards[index] = tmp;
+    }
+  }
+
+  delete(hero: Card): void {
+    var index: number = this.cards.indexOf(hero);
+    if (index > -1) this.cards.splice(index, 1);
+  }
+
   constructor(private extension: ExtensionService) {
     extension.onAddCard.subscribe(card => {
       this.cards.push(card);

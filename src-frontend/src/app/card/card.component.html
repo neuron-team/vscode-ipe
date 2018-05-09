@@ -2,13 +2,13 @@
 
 <div class="card-container">
   <span class="card-toolbar">
-      <button>
+      <button (click)="this.AppComponent.moveUp(this.card)">
           <i class="ms-Icon ms-Icon--ChevronUp" aria-hidden="true"></i>
       </button>
-      <button>
+      <button (click)="this.AppComponent.moveDown(this.card)">
           <i class="ms-Icon ms-Icon--ChevronDown" aria-hidden="true"></i>
       </button>
-      <button style="float:right">
+      <button style="float:right" (click)="this.AppComponent.delete(this.card)">
           <i class="ms-Icon ms-Icon--Clear" aria-hidden="true"></i>
       </button>
       <button style="float:right">

@@ -1,6 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
 import { Card } from 'vscode-ipe-types';
 
+import { AppComponent } from '../app.component';
+
 @Component({
   selector: 'app-card',
   templateUrl: './card.component.html',
@@ -9,7 +11,7 @@ import { Card } from 'vscode-ipe-types';
 export class CardComponent implements OnInit {
   @Input() card: Card;
 
-  constructor() { }
+  constructor(private AppComponent: AppComponent) { }
 
   ngOnInit() {
   }
