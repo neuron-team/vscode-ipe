@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import { Card } from "vscode-ipe-types";
+import { Card } from 'vscode-ipe-types';
 
 @Component({
   selector: 'app-card',
