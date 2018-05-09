@@ -59,6 +59,7 @@ export namespace ContentHelpers{
     // Used to store temporary card data
     let sourceTmp = '';
     let contentTmp: Array<CardOutput> = [];
+    let id = 0;
 
     function makeCardTitle(source: string) : string {
         let firstLine = source.split('\n')[0];
@@ -131,7 +132,8 @@ export namespace ContentHelpers{
     }
 
     function renderCard(){
-        vscode.commands.executeCommand('ipe.renderCard', new Card(1, makeCardTitle(sourceTmp), sourceTmp, contentTmp));
+        vscode.commands.executeCommand('ipe.renderCard', new Card(id, makeCardTitle(sourceTmp), sourceTmp, contentTmp));
         contentTmp = [];
+        id++;
     }
 }
