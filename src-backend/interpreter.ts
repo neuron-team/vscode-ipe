@@ -87,38 +87,43 @@ export namespace ContentHelpers{
             if(typeof status === 'string'){
                 updateStatus(status);
             }
-        }
         // Receive back the source code
-        else if('code' in content){
+        } else if('code' in content){
             let code = content['code'];
             if(typeof code === 'string'){
                 sourceTmp = code;
             }
         // The output is stdout
-        else if('name' in content){
+        } else if('name' in content){
             let output = content['text'];
             if(typeof output === 'string'){
                 contentTmp.push(new CardOutput('stdout', output));
             }
-        }
         // The output is rich
-        }else if('data' in content){
+        } else if('data' in content){
             let data = content.data;
-            if(validateData(data, 'text/html')){
-                let output = data['text/html'];
-                if(typeof output === 'string'){
-                    contentTmp.push(new CardOutput('text/html', output));
-                }
+            let output = extractComplexData(data);
+            if(typeof output === 'string'){
+                contentTmp.push(new CardOutput('text/html', output));
             }
         // The code could not be executed, an error was returned
-        }else if(['ename', 'evalue', 'traceback'].reduce((accumulator, currentValue) => accumulator && currentValue in content,true)){
+        } else if(['ename', 'evalue', 'traceback'].reduce((accumulator, currentValue) => accumulator && currentValue in content,true)){
             let ename = content['ename'];
             let evalue = content['evalue'];
             let traceback = content['traceback'];
-            if([ename, evalue, traceback].reduce((accumulator, currentValue) => accumulator && typeof currentValue === 'string', true)){
+            if(['ename', 'evalue', 'traceback'].reduce((accumulator, currentValue) => accumulator && typeof currentValue === 'string', true)){
                 contentTmp.push(new CardOutput('error', ename+'\n'+evalue+'\n'+traceback));
             }      
         }
+    }
+
+    function extractComplexData(data: JSONValue){
+
+        let validDataTypes = 
+            ['text/html', 'image/svg+xml', 'image/png', 'image/jpeg', 'text/markdown', 'application/pdf', 
+            'text/latex', 'application/javascript', 'application/json', 'text/plain']
+            .filter(dataType => validateData(data, dataType));
+        return data[validDataTypes[0]];
     }
 
     function updateStatus(status: string){
