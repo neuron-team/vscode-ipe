@@ -1,5 +1,6 @@
 import * as vscode from "vscode";
 import {Event, EventEmitter} from "vscode";
+import {Card, CardOutput} from 'vscode-ipe-types';
 
 export class UserInteraction {
     private _onShowPane: EventEmitter<void> = new EventEmitter();
@@ -7,11 +8,24 @@ export class UserInteraction {
 
     private _onNewCard: EventEmitter<string> = new EventEmitter();
     get onNewCard(): Event<string> { return this._onNewCard.event; }
-    
+
+    private _onRenderCard: EventEmitter<Card> = new EventEmitter();
+    get onRenderCard(): Event<Card> { return this._onRenderCard.event; }
+
+    private _onUpdateStatus: EventEmitter<string> = new EventEmitter();
+    get onUpdateStatus(): Event<string> { return this._onUpdateStatus.event; }
 
     constructor(private context: vscode.ExtensionContext) {
         context.subscriptions.push(vscode.commands.registerCommand('ipe.showWebview', () => {
             this._onShowPane.fire();
+        }));
+
+        context.subscriptions.push(vscode.commands.registerCommand('ipe.updateStatus', (status: string) => {
+            this._onUpdateStatus.fire(status);
+        }));
+
+        context.subscriptions.push(vscode.commands.registerCommand('ipe.renderCard', (card: Card) => {
+            this._onRenderCard.fire(card);
         }));
 
         context.subscriptions.push(vscode.commands.registerCommand('ipe.newCard', () => {
