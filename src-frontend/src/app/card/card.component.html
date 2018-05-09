@@ -21,19 +21,34 @@
     <h2>{{card.title}}</h2>
 
   <hr>
-  <button>
-    <i class="ms-Icon ms-Icon--CaretRight8" aria-hidden="true"></i>
+  <button (click)="showSource = !showSource">
+      <!-- need to show first line of code -->
+      <!-- showSource hides/shows the text on click -->
+      <div *ngIf="showSource">
+          <i class="ms-Icon ms-Icon--CaretBottomRightSolid8" aria-hidden="true"></i>
+      </div>
+      <div *ngIf="!showSource">
+          <i class="ms-Icon ms-Icon--CaretRight8" aria-hidden="true"></i>      
+      </div>
   </button>
   <div class="card-code">
-    <div>
+    <!-- Flip this part to intialize it to be hidden/shown -->
+    <div *ngIf="showSource">
       <pre>{{card.sourceCode}}</pre>
     </div>
   </div>
   <hr>
-  <button>
-    <i class="ms-Icon ms-Icon--CaretRight8" aria-hidden="true"></i>
+  <button (click)="showOut = !showOut">
+      <div *ngIf="!showOut">
+          <i class="ms-Icon ms-Icon--CaretBottomRightSolid8" aria-hidden="true"></i>
+      </div>
+      <div *ngIf="showOut">
+          <i class="ms-Icon ms-Icon--CaretRight8" aria-hidden="true"></i>      
+      </div>
   </button>
   <div class="card-output" *ngFor="let output of card.outputs">
+      <div *ngIf="!showOut">
     <pre>{{output.output}}</pre>
+      </div>
   </div>
 </div>
