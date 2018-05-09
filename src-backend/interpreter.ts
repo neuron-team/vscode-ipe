@@ -25,6 +25,7 @@ export class Interpreter {
     startKernel(kernelName: string){
         let options = {name : kernelName, serverSettings : this.serverSettings};  
         this.kernelPromise = Kernel.startNew(options);
+        this.executeCode('%matplotlib inline');
     }
 
     // Get list of running kernels and maintain the internal list
@@ -132,7 +133,9 @@ export namespace ContentHelpers{
     }
 
     function renderCard(){
-        vscode.commands.executeCommand('ipe.renderCard', new Card(id, makeCardTitle(sourceTmp), sourceTmp, contentTmp));
+        if(id !== 0){
+            vscode.commands.executeCommand('ipe.renderCard', new Card(id, makeCardTitle(sourceTmp), sourceTmp, contentTmp));
+        }
         contentTmp = [];
         id++;
     }
