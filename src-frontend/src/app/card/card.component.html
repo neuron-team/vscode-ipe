@@ -14,41 +14,43 @@
       <button style="float:right">
           <i class="ms-Icon ms-Icon--MiniExpand" aria-hidden="true"></i>
       </button>
-      <button style="float:right">
+      <button (click)="showCard = !showCard" style="float:right">
           <i class="ms-Icon ms-Icon--ChromeMinimize" aria-hidden="true"></i>
       </button>
     </span>
     <h2>{{card.title}}</h2>
 
-  <hr>
-  <button (click)="showSource = !showSource">
-      <!-- need to show first line of code -->
-      <!-- showSource hides/shows the text on click -->
+  <div *ngIf="!showCard">
+    <hr>
+    <button (click)="showSource = !showSource">
+        <!-- need to show first line of code -->
+        <!-- showSource hides/shows the text on click -->
+        <div *ngIf="showSource">
+            <i class="ms-Icon ms-Icon--CaretBottomRightSolid8" aria-hidden="true"></i>
+        </div>
+        <div *ngIf="!showSource">
+            <i class="ms-Icon ms-Icon--CaretRight8" aria-hidden="true"></i>      
+        </div>
+    </button>
+    <div class="card-code">
+      <!-- Flip this part to intialize it to be hidden/shown -->
       <div *ngIf="showSource">
-          <i class="ms-Icon ms-Icon--CaretBottomRightSolid8" aria-hidden="true"></i>
+        <pre>{{card.sourceCode}}</pre>
       </div>
-      <div *ngIf="!showSource">
-          <i class="ms-Icon ms-Icon--CaretRight8" aria-hidden="true"></i>      
-      </div>
-  </button>
-  <div class="card-code">
-    <!-- Flip this part to intialize it to be hidden/shown -->
-    <div *ngIf="showSource">
-      <pre>{{card.sourceCode}}</pre>
     </div>
-  </div>
-  <hr>
-  <button (click)="showOut = !showOut">
+    <hr>
+    <button (click)="showOut = !showOut">
       <div *ngIf="!showOut">
           <i class="ms-Icon ms-Icon--CaretBottomRightSolid8" aria-hidden="true"></i>
       </div>
       <div *ngIf="showOut">
           <i class="ms-Icon ms-Icon--CaretRight8" aria-hidden="true"></i>      
       </div>
-  </button>
-  <div class="card-output" *ngFor="let output of card.outputs">
-      <div *ngIf="!showOut">
-    <pre>{{output.output}}</pre>
-      </div>
+    </button>
+    <div class="card-output" *ngFor="let output of card.outputs">
+        <div *ngIf="!showOut">
+          <pre class="output">{{output.output}}</pre>
+        </div>
+    </div>
   </div>
 </div>

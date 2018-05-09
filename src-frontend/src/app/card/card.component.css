@@ -4,7 +4,6 @@ h2 {
   -webkit-margin-start: 5px;
 }
 
-
 .card-container {
   background-color: rgba(0, 0, 0, 0.08);
   border-radius: 1px;
@@ -24,7 +23,7 @@ h2 {
   margin: 0px 3px;
 }
 
-.card-output > pre {
+.output {
   white-space: normal;
   word-wrap: break-word;
   padding: 0px 6px;
@@ -33,7 +32,7 @@ h2 {
 button {
   align-items: flex-start;
   text-align: center;
-  cursor: default;
+  cursor: pointer;
   color: inherit;
   background-color: rgba(255, 255, 255, 0.0);
   box-sizing: border-box;
@@ -41,3 +40,12 @@ button {
   outline: none;
   box-shadow: none;
 }
+
+.card-toolbar > button:hover {
+  color: rgb(0, 119, 198);
+}
+
+button:hover {
+  text-shadow: inset 0 0 100px 100px rgba(255, 255, 255, 0.3);
+}
+
