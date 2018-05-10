@@ -4,7 +4,12 @@ h2 {
   -webkit-margin-after: 0.4em;
   -webkit-margin-start: 5px;
 }
-
+.prv{
+   overflow: hidden;
+   white-space: nowrap;
+   text-overflow: ellipsis;
+  
+}
 .card-container {
   background-color: rgba(0, 0, 0, 0.08);
   border-radius: 1px;

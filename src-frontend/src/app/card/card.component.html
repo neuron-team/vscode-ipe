@@ -39,9 +39,10 @@
         <div *ngIf="!card.codeCollapsed">
             <i class="ms-Icon ms-Icon--CaretBottomRightSolid8" aria-hidden="true"></i>
         </div>
-        <div *ngIf="card.codeCollapsed">
+        <div class = "prv"*ngIf="card.codeCollapsed">
             <i class="ms-Icon ms-Icon--CaretRight8" aria-hidden="true"></i>
-            <span>{{ card.sourceCode| slice:0:30 }} ...</span>
+            <!-- <span>{{ card.sourceCode| slice:0:30 }} ...</span> -->
+            <span>{{card.sourceCode}} </span>
         </div>
     </button>
     <div class="card-code">
