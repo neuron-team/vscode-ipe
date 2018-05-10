@@ -2,20 +2,29 @@
   height: 100%;
   margin: 0px;
 }
-.cards-list {
-  overflow-y: scroll;
-  height: 100%;
-}
 
 .toolbar {
+  position: fixed;
+  top: 0;
   display: block;
-  height: 35px;
-  margin: 0px 0px 5px 0px;
+  height: 30px;
+  width: 100%;
+  margin: 0px 0px 2px 0px;
   background-color: var(--background-color);
   border-radius: 1px;
   border-color: var(--color);
   border-style: solid;
   border-width: 0px 0px 1px 0px;
+}
+
+.searchResult {
+  background-color: var(--background-color);
+}
+
+.cards-list {
+  margin: 32px 0px 0px 0px;
+  overflow-y: scroll;
+  height: 100%;
 }
 
 button {

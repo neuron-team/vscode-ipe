@@ -12,8 +12,20 @@ export class AppComponent implements AfterViewInit {
     new Card(0, 'sample card', 'print("Hello, world!");', [new CardOutput('plaintext', 'Hello, world!')])
   ];
   selectedCards: number[] = [];
+  searchQuery: string = "";
+  sortBy: string = "Oldest";
 
-  onSelect(id: number){
+  onSort(): void {
+    //this.cards[0].sourceCode=this.sortBy;
+    if (this.sortBy == "Oldest"){
+      this.cards.sort(function(a,b) {return (a.sourceCode > b.sourceCode) ? 1 : ((b.sourceCode > a.sourceCode) ? -1 : 0);} );
+    }
+    else{
+      this.cards.sort(function(a,b) {return (a.sourceCode > b.sourceCode) ? -1 : ((b.sourceCode > a.sourceCode) ? 1 : 0);} );
+    }
+  }
+
+  onSelect(id: number): void {
     const index: number = this.selectedCards.indexOf(id, 1);
     if (index > -1) this.selectedCards.splice(index);
     else this.selectedCards.push(id);
@@ -45,6 +57,7 @@ export class AppComponent implements AfterViewInit {
   constructor(private extension: ExtensionService) {
     extension.onAddCard.subscribe(card => {
       this.cards.push(card);
+      this.onSort();
     });
   }
 
