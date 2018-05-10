@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { CardComponent } from './card/card.component';
 import {ExtensionService} from './classes/extension.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import {ExtensionService} from './classes/extension.service';
   ],
   imports: [
     BrowserModule,
-    FormsModule
+    FormsModule,
+    BrowserAnimationsModule
   ],
   providers: [
     ExtensionService
