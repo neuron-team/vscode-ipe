@@ -19,11 +19,17 @@
     "commands": [
       {
         "command": "ipe.showWebview",
-        "title": "IPE: Show output pane"
+        "title": "Show Output Pane",
+        "category": "IPE",
+        "icon":{
+          "light": "/src-backend/media/light_browser.svg",
+          "dark": "/src-backend/media/dark_browser.svg"
+        }
       },
       {
         "command": "ipe.newCard",
-        "title": "IPE: Send code to output window"
+        "title": "Send Code to Output Window",
+        "category": "IPE"
       }
     ],
     "keybindings": [
