@@ -16,18 +16,6 @@ export class AppComponent implements AfterViewInit {
   searchQuery = '';
   sortBy = 'Oldest';
 
-  /* this code ensures that the list always scrolls to the bottom when new elements are added */
-  @ViewChildren('listItems') listItems: QueryList<any>;
-  @ViewChild('scrollingList') scrollContainer;
-  ngAfterViewInit() {
-    this.listItems.changes.subscribe(() => this.scrollToBottom());
-    this.scrollToBottom();
-  }
-  scrollToBottom() {
-    try {
-      this.scrollContainer.nativeElement.scrollTop = this.scrollContainer.nativeElement.scrollHeight;
-    } catch (err) { }
-  }
 
   /* Sorting */
   onSort(): void {
@@ -77,4 +65,16 @@ export class AppComponent implements AfterViewInit {
     });
   }
 
+  /* this code ensures that the list always scrolls to the bottom when new elements are added */
+  @ViewChildren('listItems') listItems: QueryList<any>;
+  @ViewChild('scrollingList') scrollContainer;
+  ngAfterViewInit() {
+    this.listItems.changes.subscribe(() => this.scrollToBottom());
+    this.scrollToBottom();
+  }
+  scrollToBottom() {
+    try {
+      this.scrollContainer.nativeElement.scrollTop = this.scrollContainer.nativeElement.scrollHeight;
+    } catch (err) { }
+  }
 }
