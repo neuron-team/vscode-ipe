@@ -22,8 +22,10 @@ export class AppComponent implements AfterViewInit {
     // this.cards[0].sourceCode=this.sortBy;
     if (this.sortBy === 'Oldest'){
       this.cards.sort(function(a, b) {return (a.sourceCode > b.sourceCode) ? 1 : ((b.sourceCode > a.sourceCode) ? -1 : 0); } );
-    } else {
+    } else if (this.sortBy === 'Newest') {
       this.cards.sort(function(a, b) {return (a.sourceCode > b.sourceCode) ? -1 : ((b.sourceCode > a.sourceCode) ? 1 : 0); } );
+    } else if (this.sortBy === 'Alphabetical') {
+      this.cards.sort(function(a, b) {return (a.title > b.title) ? 1 : ((b.title > a.title) ? -1 : 0); } );
     }
   }
 
@@ -40,6 +42,7 @@ export class AppComponent implements AfterViewInit {
       const tmp: Card = this.cards[index - 1];
       this.cards[index - 1] = this.cards[index];
       this.cards[index] = tmp;
+      this.sortBy = 'Custom';
     }
   }
 
@@ -49,6 +52,7 @@ export class AppComponent implements AfterViewInit {
       const tmp: Card = this.cards[index + 1];
       this.cards[index + 1] = this.cards[index];
       this.cards[index] = tmp;
+      this.sortBy = 'Custom';
     }
   }
 
@@ -61,7 +65,7 @@ export class AppComponent implements AfterViewInit {
   constructor(private extension: ExtensionService) {
     extension.onAddCard.subscribe(card => {
       this.cards.push(card);
-      this.onSort();
+       this.onSort();
     });
   }
 

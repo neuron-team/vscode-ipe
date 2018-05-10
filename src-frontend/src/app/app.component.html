@@ -1,18 +1,18 @@
-<!--The content below is only a placeholder and can be replaced.-->
 <div class="container">
   <form class="toolbar">
     <input class="toolbar-left" type="text" name="searchBox" placeholder="Search..." [(ngModel)]="searchQuery" my-on-key-down-call="">
-      
-    <span>Sort by:
-        <select class="toolbar-right" name="sortByBox" [(ngModel)]="sortBy" (change)="onSort()">
-            <option value="Oldest">Oldest</option>
-            <option value="Newest">Newest</option>
-        </select>
-    </span>
+
+    <select name="sortByBox" [(ngModel)]="sortBy" (change)="onSort()">
+        <option value="Custom">Custom</option>
+        <option value="Oldest">Oldest</option>
+        <option value="Newest">Newest</option>
+        <option value="Alphabetical">Alphabetical</option>
+    </select>
 
     <div class="searchResult" *ngIf="searchQuery">Autocomplete</div>
+    <button>Export to Jupyter</button>
   </form>
-  
+
   <div #scrollingList class="cards-list">
     <app-card
       #listItems

@@ -2,45 +2,45 @@
 
 <div class="card-container"  [@cardState]="this.state">
   <span class="card-toolbar">
-      <button class="react" (click)="this.AppComponent.moveUp(this.card)">
-          <i class="ms-Icon ms-Icon--ChevronUp" aria-hidden="true"></i>
-      </button>
-      <button class="react" (click)="this.AppComponent.moveDown(this.card)">
-          <i class="ms-Icon ms-Icon--ChevronDown" aria-hidden="true"></i>
-      </button>
-      <button class="react"  (click)="this.AppComponent.onSelect(this.card.id);this.toggleState()">select</button>
-      <button class="react" style="float:right" (click)="this.AppComponent.delete(this.card)">
-          <i class="ms-Icon ms-Icon--Clear" aria-hidden="true"></i>
-      </button>
-      <button class="react" style="float:right">
-          <i class="ms-Icon ms-Icon--MiniExpand" aria-hidden="true"></i>
-      </button>
-      <button class="react" (click)="card.collapsed = !card.collapsed" style="float:right">
-          <i class="ms-Icon ms-Icon--ChromeMinimize" aria-hidden="true"></i>
-      </button>
-    </span>
-    <div *ngIf="!titleEdit">
-      <button class="react" (click)="titleEdit = !titleEdit; inputText=card.title"><h2>{{card.title}}</h2></button>
-    </div>
-    <div *ngIf="titleEdit">
-      <input [(ngModel)]="inputText" placeholder=Title autofocus (keyup.enter)="card.title=inputText;titleEdit = !titleEdit" (keyup.esc)="titleEdit = !titleEdit" />
-      <button class="react" (click)="card.title=inputText;titleEdit = !titleEdit">
-        <i class="ms-Icon ms-Icon--Accept" aria-hidden="true"></i>
-      </button>
-      <button class="react" (click)="titleEdit = !titleEdit">
-        <i class="ms-Icon ms-Icon--Clear" aria-hidden="true"></i>
-      </button>
-    </div>
+    <button class="react" (click)="this.AppComponent.moveUp(this.card)">
+        <i class="ms-Icon ms-Icon--ChevronUp" aria-label="Move Up"></i>
+    </button>
+    <button class="react" (click)="this.AppComponent.moveDown(this.card)">
+        <i class="ms-Icon ms-Icon--ChevronDown" aria-label="Move Down"></i>
+    </button>
+    <button class="react"  (click)="this.AppComponent.onSelect(this.card.id);this.toggleState()">select</button>
+    <button class="react" style="float:right" (click)="this.AppComponent.delete(this.card)">
+        <i class="ms-Icon ms-Icon--Clear" aria-label="Delete"></i>
+    </button>
+    <button class="react" style="float:right">
+        <i class="ms-Icon ms-Icon--MiniExpand" aria-label="Open in Browser"></i>
+    </button>
+    <button class="react" (click)="card.collapsed = !card.collapsed" style="float:right">
+        <i class="ms-Icon ms-Icon--ChromeMinimize" aria-label="Minimize"></i>
+    </button>
+  </span>
+  <div *ngIf="!titleEdit">
+    <button class="react" (click)="titleEdit = !titleEdit; inputText=card.title"><h2>{{card.title}}</h2></button>
+  </div>
+  <div *ngIf="titleEdit">
+    <input [(ngModel)]="inputText" placeholder=Title autofocus (keyup.enter)="card.title=inputText;titleEdit = !titleEdit" (keyup.esc)="titleEdit = !titleEdit" />
+    <button class="react" (click)="card.title=inputText;titleEdit = !titleEdit">
+      <i class="ms-Icon ms-Icon--Accept" aria-label="Accept"></i>
+    </button>
+    <button class="react" (click)="titleEdit = !titleEdit">
+      <i class="ms-Icon ms-Icon--Clear" aria-label="Cancel"></i>
+    </button>
+  </div>
 
 
   <div *ngIf="!card.collapsed">
     <hr>
     <button (click)="card.codeCollapsed = !card.codeCollapsed">
         <div *ngIf="!card.codeCollapsed">
-            <i class="ms-Icon ms-Icon--CaretBottomRightSolid8" aria-hidden="true"></i>
+            <i class="ms-Icon ms-Icon--CaretBottomRightSolid8" aria-label="Expand"></i>
         </div>
         <div class = "prv"*ngIf="card.codeCollapsed">
-            <i class="ms-Icon ms-Icon--CaretRight8" aria-hidden="true"></i>
+            <i class="ms-Icon ms-Icon--CaretRight8" aria-label="Collapse"></i>
             <span>{{card.sourceCode}} </span>
         </div>
     </button>
@@ -52,10 +52,10 @@
     <hr>
     <button (click)="card.outputCollapsed = !card.outputCollapsed">
       <div *ngIf="!card.outputCollapsed">
-          <i class="ms-Icon ms-Icon--CaretBottomRightSolid8" aria-hidden="true"></i>
+          <i class="ms-Icon ms-Icon--CaretBottomRightSolid8" aria-label="Expand"></i>
       </div>
       <div *ngIf="card.outputCollapsed">
-          <i class="ms-Icon ms-Icon--CaretRight8" aria-hidden="true"></i>
+          <i class="ms-Icon ms-Icon--CaretRight8" aria-label="Collapse"></i>
           <span>Output</span>
       </div>
     </button>

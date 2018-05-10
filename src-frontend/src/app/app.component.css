@@ -30,17 +30,53 @@
 button {
   align-items: flex-start;
   text-align: center;
-  cursor: default;
+  cursor: pointer;
   color: inherit;
   background-color: rgba(0, 119, 198, 0.3);
   box-sizing: border-box;
   border-style: none;
   outline: none;
   box-shadow: none;
+  height: 100%;
 }
 button:hover {
   background-color: rgba(0, 119, 198, 0.7);
 }
 button:active {
   background-color: rgba(0, 119, 198, 1.0);
+}
+
+input {
+  color: var(--color);
+  background-color: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  -webkit-margin-before: 0.4em;
+  -webkit-margin-after: 0.4em;
+  -webkit-margin-start: 5px;
+}
+
+input:focus {
+  border-color: rgba(0, 119, 198, 0.7);
+  outline: rgba(0, 119, 198, 0.7);
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+select {
+  padding: 5px;
+  color: inherit;
+  cursor: context-menu;
+  background-color: rgba(0, 119, 198, 0.3);
+  border-style: none;
+  border-radius: 0;
+  box-sizing: border-box;
+  outline: none;
+  box-shadow: none;
+  -webkit-appearance: none;
+  appearance: none;
+  height: 100%;
+}
+
+select:focus {
+  border-color: rgba(0, 119, 198, 0.7);
+  outline: rgba(0, 119, 198, 0.7);
 }
