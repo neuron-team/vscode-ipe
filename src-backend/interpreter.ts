@@ -10,42 +10,56 @@ export class Interpreter {
     // serverSettings, used to establish a basic connection with the server
     private serverSettings: ServerConnection.ISettings;
 
-    // List of running kernels
-    private runningKernels: Kernel.IModel[] = [];
+    // // List of running kernels
+    // private runningKernels: Kernel.IModel[] = [];
 
     // Kernel promise used for code execution
-    private kernelPromise: Promise<Kernel.IKernel>;
+    private kernelPromise = {};
 
-    constructor(kernelName: string, private pageUrl: string, private token: string){
-        // Add try block
-        this.serverSettings = ServerConnection.makeSettings({pageUrl : this.pageUrl, token : this.token});
-        this.startKernel(kernelName);
+    constructor(){}
+
+    connectToServer(pageUrl: string, token: string){
+        this.serverSettings = ServerConnection.makeSettings({pageUrl: pageUrl, token: token});
+        
+        for(var key in this.kernelPromise){
+            this.kernelPromise[key].then(kernel => kernel.shutdown());
+        }
+        this.kernelPromise = {};
     }
 
     startKernel(kernelName: string){
-        let options = {name : kernelName, serverSettings : this.serverSettings};  
-        this.kernelPromise = Kernel.startNew(options);
-        this.executeCode('%matplotlib inline');
+        if(!(kernelName in this.kernelPromise)){
+            let options = {name : kernelName, serverSettings : this.serverSettings};  
+            this.kernelPromise[kernelName] = Kernel.startNew(options);
+            if (kernelName === 'python3'){
+                this.executeCode('%matplotlib inline', 'python3');
+            }
+        }
     }
 
-    // Get list of running kernels and maintain the internal list
-    getListOfRunning() : void {
+    // // Get list of running kernels and maintain the internal list
+    // getListOfRunning() : void {
 
-        Kernel.listRunning(this.serverSettings).then(
-            list => this.runningKernels = list
-        );
+    //     Kernel.listRunning(this.serverSettings).then(
+    //         list => this.runningKernels = list
+    //     );
 
-    }
+    // }
 
-    connectToKernel(kernelId : Kernel.IModel) : void {
-        this.kernelPromise = Kernel.connectTo(kernelId, this.serverSettings);
-    }
+    // connectToKernel(kernelId : Kernel.IModel) : void {
+    //     this.kernelPromise = Kernel.connectTo(kernelId, this.serverSettings);
+    // }
 
     // Execute given code and return the result as a string
-    executeCode(source : string) {
-        this.kernelPromise
-            .then(kernel => kernel.requestExecute({code : source, stop_on_error: false}).onIOPub = this.interpretOutput)
-            .catch(reason => vscode.window.showErrorMessage(reason));
+    executeCode(source : string, kernelName: string) {
+        if(kernelName in this.kernelPromise){
+            this.kernelPromise[kernelName]
+                .then(kernel => kernel.requestExecute({code : source, stop_on_error: false}).onIOPub = this.interpretOutput)
+                .catch(reason => vscode.window.showErrorMessage(String(reason)));
+        }
+        else{
+            vscode.window.showErrorMessage("The " + kernelName + " kernel is not available");
+        }
     }
 
     interpretOutput(msg: KernelMessage.IIOPubMessage){

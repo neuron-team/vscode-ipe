@@ -13,6 +13,7 @@ export function activate(context: vscode.ExtensionContext) {
     let webview: WebviewController = new WebviewController(context);
     let statusIndicator: StatusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right);
     let userInteraction: UserInteraction = new UserInteraction(context);
+    let interpreter = new Interpreter();
 
     userInteraction.onRenderCard((card: Card) => {
         webview.addCard(card);
@@ -29,10 +30,12 @@ export function activate(context: vscode.ExtensionContext) {
 
         // Ask info about the interpreter
         userInteraction.askJupyterInfo().then(({baseUrl, token}) => {
-            // Generate new interpreter instance
-            let interpreter = new Interpreter('python3', baseUrl, token);
+            // Connect to the server defined
+            interpreter.connectToServer(baseUrl, token);
+            // Create a python3 kernel
+            interpreter.startKernel('python3');
             // Execute code when new card is created
-            userInteraction.onNewCard(sourceCode => interpreter.executeCode(sourceCode));
+            userInteraction.onNewCard(sourceCode => interpreter.executeCode(sourceCode, 'python3'));
         });
         webview.show();
     });
