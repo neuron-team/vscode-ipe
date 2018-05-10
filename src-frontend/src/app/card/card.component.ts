@@ -10,8 +10,8 @@ import { AppComponent } from '../app.component';
 })
 export class CardComponent implements OnInit {
   @Input() card: Card;
-
-  constructor(private AppComponent: AppComponent) { }
+  titleEdit:boolean;
+  constructor(public AppComponent: AppComponent) { }
 
   ngOnInit() {
   }
