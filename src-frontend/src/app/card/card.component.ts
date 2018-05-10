@@ -26,8 +26,8 @@ import {
 })
 export class CardComponent implements OnInit {
   @Input() card: Card;
-  titleEdit:boolean;
-  
+  titleEdit: boolean;
+
   constructor(public AppComponent: AppComponent) { }
 
   ngOnInit() {

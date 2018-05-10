@@ -8,59 +8,13 @@ import {Card, CardOutput} from 'vscode-ipe-types';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements AfterViewInit {
+
   cards: Card[] = [
     new Card(0, 'sample card', 'print("Hello, world!");', [new CardOutput('plaintext', 'Hello, world!')])
   ];
   selectedCards: number[] = [];
-  searchQuery: string = "";
-  sortBy: string = "Oldest";
-
-  onSort(): void {
-    //this.cards[0].sourceCode=this.sortBy;
-    if (this.sortBy == "Oldest"){
-      this.cards.sort(function(a,b) {return (a.sourceCode > b.sourceCode) ? 1 : ((b.sourceCode > a.sourceCode) ? -1 : 0);} );
-    }
-    else{
-      this.cards.sort(function(a,b) {return (a.sourceCode > b.sourceCode) ? -1 : ((b.sourceCode > a.sourceCode) ? 1 : 0);} );
-    }
-  }
-
-  onSelect(id: number): void {
-    const index: number = this.selectedCards.indexOf(id, 1);
-    if (index > -1) this.selectedCards.splice(index);
-    else this.selectedCards.push(id);
-  }
-
-  moveUp(card: Card): void {
-    const index: number = this.cards.indexOf(card, 1);
-    if (index > -1){
-      const tmp: Card = this.cards[index - 1];
-      this.cards[index - 1] = this.cards[index];
-      this.cards[index] = tmp;
-    }
-  }
-
-  moveDown(hero: Card): void {
-    let index: number = this.cards.indexOf(hero);
-    if(index > -1 && index < this.cards.length - 1){
-      let tmp: Card = this.cards[index+1];
-      this.cards[index+1] = this.cards[index];
-      this.cards[index] = tmp;
-    }
-  }
-
-  delete(hero: Card): void {
-    var index: number = this.cards.indexOf(hero);
-    if (index > -1) this.cards.splice(index, 1);
-  }
-
-  constructor(private extension: ExtensionService) {
-    extension.onAddCard.subscribe(card => {
-      this.cards.push(card);
-      this.onSort();
-    });
-  }
-
+  searchQuery = '';
+  sortBy = 'Oldest';
 
   /* this code ensures that the list always scrolls to the bottom when new elements are added */
   @ViewChildren('listItems') listItems: QueryList<any>;
@@ -72,6 +26,55 @@ export class AppComponent implements AfterViewInit {
   scrollToBottom() {
     try {
       this.scrollContainer.nativeElement.scrollTop = this.scrollContainer.nativeElement.scrollHeight;
-    } catch(err) { }
+    } catch (err) { }
   }
+
+  /* Sorting */
+  onSort(): void {
+    // this.cards[0].sourceCode=this.sortBy;
+    if (this.sortBy === 'Oldest'){
+      this.cards.sort(function(a, b) {return (a.sourceCode > b.sourceCode) ? 1 : ((b.sourceCode > a.sourceCode) ? -1 : 0); } );
+    } else {
+      this.cards.sort(function(a, b) {return (a.sourceCode > b.sourceCode) ? -1 : ((b.sourceCode > a.sourceCode) ? 1 : 0); } );
+    }
+  }
+
+  onSelect(id: number): void {
+    const index: number = this.selectedCards.indexOf(id, 1);
+    if (index > -1) { this.selectedCards.splice(index);
+    } else { this.selectedCards.push(id); }
+  }
+
+  /* Ordering */
+  moveUp(card: Card): void {
+    const index: number = this.cards.indexOf(card, 1);
+    if (index > -1){
+      const tmp: Card = this.cards[index - 1];
+      this.cards[index - 1] = this.cards[index];
+      this.cards[index] = tmp;
+    }
+  }
+
+  moveDown(hero: Card): void {
+    const index: number = this.cards.indexOf(hero);
+    if (index > -1 && index < this.cards.length - 1){
+      const tmp: Card = this.cards[index + 1];
+      this.cards[index + 1] = this.cards[index];
+      this.cards[index] = tmp;
+    }
+  }
+
+  /* Deleting */
+  delete(hero: Card): void {
+    const index: number = this.cards.indexOf(hero);
+    if (index > -1) { this.cards.splice(index, 1); }
+  }
+
+  constructor(private extension: ExtensionService) {
+    extension.onAddCard.subscribe(card => {
+      this.cards.push(card);
+      this.onSort();
+    });
+  }
+
 }
