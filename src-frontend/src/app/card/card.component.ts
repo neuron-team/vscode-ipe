@@ -27,13 +27,13 @@ import {
 export class CardComponent implements OnInit {
   @Input() card: Card;
   titleEdit: boolean;
-
+  state:string = 'notSelected';
   constructor(public AppComponent: AppComponent) { }
 
   ngOnInit() {
   }
   toggleState() {
-    this.card.state = this.card.state === 'selected' ? 'notSelected' : 'selected';
+    this.state = this.state === 'selected' ? 'notSelected' : 'selected';
   }
 
 }
