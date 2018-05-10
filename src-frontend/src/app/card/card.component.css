@@ -1,4 +1,5 @@
 h2 {
+  font-size: 16px;
   -webkit-margin-before: 0.4em;
   -webkit-margin-after: 0.4em;
   -webkit-margin-start: 5px;
@@ -29,6 +30,10 @@ h2 {
   padding: 0px 6px;
 }
 
+.react:hover {
+  color: rgb(0, 119, 198);
+}
+
 button {
   align-items: flex-start;
   text-align: center;
@@ -41,11 +46,19 @@ button {
   box-shadow: none;
 }
 
-.card-toolbar > button:hover {
-  color: rgb(0, 119, 198);
+input {
+  color: var(--color);
+  background-color: rgba(255, 255, 255, 0.0);
+  border-style: solid;
+  border-color: rgba(255, 255, 255, 0.3);
+  font-size: 16px;
+  font-weight: bold;
+  -webkit-margin-before: 0.4em;
+  -webkit-margin-after: 0.4em;
+  -webkit-margin-start: 5px;
 }
 
-button:hover {
-  text-shadow: inset 0 0 100px 100px rgba(255, 255, 255, 0.3);
+input:focus {
+  border-color: rgba(0, 119, 198, 0.7);
+  outline: rgba(0, 119, 198, 0.7);
 }
-

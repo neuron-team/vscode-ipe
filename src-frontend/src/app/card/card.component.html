@@ -2,56 +2,65 @@
 
 <div class="card-container">
   <span class="card-toolbar">
-      <button (click)="this.AppComponent.moveUp(this.card)">
+      <button class="react" (click)="this.AppComponent.moveUp(this.card)">
           <i class="ms-Icon ms-Icon--ChevronUp" aria-hidden="true"></i>
       </button>
-      <button (click)="this.AppComponent.moveDown(this.card)">
+      <button class="react" (click)="this.AppComponent.moveDown(this.card)">
           <i class="ms-Icon ms-Icon--ChevronDown" aria-hidden="true"></i>
       </button>
-      <button (click)="this.AppComponent.onSelect(this.card.id)">select</button>
-      <button style="float:right" (click)="this.AppComponent.delete(this.card)">
+      <button class="react" (click)="this.AppComponent.onSelect(this.card.id)">select</button>
+      <button class="react" style="float:right" (click)="this.AppComponent.delete(this.card)">
           <i class="ms-Icon ms-Icon--Clear" aria-hidden="true"></i>
       </button>
-      <button style="float:right">
+      <button class="react" style="float:right">
           <i class="ms-Icon ms-Icon--MiniExpand" aria-hidden="true"></i>
       </button>
-      <button (click)="showCard = !showCard" style="float:right">
+      <button class="react" (click)="card.collapsed = !card.collapsed" style="float:right">
           <i class="ms-Icon ms-Icon--ChromeMinimize" aria-hidden="true"></i>
       </button>
     </span>
-    <h2>{{card.title}}</h2>
+    <div *ngIf="!titleEdit">
+      <button class="react" (click)="titleEdit = !titleEdit; inputText=card.title"><h2>{{card.title}}</h2></button>
+    </div>
+    <div *ngIf="titleEdit">
+      <input [(ngModel)]="inputText" placeholder=Title autofocus (keyup.enter)="card.title=inputText;titleEdit = !titleEdit" (keyup.esc)="titleEdit = !titleEdit" />
+      <button class="react" (click)="card.title=inputText;titleEdit = !titleEdit">
+        <i class="ms-Icon ms-Icon--Accept" aria-hidden="true"></i>
+      </button>
+      <button class="react" (click)="titleEdit = !titleEdit">
+        <i class="ms-Icon ms-Icon--Clear" aria-hidden="true"></i>
+      </button>
+    </div>
 
-  <div *ngIf="!showCard">
+
+  <div *ngIf="!card.collapsed">
     <hr>
-    <button (click)="card.collapsed = !card.collapsed">
-        <!-- need to show first line of code -->
-        <!-- showSource hides/shows the text on click -->
-        <div *ngIf="card.collapsed">
+    <button (click)="card.codeCollapsed = !card.codeCollapsed">
+        <div *ngIf="!card.codeCollapsed">
             <i class="ms-Icon ms-Icon--CaretBottomRightSolid8" aria-hidden="true"></i>
         </div>
-        <div *ngIf="!card.collapsed">
+        <div *ngIf="card.codeCollapsed">
             <i class="ms-Icon ms-Icon--CaretRight8" aria-hidden="true"></i>
-            <span>{{ card.sourceCode| slice:0:30 }} ...</span>      
+            <span>{{ card.sourceCode| slice:0:30 }} ...</span>
         </div>
     </button>
     <div class="card-code">
-      <!-- Flip this part to intialize it to be hidden/shown
-        N.B this variable is not connected to anything -->
-      <div *ngIf="card.collapsed">
+      <div *ngIf="!card.codeCollapsed">
         <pre>{{card.sourceCode}}</pre>
       </div>
     </div>
     <hr>
-    <button (click)="showOut = !showOut">
-      <div *ngIf="!showOut">
+    <button (click)="card.outputCollapsed = !card.outputCollapsed">
+      <div *ngIf="!card.outputCollapsed">
           <i class="ms-Icon ms-Icon--CaretBottomRightSolid8" aria-hidden="true"></i>
       </div>
-      <div *ngIf="showOut">
-          <i class="ms-Icon ms-Icon--CaretRight8" aria-hidden="true"></i>      
+      <div *ngIf="card.outputCollapsed">
+          <i class="ms-Icon ms-Icon--CaretRight8" aria-hidden="true"></i>
+          <span>Output</span>
       </div>
     </button>
     <div class="card-output" *ngFor="let output of card.outputs">
-        <div *ngIf="!showOut">
+        <div *ngIf="!card.outputCollapsed">
           <pre class="output">{{output.output}}</pre>
         </div>
     </div>
