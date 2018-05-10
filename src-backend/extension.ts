@@ -4,29 +4,24 @@ import * as vscode from 'vscode';
 
 import {Card, CardOutput} from 'vscode-ipe-types';
 import {WebviewController} from "./webviewController";
-import {Interpreter} from "./interpreter";
+import {Interpreter, ContentHelpers} from "./interpreter";
 import {UserInteraction} from "./userInteraction";
-import {StatusBarItem} from 'vscode';
-
 
 export function activate(context: vscode.ExtensionContext) {
     let webview: WebviewController = new WebviewController(context);
-    let statusIndicator: StatusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right);
     let userInteraction: UserInteraction = new UserInteraction(context);
+    
     let interpreter = new Interpreter();
-
-    userInteraction.onRenderCard((card: Card) => {
+    ContentHelpers.eventEmitter.on('ipe.renderCard', (card: Card) => {
         webview.addCard(card);
     });
-
-    userInteraction.onUpdateStatus((status: string) => {
-        statusIndicator.text = "Jupyter: "+status;
+    ContentHelpers.eventEmitter.on('ipe.changeStatus', (status: string) => {
+        userInteraction.updateState("Jupyter: "+status);
     });
 
     userInteraction.onShowPane(() => {
         // Initialise status indicator
         //statusIndicator.text = "Jupyter: idle";
-        statusIndicator.show();
 
         // Ask info about the interpreter
         userInteraction.askJupyterInfo().then(({baseUrl, token}) => {

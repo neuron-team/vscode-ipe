@@ -1,9 +1,9 @@
 import { Kernel, ServerConnection, KernelMessage } from '@jupyterlab/services';
 import { JSONValue, JSONObject } from '@phosphor/coreutils';
-import { UserInteraction } from './userInteraction';
 import {Card, CardOutput} from 'vscode-ipe-types';
 
 import * as vscode from 'vscode';
+import { EventEmitter } from 'events';
 
 export class Interpreter {
 
@@ -54,7 +54,7 @@ export class Interpreter {
     executeCode(source : string, kernelName: string) {
         if(kernelName in this.kernelPromise){
             this.kernelPromise[kernelName]
-                .then(kernel => kernel.requestExecute({code : source, stop_on_error: false}).onIOPub = this.interpretOutput)
+                .then(kernel => kernel.requestExecute({code : source, stop_on_error: false}).onIOPub = ContentHelpers.interpretOutput)
                 .catch(reason => vscode.window.showErrorMessage(String(reason)));
         }
         else{
@@ -62,12 +62,6 @@ export class Interpreter {
         }
     }
 
-    interpretOutput(msg: KernelMessage.IIOPubMessage){
-        // Get the Json content of the output
-        let content = msg.content;
-        console.log(content);
-        ContentHelpers.processContent(content);
-    }
 }
 
 export namespace ContentHelpers{
@@ -75,6 +69,7 @@ export namespace ContentHelpers{
     let sourceTmp = '';
     let contentTmp: Array<CardOutput> = [];
     let id = 0;
+    export let eventEmitter: EventEmitter = new EventEmitter();
 
     function makeCardTitle(source: string) : string {
         let firstLine = source.split('\n')[0];
@@ -88,9 +83,16 @@ export namespace ContentHelpers{
     }
 
     // Validate Json received
-    export function validateData(inputData : JSONValue, field : string): inputData is JSONObject
+    function validateData(inputData : JSONValue, field : string): inputData is JSONObject
     {
         return (<JSONObject>inputData)[field] !== undefined;
+    }
+
+    export function interpretOutput(msg: KernelMessage.IIOPubMessage){
+        // Get the Json content of the output
+        let content = msg.content;
+        console.log(content);
+        ContentHelpers.processContent(content);
     }
 
     export function processContent(content: JSONObject){
@@ -98,10 +100,10 @@ export namespace ContentHelpers{
         if('execution_state' in content){
             let status = content['execution_state'];
             if(status === 'idle'){
-                renderCard();
+                onCardReady();
             }
             if(typeof status === 'string'){
-                updateStatus(status);
+                onStatusChanged(status);
             }
         // Receive back the source code
         } else if('code' in content){
@@ -142,13 +144,13 @@ export namespace ContentHelpers{
         return data[validDataTypes[0]];
     }
 
-    function updateStatus(status: string){
-        vscode.commands.executeCommand('ipe.updateStatus', status);
+    function onStatusChanged(status: string){
+        eventEmitter.emit('ipe.changeStatus', status);
     }
 
-    function renderCard(){
+    function onCardReady(){
         if(id !== 0){
-            vscode.commands.executeCommand('ipe.renderCard', new Card(id, makeCardTitle(sourceTmp), sourceTmp, contentTmp));
+            eventEmitter.emit('ipe.renderCard', new Card(id, makeCardTitle(sourceTmp), sourceTmp, contentTmp));
         }
         contentTmp = [];
         id++;
