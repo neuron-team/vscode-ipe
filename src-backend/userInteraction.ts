@@ -24,11 +24,21 @@ export class UserInteraction {
                 return;
             }
             if (vscode.window.activeTextEditor.selection.isEmpty) {
-                vscode.window.showErrorMessage("Please select some code");
-                return;
+                // Sends current line to the interpreter
+                let lineNr = vscode.window.activeTextEditor.selection.start.line;
+                let sourceCode = vscode.window.activeTextEditor.document.lineAt(lineNr).text;
+                this._onNewCard.fire(sourceCode);
+
+                // Advance text cursor to the next line
+                let newPos = new vscode.Position(lineNr+1, 0);
+                let newSelection = new vscode.Selection(newPos, newPos);
+                vscode.window.activeTextEditor.selection = newSelection;
+            } else {
+                // Send selection to interpreter
+                let sourceCode = vscode.window.activeTextEditor.document.getText(vscode.window.activeTextEditor.selection);
+                this._onNewCard.fire(sourceCode);
             }
-            let sourceCode = vscode.window.activeTextEditor.document.getText(vscode.window.activeTextEditor.selection);
-            this._onNewCard.fire(sourceCode);
+            
         }));
 
         this.statusIndicator = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right);

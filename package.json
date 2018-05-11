@@ -11,20 +11,56 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:ipe.showWebview"
+    "onCommand:ipe.showWebview",
+    "onLanguage:python"
   ],
   "main": "./out/extension",
   "contributes": {
     "commands": [
       {
         "command": "ipe.showWebview",
-        "title": "IPE: Show output pane"
+        "title": "Show Output Pane",
+        "category": "IPE",
+        "icon":{
+          "light": "/src-backend/media/light_browser.svg",
+          "dark": "/src-backend/media/dark_browser.svg"
+        }
       },
       {
         "command": "ipe.newCard",
-        "title": "IPE: Send code to output window"
+        "title": "Send Code to Output Window",
+        "category": "IPE"
       }
-    ]
+    ],
+    "keybindings": [
+      {
+        "command": "ipe.showWebview",
+        "key": "ctrl+k ctrl+v",
+        "mac": "cmd+k cmd+v",
+        "when": "editorLangId == python"
+      },
+      {
+        "command": "ipe.newCard",
+        "key": "alt+enter",
+        "when": "editorLangId == python && editorFocus"
+      }
+    ],
+    "menus": {
+      "editor/title": [
+        {
+          "when": "editorLangId == python",
+          "command": "ipe.showWebview",
+          "group": "navigation"
+        }
+      ],
+      "editor/context": [
+        {
+          "when": "editorLangId == python && editorHasSelection",
+          "command": "ipe.newCard",
+          "group": "Python"
+        }
+      ]
+    }
   },
   "scripts": {
     "clean": "shx rm -rf html/ out/",
