@@ -4,6 +4,7 @@
 }
 
 .toolbar {
+  white-space:nowrap;
   position: fixed;
   top: 0;
   display: block;
