@@ -3,7 +3,7 @@ import { JSONValue, JSONObject } from '@phosphor/coreutils';
 import {Card, CardOutput} from 'vscode-ipe-types';
 
 import * as vscode from 'vscode';
-import { EventEmitter } from 'events';
+import {Event, EventEmitter} from "vscode";
 
 export class Interpreter {
 
@@ -64,14 +64,19 @@ export class Interpreter {
 
 }
 
-export namespace ContentHelpers{
+export class ContentHelpers{
     // Used to store temporary card data
-    let sourceTmp = '';
-    let contentTmp: Array<CardOutput> = [];
-    let id = 0;
-    export let eventEmitter: EventEmitter = new EventEmitter();
+    static sourceTmp = '';
+    static contentTmp: Array<CardOutput> = [];
+    static id = 0;
 
-    function makeCardTitle(source: string) : string {
+    private static _onStatusChanged: EventEmitter<string> = new EventEmitter();
+    static get onStatusChanged(): Event<string> { return this._onStatusChanged.event; }
+
+    private static _onCardReady: EventEmitter<Card> = new EventEmitter();
+    static get onCardReady(): Event<Card> { return this._onCardReady.event; }
+
+    static makeCardTitle(source: string) : string {
         let firstLine = source.split('\n')[0];
 
         let funcName = firstLine.match(/([a-z]+)\(.*\)/i);
@@ -83,46 +88,46 @@ export namespace ContentHelpers{
     }
 
     // Validate Json received
-    function validateData(inputData : JSONValue, field : string): inputData is JSONObject
+    static validateData(inputData : JSONValue, field : string): inputData is JSONObject
     {
         return (<JSONObject>inputData)[field] !== undefined;
     }
 
-    export function interpretOutput(msg: KernelMessage.IIOPubMessage){
+    static interpretOutput(msg: KernelMessage.IIOPubMessage){
         // Get the Json content of the output
         let content = msg.content;
         console.log(content);
         ContentHelpers.processContent(content);
     }
 
-    export function processContent(content: JSONObject){
+    static processContent(content: JSONObject){
         // Process execution state ['busy', 'idle']
         if('execution_state' in content){
             let status = content['execution_state'];
             if(status === 'idle'){
-                onCardReady();
+                this.makeCard();
             }
             if(typeof status === 'string'){
-                onStatusChanged(status);
+                this._onStatusChanged.fire(status);
             }
         // Receive back the source code
         } else if('code' in content){
             let code = content['code'];
             if(typeof code === 'string'){
-                sourceTmp = code;
+                this.sourceTmp = code;
             }
         // The output is stdout
         } else if('name' in content){
             let output = content['text'];
             if(typeof output === 'string'){
-                contentTmp.push(new CardOutput('stdout', output));
+                this.contentTmp.push(new CardOutput('stdout', output));
             }
         // The output is rich
         } else if('data' in content){
             let data = content.data;
-            let output = extractComplexData(data);
+            let output = this.extractComplexData(data);
             if(typeof output === 'string'){
-                contentTmp.push(new CardOutput('text/html', output));
+                this.contentTmp.push(new CardOutput('text/html', output));
             }
         // The code could not be executed, an error was returned
         } else if(['ename', 'evalue', 'traceback'].reduce((accumulator, currentValue) => accumulator && currentValue in content,true)){
@@ -130,29 +135,25 @@ export namespace ContentHelpers{
             let evalue = content['evalue'];
             let traceback = content['traceback'];
             if(['ename', 'evalue', 'traceback'].reduce((accumulator, currentValue) => accumulator && typeof currentValue === 'string', true)){
-                contentTmp.push(new CardOutput('error', ename+'\n'+evalue+'\n'+traceback));
+                this.contentTmp.push(new CardOutput('error', ename+'\n'+evalue+'\n'+traceback));
             }      
         }
     }
 
-    function extractComplexData(data: JSONValue){
+    static extractComplexData(data: JSONValue){
 
         let validDataTypes = 
             ['text/html', 'image/svg+xml', 'image/png', 'image/jpeg', 'text/markdown', 'application/pdf', 
             'text/latex', 'application/javascript', 'application/json', 'text/plain']
-            .filter(dataType => validateData(data, dataType));
+            .filter(dataType => this.validateData(data, dataType));
         return data[validDataTypes[0]];
     }
 
-    function onStatusChanged(status: string){
-        eventEmitter.emit('ipe.changeStatus', status);
-    }
-
-    function onCardReady(){
-        if(id !== 0){
-            eventEmitter.emit('ipe.renderCard', new Card(id, makeCardTitle(sourceTmp), sourceTmp, contentTmp));
+    static makeCard(){
+        if(this.id !== 0){
+            this._onCardReady.fire(new Card(this.id, this.makeCardTitle(this.sourceTmp), this.sourceTmp, this.contentTmp));
         }
-        contentTmp = [];
-        id++;
+        this.contentTmp = [];
+        this.id++;
     }
 }

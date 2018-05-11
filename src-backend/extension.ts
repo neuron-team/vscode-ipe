@@ -12,11 +12,11 @@ export function activate(context: vscode.ExtensionContext) {
     let userInteraction: UserInteraction = new UserInteraction(context);
     
     let interpreter = new Interpreter();
-    ContentHelpers.eventEmitter.on('ipe.renderCard', (card: Card) => {
-        webview.addCard(card);
-    });
-    ContentHelpers.eventEmitter.on('ipe.changeStatus', (status: string) => {
+    ContentHelpers.onStatusChanged(status => {
         userInteraction.updateStatus(`Jupyter: ${status}`);
+    });
+    ContentHelpers.onCardReady((card: Card) => {
+        webview.addCard(card);
     });
 
     userInteraction.onShowPane(() => {
