@@ -1,5 +1,6 @@
 import * as vscode from "vscode";
 import {Event, EventEmitter} from "vscode";
+import {StatusBarItem} from 'vscode';
 
 export class UserInteraction {
     private _onShowPane: EventEmitter<void> = new EventEmitter();
@@ -7,9 +8,12 @@ export class UserInteraction {
 
     private _onNewCard: EventEmitter<string> = new EventEmitter();
     get onNewCard(): Event<string> { return this._onNewCard.event; }
-    
+
+    private statusIndicator: StatusBarItem;
 
     constructor(private context: vscode.ExtensionContext) {
+
+        
         context.subscriptions.push(vscode.commands.registerCommand('ipe.showWebview', () => {
             this._onShowPane.fire();
         }));
@@ -26,6 +30,9 @@ export class UserInteraction {
             let sourceCode = vscode.window.activeTextEditor.document.getText(vscode.window.activeTextEditor.selection);
             this._onNewCard.fire(sourceCode);
         }));
+
+        this.statusIndicator = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right);
+        this.statusIndicator.show();
     }
 
     askJupyterInfo() : Promise<{baseUrl: string, token: string}> {
@@ -45,5 +52,9 @@ export class UserInteraction {
                 });
             });
         });
+    }
+
+    updateStatus(status: string){
+        this.statusIndicator.text = status;
     }
 }
