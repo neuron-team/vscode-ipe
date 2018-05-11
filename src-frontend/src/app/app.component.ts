@@ -20,29 +20,28 @@ export class AppComponent implements AfterViewInit {
   typeQuery = {
     text: true,
     graph: true
-  }
+  };
 
-  /* Type Filtering */  //passed testing, waiting for backend card.outputs[i].type implementation
+  /* Type Filtering */  // passed testing, waiting for backend card.outputs[i].type implementation
   toggleTypeQuery(typeStr: string): void {
     this.typeQuery[typeStr] = !this.typeQuery[typeStr];
   }
-  onType(card: Card): boolean { //need to manually list all possible types
+  onType(card: Card): boolean { // need to manually list all possible types
     // if (this.typeQuery.text && card.sourceCode === 'print("Hello")') return true;
     // if (this.typeQuery.text && this.typeQuery.graph) return true;
     for (let i = 0; i < card.outputs.length; i++){
-      if (this.typeQuery.text && card.outputs[i].type === 'text') return true;
-      if (this.typeQuery.graph && card.outputs[i].type === 'graph') return true;
+      if (this.typeQuery.text && card.outputs[i].type === 'text') { return true; }
+      if (this.typeQuery.graph && card.outputs[i].type === 'graph'){ return true; }
     }
-    //return false;
-    return true; //now pass every card through (no filtering); must be changed to false
+    return true; // now pass every card through (no filtering); must be changed to false
   }
 
-  /* Sorting */ //passed testing, waiting for backend card.id implementation
+  /* Sorting */ // passed testing, waiting for backend card.id implementation
   onSort(): void {
-    if (this.sortQuery === 'Oldest'){ //must change to compare ids
-      this.cards.sort(function(a, b) {return (a.sourceCode > b.sourceCode) ? 1 : ((b.sourceCode > a.sourceCode) ? -1 : 0); } );
-    } else if (this.sortQuery === 'Newest') { //must change to compare ids
-      this.cards.sort(function(a, b) {return (a.sourceCode > b.sourceCode) ? -1 : ((b.sourceCode > a.sourceCode) ? 1 : 0); } );
+    if (this.sortQuery === 'Oldest'){
+      this.cards.sort(function(a, b) {return (a.id > b.id) ? 1 : ((b.id > a.id) ? -1 : 0); } );
+    } else if (this.sortQuery === 'Newest') {
+      this.cards.sort(function(a, b) {return (a.id > b.id) ? -1 : ((b.id > a.id) ? 1 : 0); } );
     } else if (this.sortQuery === 'Alphabetical: A-Z') {
       this.cards.sort(function(a, b) {return (a.title > b.title) ? 1 : ((b.title > a.title) ? -1 : 0); } );
     } else if (this.sortQuery === 'Alphabetical: Z-A') {

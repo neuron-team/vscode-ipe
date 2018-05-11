@@ -1,7 +1,11 @@
 <div class="container">
   <form class="toolbar">
     <input type="text" name="searchBox" placeholder="Search..." [(ngModel)]="searchQuery" my-on-key-down-call="">
-
+    <span>
+        <label class="css-checkbox"><input type="checkbox" checked (click)="toggleTypeQuery('text')">Text</label>
+        <label class="css-checkbox"><input type="checkbox" checked (click)="toggleTypeQuery('graph')">Graph</label>
+    </span>
+    
     <select name="sortBox" [(ngModel)]="sortQuery" (change)="onSort()">
         <option value="Custom">Custom</option>
         <option value="Oldest">Oldest</option>
@@ -10,10 +14,6 @@
         <option value="Alphabetical: Z-A">Alphabetical: Z-A</option>
     </select>
 
-    <span>Type:
-        <label><input type="checkbox" checked (click)="toggleTypeQuery('text')">Text</label>
-        <label><input type="checkbox" checked (click)="toggleTypeQuery('graph')">Graph</label>
-    </span>
 
     <button>Export to Jupyter</button>
     <div class="searchResult" *ngIf="searchQuery">Autocomplete</div>
