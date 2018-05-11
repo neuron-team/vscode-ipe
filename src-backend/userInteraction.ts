@@ -19,22 +19,20 @@ export class UserInteraction {
                 vscode.window.showErrorMessage("No file open");
                 return;
             }
-            // Sends current line to the interpreter
             if (vscode.window.activeTextEditor.selection.isEmpty) {
+                // Sends current line to the interpreter
                 let lineNr = vscode.window.activeTextEditor.selection.start.line;
                 let sourceCode = vscode.window.activeTextEditor.document.lineAt(lineNr).text;
                 this._onNewCard.fire(sourceCode);
 
-                // Advance to the next line
-                let newPos = new vscode.Position(lineNr+1, 0)
+                // Advance text cursor to the next line
+                let newPos = new vscode.Position(lineNr+1, 0);
                 let newSelection = new vscode.Selection(newPos, newPos);
                 vscode.window.activeTextEditor.selection = newSelection;
-                return;
-            }
-            if (!vscode.window.activeTextEditor.selection.isEmpty){
+            } else {
+                // Send selection to interpreter
                 let sourceCode = vscode.window.activeTextEditor.document.getText(vscode.window.activeTextEditor.selection);
                 this._onNewCard.fire(sourceCode);
-                return;
             }
             
         }));
