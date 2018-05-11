@@ -2,7 +2,7 @@
 
 import * as vscode from 'vscode';
 
-import {Card, CardOutput} from 'vscode-ipe-types';
+import {Card} from 'vscode-ipe-types';
 import {WebviewController} from "./webviewController";
 import {Interpreter, ContentHelpers} from "./interpreter";
 import {UserInteraction} from "./userInteraction";
@@ -16,7 +16,7 @@ export function activate(context: vscode.ExtensionContext) {
         webview.addCard(card);
     });
     ContentHelpers.eventEmitter.on('ipe.changeStatus', (status: string) => {
-        userInteraction.updateState("Jupyter: "+status);
+        userInteraction.updateStatus(`Jupyter: ${status}`);
     });
 
     userInteraction.onShowPane(() => {

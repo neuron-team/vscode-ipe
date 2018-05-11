@@ -1,6 +1,5 @@
 import * as vscode from "vscode";
 import {Event, EventEmitter} from "vscode";
-import {Card, CardOutput} from 'vscode-ipe-types';
 import {StatusBarItem} from 'vscode';
 
 export class UserInteraction {
@@ -55,7 +54,7 @@ export class UserInteraction {
         });
     }
 
-    updateState(status: string){
+    updateStatus(status: string){
         this.statusIndicator.text = status;
     }
 }
