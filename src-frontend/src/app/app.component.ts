@@ -12,20 +12,41 @@ export class AppComponent implements AfterViewInit {
   cards: Card[] = [
     new Card(0, 'sample card', 'print("Hello, world!");', [new CardOutput('plaintext', 'Hello, world!')])
   ];
+
   selectedCards: number[] = [];
+
   searchQuery = '';
-  sortBy = 'Oldest';
+  sortQuery = 'Oldest';
+  typeQuery = {
+    text: true,
+    graph: true
+  }
 
+  /* Type Filtering */  //passed testing, waiting for backend card.outputs[i].type implementation
+  toggleTypeQuery(typeStr: string): void {
+    this.typeQuery[typeStr] = !this.typeQuery[typeStr];
+  }
+  onType(card: Card): boolean { //need to manually list all possible types
+    // if (this.typeQuery.text && card.sourceCode === 'print("Hello")') return true;
+    // if (this.typeQuery.text && this.typeQuery.graph) return true;
+    for (let i = 0; i < card.outputs.length; i++){
+      if (this.typeQuery.text && card.outputs[i].type === 'text') return true;
+      if (this.typeQuery.graph && card.outputs[i].type === 'graph') return true;
+    }
+    //return false;
+    return true; //now pass every card through (no filtering); must be changed to false
+  }
 
-  /* Sorting */
+  /* Sorting */ //passed testing, waiting for backend card.id implementation
   onSort(): void {
-    // this.cards[0].sourceCode=this.sortBy;
-    if (this.sortBy === 'Oldest'){
+    if (this.sortQuery === 'Oldest'){ //must change to compare ids
       this.cards.sort(function(a, b) {return (a.sourceCode > b.sourceCode) ? 1 : ((b.sourceCode > a.sourceCode) ? -1 : 0); } );
-    } else if (this.sortBy === 'Newest') {
+    } else if (this.sortQuery === 'Newest') { //must change to compare ids
       this.cards.sort(function(a, b) {return (a.sourceCode > b.sourceCode) ? -1 : ((b.sourceCode > a.sourceCode) ? 1 : 0); } );
-    } else if (this.sortBy === 'Alphabetical') {
+    } else if (this.sortQuery === 'Alphabetical: A-Z') {
       this.cards.sort(function(a, b) {return (a.title > b.title) ? 1 : ((b.title > a.title) ? -1 : 0); } );
+    } else if (this.sortQuery === 'Alphabetical: Z-A') {
+      this.cards.sort(function(a, b) {return (a.title > b.title) ? -1 : ((b.title > a.title) ? 1 : 0); } );
     }
   }
 
@@ -42,23 +63,23 @@ export class AppComponent implements AfterViewInit {
       const tmp: Card = this.cards[index - 1];
       this.cards[index - 1] = this.cards[index];
       this.cards[index] = tmp;
-      this.sortBy = 'Custom';
+      this.sortQuery = 'Custom';
     }
   }
 
-  moveDown(hero: Card): void {
-    const index: number = this.cards.indexOf(hero);
+  moveDown(card: Card): void {
+    const index: number = this.cards.indexOf(card);
     if (index > -1 && index < this.cards.length - 1){
       const tmp: Card = this.cards[index + 1];
       this.cards[index + 1] = this.cards[index];
       this.cards[index] = tmp;
-      this.sortBy = 'Custom';
+      this.sortQuery = 'Custom';
     }
   }
 
   /* Deleting */
-  delete(hero: Card): void {
-    const index: number = this.cards.indexOf(hero);
+  delete(card: Card): void {
+    const index: number = this.cards.indexOf(card);
     if (index > -1) { this.cards.splice(index, 1); }
   }
 
