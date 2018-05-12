@@ -18,8 +18,8 @@ export class Interpreter {
 
     constructor(){}
 
-    connectToServer(pageUrl: string, token: string){
-        this.serverSettings = ServerConnection.makeSettings({pageUrl: pageUrl, token: token});
+    connectToServer(baseUrl: string, token: string){
+        this.serverSettings = ServerConnection.makeSettings({pageUrl: baseUrl, token: token});
         
         for(var key in this.kernelPromise){
             this.kernelPromise[key].then(kernel => kernel.shutdown());
