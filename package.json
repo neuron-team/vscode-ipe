@@ -21,7 +21,7 @@
         "command": "ipe.showWebview",
         "title": "Show Output Pane",
         "category": "IPE",
-        "icon":{
+        "icon": {
           "light": "/src-backend/media/light_browser.svg",
           "dark": "/src-backend/media/dark_browser.svg"
         }
@@ -76,6 +76,7 @@
     "test": "npm run compile && node ./node_modules/vscode/bin/test"
   },
   "devDependencies": {
+    "child-process":"^1.0.2",
     "@jupyterlab/services": "^2.0.3",
     "@types/mocha": "^2.2.42",
     "@types/node": "^7.0.43",
@@ -83,5 +84,7 @@
     "tslint": "^5.8.0",
     "typescript": "^2.6.1",
     "vscode": "^1.1.6"
+  },
+  "dependencies": {
   }
 }
