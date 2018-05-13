@@ -23,7 +23,6 @@ export function activate(context: vscode.ExtensionContext) {
     });
 
     function initialisePanel({baseUrl, token}){
-        console.log(baseUrl+" "+ token);
         // Connect to the server defined
         interpreter.connectToServer(baseUrl, token);
         // Create a python3 kernel, any kernel can be chosen
