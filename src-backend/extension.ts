@@ -37,13 +37,26 @@ export function activate(context: vscode.ExtensionContext) {
 
     userInteraction.onShowPane(() => {
         if(!panelInitialised){
-            let jupyterManager = new JupyterManager();
-            jupyterManager.getJupyterInfos()
-                .then(initialisePanel)
-                .catch(() => {
+            let choices = ['Create a new notebook', 'Enter details manually'];
+            let runningNotebooks = JupyterManager.getRunningNotebooks();
+            runningNotebooks.map(input =>{
+                choices.push(input.url);
+            });
+            vscode.window.showQuickPick(choices).then(choice => {
+                if(choice === 'Create a new notebook'){
+                    let jupyterManager = new JupyterManager();
+                    jupyterManager.getJupyterInfos()
+                        .then(initialisePanel)
+                        .catch(() => vscode.window.showErrorMessage('Could not start a notebook automatically'));
+                }
+                else if(choice === 'Enter details manually'){
                     vscode.window.showErrorMessage('Could not create a Jupyter instance, enter the server details manually');
                     userInteraction.askJupyterInfo().then(initialisePanel);
-                });
+                }
+                else{
+                    initialisePanel(runningNotebooks.filter(input => input.url === choice)[0].info);
+                }
+            });
         }
         else{
             webview.show();

@@ -1,4 +1,4 @@
-import { spawn, ChildProcess } from 'child_process';
+import { spawn, ChildProcess, execSync } from 'child_process';
 import { URL } from 'url';
 
 export class JupyterManager{
@@ -35,6 +35,28 @@ export class JupyterManager{
                         });
                 }
             }, JupyterManager.timeout);
+        });
+    }
+
+    public static getRunningNotebooks(){
+        let runningUrls = 
+            execSync(
+                'jupyter notebook list',  
+                { stdio: 'pipe', encoding: 'utf8'}
+            );
+
+        let matches = runningUrls.match(JupyterManager.pattern);
+        
+        return matches.map(input => {
+            let url = new URL(input);
+            return {
+                url: input, 
+                info: 
+                    {
+                        baseUrl: url.protocol+'//'+url.host+'/', 
+                        token: url.searchParams.get('token')
+                    }
+            };
         });
     }
 }
