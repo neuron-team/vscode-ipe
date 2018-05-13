@@ -15,11 +15,18 @@ export class Interpreter {
 
     // Kernel promise used for code execution
     private kernelPromise = {};
-
     constructor(){}
 
     connectToServer(baseUrl: string, token: string){
-        this.serverSettings = ServerConnection.makeSettings({pageUrl: baseUrl, token: token});
+        console.log(ServerConnection.defaultSettings);
+        this.serverSettings = ServerConnection.makeSettings(
+            {
+                baseUrl: baseUrl, 
+                pageUrl: "", 
+                wsUrl: baseUrl.replace('http', 'ws'), 
+                token: token, 
+                init: {cache: "no-store", credentials: "same-origin"}
+            });
         
         for(var key in this.kernelPromise){
             this.kernelPromise[key].then(kernel => kernel.shutdown());
@@ -29,7 +36,7 @@ export class Interpreter {
 
     startKernel(kernelName: string){
         if(!(kernelName in this.kernelPromise)){
-            let options = {name : kernelName, serverSettings : this.serverSettings};  
+            let options: Kernel.IOptions = {name : kernelName, serverSettings : this.serverSettings}; 
             this.kernelPromise[kernelName] = Kernel.startNew(options);
             if (kernelName === 'python3'){
                 this.executeCode('%matplotlib inline', 'python3');

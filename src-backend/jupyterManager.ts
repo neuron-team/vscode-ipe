@@ -30,7 +30,7 @@ export class JupyterManager{
                 else{
                     resolve(
                         {
-                            baseUrl: JupyterManager.url.protocol+'//'+'127.0.0.1'+':'+JupyterManager.url.port+'', 
+                            baseUrl: JupyterManager.url.protocol+'//'+JupyterManager.url.host+'/', 
                             token: JupyterManager.url.searchParams.get('token')
                         });
                 }
