@@ -18,7 +18,6 @@ export class Interpreter {
     constructor(){}
 
     connectToServer(baseUrl: string, token: string){
-        console.log(ServerConnection.defaultSettings);
         this.serverSettings = ServerConnection.makeSettings(
             {
                 baseUrl: baseUrl, 
