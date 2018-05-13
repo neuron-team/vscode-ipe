@@ -60,7 +60,7 @@ export class Interpreter {
     executeCode(source : string, kernelName: string) {
         if(kernelName in this.kernelPromise){
             this.kernelPromise[kernelName]
-                .then(kernel => kernel.requestExecute({code : source, stop_on_error: false}).onIOPub = ContentHelpers.interpretOutput)
+                .then(kernel => kernel.requestExecute({code : source, stop_on_error: false, allow_stdin: false}).onIOPub = ContentHelpers.interpretOutput)
                 .catch(reason => vscode.window.showErrorMessage(String(reason)));
         }
         else{
