@@ -1,6 +1,7 @@
 import { Kernel, ServerConnection, KernelMessage } from '@jupyterlab/services';
 import { JSONValue, JSONObject } from '@phosphor/coreutils';
 import {Card, CardOutput} from 'vscode-ipe-types';
+import {JupyterManager} from './jupyterManager';
 
 import * as vscode from 'vscode';
 import {Event, EventEmitter} from "vscode";
@@ -9,17 +10,24 @@ export class Interpreter {
 
     // serverSettings, used to establish a basic connection with the server
     private serverSettings: ServerConnection.ISettings;
-
+    
     // // List of running kernels
     // private runningKernels: Kernel.IModel[] = [];
 
     // Kernel promise used for code execution
     private kernelPromise = {};
-
+    
     constructor(){}
 
-    connectToServer(pageUrl: string, token: string){
-        this.serverSettings = ServerConnection.makeSettings({pageUrl: pageUrl, token: token});
+    connectToServer(baseUrl: string, token: string){
+        this.serverSettings = ServerConnection.makeSettings(
+            {
+                baseUrl: baseUrl, 
+                pageUrl: "", 
+                wsUrl: baseUrl.replace('http', 'ws'), 
+                token: token, 
+                init: {cache: "no-store", credentials: "same-origin"}
+            });
         
         for(var key in this.kernelPromise){
             this.kernelPromise[key].then(kernel => kernel.shutdown());
@@ -29,7 +37,7 @@ export class Interpreter {
 
     startKernel(kernelName: string){
         if(!(kernelName in this.kernelPromise)){
-            let options = {name : kernelName, serverSettings : this.serverSettings};  
+            let options: Kernel.IOptions = {name : kernelName, serverSettings : this.serverSettings}; 
             this.kernelPromise[kernelName] = Kernel.startNew(options);
             if (kernelName === 'python3'){
                 this.executeCode('%matplotlib inline', 'python3');
@@ -54,7 +62,7 @@ export class Interpreter {
     executeCode(source : string, kernelName: string) {
         if(kernelName in this.kernelPromise){
             this.kernelPromise[kernelName]
-                .then(kernel => kernel.requestExecute({code : source, stop_on_error: false}).onIOPub = ContentHelpers.interpretOutput)
+                .then(kernel => kernel.requestExecute({code : source, stop_on_error: false, allow_stdin: false}).onIOPub = ContentHelpers.interpretOutput)
                 .catch(reason => vscode.window.showErrorMessage(String(reason)));
         }
         else{
