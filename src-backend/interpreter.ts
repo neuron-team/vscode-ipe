@@ -1,6 +1,7 @@
 import { Kernel, ServerConnection, KernelMessage } from '@jupyterlab/services';
 import { JSONValue, JSONObject } from '@phosphor/coreutils';
 import {Card, CardOutput} from 'vscode-ipe-types';
+import {JupyterManager} from './jupyterManager';
 
 import * as vscode from 'vscode';
 import {Event, EventEmitter} from "vscode";
@@ -9,13 +10,28 @@ export class Interpreter {
 
     // serverSettings, used to establish a basic connection with the server
     private serverSettings: ServerConnection.ISettings;
-
+    
     // // List of running kernels
     // private runningKernels: Kernel.IModel[] = [];
 
     // Kernel promise used for code execution
     private kernelPromise = {};
+    
+    private static jupyterManager: JupyterManager;
+    
     constructor(){}
+
+    public static createNewNotebook(){
+        return new Promise((resolve, reject) => {
+            Interpreter.jupyterManager = new JupyterManager();
+            Interpreter.jupyterManager.getJupyterAddressAndToken()
+                .then(data => resolve(data))
+                .catch(() => {
+                    vscode.window.showErrorMessage('Could not start a notebook automatically');
+                    reject();
+                });
+        });
+    }
 
     connectToServer(baseUrl: string, token: string){
         this.serverSettings = ServerConnection.makeSettings(
