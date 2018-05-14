@@ -1,5 +1,6 @@
 import * as vscode from "vscode";
 import {Event, EventEmitter} from "vscode";
+import {StatusBarItem} from 'vscode';
 
 export class UserInteraction {
     private _onShowPane: EventEmitter<void> = new EventEmitter();
@@ -7,9 +8,12 @@ export class UserInteraction {
 
     private _onNewCard: EventEmitter<string> = new EventEmitter();
     get onNewCard(): Event<string> { return this._onNewCard.event; }
-    
+
+    private statusIndicator: StatusBarItem;
 
     constructor(private context: vscode.ExtensionContext) {
+
+        
         context.subscriptions.push(vscode.commands.registerCommand('ipe.showWebview', () => {
             this._onShowPane.fire();
         }));
@@ -20,12 +24,25 @@ export class UserInteraction {
                 return;
             }
             if (vscode.window.activeTextEditor.selection.isEmpty) {
-                vscode.window.showErrorMessage("Please select some code");
-                return;
+                // Sends current line to the interpreter
+                let lineNr = vscode.window.activeTextEditor.selection.start.line;
+                let sourceCode = vscode.window.activeTextEditor.document.lineAt(lineNr).text;
+                this._onNewCard.fire(sourceCode);
+
+                // Advance text cursor to the next line
+                let newPos = new vscode.Position(lineNr+1, 0);
+                let newSelection = new vscode.Selection(newPos, newPos);
+                vscode.window.activeTextEditor.selection = newSelection;
+            } else {
+                // Send selection to interpreter
+                let sourceCode = vscode.window.activeTextEditor.document.getText(vscode.window.activeTextEditor.selection);
+                this._onNewCard.fire(sourceCode);
             }
-            let sourceCode = vscode.window.activeTextEditor.document.getText(vscode.window.activeTextEditor.selection);
-            this._onNewCard.fire(sourceCode);
+            
         }));
+
+        this.statusIndicator = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right);
+        this.statusIndicator.show();
     }
 
     askJupyterInfo() : Promise<{baseUrl: string, token: string}> {
@@ -45,5 +62,9 @@ export class UserInteraction {
                 });
             });
         });
+    }
+
+    updateStatus(status: string){
+        this.statusIndicator.text = status;
     }
 }
