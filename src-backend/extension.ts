@@ -44,7 +44,7 @@ export function activate(context: vscode.ExtensionContext) {
             vscode.window.showQuickPick(choices).then(choice => {
                 if(choice === 'Create a new notebook'){
                     let jupyterManager = new JupyterManager();
-                    jupyterManager.getJupyterInfos()
+                    jupyterManager.getJupyterAddressAndToken()
                         .then(initialisePanel)
                         .catch(() => vscode.window.showErrorMessage('Could not start a notebook automatically'));
                 }

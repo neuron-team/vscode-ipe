@@ -4,7 +4,7 @@ import { URL } from 'url';
 export class JupyterManager{
     private static process: ChildProcess;
     private static url: URL;
-    private static pattern = /http:\/\/localhost:[0-9]+\/\?token=[a-z0-9]+/g;
+    private static urlPattern = /http:\/\/localhost:[0-9]+\/\?token=[a-z0-9]+/g;
     private static timeout = 3000; // timeout set to 3s
 
     constructor(){
@@ -12,15 +12,15 @@ export class JupyterManager{
         JupyterManager.process.stderr.on('data', (data: string) => this.extractJupyterInfos(data));
     }
 
-    extractJupyterInfos(data: string){
-        let match = JupyterManager.pattern.exec(data);
+    private extractJupyterInfos(data: string){
+        let urlMatch = JupyterManager.urlPattern.exec(data);
         
-        if(match !== null){
-            JupyterManager.url = new URL(match[0]);
+        if(urlMatch !== null){
+            JupyterManager.url = new URL(urlMatch[0]);
         }
     }
 
-    public getJupyterInfos(){
+    public getJupyterAddressAndToken(){
         return new Promise(function(resolve, reject){
             setTimeout(() => {
                 JupyterManager.process.stderr.removeAllListeners();
@@ -45,7 +45,7 @@ export class JupyterManager{
                 { stdio: 'pipe', encoding: 'utf8'}
             );
 
-        let matches = runningUrls.match(JupyterManager.pattern);
+        let matches = runningUrls.match(JupyterManager.urlPattern);
         
         return matches.map(input => {
             let url = new URL(input);
