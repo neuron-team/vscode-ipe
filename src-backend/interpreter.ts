@@ -17,21 +17,7 @@ export class Interpreter {
     // Kernel promise used for code execution
     private kernelPromise = {};
     
-    private static jupyterManager: JupyterManager;
-    
     constructor(){}
-
-    public static createNewNotebook(){
-        return new Promise((resolve, reject) => {
-            Interpreter.jupyterManager = new JupyterManager();
-            Interpreter.jupyterManager.getJupyterAddressAndToken()
-                .then(data => resolve(data))
-                .catch(() => {
-                    vscode.window.showErrorMessage('Could not start a notebook automatically');
-                    reject();
-                });
-        });
-    }
 
     connectToServer(baseUrl: string, token: string){
         this.serverSettings = ServerConnection.makeSettings(

@@ -43,7 +43,10 @@ export function activate(context: vscode.ExtensionContext) {
             });
             vscode.window.showQuickPick(choices).then(choice => {
                 if(choice === 'Create a new notebook'){
-                    Interpreter.createNewNotebook().then(initialisePanel);
+                    let jupyterManager = new JupyterManager();
+                    jupyterManager.getJupyterAddressAndToken()
+                        .then(initialisePanel)
+                        .catch(() => vscode.window.showErrorMessage('Could not start a notebook automatically'));
                 }
                 else if(choice === 'Enter details manually'){
                     vscode.window.showErrorMessage('Could not create a Jupyter instance, enter the server details manually');
