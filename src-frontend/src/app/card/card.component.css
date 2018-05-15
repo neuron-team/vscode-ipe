@@ -13,6 +13,7 @@ h2 {
    white-space: nowrap;
    text-overflow: ellipsis;
    user-select: none;
+   font-family: monospace;
 }
 .card-container {
   background-color: rgba(0, 0, 0, 0.08);
@@ -24,6 +25,13 @@ h2 {
   margin: 0px;
   text-align: left;
   margin-bottom: 25px;
+}
+
+.toolbar-icon {
+  opacity: 0;
+}
+.card-container:hover .toolbar-icon {
+  opacity: 1;
 }
 
 .card-code > div {
