@@ -1,5 +1,6 @@
 import { spawn, ChildProcess, execSync, exec } from 'child_process';
 import { URL } from 'url';
+import * as vscode from 'vscode';
 
 export class JupyterManager{
     private static process: ChildProcess;
@@ -81,5 +82,13 @@ export class JupyterManager{
             else{
                 return false;
             }
+    }
+
+    public static installJupyter(data) {
+        if (data !== undefined) {
+            let terminal = vscode.window.createTerminal('pip');
+            terminal.show();
+            terminal.sendText('pip install jupyter', true);
+        }
     }
 }
