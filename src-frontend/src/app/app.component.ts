@@ -19,21 +19,24 @@ export class AppComponent implements AfterViewInit {
   sortQuery = 'Oldest';
   typeQuery = {
     text: true,
-    graph: true
+    image: true,
+    application: true,
+    error: true
   };
 
-  /* Type Filtering */  // passed testing, waiting for backend card.outputs[i].type implementation
+
+  /* Type Filtering */
   toggleTypeQuery(typeStr: string): void {
     this.typeQuery[typeStr] = !this.typeQuery[typeStr];
   }
   onType(card: Card): boolean { // need to manually list all possible types
-    // if (this.typeQuery.text && card.sourceCode === 'print("Hello")') return true;
-    // if (this.typeQuery.text && this.typeQuery.graph) return true;
     for (let i = 0; i < card.outputs.length; i++){
-      if (this.typeQuery.text && card.outputs[i].type === 'text') { return true; }
-      if (this.typeQuery.graph && card.outputs[i].type === 'graph'){ return true; }
+      if (this.typeQuery.text && (card.outputs[i].type.indexOf('text') > -1 || card.outputs[i].type === 'stdout')) { return true; }
+      if (this.typeQuery.image && card.outputs[i].type.indexOf('image') > -1) { return true; }
+      if (this.typeQuery.application && card.outputs[i].type.indexOf('application') > -1) { return true; }
+      if (this.typeQuery.error && card.outputs[i].type.indexOf('error') > -1) { return true; }
     }
-    return true; // now pass every card through (no filtering); must be changed to false
+    return false;
   }
 
   /* Sorting */ // passed testing, waiting for backend card.id implementation
@@ -57,6 +60,8 @@ export class AppComponent implements AfterViewInit {
 
   /* Ordering */
   moveUp(card: Card): void {
+    //card.sourceCode = card.outputs[0].type;
+    //card.sourceCode = card.outputs.length.toString();
     const index: number = this.cards.indexOf(card, 1);
     if (index > -1){
       const tmp: Card = this.cards[index - 1];
