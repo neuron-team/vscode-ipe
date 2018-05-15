@@ -23,11 +23,17 @@ export class AppComponent implements AfterViewInit {
     error: true
   };
 
+  /* Searching */
+  onSearch(): void{
+
+  }
 
   /* Type Filtering */
   toggleTypeQuery(typeStr: string): void {
     this.typeQuery[typeStr] = !this.typeQuery[typeStr];
   }
+
+  /* Type Filtring */
   onType(card: Card): boolean { // need to manually list all possible types
     for (let i = 0; i < card.outputs.length; i++){
       if (this.typeQuery.text && (card.outputs[i].type.indexOf('text') > -1 || card.outputs[i].type === 'stdout')) { return true; }
@@ -38,7 +44,7 @@ export class AppComponent implements AfterViewInit {
     return false;
   }
 
-  /* Sorting */ // passed testing, waiting for backend card.id implementation
+  /* Sorting */
   onSort(): void {
     if (this.sortQuery === 'Oldest'){
       this.cards.sort(function(a, b) {return (a.id > b.id) ? 1 : ((b.id > a.id) ? -1 : 0); } );
@@ -50,6 +56,7 @@ export class AppComponent implements AfterViewInit {
       this.cards.sort(function(a, b) {return (a.title > b.title) ? -1 : ((b.title > a.title) ? 1 : 0); } );
     }
   }
+
   //On select will remove/add element if it's in/not in array
   onSelect(id: number): void {
     const index: number = this.selectedCards.indexOf(id, 1);
@@ -57,8 +64,8 @@ export class AppComponent implements AfterViewInit {
     } else { this.selectedCards.push(id); }
   }
 
+  /* Ordering */
   onMove({dir: direction,card: card}){
-
     if(direction === "up"){
       this.moveUp(card);
     }
@@ -66,9 +73,6 @@ export class AppComponent implements AfterViewInit {
       this.moveDown(card);
     }
   }
-
-
-  /* Ordering */
   moveUp(card: Card): void {
     //card.sourceCode = card.outputs[0].type;
     //card.sourceCode = card.outputs.length.toString();
@@ -80,7 +84,6 @@ export class AppComponent implements AfterViewInit {
       this.sortQuery = 'Custom';
     }
   }
-
   moveDown(card: Card): void {
     const index: number = this.cards.indexOf(card);
     if (index > -1 && index < this.cards.length - 1){

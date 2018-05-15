@@ -82,3 +82,7 @@ select:focus {
   border-color: rgba(0, 119, 198, 0.7);
   outline: rgba(0, 119, 198, 0.7);
 }
+
+:host ::ng-deep .search-highlight{
+  background-color: rgb(136, 136, 67);
+}

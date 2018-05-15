@@ -1,6 +1,6 @@
 <div class="container">
   <form class="toolbar">
-    <input type="text" name="searchBox" placeholder="Search..." [(ngModel)]="searchQuery" my-on-key-down-call="">
+    <input type="text" name="searchBox" placeholder="Search..." [(ngModel)]="searchQuery" my-on-key-down-call="onSearch()">
     <span>
         <label class="css-checkbox"><input type="checkbox" checked (click)="toggleTypeQuery('text')">Text</label>
         <label class="css-checkbox"><input type="checkbox" checked (click)="toggleTypeQuery('image')">Image</label>

@@ -20,7 +20,7 @@
     </button>
   </span>
   <div *ngIf="!titleEdit">
-    <button class="react" (click)="titleEdit = !titleEdit; inputText=card.title"><h2>{{card.title}}</h2></button>
+    <button class="react" (click)="titleEdit = !titleEdit; inputText=card.title"><h2 [innerHTML]="card.title | highlight : this.AppComponent.searchQuery"></h2></button>
   </div>
   <div *ngIf="titleEdit">
     <input [(ngModel)]="inputText" placeholder=Title autofocus (keyup.enter)="card.title=inputText;titleEdit = !titleEdit" (keyup.esc)="titleEdit = !titleEdit" />
@@ -41,12 +41,12 @@
         </div>
         <div class = "prv"*ngIf="card.codeCollapsed">
             <i class="ms-Icon ms-Icon--CaretRight8" aria-label="Collapse"></i>
-            <span>{{card.sourceCode}} </span>
+            <span [innerHTML]="card.sourceCode | highlight : this.AppComponent.searchQuery"></span>
         </div>
     </button>
     <div class="card-code">
       <div *ngIf="!card.codeCollapsed">
-        <pre>{{card.sourceCode}}</pre>
+        <pre [innerHTML]="card.sourceCode | highlight : this.AppComponent.searchQuery"></pre>
       </div>
     </div>
     <hr>
