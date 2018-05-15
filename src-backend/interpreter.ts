@@ -132,9 +132,10 @@ export class ContentHelpers{
         // The output is rich
         } else if('data' in content){
             let data = content.data;
-            let output = this.extractComplexData(data);
+            let chosenType = this.chooseTypeFromComplexData(data);
+            let output = data[chosenType];
             if(typeof output === 'string'){
-                this.contentTmp.push(new CardOutput('text/html', output));
+                this.contentTmp.push(new CardOutput(chosenType, output));
             }
         // The code could not be executed, an error was returned
         } else if(['ename', 'evalue', 'traceback'].every(value => value in content)) {
@@ -147,13 +148,12 @@ export class ContentHelpers{
         }
     }
 
-    static extractComplexData(data: JSONValue){
-
+    static chooseTypeFromComplexData(data: JSONValue) {
         let validDataTypes = 
             ['text/html', 'image/svg+xml', 'image/png', 'image/jpeg', 'text/markdown', 'application/pdf', 
             'text/latex', 'application/javascript', 'application/json', 'text/plain']
             .filter(dataType => this.validateData(data, dataType));
-        return data[validDataTypes[0]];
+        return validDataTypes[0];
     }
 
     static makeCard(){
