@@ -24,7 +24,11 @@
     <app-card
       #listItems
       *ngFor="let card of cards"
-      [card]="card">
+      [card]="card"
+      (onMove)="onMove($event)"
+      (onSelect)="onSelect($event)"
+      (onDelete)="onDelete($event)">
   </app-card>
   </div>
 </div>
+

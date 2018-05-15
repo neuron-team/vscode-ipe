@@ -2,14 +2,14 @@
 
 <div class="card-container"  [@cardState]="this.state" *ngIf="this.AppComponent.onType(this.card)">
   <span class="card-toolbar">
-    <button class="react" (click)="this.AppComponent.moveUp(this.card)">
+    <button class="react" (click)="move('up')">
         <i class="ms-Icon ms-Icon--ChevronUp" aria-label="Move Up"></i>
     </button>
-    <button class="react" (click)="this.AppComponent.moveDown(this.card)">
+    <button class="react" (click)="move('down')">
         <i class="ms-Icon ms-Icon--ChevronDown" aria-label="Move Down"></i>
     </button>
-    <button class="react"  (click)="this.AppComponent.onSelect(this.card.id);this.toggleState()">select</button>
-    <button class="react" style="float:right" (click)="this.AppComponent.delete(this.card)">
+    <button class="react"  (click)="selectCard()">select</button>
+    <button class="react" style="float:right" (click)="deleteCard()">
         <i class="ms-Icon ms-Icon--Clear" aria-label="Delete"></i>
     </button>
     <button class="react" style="float:right">

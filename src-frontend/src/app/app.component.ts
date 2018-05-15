@@ -8,7 +8,6 @@ import {Card, CardOutput} from 'vscode-ipe-types';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements AfterViewInit {
-
   cards: Card[] = [
     new Card(0, 'sample card', 'print("Hello, world!");', [new CardOutput('plaintext', 'Hello, world!')])
   ];
@@ -51,12 +50,23 @@ export class AppComponent implements AfterViewInit {
       this.cards.sort(function(a, b) {return (a.title > b.title) ? -1 : ((b.title > a.title) ? 1 : 0); } );
     }
   }
-
+  //On select will remove/add element if it's in/not in array
   onSelect(id: number): void {
     const index: number = this.selectedCards.indexOf(id, 1);
     if (index > -1) { this.selectedCards.splice(index);
     } else { this.selectedCards.push(id); }
   }
+
+  onMove({dir: direction,card: card}){
+
+    if(direction === "up"){
+      this.moveUp(card);
+    }
+    else if (direction ==="down"){
+      this.moveDown(card);
+    }
+  }
+
 
   /* Ordering */
   moveUp(card: Card): void {
@@ -81,8 +91,7 @@ export class AppComponent implements AfterViewInit {
     }
   }
 
-  /* Deleting */
-  delete(card: Card): void {
+  onDelete(card: Card): void {
     const index: number = this.cards.indexOf(card);
     if (index > -1) { this.cards.splice(index, 1); }
   }

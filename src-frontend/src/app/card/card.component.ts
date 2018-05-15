@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit,Output, EventEmitter} from '@angular/core';
 import { Card } from 'vscode-ipe-types';
 
 import { AppComponent } from '../app.component';
@@ -25,15 +25,38 @@ import {
   ]
 })
 export class CardComponent implements OnInit {
+  
   @Input() card: Card;
+  //Movment of cards up/down
+  @Output() onMove = new EventEmitter();
+  //Select a card
+  @Output() onSelect = new EventEmitter();
+  //Delete 
+  @Output() onDelete = new EventEmitter();
+
   titleEdit: boolean;
   state:string = 'notSelected';
   constructor(public AppComponent: AppComponent) { }
 
-  ngOnInit() {
-  }
+   //Toggle state for animation
   toggleState() {
     this.state = this.state === 'selected' ? 'notSelected' : 'selected';
   }
+  //Emit to parent app.component.ts
+  move(direction:string){
+    this.onMove.emit({dir: direction,card: this.card});
+  }
 
+  selectCard(){
+    this.toggleState();
+    this.onSelect.emit(this.card);
+  }
+
+  deleteCard(){
+    this.onDelete.emit(this.card);
+  }
+
+
+  ngOnInit() {
+  }
 }
