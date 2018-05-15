@@ -1,10 +1,29 @@
-<!--The content below is only a placeholder and can be replaced.-->
 <div class="container">
+  <form class="toolbar">
+    <input type="text" name="searchBox" placeholder="Search..." [(ngModel)]="searchQuery" my-on-key-down-call="">
+    <span>
+        <label class="css-checkbox"><input type="checkbox" checked (click)="toggleTypeQuery('text')">Text</label>
+        <label class="css-checkbox"><input type="checkbox" checked (click)="toggleTypeQuery('graph')">Graph</label>
+    </span>
+    
+    <select name="sortBox" [(ngModel)]="sortQuery" (change)="onSort()">
+        <option value="Custom">Custom</option>
+        <option value="Oldest">Oldest</option>
+        <option value="Newest">Newest</option>
+        <option value="Alphabetical: A-Z">Alphabetical: A-Z</option>
+        <option value="Alphabetical: Z-A">Alphabetical: Z-A</option>
+    </select>
+
+
+    <button>Export to Jupyter</button>
+    <div class="searchResult" *ngIf="searchQuery">Autocomplete</div>
+  </form>
+
   <div #scrollingList class="cards-list">
     <app-card
       #listItems
       *ngFor="let card of cards"
       [card]="card">
-    </app-card>
+  </app-card>
   </div>
 </div>

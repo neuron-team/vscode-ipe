@@ -1,18 +1,68 @@
-<div class="card-container">
-  <h2>{{card.title}}</h2>
+<link rel="stylesheet" href="https://static2.sharepointonline.com/files/fabric/office-ui-fabric-core/9.6.0/css/fabric.min.css">
 
-  <div class="separator"></div>
-
-  <div class="card-code">
-    <img src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTkuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDUwMi42NjQgNTAyLjY2NCIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgNTAyLjY2NCA1MDIuNjY0OyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSIgd2lkdGg9IjY0cHgiIGhlaWdodD0iNjRweCI+CjxnPgoJPGc+CgkJPHBhdGggZD0iTTE1My44MjEsMzU4LjIyNkwwLDI3NC4zMzd2LTQ2LjQ2M2wxNTMuODIxLTgzLjQxNHY1NC41NzRMNDYuNjM2LDI1MC41MjNsMTA3LjE4NSw1My40MzEgICAgQzE1My44MjEsMzAzLjk1NCwxNTMuODIxLDM1OC4yMjYsMTUzLjgyMSwzNTguMjI2eiIgZmlsbD0iI0ZGRkZGRiIvPgoJCTxwYXRoIGQ9Ik0xODAuMDk0LDM4Ny41ODRMMjgyLjEwMywxMTUuMDhoMzIuMjI3TDIxMi4wODQsMzg3LjU4NEgxODAuMDk0eiIgZmlsbD0iI0ZGRkZGRiIvPgoJCTxwYXRoIGQ9Ik0zNDguODQzLDM1OC4yMjZ2LTU0LjI3MmwxMDcuMTY0LTUyLjk5OWwtMTA3LjE2NC01Mi41OXYtNTMuOTI3bDE1My44MjEsODMuNTIydjQ2LjE4MyAgICBMMzQ4Ljg0MywzNTguMjI2eiIgZmlsbD0iI0ZGRkZGRiIvPgoJPC9nPgoJPGc+Cgk8L2c+Cgk8Zz4KCTwvZz4KCTxnPgoJPC9nPgoJPGc+Cgk8L2c+Cgk8Zz4KCTwvZz4KCTxnPgoJPC9nPgoJPGc+Cgk8L2c+Cgk8Zz4KCTwvZz4KCTxnPgoJPC9nPgoJPGc+Cgk8L2c+Cgk8Zz4KCTwvZz4KCTxnPgoJPC9nPgoJPGc+Cgk8L2c+Cgk8Zz4KCTwvZz4KCTxnPgoJPC9nPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+Cjwvc3ZnPgo=" />
-    <div>
-      <pre>{{card.sourceCode}}</pre>
-    </div>
+<div class="card-container"  [@cardState]="this.state" *ngIf="this.AppComponent.onType(this.card)">
+  <span class="card-toolbar">
+    <button class="react" (click)="this.AppComponent.moveUp(this.card)">
+        <i class="ms-Icon ms-Icon--ChevronUp" aria-label="Move Up"></i>
+    </button>
+    <button class="react" (click)="this.AppComponent.moveDown(this.card)">
+        <i class="ms-Icon ms-Icon--ChevronDown" aria-label="Move Down"></i>
+    </button>
+    <button class="react"  (click)="this.AppComponent.onSelect(this.card.id);this.toggleState()">select</button>
+    <button class="react" style="float:right" (click)="this.AppComponent.delete(this.card)">
+        <i class="ms-Icon ms-Icon--Clear" aria-label="Delete"></i>
+    </button>
+    <button class="react" style="float:right">
+        <i class="ms-Icon ms-Icon--MiniExpand" aria-label="Open in Browser"></i>
+    </button>
+    <button class="react" (click)="card.collapsed = !card.collapsed" style="float:right">
+        <i class="ms-Icon ms-Icon--ChromeMinimize" aria-label="Minimize"></i>
+    </button>
+  </span>
+  <div *ngIf="!titleEdit">
+    <button class="react" (click)="titleEdit = !titleEdit; inputText=card.title"><h2>{{card.title}}</h2></button>
+  </div>
+  <div *ngIf="titleEdit">
+    <input [(ngModel)]="inputText" placeholder=Title autofocus (keyup.enter)="card.title=inputText;titleEdit = !titleEdit" (keyup.esc)="titleEdit = !titleEdit" />
+    <button class="react" (click)="card.title=inputText;titleEdit = !titleEdit">
+      <i class="ms-Icon ms-Icon--Accept" aria-label="Accept"></i>
+    </button>
+    <button class="react" (click)="titleEdit = !titleEdit">
+      <i class="ms-Icon ms-Icon--Clear" aria-label="Cancel"></i>
+    </button>
   </div>
 
-  <div class="separator"></div>
 
-  <div class="card-output" *ngFor="let output of card.outputs">
-    <pre>{{output.output}}</pre>
+  <div *ngIf="!card.collapsed">
+    <hr>
+    <button (click)="card.codeCollapsed = !card.codeCollapsed">
+        <div *ngIf="!card.codeCollapsed">
+            <i class="ms-Icon ms-Icon--CaretBottomRightSolid8" aria-label="Expand"></i>
+        </div>
+        <div class = "prv"*ngIf="card.codeCollapsed">
+            <i class="ms-Icon ms-Icon--CaretRight8" aria-label="Collapse"></i>
+            <span>{{card.sourceCode}} </span>
+        </div>
+    </button>
+    <div class="card-code">
+      <div *ngIf="!card.codeCollapsed">
+        <pre>{{card.sourceCode}}</pre>
+      </div>
+    </div>
+    <hr>
+    <button (click)="card.outputCollapsed = !card.outputCollapsed">
+      <div *ngIf="!card.outputCollapsed">
+          <i class="ms-Icon ms-Icon--CaretBottomRightSolid8" aria-label="Expand"></i>
+      </div>
+      <div *ngIf="card.outputCollapsed">
+          <i class="ms-Icon ms-Icon--CaretRight8" aria-label="Collapse"></i>
+          <span>Output</span>
+      </div>
+    </button>
+    <div class="card-output" *ngFor="let output of card.outputs">
+        <div *ngIf="!card.outputCollapsed">
+          <pre class="output">{{output.output}}</pre>
+        </div>
+    </div>
   </div>
 </div>

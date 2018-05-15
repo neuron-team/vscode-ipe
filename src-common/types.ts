@@ -1,7 +1,8 @@
 
 export class Card {
-    public collapsed: boolean = false; // not implemented
-    public codeExpanded: boolean = false;
+    public collapsed: boolean = false;
+    public codeCollapsed: boolean = true;
+    public outputCollapsed: boolean = false;
 
     constructor(
         public id: number,
