@@ -39,9 +39,9 @@
         <div *ngIf="!card.codeCollapsed">
             <i class="ms-Icon ms-Icon--CaretBottomRightSolid8" aria-label="Expand"></i>
         </div>
-        <div class = "prv"*ngIf="card.codeCollapsed">
+        <div class="prv" *ngIf="card.codeCollapsed">
             <i class="ms-Icon ms-Icon--CaretRight8" aria-label="Collapse"></i>
-            <span>{{card.sourceCode}} </span>
+            <span>{{card.sourceCode | preview}} </span>
         </div>
     </button>
     <div class="card-code">
