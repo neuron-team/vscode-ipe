@@ -40,34 +40,40 @@ export class JupyterManager{
     }
 
     public static getRunningNotebooks(){
-        let runningUrls = 
-            execSync(
-                'jupyter notebook list',  
-                { stdio: 'pipe', encoding: 'utf8'}
-            );
+        try{
+            let runningUrls = 
+                execSync(
+                    'jupyter notebook list',  
+                    { stdio: 'pipe', encoding: 'utf8'}
+                );
 
-        let matches = runningUrls.match(JupyterManager.urlPattern);
-        
-        if(!matches){
-            return [];
+            let matches = runningUrls.match(JupyterManager.urlPattern);
+            
+            if(!matches){
+                return [];
+            }
+            else{
+                return matches.map(input => {
+                    let url = new URL(input);
+                    return {
+                        url: input, 
+                        info: 
+                            {
+                                baseUrl: url.protocol+'//'+url.host+'/', 
+                                token: url.searchParams.get('token')
+                            }
+                    };
+                });
+            }
         }
-        else{
-            return matches.map(input => {
-                let url = new URL(input);
-                return {
-                    url: input, 
-                    info: 
-                        {
-                            baseUrl: url.protocol+'//'+url.host+'/', 
-                            token: url.searchParams.get('token')
-                        }
-                };
-            });
+        catch{
+            return [];
         }
     }
 
     public static isJupyterInPath(){
-        let jupyterHelpOutput = 
+        try{
+            let jupyterHelpOutput = 
             execSync(
                 'jupyter -h',
                 { stdio: 'pipe', encoding: 'utf8'}
@@ -82,6 +88,10 @@ export class JupyterManager{
             else{
                 return false;
             }
+        }
+        catch{
+            return false;
+        }
     }
 
     public static installJupyter(data) {
