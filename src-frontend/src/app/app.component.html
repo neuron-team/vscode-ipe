@@ -3,7 +3,8 @@
     <input type="text" name="searchBox" placeholder="Search..." [(ngModel)]="searchQuery" my-on-key-down-call="">
     <span>
         <label class="css-checkbox"><input type="checkbox" checked (click)="toggleTypeQuery('text')">Text</label>
-        <label class="css-checkbox"><input type="checkbox" checked (click)="toggleTypeQuery('graph')">Graph</label>
+        <label class="css-checkbox"><input type="checkbox" checked (click)="toggleTypeQuery('image')">Image</label>
+        <label class="css-checkbox"><input type="checkbox" checked (click)="toggleTypeQuery('application')">Application</label>
     </span>
     
     <select name="sortBox" [(ngModel)]="sortQuery" (change)="onSort()">
