@@ -1,7 +1,6 @@
 import { Kernel, ServerConnection, KernelMessage } from '@jupyterlab/services';
 import { JSONValue, JSONObject } from '@phosphor/coreutils';
 import {Card, CardOutput} from 'vscode-ipe-types';
-import {JupyterManager} from './jupyterManager';
 
 import * as vscode from 'vscode';
 import {Event, EventEmitter} from "vscode";
@@ -138,13 +137,13 @@ export class ContentHelpers{
                 this.contentTmp.push(new CardOutput('text/html', output));
             }
         // The code could not be executed, an error was returned
-        } else if(['ename', 'evalue', 'traceback'].reduce((accumulator, currentValue) => accumulator && currentValue in content,true)){
+        } else if(['ename', 'evalue', 'traceback'].every(value => value in content)) {
             let ename = content['ename'];
             let evalue = content['evalue'];
             let traceback = content['traceback'];
-            if(['ename', 'evalue', 'traceback'].reduce((accumulator, currentValue) => accumulator && typeof currentValue === 'string', true)){
+            if([ename, evalue, traceback].every(element => typeof element === 'string')) {
                 this.contentTmp.push(new CardOutput('error', ename+'\n'+evalue+'\n'+traceback));
-            }      
+            }
         }
     }
 
