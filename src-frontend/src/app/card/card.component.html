@@ -62,7 +62,7 @@
     <div class="card-output" *ngFor="let output of card.outputs">
         <div *ngIf="!card.outputCollapsed" [ngSwitch]="output.type">
             <div *ngSwitchCase="'image/png'">
-                <img [src]="'data:image/png;base64,'+output.output">
+                <img [src]="'data:image/png;base64,'+output.output | bypassSecurityTrustResourceUrl(html);">
             </div>
             <div *ngSwitchDefault>
                 <pre class="output">{{output.output}}</pre>
