@@ -1,4 +1,4 @@
-import { spawn, ChildProcess, execSync } from 'child_process';
+import { spawn, ChildProcess, execSync, exec } from 'child_process';
 import { URL } from 'url';
 
 export class JupyterManager{
@@ -47,7 +47,7 @@ export class JupyterManager{
 
         let matches = runningUrls.match(JupyterManager.urlPattern);
         
-        if(matches === null){
+        if(!matches){
             return [];
         }
         else{
@@ -63,5 +63,23 @@ export class JupyterManager{
                 };
             });
         }
+    }
+
+    public static isJupyterInPath(){
+        let jupyterHelpOutput = 
+            execSync(
+                'jupyter -h',
+                { stdio: 'pipe', encoding: 'utf8'}
+            );
+        
+            let jupyterPattern = /Jupyter/g;
+            let matches = jupyterHelpOutput.match(jupyterPattern);
+
+            if(matches){
+                return true;
+            }
+            else{
+                return false;
+            }
     }
 }
