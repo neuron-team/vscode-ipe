@@ -1,3 +1,7 @@
+body {
+  user-select: none;
+}
+
 h2 {
   font-size: 16px;
   -webkit-margin-before: 0.4em;
@@ -8,7 +12,7 @@ h2 {
    overflow: hidden;
    white-space: nowrap;
    text-overflow: ellipsis;
-  
+   user-select: none;
 }
 .card-container {
   background-color: rgba(0, 0, 0, 0.08);
@@ -50,6 +54,7 @@ button {
   border-style: none;
   outline: none;
   box-shadow: none;
+  user-select: none;
 }
 
 input {
