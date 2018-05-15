@@ -47,16 +47,21 @@ export class JupyterManager{
 
         let matches = runningUrls.match(JupyterManager.urlPattern);
         
-        return matches.map(input => {
-            let url = new URL(input);
-            return {
-                url: input, 
-                info: 
-                    {
-                        baseUrl: url.protocol+'//'+url.host+'/', 
-                        token: url.searchParams.get('token')
-                    }
-            };
-        });
+        if(matches === null){
+            return [];
+        }
+        else{
+            return matches.map(input => {
+                let url = new URL(input);
+                return {
+                    url: input, 
+                    info: 
+                        {
+                            baseUrl: url.protocol+'//'+url.host+'/', 
+                            token: url.searchParams.get('token')
+                        }
+                };
+            });
+        }
     }
 }
