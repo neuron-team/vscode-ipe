@@ -6,15 +6,17 @@ import { AppComponent } from './app.component';
 import { CardComponent } from './card/card.component';
 import { ExtensionService } from './classes/extension.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HighlightPipe } from './highlight.pipe';
+import { HighlightPipe } from './classes/highlight.pipe';
 import { AnsiColorizePipe } from './classes/ansi-colorize.pipe';
+import { RunScriptsDirective } from './classes/run-scripts.directive';
 
 @NgModule({
   declarations: [
     AppComponent,
     CardComponent,
     HighlightPipe,
-    AnsiColorizePipe
+    AnsiColorizePipe,
+    RunScriptsDirective
   ],
   imports: [
     BrowserModule,
