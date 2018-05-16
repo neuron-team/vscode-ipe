@@ -16,8 +16,8 @@ h2 {
   border-color: rgba(0, 0, 0, 0.08);
   border-style: solid;
   border-width: 2px 2px 2px 2px;
-  padding: 5px 0px;
-  margin: 0px;
+  padding: 5px 0;
+  margin: 0;
   text-align: left;
   margin-bottom: 25px;
 }
@@ -26,13 +26,17 @@ h2 {
   flex: 1;
   overflow-x: scroll;
   background-color: rgba(0, 0, 0, 0.2);
-  padding: 0px 3px;
-  margin: 0px 3px;
+  padding: 0 3px;
+  margin: 0 3px;
 }
 
-.output {
+:host ::ng-deep .card-output img {
+  background-color: rgba(255, 255, 255, 0.96);
+}
+
+.output-plain {
   word-wrap: break-word;
-  padding: 0px 6px;
+  padding: 0 6px;
 }
 
 .output-error {

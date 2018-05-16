@@ -71,6 +71,7 @@
           </div>
 
           <div *ngSwitchCase="'text/html'">
+            <pre>{{output.output}}</pre>
             <div [innerHTML]="sanitizer.bypassSecurityTrustHtml(output.output)"></div>
           </div>
 
@@ -82,10 +83,10 @@
             <p class="output-error" [innerHTML]="sanitizer.bypassSecurityTrustHtml(output.output | ansiColorize)"></p>
           </div>
 
-            <div *ngSwitchDefault>
-              <h3>Plain text output</h3>
-              <pre class="output">{{output.output}}</pre>
-            </div>
+          <div *ngSwitchDefault>
+            <h3>Plain text output</h3>
+            <pre class="output-plain">{{output.output}}</pre>
+          </div>
         </div>
     </div>
   </div>
