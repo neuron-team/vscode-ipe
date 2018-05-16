@@ -23,7 +23,7 @@ import {trigger, state, style, animate, transition} from '@angular/animations';
 export class CardComponent implements OnInit {
   @Input() card: Card;
   titleEdit: boolean;
-  state = 'notSelected';
+  state: string = 'notSelected';
   constructor(public AppComponent: AppComponent) { }
 
   ngOnInit() {
@@ -34,13 +34,3 @@ export class CardComponent implements OnInit {
 
 }
 
-@Pipe({
-  name: 'preview'
-})
-export class PreviewPipe implements PipeTransform {
-  transform(value: string, limit = 50) {
-    const preview = value.split(/\n/);
-    if (preview[0].length <= 50 && preview.length <= 1) { return value;
-    } else { return `${preview[0].slice(0, limit)}...`; }
-  }
-}
