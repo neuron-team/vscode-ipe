@@ -6,36 +6,54 @@ export class JupyterManager{
     private static process: ChildProcess;
     private static url: URL;
     private static urlPattern = /http:\/\/localhost:[0-9]+\/\?token=[a-z0-9]+/g;
-    private static timeout = 3000; // timeout set to 3s
+    private static timeout = 10; // 10 seconds
 
     constructor(){
-        JupyterManager.process = spawn('jupyter', ['notebook', '--no-browser']);
+        JupyterManager.process = spawn('jupyter', ['notebook', '--no-browser'], {detached: false});
         JupyterManager.process.stderr.on('data', (data: string) => this.extractJupyterInfos(data));
+    }
+
+    public static disposeNotebook(){
+        if(JupyterManager.process){
+            for(let i=0; i<=10 && !JupyterManager.process.killed; i++){
+                JupyterManager.process.kill('SIGINT')
+            }
+        }
     }
 
     private extractJupyterInfos(data: string){
         let urlMatch = JupyterManager.urlPattern.exec(data);
         
-        if(urlMatch !== null){
+        if(urlMatch){
             JupyterManager.url = new URL(urlMatch[0]);
         }
     }
 
-    public getJupyterAddressAndToken(){
-        return new Promise(function(resolve, reject){
-            setTimeout(() => {
-                JupyterManager.process.stderr.removeAllListeners();
-                if(typeof JupyterManager.url === 'undefined'){
+    private defineTimeout(numTries: number, resolve, reject){
+        setTimeout(() => {
+            if(!JupyterManager.url){
+                if(numTries == 0){
+                    JupyterManager.process.stderr.removeAllListeners();
                     reject('Jupyter could not be executed automatically');
                 }
                 else{
-                    resolve(
-                        {
-                            baseUrl: JupyterManager.url.protocol+'//'+JupyterManager.url.host+'/', 
-                            token: JupyterManager.url.searchParams.get('token')
-                        });
+                    this.defineTimeout(numTries-1, resolve, reject);
                 }
-            }, JupyterManager.timeout);
+            }
+            else{
+                JupyterManager.process.stderr.removeAllListeners();
+                resolve(
+                    {
+                        baseUrl: JupyterManager.url.protocol+'//'+JupyterManager.url.host+'/', 
+                        token: JupyterManager.url.searchParams.get('token')
+                    });
+            }
+        }, 1000);
+    }
+
+    public getJupyterAddressAndToken(){
+        return new Promise((resolve, reject) => {
+            this.defineTimeout(10, resolve, reject);
         });
     }
 

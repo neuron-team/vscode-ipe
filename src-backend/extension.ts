@@ -61,7 +61,7 @@ export function activate(context: vscode.ExtensionContext) {
                         vscode.window.showErrorMessage('Could not create a Jupyter instance, enter the server details manually');
                         UserInteraction.askJupyterInfo().then(initialisePanel);
                     }
-                    else {
+                    else if(choice){
                         initialisePanel(runningNotebooks.filter(input => input.url === choice)[0].info);
                     }
                 });
@@ -81,5 +81,7 @@ export function activate(context: vscode.ExtensionContext) {
     });
 }
 
-export function deactivate() {
+export function deactivate(context: vscode.ExtensionContext) {
+    console.log('Killed');
+    JupyterManager.disposeNotebook();
 }
