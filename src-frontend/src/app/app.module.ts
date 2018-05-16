@@ -8,13 +8,15 @@ import { ExtensionService } from './classes/extension.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HighlightPipe } from './highlight.pipe';
 import { AnsiColorizePipe } from './classes/ansi-colorize.pipe';
+import { ToolbarComponent } from './toolbar/toolbar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CardComponent,
     HighlightPipe,
-    AnsiColorizePipe
+    AnsiColorizePipe,
+    ToolbarComponent
   ],
   imports: [
     BrowserModule,
