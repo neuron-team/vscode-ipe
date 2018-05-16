@@ -142,9 +142,7 @@ export class ContentHelpers{
             let ename = content['ename'];
             let evalue = content['evalue'];
             let traceback = content['traceback'];
-            if([ename, evalue, traceback].every(element => typeof element === 'string')) {
-                this.contentTmp.push(new CardOutput('error', ename+'\n'+evalue+'\n'+traceback));
-            }
+            this.contentTmp.push(new CardOutput('error', ename+'\n'+evalue+'\n'+traceback));
         }
     }
 
