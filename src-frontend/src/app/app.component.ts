@@ -9,74 +9,52 @@ import {Card, CardOutput} from 'vscode-ipe-types';
 })
 export class AppComponent implements AfterViewInit {
   cards: Card[] = [
-    new Card(0, 'sample card', 'print("Hello, world!");', [new CardOutput('text/plain', 'Hello, world!')])
+    new Card(0, 'sample card', 'print("Hello, world!")', [new CardOutput('text/plain', 'Hello, world!')])
   ];
 
   selectedCards: number[] = [];
   visibleCards = new Map<Card,boolean>();
 
   searchQuery = '';
-  sortQuery = 'Oldest';
-  typeQuery = {
+  typeFilters = {
     text: true,
     rich: true,
     error: true
   };
+
   ngOnInit() {
-    //Intialize map, display all cards
-    for (let card of this.cards) {
-      this.visibleCards.set(card, true);
+  }
+
+  /* Type Filtering called via emitter in toolbar*/
+  updateFilters(event: {search: string, filters: any}): void {
+    this.searchQuery = event.search;
+    this.typeFilters = event.filters;
+    for (let card of this.cards){
+      this.visibleCards.set(card,this.cardMatchesFilter(card) && this.cardMatchesSearchQuery(card));
     }
   }
+
   /* Searching */
   cardMatchesSearchQuery(card: Card): boolean {
-    if (this.searchQuery === '') { return true; }
+    if (this.searchQuery == '') { return true; }
     if (card.title.search(new RegExp(this.searchQuery, "i")) > -1) { return true; }
     if (card.sourceCode.search(new RegExp(this.searchQuery, "i")) > -1) { return true; }
     return false;
   }
 
-  /* Type Filtering called via emitter in toolbar*/
-  toggleTypeQuery(typeStr: string): void {
-    this.typeQuery[typeStr] = !this.typeQuery[typeStr];
-    for (let card of this.cards){
-      this.visibleCards.set(card,this.cardMatchesFilter(card));
-    }
-
-  }
-
   cardMatchesFilter(card: Card): boolean {
-    if (!this.typeQuery.text && !this.typeQuery.rich && !this.typeQuery.error) return true;
-    if (card.outputs.length === 0) return true;
+    if (card.outputs.length === 0) return this.typeFilters.text; // treat empty cards as plain
 
-    for (let i = 0; i < card.outputs.length; i++) {
-      if (this.typeQuery.text && card.outputs[i].type.indexOf('text/html') === -1) {
-        if (card.outputs[i].type.indexOf('text') > -1) return true;
-        if (card.outputs[i].type.indexOf('stdout') > -1) return true;
-      }
-      else if (this.typeQuery.error) {
-        if (card.outputs[i].type.indexOf('error') > -1) return true;
-      }
-      else if (this.typeQuery.rich) {
-        if (card.outputs[i].type.indexOf('image') > -1) return true;
-        if (card.outputs[i].type.indexOf('application') > -1) return true;
-        if (card.outputs[i].type.indexOf('text/html') > -1) return true;
+    for (let output of card.outputs) {
+      if (output.type == 'stdout' || output.type == 'text/plain') { // plain text
+        if (this.typeFilters.text) return true;
+      } else if (output.type == 'error') { // code errors
+        if (this.typeFilters.error) return true;
+      } else { // anything else is rich output
+        if (this.typeFilters.rich) return true;
       }
     }
     return false;
-  }
-
-  /* Sorting */
-  onSort(): void {
-    if (this.sortQuery === 'Oldest'){
-      this.cards.sort(function(a, b) { return (a.id > b.id) ? 1 : ((b.id > a.id) ? -1 : 0); } );
-    } else if (this.sortQuery === 'Newest') {
-      this.cards.sort(function(a, b) { return (a.id > b.id) ? -1 : ((b.id > a.id) ? 1 : 0); } );
-    } else if (this.sortQuery === 'Alphabetical: A-Z') {
-      this.cards.sort(function(a, b) { return (a.title > b.title) ? 1 : ((b.title > a.title) ? -1 : 0); } );
-    } else if (this.sortQuery === 'Alphabetical: Z-A') {
-      this.cards.sort(function(a, b) { return (a.title > b.title) ? -1 : ((b.title > a.title) ? 1 : 0); } );
-    }
   }
 
   /* Selecting */ //will remove/add element if it's in/not_in array
@@ -98,7 +76,6 @@ export class AppComponent implements AfterViewInit {
       const tmp: Card = this.cards[index - 1];
       this.cards[index - 1] = this.cards[index];
       this.cards[index] = tmp;
-      this.sortQuery = 'Custom';
     }
   }
 
@@ -108,7 +85,6 @@ export class AppComponent implements AfterViewInit {
       const tmp: Card = this.cards[index + 1];
       this.cards[index + 1] = this.cards[index];
       this.cards[index] = tmp;
-      this.sortQuery = 'Custom';
     }
   }
 
@@ -117,10 +93,14 @@ export class AppComponent implements AfterViewInit {
     if (index > -1) { this.cards.splice(index, 1); }
   }
 
+  addCard(card: Card) {
+    this.cards.push(card);
+    this.scrollToBottom();
+  }
+
   constructor(private extension: ExtensionService) {
     extension.onAddCard.subscribe(card => {
-      this.cards.push(card);
-       this.onSort();
+      this.addCard(card);
     });
   }
 
@@ -128,12 +108,14 @@ export class AppComponent implements AfterViewInit {
   @ViewChildren('listItems') listItems: QueryList<any>;
   @ViewChild('scrollingList') scrollContainer;
   ngAfterViewInit() {
-    this.listItems.changes.subscribe(() => this.scrollToBottom());
+    //this.listItems.changes.subscribe(() => this.scrollToBottom());
     this.scrollToBottom();
   }
   scrollToBottom() {
-    try {
-      this.scrollContainer.nativeElement.scrollTop = this.scrollContainer.nativeElement.scrollHeight;
-    } catch (err) { }
+    setTimeout(() => {
+      try {
+        this.scrollContainer.nativeElement.scrollTop = this.scrollContainer.nativeElement.scrollHeight;
+      } catch (err) { }
+    }, 0);
   }
 }

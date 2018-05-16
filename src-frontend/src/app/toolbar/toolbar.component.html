@@ -1,21 +1,14 @@
-<form class="toolbar">
-  <input type="text" name="searchBox" placeholder="Search..." [(ngModel)]="searchQuery">
-  <select name="sortBox" [(ngModel)]="sortQuery" (change)="onSort()">
-      <option value="Custom">Custom</option>
-      <option value="Oldest">Oldest</option>
-      <option value="Newest">Newest</option>
-      <option value="Alphabetical: A-Z">Alphabetical: A-Z</option>
-      <option value="Alphabetical: Z-A">Alphabetical: Z-A</option>
-  </select>
+<div class="toolbar">
+  <input type="text" name="searchBox" placeholder="Search cards" [(ngModel)]="searchQuery" (keyup)="fireEvent()">
 
   <button>Export to Jupyter</button>
 
-  <div class="searchResult" *ngIf="searchQuery">
-    Add search filter:
+  <div class="search-filters" [style.display]="searchQuery ? 'block' : 'none'">
+    Only show cards with:
     <span>
-      <label class="css-checkbox"><input type="checkbox" (click)="toggleTypeQuery('text')">Text</label>
-      <label class="css-checkbox"><input type="checkbox" (click)="toggleTypeQuery('rich')">Rich</label>
-      <label class="css-checkbox"><input type="checkbox" (click)="toggleTypeQuery('error')">Error</label>
+      <label class="css-checkbox"><input type="checkbox" [(ngModel)]="filterState.text" name="text" (change)="fireEvent()">Plain text</label>
+      <label class="css-checkbox"><input type="checkbox" [(ngModel)]="filterState.rich" name="rich" (change)="fireEvent()">Rich output</label>
+      <label class="css-checkbox"><input type="checkbox" [(ngModel)]="filterState.error" name="error" (change)="fireEvent()">Errors</label>
   </span>
   </div>
-</form>
+</div>

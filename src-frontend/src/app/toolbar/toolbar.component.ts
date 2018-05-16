@@ -6,14 +6,26 @@ import { Component, OnInit,Output,EventEmitter } from '@angular/core';
   styleUrls: ['./toolbar.component.css']
 })
 export class ToolbarComponent implements OnInit {
-  @Output() onSelectType = new EventEmitter();
+  searchQuery: string = '';
+
+  @Output() onSearchChanged = new EventEmitter<{search: string, filters: any}>();
+
+  filterState = {
+    text: true,
+    rich: true,
+    error: true
+  };
+
   constructor() { }
 
-  toggleTypeQuery(typeStr: string): void {
-    this.onSelectType.emit(typeStr);
-
-  }
   ngOnInit() {
+  }
+
+  fireEvent() {
+    this.onSearchChanged.emit({
+      search: this.searchQuery,
+      filters: this.filterState
+    })
   }
 
 }

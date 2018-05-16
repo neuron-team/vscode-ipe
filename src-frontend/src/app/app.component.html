@@ -1,12 +1,13 @@
 <div class="container">
-  <app-toolbar (onSelectType)="toggleTypeQuery($event)"></app-toolbar>
+  <app-toolbar
+    (onSearchChanged)="updateFilters($event)"></app-toolbar>
 
   <div #scrollingList class="cards-list">
     <app-card
       #listItems
       *ngFor="let card of cards"
       [card]="card"
-      [visible] = "visibleCards.get(card) !== false"
+      [visible] = "!visibleCards.has(card) || visibleCards.get(card)"
       (onMove)="onMove($event)"
       (onSelect)="onSelect($event)"
       (onDelete)="onDelete($event)">
