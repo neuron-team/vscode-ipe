@@ -4,22 +4,48 @@ h2 {
   -webkit-margin-after: 0.4em;
   -webkit-margin-start: 5px;
 }
-.prv{
-   overflow: hidden;
-   white-space: nowrap;
-   text-overflow: ellipsis;
 
+hr {
+  border-style: solid;
+  border-width: 1px;
+  color: rgba(170, 170, 170, 0.3);
 }
+
+.prv{
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  user-select: none;
+  font-family: monospace;
+}
+
 .card-container {
-  background-color: rgba(0, 0, 0, 0.08);
-  border-radius: 2px;
-  border-color: rgba(0, 0, 0, 0.08);
+  background-color: rgba(170, 170, 170, 0.15);
+  border-radius: 3px;
+  border-color: rgba(85, 85, 85, 0.3);
   border-style: solid;
   border-width: 2px 2px 2px 2px;
   padding: 5px 0;
   margin: 0;
   text-align: left;
   margin-bottom: 25px;
+  user-select: none;
+  cursor: default;
+}
+
+
+.right {
+  float:right;
+}
+/* Toolbar Icons */
+.toolbar-icon {
+  opacity: 0;
+}
+.card-container:hover .toolbar-icon {
+  opacity: 1;
+}
+.react:hover {
+  color: rgb(0, 119, 198);
 }
 
 .card-code > div {
@@ -28,6 +54,7 @@ h2 {
   background-color: rgba(0, 0, 0, 0.2);
   padding: 0 3px;
   margin: 0 3px;
+  user-select: text;
 }
 
 :host ::ng-deep .card-output img {
@@ -36,6 +63,8 @@ h2 {
 
 .output-plain {
   word-wrap: break-word;
+  padding: 0px 6px;
+  user-select: text;
   padding: 0 6px;
 }
 
@@ -53,16 +82,18 @@ button {
   text-align: center;
   cursor: pointer;
   color: inherit;
-  background-color: rgba(255, 255, 255, 0.0);
+  background-color: transparent;
   box-sizing: border-box;
   border-style: none;
   outline: none;
   box-shadow: none;
+  user-select: none;
 }
 
+/* Title Edit Box */
 input {
   color: var(--color);
-  background-color: rgba(255, 255, 255, 0.0);
+  background-color: transparent;
   border-style: solid;
   border-color: rgba(255, 255, 255, 0.3);
   font-size: 16px;
@@ -75,5 +106,5 @@ input {
 input:focus {
   border-color: rgba(0, 119, 198, 0.7);
   outline: rgba(0, 119, 198, 0.7);
-  background-color: rgba(255, 255, 255, 0.05);
+  background-color: rgba(170, 170, 170, 0.05);
 }

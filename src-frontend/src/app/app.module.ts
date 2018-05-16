@@ -9,6 +9,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HighlightPipe } from './classes/highlight.pipe';
 import { AnsiColorizePipe } from './classes/ansi-colorize.pipe';
 import { RunScriptsDirective } from './classes/run-scripts.directive';
+import {PreviewPipe} from "./classes/preview.pipe";
+
 
 @NgModule({
   declarations: [
@@ -16,7 +18,8 @@ import { RunScriptsDirective } from './classes/run-scripts.directive';
     CardComponent,
     HighlightPipe,
     AnsiColorizePipe,
-    RunScriptsDirective
+    RunScriptsDirective,
+    PreviewPipe
   ],
   imports: [
     BrowserModule,

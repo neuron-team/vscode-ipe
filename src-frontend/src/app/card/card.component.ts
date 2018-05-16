@@ -1,5 +1,6 @@
-import {Component, Input, OnInit,Output, EventEmitter} from '@angular/core';
+import {Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
 import { Card } from 'vscode-ipe-types';
+import { Pipe, PipeTransform } from '@angular/core';
 
 import { AppComponent } from '../app.component';
 import {
@@ -10,6 +11,7 @@ import {
   transition
 } from '@angular/animations';
 import {DomSanitizer} from "@angular/platform-browser";
+
 @Component({
   selector: 'app-card',
   templateUrl: './card.component.html',
@@ -25,6 +27,7 @@ import {DomSanitizer} from "@angular/platform-browser";
     ])
   ]
 })
+
 export class CardComponent implements OnInit {
 
   @Input() card: Card;
@@ -36,7 +39,7 @@ export class CardComponent implements OnInit {
   @Output() onDelete = new EventEmitter();
 
   titleEdit: boolean;
-  state:string = 'notSelected';
+  state: string = 'notSelected';
   constructor(public AppComponent: AppComponent, public sanitizer: DomSanitizer) { }
 
    //Toggle state for animation

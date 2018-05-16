@@ -12,13 +12,14 @@
     <button class="react" style="float:right" (click)="deleteCard()">
         <i class="ms-Icon ms-Icon--Clear" aria-label="Delete"></i>
     </button>
-    <button class="react" style="float:right">
+    <button class="react toolbar-icon right">
         <i class="ms-Icon ms-Icon--MiniExpand" aria-label="Open in Browser"></i>
     </button>
-    <button class="react" (click)="card.collapsed = !card.collapsed" style="float:right">
+    <button class="react toolbar-icon right" (click)="card.collapsed = !card.collapsed;titleEdit = false">
         <i class="ms-Icon ms-Icon--ChromeMinimize" aria-label="Minimize"></i>
     </button>
   </span>
+
   <div *ngIf="!titleEdit">
     <button class="react" (click)="titleEdit = !titleEdit; inputText=card.title"><h2 [innerHTML]="card.title | highlight : this.AppComponent.searchQuery"></h2></button>
   </div>
@@ -39,7 +40,7 @@
         <div *ngIf="!card.codeCollapsed">
             <i class="ms-Icon ms-Icon--CaretBottomRightSolid8" aria-label="Expand"></i>
         </div>
-        <div class = "prv"*ngIf="card.codeCollapsed">
+        <div class="prv" *ngIf="card.codeCollapsed">
             <i class="ms-Icon ms-Icon--CaretRight8" aria-label="Collapse"></i>
             <span [innerHTML]="card.sourceCode | highlight : this.AppComponent.searchQuery"></span>
         </div>
@@ -55,7 +56,7 @@
           <i class="ms-Icon ms-Icon--CaretBottomRightSolid8" aria-label="Expand"></i>
       </div>
       <div *ngIf="card.outputCollapsed">
-          <i class="ms-Icon ms-Icon--CaretRight8" aria-label="Collapse"></i>
+          <i class="ms-Icon ms-Icon--CaretRight" aria-label="Collapse"></i>
           <span>Output</span>
       </div>
     </button>

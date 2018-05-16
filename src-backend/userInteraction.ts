@@ -69,6 +69,10 @@ export class UserInteraction {
     }
 
     static determineKernel(){
+        if(!vscode.window.activeTextEditor){
+            return '';
+        }
+
         let docType = vscode.window.activeTextEditor.document.languageId;
         switch (docType) {
             case 'python':
@@ -76,7 +80,7 @@ export class UserInteraction {
             case 'r':
                 return 'ir';
             default: 
-                return 'python3';
+                return '';
         }
     }
 }
