@@ -71,8 +71,7 @@
           </div>
 
           <div *ngSwitchCase="'text/html'">
-            <pre>{{output.output}}</pre>
-            <div [innerHTML]="sanitizer.bypassSecurityTrustHtml(output.output)"></div>
+            <div [innerHTML]="sanitizer.bypassSecurityTrustHtml(output.output)" runScripts></div>
           </div>
 
           <div *ngSwitchCase="'image/svg+xml'">
