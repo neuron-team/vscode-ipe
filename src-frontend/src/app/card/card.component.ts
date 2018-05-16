@@ -9,6 +9,7 @@ import {
   animate,
   transition
 } from '@angular/animations';
+import {DomSanitizer} from "@angular/platform-browser";
 @Component({
   selector: 'app-card',
   templateUrl: './card.component.html',
@@ -25,18 +26,18 @@ import {
   ]
 })
 export class CardComponent implements OnInit {
-  
+
   @Input() card: Card;
   //Movment of cards up/down
   @Output() onMove = new EventEmitter();
   //Select a card
   @Output() onSelect = new EventEmitter();
-  //Delete 
+  //Delete
   @Output() onDelete = new EventEmitter();
 
   titleEdit: boolean;
   state:string = 'notSelected';
-  constructor(public AppComponent: AppComponent) { }
+  constructor(public AppComponent: AppComponent, public sanitizer: DomSanitizer) { }
 
    //Toggle state for animation
   toggleState() {

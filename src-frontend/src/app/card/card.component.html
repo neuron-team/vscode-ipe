@@ -59,13 +59,33 @@
           <span>Output</span>
       </div>
     </button>
+
     <div class="card-output" *ngFor="let output of card.outputs">
         <div *ngIf="!card.outputCollapsed" [ngSwitch]="output.type">
-            <div *ngSwitchCase="'image/png'">
-                <img [src]="'data:image/png;base64,'+output.output">
-            </div>
+          <div *ngSwitchCase="'image/png'">
+            <img [src]="sanitizer.bypassSecurityTrustUrl('data:image/png;base64,'+output.output)">
+          </div>
+
+          <div *ngSwitchCase="'image/jpeg'">
+            <img [src]="sanitizer.bypassSecurityTrustUrl('data:image/jpeg;base64,'+output.output)">
+          </div>
+
+          <div *ngSwitchCase="'text/html'">
+            <div [innerHTML]="sanitizer.bypassSecurityTrustHtml(output.output)"></div>
+          </div>
+
+          <div *ngSwitchCase="'image/svg+xml'">
+            <div [innerHTML]="sanitizer.bypassSecurityTrustHtml(output.output)"></div>
+          </div>
+
+          <div *ngSwitchCase="'error'">
+            <h3>Error</h3>
+            <p *ngFor="let line of output.output.split('\n')">{{line}}</p>
+          </div>
+
             <div *ngSwitchDefault>
-                <pre class="output">{{output.output}}</pre>
+              <h3>Plain text output</h3>
+              <pre class="output">{{output.output}}</pre>
             </div>
         </div>
     </div>
