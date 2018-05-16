@@ -1,5 +1,6 @@
-import { spawn, ChildProcess, execSync } from 'child_process';
+import { spawn, ChildProcess, execSync, exec } from 'child_process';
 import { URL } from 'url';
+import * as vscode from 'vscode';
 
 export class JupyterManager{
     private static process: ChildProcess;
@@ -39,29 +40,62 @@ export class JupyterManager{
     }
 
     public static getRunningNotebooks(){
-        let runningUrls = 
+        try{
+            let runningUrls = 
+                execSync(
+                    'jupyter notebook list',  
+                    { stdio: 'pipe', encoding: 'utf8'}
+                );
+
+            let matches = runningUrls.match(JupyterManager.urlPattern);
+            
+            if(!matches){
+                return [];
+            }
+            else{
+                return matches.map(input => {
+                    let url = new URL(input);
+                    return {
+                        url: input, 
+                        info: 
+                            {
+                                baseUrl: url.protocol+'//'+url.host+'/', 
+                                token: url.searchParams.get('token')
+                            }
+                    };
+                });
+            }
+        }
+        catch{
+            return [];
+        }
+    }
+
+    public static isJupyterInPath(){
+        try{
+            let jupyterHelpOutput = 
             execSync(
-                'jupyter notebook list',  
+                'jupyter -h',
                 { stdio: 'pipe', encoding: 'utf8'}
             );
 
-        let matches = runningUrls.match(JupyterManager.urlPattern);
-        
-        if(matches === null){
-            return [];
+            if(jupyterHelpOutput.match(/Jupyter/g)){
+                return true;
+            }
+            else{
+                return false;
+            }
         }
-        else{
-            return matches.map(input => {
-                let url = new URL(input);
-                return {
-                    url: input, 
-                    info: 
-                        {
-                            baseUrl: url.protocol+'//'+url.host+'/', 
-                            token: url.searchParams.get('token')
-                        }
-                };
-            });
+        catch{
+            return false;
+        }
+    }
+
+    public static installJupyter(data) {
+        if (data !== undefined) {
+            let terminal = vscode.window.createTerminal('pip');
+            terminal.show();
+            terminal.sendText('pip install jupyter', true);
         }
     }
 }

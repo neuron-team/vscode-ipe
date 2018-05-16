@@ -155,9 +155,7 @@ export class ContentHelpers{
     }
 
     static makeCard(){
-        if(this.id !== 0){
-            this._onCardReady.fire(new Card(this.id, this.makeCardTitle(this.sourceTmp), this.sourceTmp, this.contentTmp));
-        }
+        this._onCardReady.fire(new Card(this.id, this.makeCardTitle(this.sourceTmp), this.sourceTmp, this.contentTmp));
         this.contentTmp = [];
         this.id++;
     }

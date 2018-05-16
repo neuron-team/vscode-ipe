@@ -12,7 +12,8 @@
   ],
   "activationEvents": [
     "onCommand:ipe.showWebview",
-    "onLanguage:python"
+    "onLanguage:python",
+    "onLanguage:r"
   ],
   "main": "./out/extension",
   "contributes": {
@@ -40,9 +41,20 @@
         "when": "editorLangId == python"
       },
       {
+        "command": "ipe.showWebview",
+        "key": "ctrl+k ctrl+v",
+        "mac": "cmd+k cmd+v",
+        "when": "editorLangId == r"
+      },
+      {
         "command": "ipe.newCard",
         "key": "alt+enter",
-        "when": "editorLangId == python && editorFocus"
+        "when": "editorFocus && editorLangId == python"
+      },
+      {
+        "command": "ipe.newCard",
+        "key": "alt+enter",
+        "when": "editorFocus && editorLangId == r"
       }
     ],
     "menus": {
@@ -51,11 +63,21 @@
           "when": "editorLangId == python",
           "command": "ipe.showWebview",
           "group": "navigation"
+        },
+        {
+          "when": "editorLangId == r",
+          "command": "ipe.showWebview",
+          "group": "navigation"
         }
       ],
       "editor/context": [
         {
-          "when": "editorLangId == python && editorHasSelection",
+          "when": "editorHasSelection && editorLangId == python",
+          "command": "ipe.newCard",
+          "group": "Python"
+        },
+        {
+          "when": "editorHasSelection && editorLangId == r",
           "command": "ipe.newCard",
           "group": "Python"
         }
