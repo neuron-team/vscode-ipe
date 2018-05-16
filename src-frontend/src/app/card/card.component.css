@@ -8,7 +8,7 @@ h2 {
    overflow: hidden;
    white-space: nowrap;
    text-overflow: ellipsis;
-  
+
 }
 .card-container {
   background-color: rgba(0, 0, 0, 0.08);
@@ -31,7 +31,6 @@ h2 {
 }
 
 .output {
-  white-space: normal;
   word-wrap: break-word;
   padding: 0px 6px;
 }
