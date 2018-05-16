@@ -7,12 +7,14 @@ import { CardComponent } from './card/card.component';
 import { ExtensionService } from './classes/extension.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HighlightPipe } from './highlight.pipe';
+import { AnsiColorizePipe } from './classes/ansi-colorize.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     CardComponent,
-    HighlightPipe
+    HighlightPipe,
+    AnsiColorizePipe
   ],
   imports: [
     BrowserModule,

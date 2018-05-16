@@ -79,8 +79,7 @@
           </div>
 
           <div *ngSwitchCase="'error'">
-            <h3>Error</h3>
-            <p *ngFor="let line of output.output.split('\n')">{{line}}</p>
+            <p class="output-error" [innerHTML]="sanitizer.bypassSecurityTrustHtml(output.output | ansiColorize)"></p>
           </div>
 
             <div *ngSwitchDefault>

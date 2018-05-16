@@ -35,6 +35,11 @@ h2 {
   padding: 0px 6px;
 }
 
+.output-error {
+  white-space: pre;
+  font-family: monospace;
+}
+
 .react:hover {
   color: rgb(0, 119, 198);
 }
