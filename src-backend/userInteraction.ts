@@ -45,7 +45,11 @@ export class UserInteraction {
         this.statusIndicator.show();
     }
 
-    askJupyterInfo() : Promise<{baseUrl: string, token: string}> {
+    updateStatus(status: string){
+        this.statusIndicator.text = status;
+    }
+
+    static askJupyterInfo() : Promise<{baseUrl: string, token: string}> {
         return new Promise(resolve => {
             vscode.window.showInputBox({
                 prompt: 'Provide the base address of the Jupyter notebook',
@@ -64,7 +68,15 @@ export class UserInteraction {
         });
     }
 
-    updateStatus(status: string){
-        this.statusIndicator.text = status;
+    static determineKernel(){
+        let docType = vscode.window.activeTextEditor.document.languageId;
+        switch (docType) {
+            case 'python':
+                return 'python3';
+            case 'r':
+                return 'ir';
+            default: 
+                return 'python3';
+        }
     }
 }

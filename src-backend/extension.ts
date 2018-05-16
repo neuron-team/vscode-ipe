@@ -22,32 +22,15 @@ export function activate(context: vscode.ExtensionContext) {
         webview.addCard(card);
     });
 
-    function determineKernel(){
-        let docType = vscode.window.activeTextEditor.document.languageId;
-        let kernelType = '';
-        switch (docType) {
-            case 'python':
-                kernelType = 'python3';
-                break;
-            case 'r':
-                kernelType = 'ir';
-                break;
-            default: 
-                kernelType = '';
-        }
-
-        return kernelType;
-    }
-
     function initialisePanel({baseUrl, token}){
         // Connect to the server defined
         interpreter.connectToServer(baseUrl, token);
         // Start needed kernel
-        interpreter.startKernel(determineKernel());  
+        interpreter.startKernel(UserInteraction.determineKernel());  
 
         // Execute code when new card is created
         userInteraction.onNewCard(sourceCode => {
-            interpreter.executeCode(sourceCode, determineKernel());
+            interpreter.executeCode(sourceCode, UserInteraction.determineKernel());
         });
 
         webview.show();
@@ -56,6 +39,7 @@ export function activate(context: vscode.ExtensionContext) {
 
     userInteraction.onShowPane(() => {
         if(!panelInitialised){
+
             if(!JupyterManager.isJupyterInPath()){
                 vscode.window.showInformationMessage('The IPE extension requires Jupyter to be installed. Install now?', 'Install')
                     .then(data => JupyterManager.installJupyter(data));
@@ -75,13 +59,14 @@ export function activate(context: vscode.ExtensionContext) {
                     }
                     else if (choice === 'Enter details manually') {
                         vscode.window.showErrorMessage('Could not create a Jupyter instance, enter the server details manually');
-                        userInteraction.askJupyterInfo().then(initialisePanel);
+                        UserInteraction.askJupyterInfo().then(initialisePanel);
                     }
                     else {
                         initialisePanel(runningNotebooks.filter(input => input.url === choice)[0].info);
                     }
                 });
             }
+        
         }
         else{
             webview.show();
@@ -91,7 +76,7 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.window.onDidChangeActiveTextEditor(input => {
         if(panelInitialised){
             // Open new kernel if new file is in a different language
-            interpreter.startKernel(determineKernel());
+            interpreter.startKernel(UserInteraction.determineKernel());
         }
     });
 }

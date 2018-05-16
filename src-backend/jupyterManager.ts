@@ -78,11 +78,8 @@ export class JupyterManager{
                 'jupyter -h',
                 { stdio: 'pipe', encoding: 'utf8'}
             );
-        
-            let jupyterPattern = /Jupyter/g;
-            let matches = jupyterHelpOutput.match(jupyterPattern);
 
-            if(matches){
+            if(jupyterHelpOutput.match(/Jupyter/g)){
                 return true;
             }
             else{
