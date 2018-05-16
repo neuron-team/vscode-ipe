@@ -25,10 +25,13 @@ export function activate(context: vscode.ExtensionContext) {
     function initialisePanel({baseUrl, token}){
         // Connect to the server defined
         interpreter.connectToServer(baseUrl, token);
-        // Create a python3 kernel, any kernel can be chosen
-        interpreter.startKernel('python3');
+        // Start needed kernel
+        interpreter.startKernel(UserInteraction.determineKernel());  
+
         // Execute code when new card is created
-        userInteraction.onNewCard(sourceCode => interpreter.executeCode(sourceCode, 'python3'));
+        userInteraction.onNewCard(sourceCode => {
+            interpreter.executeCode(sourceCode, UserInteraction.determineKernel());
+        });
 
         webview.show();
         panelInitialised = true;
@@ -36,29 +39,44 @@ export function activate(context: vscode.ExtensionContext) {
 
     userInteraction.onShowPane(() => {
         if(!panelInitialised){
-            let choices = ['Create a new notebook', 'Enter details manually'];
-            let runningNotebooks = JupyterManager.getRunningNotebooks();
-            runningNotebooks.map(input =>{
-                choices.push(input.url);
-            });
-            vscode.window.showQuickPick(choices).then(choice => {
-                if(choice === 'Create a new notebook'){
-                    let jupyterManager = new JupyterManager();
-                    jupyterManager.getJupyterAddressAndToken()
-                        .then(initialisePanel)
-                        .catch(() => vscode.window.showErrorMessage('Could not start a notebook automatically'));
-                }
-                else if(choice === 'Enter details manually'){
-                    vscode.window.showErrorMessage('Could not create a Jupyter instance, enter the server details manually');
-                    userInteraction.askJupyterInfo().then(initialisePanel);
-                }
-                else{
-                    initialisePanel(runningNotebooks.filter(input => input.url === choice)[0].info);
-                }
-            });
+
+            if(!JupyterManager.isJupyterInPath()){
+                vscode.window.showInformationMessage('The IPE extension requires Jupyter to be installed. Install now?', 'Install')
+                    .then(data => JupyterManager.installJupyter(data));
+            }
+            else{
+                let choices = ['Create a new notebook', 'Enter details manually'];
+                let runningNotebooks = JupyterManager.getRunningNotebooks();
+                runningNotebooks.map(input => {
+                    choices.push(input.url);
+                });
+                vscode.window.showQuickPick(choices).then(choice => {
+                    if (choice === 'Create a new notebook') {
+                        let jupyterManager = new JupyterManager();
+                        jupyterManager.getJupyterAddressAndToken()
+                            .then(initialisePanel)
+                            .catch(() => vscode.window.showErrorMessage('Could not start a notebook automatically'));
+                    }
+                    else if (choice === 'Enter details manually') {
+                        vscode.window.showErrorMessage('Could not create a Jupyter instance, enter the server details manually');
+                        UserInteraction.askJupyterInfo().then(initialisePanel);
+                    }
+                    else {
+                        initialisePanel(runningNotebooks.filter(input => input.url === choice)[0].info);
+                    }
+                });
+            }
+        
         }
         else{
             webview.show();
+        }
+    });
+
+    vscode.window.onDidChangeActiveTextEditor(input => {
+        if(panelInitialised){
+            // Open new kernel if new file is in a different language
+            interpreter.startKernel(UserInteraction.determineKernel());
         }
     });
 }
