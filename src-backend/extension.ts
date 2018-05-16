@@ -22,23 +22,37 @@ export function activate(context: vscode.ExtensionContext) {
         webview.addCard(card);
     });
 
+    function determineKernel(){
+        let docType = vscode.window.activeTextEditor.document.languageId;
+        let kernelType = '';
+        switch (docType) {
+            case 'python':
+                kernelType = 'python3';
+                break;
+            case 'r':
+                kernelType = 'ir';
+                break;
+            default: 
+                kernelType = '';
+        }
 
-
-        
-
+        return kernelType;
+    }
 
     function initialisePanel({baseUrl, token}){
         // Connect to the server defined
         interpreter.connectToServer(baseUrl, token);
-        // Create a python3 kernel, any kernel can be chosen
-        interpreter.startKernel('python3');
+        // Start needed kernel
+        interpreter.startKernel(determineKernel());  
+
         // Execute code when new card is created
-        userInteraction.onNewCard(sourceCode => interpreter.executeCode(sourceCode, 'python3'));
+        userInteraction.onNewCard(sourceCode => {
+            interpreter.executeCode(sourceCode, determineKernel());
+        });
 
         webview.show();
         panelInitialised = true;
     }
-
 
     userInteraction.onShowPane(() => {
         if(!panelInitialised){
@@ -71,6 +85,13 @@ export function activate(context: vscode.ExtensionContext) {
         }
         else{
             webview.show();
+        }
+    });
+
+    vscode.window.onDidChangeActiveTextEditor(input => {
+        if(panelInitialised){
+            // Open new kernel if new file is in a different language
+            interpreter.startKernel(determineKernel());
         }
     });
 }

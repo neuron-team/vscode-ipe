@@ -41,6 +41,8 @@ export class Interpreter {
             this.kernelPromise[kernelName] = Kernel.startNew(options);
             if (kernelName === 'python3'){
                 this.executeCode('%matplotlib inline', 'python3');
+            } else if (kernelName === 'ir'){
+                this.executeCode('print("This is an R kernel")' , 'ir');
             }
         }
     }
