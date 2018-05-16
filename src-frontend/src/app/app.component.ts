@@ -13,6 +13,7 @@ export class AppComponent implements AfterViewInit {
   ];
 
   selectedCards: number[] = [];
+  visibleMap = new Map<Card,boolean>();
 
   searchQuery = '';
   sortQuery = 'Oldest';
@@ -21,7 +22,12 @@ export class AppComponent implements AfterViewInit {
     rich: false,
     error: false
   };
-
+  ngOnInit() {
+    //Intialize map, display all cards
+    for (let card of this.cards){
+      this.visibleMap.set(card,true);
+    }
+  }
   /* Searching */
   onSearch(card: Card): boolean {
     if (this.searchQuery === '') { return true; }
@@ -30,9 +36,13 @@ export class AppComponent implements AfterViewInit {
     return false;
   }
 
-  /* Type Filtering */
+  /* Type Filtering called via emitter in toolbar*/
   toggleTypeQuery(typeStr: string): void {
     this.typeQuery[typeStr] = !this.typeQuery[typeStr];
+    for (let card of this.cards){
+      this.visibleMap.set(card,this.onType(card));
+    }
+
   }
 
   onType(card: Card): boolean {

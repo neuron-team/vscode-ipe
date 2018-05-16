@@ -29,7 +29,7 @@ import {DomSanitizer} from "@angular/platform-browser";
 })
 
 export class CardComponent implements OnInit {
-
+  @Input() visible:boolean = true;
   @Input() card: Card;
   //Movment of cards up/down
   @Output() onMove = new EventEmitter();
@@ -62,5 +62,7 @@ export class CardComponent implements OnInit {
 
 
   ngOnInit() {
+    //Initialize
+    this.visible = true;
   }
 }

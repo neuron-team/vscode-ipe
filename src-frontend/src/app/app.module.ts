@@ -8,6 +8,7 @@ import { ExtensionService } from './classes/extension.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HighlightPipe } from './classes/highlight.pipe';
 import { AnsiColorizePipe } from './classes/ansi-colorize.pipe';
+import { ToolbarComponent } from './toolbar/toolbar.component';
 import { RunScriptsDirective } from './classes/run-scripts.directive';
 import {PreviewPipe} from "./classes/preview.pipe";
 
@@ -19,7 +20,8 @@ import {PreviewPipe} from "./classes/preview.pipe";
     HighlightPipe,
     AnsiColorizePipe,
     RunScriptsDirective,
-    PreviewPipe
+    PreviewPipe,
+    ToolbarComponent
   ],
   imports: [
     BrowserModule,

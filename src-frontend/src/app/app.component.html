@@ -1,31 +1,12 @@
 <div class="container">
-  <form class="toolbar">
-    <input type="text" name="searchBox" placeholder="Search..." [(ngModel)]="searchQuery">
-    <select name="sortBox" [(ngModel)]="sortQuery" (change)="onSort()">
-        <option value="Custom">Custom</option>
-        <option value="Oldest">Oldest</option>
-        <option value="Newest">Newest</option>
-        <option value="Alphabetical: A-Z">Alphabetical: A-Z</option>
-        <option value="Alphabetical: Z-A">Alphabetical: Z-A</option>
-    </select>
-
-    <button>Export to Jupyter</button>
-
-    <div class="searchResult" *ngIf="searchQuery">
-      Add search filter:
-      <span>
-        <label class="css-checkbox"><input type="checkbox" (click)="toggleTypeQuery('text')">Text</label>
-        <label class="css-checkbox"><input type="checkbox" (click)="toggleTypeQuery('rich')">Rich</label>
-        <label class="css-checkbox"><input type="checkbox" (click)="toggleTypeQuery('error')">Error</label>
-    </span>
-    </div>
-  </form>
+  <app-toolbar (onSelectType)="toggleTypeQuery($event)"></app-toolbar>
 
   <div #scrollingList class="cards-list">
     <app-card
       #listItems
       *ngFor="let card of cards"
       [card]="card"
+      [visible] = "visibleMap.get(card)"
       (onMove)="onMove($event)"
       (onSelect)="onSelect($event)"
       (onDelete)="onDelete($event)">
