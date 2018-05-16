@@ -1,14 +1,9 @@
 import {Component, Input, OnInit} from '@angular/core';
 import { Card } from 'vscode-ipe-types';
+import { Pipe, PipeTransform } from '@angular/core';
 
 import { AppComponent } from '../app.component';
-import {
-  trigger,
-  state,
-  style,
-  animate,
-  transition
-} from '@angular/animations';
+import {trigger, state, style, animate, transition} from '@angular/animations';
 @Component({
   selector: 'app-card',
   templateUrl: './card.component.html',
@@ -24,10 +19,11 @@ import {
     ])
   ]
 })
+
 export class CardComponent implements OnInit {
   @Input() card: Card;
   titleEdit: boolean;
-  state:string = 'notSelected';
+  state: string = 'notSelected';
   constructor(public AppComponent: AppComponent) { }
 
   ngOnInit() {
@@ -37,3 +33,4 @@ export class CardComponent implements OnInit {
   }
 
 }
+

@@ -1,24 +1,26 @@
 <link rel="stylesheet" href="https://static2.sharepointonline.com/files/fabric/office-ui-fabric-core/9.6.0/css/fabric.min.css">
 
 <div class="card-container"  [@cardState]="this.state" *ngIf="this.AppComponent.onType(this.card)">
+
   <span class="card-toolbar">
-    <button class="react" (click)="this.AppComponent.moveUp(this.card)">
+    <button class="react toolbar-icon" (click)="this.AppComponent.moveUp(this.card)">
         <i class="ms-Icon ms-Icon--ChevronUp" aria-label="Move Up"></i>
     </button>
-    <button class="react" (click)="this.AppComponent.moveDown(this.card)">
+    <button class="react toolbar-icon" (click)="this.AppComponent.moveDown(this.card)">
         <i class="ms-Icon ms-Icon--ChevronDown" aria-label="Move Down"></i>
     </button>
-    <button class="react"  (click)="this.AppComponent.onSelect(this.card.id);this.toggleState()">select</button>
-    <button class="react" style="float:right" (click)="this.AppComponent.delete(this.card)">
+    <button class="react toolbar-icon" (click)="this.AppComponent.onSelect(this.card.id);this.toggleState()">select</button>
+    <button class="react toolbar-icon right" (click)="this.AppComponent.delete(this.card)">
         <i class="ms-Icon ms-Icon--Clear" aria-label="Delete"></i>
     </button>
-    <button class="react" style="float:right">
+    <button class="react toolbar-icon right">
         <i class="ms-Icon ms-Icon--MiniExpand" aria-label="Open in Browser"></i>
     </button>
-    <button class="react" (click)="card.collapsed = !card.collapsed" style="float:right">
+    <button class="react toolbar-icon right" (click)="card.collapsed = !card.collapsed;titleEdit = false">
         <i class="ms-Icon ms-Icon--ChromeMinimize" aria-label="Minimize"></i>
     </button>
   </span>
+
   <div *ngIf="!titleEdit">
     <button class="react" (click)="titleEdit = !titleEdit; inputText=card.title"><h2>{{card.title}}</h2></button>
   </div>
@@ -39,9 +41,9 @@
         <div *ngIf="!card.codeCollapsed">
             <i class="ms-Icon ms-Icon--CaretBottomRightSolid8" aria-label="Expand"></i>
         </div>
-        <div class = "prv"*ngIf="card.codeCollapsed">
-            <i class="ms-Icon ms-Icon--CaretRight8" aria-label="Collapse"></i>
-            <span>{{card.sourceCode}} </span>
+        <div *ngIf="card.codeCollapsed">
+            <i class="ms-Icon ms-Icon--CaretRight" aria-label="Collapse"></i>
+            <span class="prv">{{card.sourceCode | preview}}</span>
         </div>
     </button>
     <div class="card-code">
@@ -50,12 +52,13 @@
       </div>
     </div>
     <hr>
+
     <button (click)="card.outputCollapsed = !card.outputCollapsed">
       <div *ngIf="!card.outputCollapsed">
           <i class="ms-Icon ms-Icon--CaretBottomRightSolid8" aria-label="Expand"></i>
       </div>
       <div *ngIf="card.outputCollapsed">
-          <i class="ms-Icon ms-Icon--CaretRight8" aria-label="Collapse"></i>
+          <i class="ms-Icon ms-Icon--CaretRight" aria-label="Collapse"></i>
           <span>Output</span>
       </div>
     </button>
@@ -64,5 +67,7 @@
           <pre class="output">{{output.output}}</pre>
         </div>
     </div>
+
   </div>
+
 </div>
