@@ -1,6 +1,7 @@
 <link rel="stylesheet" href="https://static2.sharepointonline.com/files/fabric/office-ui-fabric-core/9.6.0/css/fabric.min.css">
 
 <div class="card-container"  [@cardState]="state" *ngIf="visible">
+  <!-- Card toolbar -->
   <span class="card-toolbar">
     <button class="react" (click)="move('up')">
         <i class="ms-Icon ms-Icon--ChevronUp" aria-label="Move Up"></i>
@@ -20,22 +21,30 @@
     </button>
   </span>
 
-  <div *ngIf="!titleEdit">
-    <button class="react" (click)="titleEdit = !titleEdit; inputText=card.title"><h2 [innerHTML]="card.title | highlight : this.AppComponent.searchQuery"></h2></button>
+  <!-- Card title and title edit box -->
+  <div *ngIf="!editingTitle">
+    <button class="react" (click)="editingTitle = true">
+      <h2 [innerHTML]="card.title | highlight : this.AppComponent.searchQuery"></h2>
+    </button>
   </div>
-  <div *ngIf="titleEdit">
-    <input [(ngModel)]="inputText" placeholder=Title autofocus (keyup.enter)="card.title=inputText;titleEdit = !titleEdit" (keyup.esc)="titleEdit = !titleEdit" />
-    <button class="react" (click)="card.title=inputText;titleEdit = !titleEdit">
+  <div *ngIf="editingTitle">
+    <input #titleEditInput
+           placeholder="Title"
+           autofocus
+           [value]="card.title"
+           (keyup.enter)="card.title = titleEditInput.value; editingTitle = false"
+           (keyup.esc)="editingTitle = false" />
+    <button class="react" (click)="card.title = titleEditInput.value; editingTitle = false">
       <i class="ms-Icon ms-Icon--Accept" aria-label="Accept"></i>
     </button>
-    <button class="react" (click)="titleEdit = !titleEdit">
+    <button class="react" (click)="editingTitle = false">
       <i class="ms-Icon ms-Icon--Clear" aria-label="Cancel"></i>
     </button>
   </div>
 
-
   <div *ngIf="!card.collapsed">
     <hr>
+    <!-- Source code -->
     <button (click)="card.codeCollapsed = !card.codeCollapsed">
         <div *ngIf="!card.codeCollapsed">
             <i class="ms-Icon ms-Icon--CaretBottomRightSolid8" aria-label="Expand"></i>
@@ -61,6 +70,7 @@
       </div>
     </button>
 
+    <!-- Outputs -->
     <div class="card-output" *ngFor="let output of card.outputs">
         <div *ngIf="!card.outputCollapsed" [ngSwitch]="output.type">
           <div *ngSwitchCase="'image/png'">

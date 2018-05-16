@@ -38,7 +38,7 @@ export class CardComponent {
   //Delete
   @Output() onDelete = new EventEmitter();
 
-  titleEdit: boolean;
+  editingTitle: boolean;
   state: string = 'notSelected';
   constructor(public AppComponent: AppComponent, public sanitizer: DomSanitizer) { }
 
