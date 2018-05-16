@@ -6,7 +6,7 @@
       #listItems
       *ngFor="let card of cards"
       [card]="card"
-      [visible] = "visibleMap.get(card)"
+      [visible] = "visibleCards.get(card) !== false"
       (onMove)="onMove($event)"
       (onSelect)="onSelect($event)"
       (onDelete)="onDelete($event)">

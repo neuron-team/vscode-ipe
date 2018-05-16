@@ -9,27 +9,27 @@ import {Card, CardOutput} from 'vscode-ipe-types';
 })
 export class AppComponent implements AfterViewInit {
   cards: Card[] = [
-    new Card(0, 'sample card', 'print("Hello, world!");', [new CardOutput('plaintext', 'Hello, world!')])
+    new Card(0, 'sample card', 'print("Hello, world!");', [new CardOutput('text/plain', 'Hello, world!')])
   ];
 
   selectedCards: number[] = [];
-  visibleMap = new Map<Card,boolean>();
+  visibleCards = new Map<Card,boolean>();
 
   searchQuery = '';
   sortQuery = 'Oldest';
   typeQuery = {
-    text: false,
-    rich: false,
-    error: false
+    text: true,
+    rich: true,
+    error: true
   };
   ngOnInit() {
     //Intialize map, display all cards
-    for (let card of this.cards){
-      this.visibleMap.set(card,true);
+    for (let card of this.cards) {
+      this.visibleCards.set(card, true);
     }
   }
   /* Searching */
-  onSearch(card: Card): boolean {
+  cardMatchesSearchQuery(card: Card): boolean {
     if (this.searchQuery === '') { return true; }
     if (card.title.search(new RegExp(this.searchQuery, "i")) > -1) { return true; }
     if (card.sourceCode.search(new RegExp(this.searchQuery, "i")) > -1) { return true; }
@@ -40,12 +40,12 @@ export class AppComponent implements AfterViewInit {
   toggleTypeQuery(typeStr: string): void {
     this.typeQuery[typeStr] = !this.typeQuery[typeStr];
     for (let card of this.cards){
-      this.visibleMap.set(card,this.onType(card));
+      this.visibleCards.set(card,this.cardMatchesFilter(card));
     }
 
   }
 
-  onType(card: Card): boolean {
+  cardMatchesFilter(card: Card): boolean {
     if (!this.typeQuery.text && !this.typeQuery.rich && !this.typeQuery.error) return true;
     if (card.outputs.length === 0) return true;
 
@@ -88,7 +88,7 @@ export class AppComponent implements AfterViewInit {
 
   /* Ordering */
   onMove({dir: direction, card: card}): void {
-    if(direction === "up") this.moveUp(card); 
+    if(direction === "up") this.moveUp(card);
     else if (direction ==="down") this.moveDown(card);
   }
 

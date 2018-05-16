@@ -1,83 +1,79 @@
 .toolbar {
-    white-space:nowrap;
-    position: fixed;
-    top: 0;
-    display: block;
-    height: 30px;
-    width: 100%;
-    margin: 0px 0px 2px 0px;
-    background-color: var(--background-color);
-    border-radius: 1px;
-    border-color: var(--color);
-    border-style: solid;
-    border-width: 0px 0px 1px 0px;
-  }
-  
-  .searchResult {
-    background-color: var(--background-color);
-  }
-  
-  .cards-list {
-    margin: 32px 0px 0px 0px;
-    overflow-y: scroll;
-    height: 100%;
-  }
-  
-  button {
-    align-items: flex-start;
-    text-align: center;
-    cursor: pointer;
-    color: inherit;
-    background-color: rgba(0, 119, 198, 0.3);
-    box-sizing: border-box;
-    border-style: none;
-    outline: none;
-    box-shadow: none;
-    height: 100%;
-  }
-  button:hover {
-    background-color: rgba(0, 119, 198, 0.7);
-  }
-  button:active {
-    background-color: rgba(0, 119, 198, 1.0);
-  }
-  
-  input {
-    color: var(--color);
-    background-color: transparent;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    -webkit-margin-before: 0.4em;
-    -webkit-margin-after: 0.4em;
-    -webkit-margin-start: 5px;
-  }
-  
-  input:focus {
-    border-color: rgba(0, 119, 198, 0.7);
-    outline: rgba(0, 119, 198, 0.7);
-    background-color: rgba(255, 255, 255, 0.05);
-  }
-  
-  select {
-    width: 100px;
-    padding: 5px;
-    color: inherit;
-    cursor: context-menu;
-    background-color: rgba(0, 119, 198, 0.3);
-    border-style: none;
-    border-radius: 0;
-    box-sizing: border-box;
-    outline: none;
-    box-shadow: none;
-    -webkit-appearance: none;
-    appearance: none;
-    height: 100%;
-  }
-  
-  select:focus {
-    border-color: rgba(0, 119, 198, 0.7);
-    outline: rgba(0, 119, 198, 0.7);
-  }
-  
-  :host ::ng-deep .search-highlight{
-    background-color: rgb(136, 136, 67);
-  }
+  white-space:nowrap;
+  position: fixed;
+  top: 0;
+  display: block;
+  height: 30px;
+  width: 100%;
+  margin: 0 0 2px 0;
+  background-color: var(--background-color);
+  border-radius: 1px;
+  border-color: var(--color);
+  border-style: solid;
+  border-width: 0 0 1px 0;
+}
+
+.searchResult {
+  background-color: var(--background-color);
+}
+
+.cards-list {
+  margin: 32px 0px 0px 0px;
+  overflow-y: scroll;
+  height: 100%;
+}
+
+button {
+  align-items: flex-start;
+  text-align: center;
+  cursor: pointer;
+  color: inherit;
+  background-color: rgba(0, 119, 198, 0.3);
+  box-sizing: border-box;
+  border-style: none;
+  outline: none;
+  box-shadow: none;
+  height: 100%;
+}
+button:hover {
+  background-color: rgba(0, 119, 198, 0.7);
+}
+button:active {
+  background-color: rgba(0, 119, 198, 1.0);
+}
+
+input {
+  color: var(--color);
+  background-color: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  -webkit-margin-before: 0.4em;
+  -webkit-margin-after: 0.4em;
+  -webkit-margin-start: 5px;
+}
+
+input:focus {
+  border-color: rgba(0, 119, 198, 0.7);
+  outline: rgba(0, 119, 198, 0.7);
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+select {
+  width: 100px;
+  padding: 5px;
+  color: inherit;
+  cursor: context-menu;
+  background-color: rgba(0, 119, 198, 0.3);
+  border-style: none;
+  border-radius: 0;
+  box-sizing: border-box;
+  outline: none;
+  box-shadow: none;
+  -webkit-appearance: none;
+  appearance: none;
+  height: 100%;
+}
+
+select:focus {
+  border-color: rgba(0, 119, 198, 0.7);
+  outline: rgba(0, 119, 198, 0.7);
+}

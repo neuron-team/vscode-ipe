@@ -1,6 +1,6 @@
 <link rel="stylesheet" href="https://static2.sharepointonline.com/files/fabric/office-ui-fabric-core/9.6.0/css/fabric.min.css">
 
-<div class="card-container"  [@cardState]="this.state" *ngIf="this.visible">
+<div class="card-container"  [@cardState]="state" *ngIf="visible">
   <span class="card-toolbar">
     <button class="react" (click)="move('up')">
         <i class="ms-Icon ms-Icon--ChevronUp" aria-label="Move Up"></i>
