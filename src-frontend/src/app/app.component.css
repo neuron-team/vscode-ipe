@@ -10,7 +10,3 @@
   height: 100%;
   box-sizing: border-box;
 }
-
-:host ::ng-deep .search-highlight {
-  background-color: rgb(136, 136, 67);
-}

@@ -25,3 +25,7 @@ app-root {
 .ansi-bright-magenta-fg { color: #E7C7F2; }
 .ansi-bright-cyan-fg { color: #B0F0F5; }
 .ansi-bright-white-fg { color: #FFF; }
+
+.search-highlight {
+  background-color: rgb(136, 136, 67);
+}
