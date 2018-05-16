@@ -37,7 +37,7 @@
         "command": "ipe.showWebview",
         "key": "ctrl+k ctrl+v",
         "mac": "cmd+k cmd+v",
-        "when": "editorLangId == python"
+        "when": ""
       },
       {
         "command": "ipe.newCard",
