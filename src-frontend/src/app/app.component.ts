@@ -24,8 +24,11 @@ export class AppComponent implements AfterViewInit {
   };
 
   /* Searching */
-  onSearch(): void{
-
+  onSearch(card: Card): boolean {
+    if (this.searchQuery === '') { return true; }
+    if (card.title.search(new RegExp(this.searchQuery, "i")) > -1) { return true; }
+    if (card.sourceCode.search(new RegExp(this.searchQuery, "i")) > -1) { return true; }
+    return false;
   }
 
   /* Type Filtering */
@@ -33,7 +36,6 @@ export class AppComponent implements AfterViewInit {
     this.typeQuery[typeStr] = !this.typeQuery[typeStr];
   }
 
-  /* Type Filtring */
   onType(card: Card): boolean { // need to manually list all possible types
     for (let i = 0; i < card.outputs.length; i++){
       if (this.typeQuery.text && (card.outputs[i].type.indexOf('text') > -1 || card.outputs[i].type === 'stdout')) { return true; }
@@ -47,17 +49,17 @@ export class AppComponent implements AfterViewInit {
   /* Sorting */
   onSort(): void {
     if (this.sortQuery === 'Oldest'){
-      this.cards.sort(function(a, b) {return (a.id > b.id) ? 1 : ((b.id > a.id) ? -1 : 0); } );
+      this.cards.sort(function(a, b) { return (a.id > b.id) ? 1 : ((b.id > a.id) ? -1 : 0); } );
     } else if (this.sortQuery === 'Newest') {
-      this.cards.sort(function(a, b) {return (a.id > b.id) ? -1 : ((b.id > a.id) ? 1 : 0); } );
+      this.cards.sort(function(a, b) { return (a.id > b.id) ? -1 : ((b.id > a.id) ? 1 : 0); } );
     } else if (this.sortQuery === 'Alphabetical: A-Z') {
-      this.cards.sort(function(a, b) {return (a.title > b.title) ? 1 : ((b.title > a.title) ? -1 : 0); } );
+      this.cards.sort(function(a, b) { return (a.title > b.title) ? 1 : ((b.title > a.title) ? -1 : 0); } );
     } else if (this.sortQuery === 'Alphabetical: Z-A') {
-      this.cards.sort(function(a, b) {return (a.title > b.title) ? -1 : ((b.title > a.title) ? 1 : 0); } );
+      this.cards.sort(function(a, b) { return (a.title > b.title) ? -1 : ((b.title > a.title) ? 1 : 0); } );
     }
   }
 
-  //On select will remove/add element if it's in/not in array
+  /* Selecting */ //will remove/add element if it's in/not_in array
   onSelect(id: number): void {
     const index: number = this.selectedCards.indexOf(id, 1);
     if (index > -1) { this.selectedCards.splice(index);
@@ -65,17 +67,12 @@ export class AppComponent implements AfterViewInit {
   }
 
   /* Ordering */
-  onMove({dir: direction,card: card}){
-    if(direction === "up"){
-      this.moveUp(card);
-    }
-    else if (direction ==="down"){
-      this.moveDown(card);
-    }
+  onMove({dir: direction, card: card}): void {
+    if(direction === "up") this.moveUp(card); 
+    else if (direction ==="down") this.moveDown(card);
   }
+
   moveUp(card: Card): void {
-    //card.sourceCode = card.outputs[0].type;
-    //card.sourceCode = card.outputs.length.toString();
     const index: number = this.cards.indexOf(card, 1);
     if (index > -1){
       const tmp: Card = this.cards[index - 1];
@@ -84,6 +81,7 @@ export class AppComponent implements AfterViewInit {
       this.sortQuery = 'Custom';
     }
   }
+
   moveDown(card: Card): void {
     const index: number = this.cards.indexOf(card);
     if (index > -1 && index < this.cards.length - 1){
