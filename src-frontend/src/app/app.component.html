@@ -1,12 +1,6 @@
 <div class="container">
   <form class="toolbar">
     <input type="text" name="searchBox" placeholder="Search..." [(ngModel)]="searchQuery">
-    <span>
-        <label class="css-checkbox"><input type="checkbox" checked (click)="toggleTypeQuery('text')">Text</label>
-        <label class="css-checkbox"><input type="checkbox" checked (click)="toggleTypeQuery('image')">Image</label>
-        <label class="css-checkbox"><input type="checkbox" checked (click)="toggleTypeQuery('application')">Application</label>
-    </span>
-
     <select name="sortBox" [(ngModel)]="sortQuery" (change)="onSort()">
         <option value="Custom">Custom</option>
         <option value="Oldest">Oldest</option>
@@ -16,7 +10,15 @@
     </select>
 
     <button>Export to Jupyter</button>
-    <div class="searchResult" *ngIf="searchQuery" style="display: none;">Autocomplete</div>
+
+    <div class="searchResult" *ngIf="searchQuery">
+      Add search filter:
+      <span>
+        <label class="css-checkbox"><input type="checkbox" (click)="toggleTypeQuery('text')">Text</label>
+        <label class="css-checkbox"><input type="checkbox" (click)="toggleTypeQuery('rich')">Rich</label>
+        <label class="css-checkbox"><input type="checkbox" (click)="toggleTypeQuery('error')">Error</label>
+    </span>
+    </div>
   </form>
 
   <div #scrollingList class="cards-list">

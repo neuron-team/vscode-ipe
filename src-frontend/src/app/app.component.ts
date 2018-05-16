@@ -17,10 +17,9 @@ export class AppComponent implements AfterViewInit {
   searchQuery = '';
   sortQuery = 'Oldest';
   typeQuery = {
-    text: true,
-    image: true,
-    application: true,
-    error: true
+    text: false,
+    rich: false,
+    error: false
   };
 
   /* Searching */
@@ -36,12 +35,23 @@ export class AppComponent implements AfterViewInit {
     this.typeQuery[typeStr] = !this.typeQuery[typeStr];
   }
 
-  onType(card: Card): boolean { // need to manually list all possible types
-    for (let i = 0; i < card.outputs.length; i++){
-      if (this.typeQuery.text && (card.outputs[i].type.indexOf('text') > -1 || card.outputs[i].type === 'stdout')) { return true; }
-      if (this.typeQuery.image && card.outputs[i].type.indexOf('image') > -1) { return true; }
-      if (this.typeQuery.application && card.outputs[i].type.indexOf('application') > -1) { return true; }
-      if (this.typeQuery.error && card.outputs[i].type.indexOf('error') > -1) { return true; }
+  onType(card: Card): boolean {
+    if (!this.typeQuery.text && !this.typeQuery.rich && !this.typeQuery.error) return true;
+    if (card.outputs.length === 0) return true;
+
+    for (let i = 0; i < card.outputs.length; i++) {
+      if (this.typeQuery.text && card.outputs[i].type.indexOf('text/html') === -1) {
+        if (card.outputs[i].type.indexOf('text') > -1) return true;
+        if (card.outputs[i].type.indexOf('stdout') > -1) return true;
+      }
+      else if (this.typeQuery.error) {
+        if (card.outputs[i].type.indexOf('error') > -1) return true;
+      }
+      else if (this.typeQuery.rich) {
+        if (card.outputs[i].type.indexOf('image') > -1) return true;
+        if (card.outputs[i].type.indexOf('application') > -1) return true;
+        if (card.outputs[i].type.indexOf('text/html') > -1) return true;
+      }
     }
     return false;
   }
