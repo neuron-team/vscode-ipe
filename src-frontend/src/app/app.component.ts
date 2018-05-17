@@ -12,7 +12,7 @@ export class AppComponent implements AfterViewInit {
     new Card(0, 'sample card', 'print("Hello, world!")', [new CardOutput('stdout', 'Hello, world!')])
   ];
 
-  selectedCards: number[] = [];
+  selectedCards: Card[] = [];
   visibleCards = new Map<Card,boolean>();
 
   searchQuery = '';
@@ -58,19 +58,22 @@ export class AppComponent implements AfterViewInit {
   }
 
   /* Selecting - will remove/add element if it's in/not_in array */
-  onSelect(id: number): void {
-    const index: number = this.selectedCards.indexOf(id, 1);
-    if (index > -1) { this.selectedCards.splice(index);
-    } else { this.selectedCards.push(id); }
+  cardSelected(card: Card, selected: boolean) {
+    const index: number = this.selectedCards.indexOf(card);
+    if (index > -1) {
+      this.selectedCards.splice(index);
+    } else {
+      this.selectedCards.push(card);
+    }
   }
 
   /* Ordering */
-  onMove({dir: direction, card: card}): void {
+  cardMoved(card: Card, direction: string) {
     if(direction === "up") this.moveUp(card);
     else if (direction ==="down") this.moveDown(card);
   }
 
-  moveUp(card: Card): void {
+  moveUp(card: Card) {
     const index: number = this.cards.indexOf(card, 1);
     if (index > -1){
       const tmp: Card = this.cards[index - 1];
@@ -79,7 +82,7 @@ export class AppComponent implements AfterViewInit {
     }
   }
 
-  moveDown(card: Card): void {
+  moveDown(card: Card) {
     const index: number = this.cards.indexOf(card);
     if (index > -1 && index < this.cards.length - 1){
       const tmp: Card = this.cards[index + 1];
@@ -88,7 +91,7 @@ export class AppComponent implements AfterViewInit {
     }
   }
 
-  onDelete(card: Card): void {
+  deleteCard(card: Card) {
     const index: number = this.cards.indexOf(card);
     if (index > -1) { this.cards.splice(index, 1); }
   }

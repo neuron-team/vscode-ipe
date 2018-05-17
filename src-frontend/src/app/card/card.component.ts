@@ -35,30 +35,30 @@ export class CardComponent {
   //Movement of cards up/down
   @Output() onMove = new EventEmitter();
   //Select a card
-  @Output() onSelect = new EventEmitter();
+  @Output() onSelect = new EventEmitter<boolean>();
   //Delete
-  @Output() onDelete = new EventEmitter();
+  @Output() onDelete = new EventEmitter<void>();
 
   editingTitle: boolean;
-  state: string = 'notSelected';
+  selected: boolean = false;
   constructor(public sanitizer: DomSanitizer) { }
 
    //Toggle state for animation
   toggleState() {
-    this.state = this.state === 'selected' ? 'notSelected' : 'selected';
+    this.selected = !this.selected;
   }
   //Emit to parent app.component.ts
-  move(direction:string){
-    this.onMove.emit({dir: direction,card: this.card});
+  move(direction: string) {
+    this.onMove.emit({direction: direction});
   }
 
-  selectCard(){
+  selectCard() {
     this.toggleState();
-    this.onSelect.emit(this.card);
+    this.onSelect.emit(this.selected);
   }
 
-  deleteCard(){
-    this.onDelete.emit(this.card);
+  deleteCard() {
+    this.onDelete.emit();
   }
 
 }

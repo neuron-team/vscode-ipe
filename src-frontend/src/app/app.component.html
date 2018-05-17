@@ -9,9 +9,9 @@
       [card]="card"
       [visible] = "!visibleCards.has(card) || visibleCards.get(card)"
       [searchQuery]="searchQuery"
-      (onMove)="onMove($event)"
-      (onSelect)="onSelect($event)"
-      (onDelete)="onDelete($event)">
+      (onMove)="cardMoved(card, $event.direction)"
+      (onSelect)="cardSelected(card, $event)"
+      (onDelete)="deleteCard(card)">
   </app-card>
   </div>
 </div>
