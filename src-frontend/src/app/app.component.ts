@@ -26,9 +26,6 @@ export class AppComponent implements AfterViewInit {
     error: true
   };
 
-  ngOnInit() {
-  }
-
   /* Type Filtering called via emitter in toolbar*/
   updateFilters(event: {search: string, filters: any}): void {
     this.searchQuery = event.search;
