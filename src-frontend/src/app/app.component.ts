@@ -57,7 +57,7 @@ export class AppComponent implements AfterViewInit {
     return false;
   }
 
-  /* Selecting */ //will remove/add element if it's in/not_in array
+  /* Selecting - will remove/add element if it's in/not_in array */
   onSelect(id: number): void {
     const index: number = this.selectedCards.indexOf(id, 1);
     if (index > -1) { this.selectedCards.splice(index);
