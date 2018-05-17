@@ -5,7 +5,10 @@ import {Card, CardOutput} from 'vscode-ipe-types';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
+  host: {
+    '(window:resize)': 'onWindowResize()'
+  }
 })
 export class AppComponent implements AfterViewInit {
   cards: Card[] = [
@@ -25,6 +28,12 @@ export class AppComponent implements AfterViewInit {
     rich: true,
     error: true
   };
+
+  constructor(private extension: ExtensionService) {
+    extension.onAddCard.subscribe(card => {
+      this.addCard(card);
+    });
+  }
 
   /* Type Filtering called via emitter in toolbar*/
   updateFilters(event: {search: string, filters: any}): void {
@@ -91,20 +100,33 @@ export class AppComponent implements AfterViewInit {
     }
   }
 
-  deleteCard(card: Card) {
-    const index: number = this.cards.indexOf(card);
-    if (index > -1) { this.cards.splice(index, 1); }
-  }
-
   addCard(card: Card) {
     this.cards.push(card);
     this.scrollToBottom();
   }
 
-  constructor(private extension: ExtensionService) {
-    extension.onAddCard.subscribe(card => {
-      this.addCard(card);
-    });
+  deleteCard(card: Card) {
+    const index: number = this.cards.indexOf(card);
+    if (index > -1) { this.cards.splice(index, 1); }
+  }
+
+  private windowResizeThrottle;
+  onWindowResize() {
+    // make sure all scripted HTML fragments are re-sized appropriately.
+    // this can be a bit inefficient, but it's only executed on window resize,
+    // which doesn't happen very often anyway
+    clearTimeout(this.windowResizeThrottle);
+    this.windowResizeThrottle = setTimeout(() => {
+      for (let card of this.cards) {
+        for (let output of card.outputs) {
+          if (output.type === 'text/html') {
+            const o = output.output;
+            output.output = '';
+            setTimeout(() => { output.output = o; });
+          }
+        }
+      }
+    }, 400);
   }
 
   /* this code ensures that the list always scrolls to the bottom when new elements are added */
