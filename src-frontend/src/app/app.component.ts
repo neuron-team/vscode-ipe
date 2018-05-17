@@ -12,7 +12,7 @@ export class AppComponent implements AfterViewInit {
     new Card(0, 'sample card', 'print("Hello, world!")', [new CardOutput('stdout', 'Hello, world!')])
   ];
 
-  selectedCards: Card[] = [];
+  selectedCards = new Set<Card>();
   visibleCards = new Map<Card,boolean>();
 
   searchQuery = '';
@@ -59,11 +59,10 @@ export class AppComponent implements AfterViewInit {
 
   /* Selecting - will remove/add element if it's in/not_in array */
   cardSelected(card: Card, selected: boolean) {
-    const index: number = this.selectedCards.indexOf(card);
-    if (index > -1) {
-      this.selectedCards.splice(index);
+    if (selected) {
+      this.selectedCards.add(card);
     } else {
-      this.selectedCards.push(card);
+      this.selectedCards.delete(card);
     }
   }
 

@@ -7,7 +7,7 @@
       #listItems
       *ngFor="let card of cards"
       [card]="card"
-      [visible] = "!visibleCards.has(card) || visibleCards.get(card)"
+      [visible] = "visibleCards.get(card) !== false"
       [searchQuery]="searchQuery"
       (onMove)="cardMoved(card, $event.direction)"
       (onSelect)="cardSelected(card, $event)"
