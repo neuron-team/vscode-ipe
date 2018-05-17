@@ -30,8 +30,9 @@ import {DomSanitizer} from "@angular/platform-browser";
 
 export class CardComponent {
   @Input() visible: boolean = true;
+  @Input() searchQuery: string = '';
   @Input() card: Card;
-  //Movment of cards up/down
+  //Movement of cards up/down
   @Output() onMove = new EventEmitter();
   //Select a card
   @Output() onSelect = new EventEmitter();
@@ -40,7 +41,7 @@ export class CardComponent {
 
   editingTitle: boolean;
   state: string = 'notSelected';
-  constructor(public AppComponent: AppComponent, public sanitizer: DomSanitizer) { }
+  constructor(public sanitizer: DomSanitizer) { }
 
    //Toggle state for animation
   toggleState() {

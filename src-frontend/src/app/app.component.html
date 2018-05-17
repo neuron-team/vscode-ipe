@@ -8,6 +8,7 @@
       *ngFor="let card of cards"
       [card]="card"
       [visible] = "!visibleCards.has(card) || visibleCards.get(card)"
+      [searchQuery]="searchQuery"
       (onMove)="onMove($event)"
       (onSelect)="onSelect($event)"
       (onDelete)="onDelete($event)">
