@@ -1,9 +1,17 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
 import { Card } from 'vscode-ipe-types';
 import { Pipe, PipeTransform } from '@angular/core';
 
 import { AppComponent } from '../app.component';
-import {trigger, state, style, animate, transition} from '@angular/animations';
+import {
+  trigger,
+  state,
+  style,
+  animate,
+  transition
+} from '@angular/animations';
+import {DomSanitizer} from "@angular/platform-browser";
+
 @Component({
   selector: 'app-card',
   templateUrl: './card.component.html',
@@ -20,17 +28,37 @@ import {trigger, state, style, animate, transition} from '@angular/animations';
   ]
 })
 
-export class CardComponent implements OnInit {
+export class CardComponent {
+  @Input() visible: boolean = true;
+  @Input() searchQuery: string = '';
   @Input() card: Card;
-  titleEdit: boolean;
-  state: string = 'notSelected';
-  constructor(public AppComponent: AppComponent) { }
+  //Movement of cards up/down
+  @Output() onMove = new EventEmitter();
+  //Select a card
+  @Output() onSelect = new EventEmitter();
+  //Delete
+  @Output() onDelete = new EventEmitter();
 
-  ngOnInit() {
-  }
+  editingTitle: boolean;
+  state: string = 'notSelected';
+  constructor(public sanitizer: DomSanitizer) { }
+
+   //Toggle state for animation
   toggleState() {
     this.state = this.state === 'selected' ? 'notSelected' : 'selected';
   }
+  //Emit to parent app.component.ts
+  move(direction:string){
+    this.onMove.emit({dir: direction,card: this.card});
+  }
+
+  selectCard(){
+    this.toggleState();
+    this.onSelect.emit(this.card);
+  }
+
+  deleteCard(){
+    this.onDelete.emit(this.card);
+  }
 
 }
-

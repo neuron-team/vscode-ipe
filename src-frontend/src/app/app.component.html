@@ -1,29 +1,18 @@
 <div class="container">
-  <form class="toolbar">
-    <input type="text" name="searchBox" placeholder="Search..." [(ngModel)]="searchQuery" my-on-key-down-call="">
-    <span>
-        <label class="css-checkbox"><input type="checkbox" checked (click)="toggleTypeQuery('text')">Text</label>
-        <label class="css-checkbox"><input type="checkbox" checked (click)="toggleTypeQuery('graph')">Graph</label>
-    </span>
-    
-    <select name="sortBox" [(ngModel)]="sortQuery" (change)="onSort()">
-        <option value="Custom">Custom</option>
-        <option value="Oldest">Oldest</option>
-        <option value="Newest">Newest</option>
-        <option value="Alphabetical: A-Z">Alphabetical: A-Z</option>
-        <option value="Alphabetical: Z-A">Alphabetical: Z-A</option>
-    </select>
-
-
-    <button>Export to Jupyter</button>
-    <div class="searchResult" *ngIf="searchQuery">Autocomplete</div>
-  </form>
+  <app-toolbar
+    (onSearchChanged)="updateFilters($event)"></app-toolbar>
 
   <div #scrollingList class="cards-list">
     <app-card
       #listItems
       *ngFor="let card of cards"
-      [card]="card">
+      [card]="card"
+      [visible] = "!visibleCards.has(card) || visibleCards.get(card)"
+      [searchQuery]="searchQuery"
+      (onMove)="onMove($event)"
+      (onSelect)="onSelect($event)"
+      (onDelete)="onDelete($event)">
   </app-card>
   </div>
 </div>
+

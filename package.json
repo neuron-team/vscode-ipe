@@ -98,7 +98,7 @@
     "test": "npm run compile && node ./node_modules/vscode/bin/test"
   },
   "devDependencies": {
-    "child-process":"^1.0.2",
+    "child-process": "^1.0.2",
     "@jupyterlab/services": "^2.0.3",
     "@types/mocha": "^2.2.42",
     "@types/node": "^7.0.43",
@@ -108,5 +108,6 @@
     "vscode": "^1.1.6"
   },
   "dependencies": {
+    "ansi_up": "^3.0.0"
   }
 }

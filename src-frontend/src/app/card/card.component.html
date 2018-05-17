@@ -1,58 +1,65 @@
 <link rel="stylesheet" href="https://static2.sharepointonline.com/files/fabric/office-ui-fabric-core/9.6.0/css/fabric.min.css">
 
-<div class="card-container"  [@cardState]="this.state" *ngIf="this.AppComponent.onType(this.card)">
-
+<div class="card-container"  [@cardState]="state" *ngIf="visible">
+  <!-- Card toolbar -->
   <span class="card-toolbar">
-    <button class="react toolbar-icon" (click)="this.AppComponent.moveUp(this.card)">
+    <button class="react toolbar-icon" (click)="move('up')">
         <i class="ms-Icon ms-Icon--ChevronUp" aria-label="Move Up"></i>
     </button>
-    <button class="react toolbar-icon" (click)="this.AppComponent.moveDown(this.card)">
+    <button class="react toolbar-icon" (click)="move('down')">
         <i class="ms-Icon ms-Icon--ChevronDown" aria-label="Move Down"></i>
     </button>
-    <button class="react toolbar-icon" (click)="this.AppComponent.onSelect(this.card.id);this.toggleState()">select</button>
-    <button class="react toolbar-icon right" (click)="this.AppComponent.delete(this.card)">
+    <button class="react toolbar-icon"  (click)="selectCard()">select</button>
+    <button class="react right" (click)="deleteCard()">
         <i class="ms-Icon ms-Icon--Clear" aria-label="Delete"></i>
     </button>
     <button class="react toolbar-icon right">
         <i class="ms-Icon ms-Icon--MiniExpand" aria-label="Open in Browser"></i>
     </button>
-    <button class="react toolbar-icon right" (click)="card.collapsed = !card.collapsed;titleEdit = false">
+    <button class="react toolbar-icon right" (click)="card.collapsed = !card.collapsed; editingTitle = false">
         <i class="ms-Icon ms-Icon--ChromeMinimize" aria-label="Minimize"></i>
     </button>
   </span>
 
-  <div *ngIf="!titleEdit">
-    <button class="react" (click)="titleEdit = !titleEdit; inputText=card.title"><h2>{{card.title}}</h2></button>
+  <!-- Card title and title edit box -->
+  <div *ngIf="!editingTitle">
+    <button class="react" (click)="editingTitle = true">
+      <h2 [innerHTML]="card.title | highlight : searchQuery"></h2>
+    </button>
   </div>
-  <div *ngIf="titleEdit">
-    <input [(ngModel)]="inputText" placeholder=Title autofocus (keyup.enter)="card.title=inputText;titleEdit = !titleEdit" (keyup.esc)="titleEdit = !titleEdit" />
-    <button class="react" (click)="card.title=inputText;titleEdit = !titleEdit">
+  <div *ngIf="editingTitle">
+    <input #titleEditInput
+           placeholder="Title"
+           autofocus
+           [value]="card.title"
+           (keyup.enter)="card.title = titleEditInput.value; editingTitle = false"
+           (keyup.esc)="editingTitle = false" />
+    <button class="react" (click)="card.title = titleEditInput.value; editingTitle = false">
       <i class="ms-Icon ms-Icon--Accept" aria-label="Accept"></i>
     </button>
-    <button class="react" (click)="titleEdit = !titleEdit">
+    <button class="react" (click)="editingTitle = false">
       <i class="ms-Icon ms-Icon--Clear" aria-label="Cancel"></i>
     </button>
   </div>
 
-
   <div *ngIf="!card.collapsed">
     <hr>
+    <!-- Source code -->
     <button (click)="card.codeCollapsed = !card.codeCollapsed">
         <div *ngIf="!card.codeCollapsed">
             <i class="ms-Icon ms-Icon--CaretBottomRightSolid8" aria-label="Expand"></i>
         </div>
-        <div *ngIf="card.codeCollapsed">
+        <div class="prv" *ngIf="card.codeCollapsed">
             <i class="ms-Icon ms-Icon--CaretRight" aria-label="Collapse"></i>
-            <span class="prv">{{card.sourceCode | preview}}</span>
+            <span [innerHTML]="card.sourceCode | preview | highlight : searchQuery"></span>
         </div>
     </button>
     <div class="card-code">
       <div *ngIf="!card.codeCollapsed">
-        <pre>{{card.sourceCode}}</pre>
+        <pre [innerHTML]="card.sourceCode | highlight : searchQuery"></pre>
       </div>
     </div>
     <hr>
-
     <button (click)="card.outputCollapsed = !card.outputCollapsed">
       <div *ngIf="!card.outputCollapsed">
           <i class="ms-Icon ms-Icon--CaretBottomRightSolid8" aria-label="Expand"></i>
@@ -62,12 +69,34 @@
           <span>Output</span>
       </div>
     </button>
+
+    <!-- Outputs -->
     <div class="card-output" *ngFor="let output of card.outputs">
-        <div *ngIf="!card.outputCollapsed">
-          <pre class="output">{{output.output}}</pre>
+        <div *ngIf="!card.outputCollapsed" [ngSwitch]="output.type">
+          <div *ngSwitchCase="'image/png'">
+            <img [src]="sanitizer.bypassSecurityTrustUrl('data:image/png;base64,'+output.output)">
+          </div>
+
+          <div *ngSwitchCase="'image/jpeg'">
+            <img [src]="sanitizer.bypassSecurityTrustUrl('data:image/jpeg;base64,'+output.output)">
+          </div>
+
+          <div *ngSwitchCase="'text/html'">
+            <div [innerHTML]="sanitizer.bypassSecurityTrustHtml(output.output)" runScripts></div>
+          </div>
+
+          <div *ngSwitchCase="'image/svg+xml'">
+            <div [innerHTML]="sanitizer.bypassSecurityTrustHtml(output.output)"></div>
+          </div>
+
+          <div *ngSwitchCase="'error'">
+            <p class="output-error" [innerHTML]="sanitizer.bypassSecurityTrustHtml(output.output | ansiColorize)"></p>
+          </div>
+
+          <div *ngSwitchDefault>
+            <pre class="output-plain">{{output.output}}</pre>
+          </div>
         </div>
     </div>
-
   </div>
-
 </div>
