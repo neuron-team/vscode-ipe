@@ -70,6 +70,7 @@ hr {
 .output-error {
   white-space: pre;
   font-family: monospace;
+  overflow-x: scroll;
 }
 
 button {
