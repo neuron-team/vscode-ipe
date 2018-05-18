@@ -76,6 +76,7 @@ export class ContentHelpers{
     static sourceTmp = '';
     static contentTmp: Array<CardOutput> = [];
     static id = 0;
+    static contentId = 0;
 
     private static _onStatusChanged: EventEmitter<string> = new EventEmitter();
     static get onStatusChanged(): Event<string> { return this._onStatusChanged.event; }
@@ -132,17 +133,38 @@ export class ContentHelpers{
         // The output is rich
         } else if('data' in content){
             let data = content.data;
-            let chosenType = this.chooseTypeFromComplexData(data);
-            let output = data[chosenType];
-            if(typeof output === 'string'){
-                this.contentTmp.push(new CardOutput(chosenType, output));
-            }
+            this.interpretRich(data);
         // The code could not be executed, an error was returned
         } else if(['ename', 'evalue', 'traceback'].every(value => value in content)) {
             let ename = content['ename'];
             let evalue = content['evalue'];
             let traceback = (content['traceback'] as string[]).join('\n');
             this.contentTmp.push(new CardOutput('error', traceback));
+        }
+    }
+
+    static interpretRich(data){
+        let chosenType = this.chooseTypeFromComplexData(data);
+        let output = '';
+
+        if(chosenType === 'application/vnd.plotly.v1+json'){
+            let plotlyJson = data[chosenType];
+            if(ContentHelpers.validateData(plotlyJson, 'data')){
+                output = 
+                    '<div id="' + this.contentId + '" style="height: 525px; width: 100%;" class="plotly-graph-div">'
+                    + '</div><script type="text/javascript">require(["plotly"], function(Plotly)'
+                    + '{ window.PLOTLYENV=window.PLOTLYENV || {};window.PLOTLYENV.BASE_URL="https://plot.ly";Plotly.newPlot("'
+                    + this.contentId + '",' + JSON.stringify(plotlyJson.data) + ', {}, {"showLink": true, "linkText": "Export to plot.ly"})});</script>';
+                    
+                    this.contentId++;
+            }
+            chosenType = 'text/html';
+        }
+        else{
+            output = data[chosenType];
+        }
+        if(typeof output === 'string'){
+            this.contentTmp.push(new CardOutput(chosenType, output));
         }
     }
 
