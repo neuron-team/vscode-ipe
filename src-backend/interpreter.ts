@@ -166,10 +166,10 @@ export class ContentHelpers{
     }
 
     static getMissingModule(evalue: string){
-        let moduleMatch = evalue.match(/No module named|\'.+\'/g);
-        if(moduleMatch && moduleMatch.length===2){
+        let moduleMatch = evalue.match(/No module named \'(.+?)\'/);
+        if(moduleMatch){
             let module = moduleMatch[1].replace(/\'/g, '');
-            vscode.window.showInformationMessage('Jupyter requires the module ' + moduleMatch[1] + ' to be installed. Install now?', 'Install')
+            vscode.window.showInformationMessage('Jupyter requires the module \'' + moduleMatch[1] + '\' to be installed. Install now?', 'Install')
                 .then(data => {
                     if(data) { 
                         this.installMissingModule(module);
