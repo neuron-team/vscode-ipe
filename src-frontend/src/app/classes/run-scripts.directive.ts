@@ -1,13 +1,22 @@
-import { Directive, ElementRef, OnInit } from '@angular/core';
+import {Directive, ElementRef, Input, OnChanges} from '@angular/core';
 
+/**
+ * The runScripts custom Directive ensures that HTML containing <script> tags is handled correctly when injected.
+ * Using runScripts on an element allows you to bind the `innerHTML` attribute and have any scripts in it run automatically.
+ */
 @Directive({ selector: '[runScripts]' })
-export class RunScriptsDirective implements OnInit {
+export class RunScriptsDirective implements OnChanges {
+  @Input() innerHTML: string;
+
   constructor(private elementRef: ElementRef) { }
-  ngOnInit(): void {
-    setTimeout(() => { // wait for DOM rendering
+
+  ngOnChanges() {
+    this.elementRef.nativeElement.innerHTML = this.innerHTML;
+    setTimeout(() => { // wait for DOM render
       this.reinsertScripts();
     });
   }
+
   reinsertScripts(): void {
     const scripts = <HTMLScriptElement[]>this.elementRef.nativeElement.getElementsByTagName('script');
     const scriptsInitialLength = scripts.length;

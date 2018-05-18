@@ -5,11 +5,18 @@ import {Card, CardOutput} from 'vscode-ipe-types';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
+  host: {
+    '(window:resize)': 'onWindowResize()'
+  }
 })
 export class AppComponent implements AfterViewInit {
   cards: Card[] = [
-    new Card(0, 'sample card', 'print("Hello, world!")', [new CardOutput('stdout', 'Hello, world!')])
+    new Card(0, 'sample card', 'print("Hello, world!")', [new CardOutput('stdout', 'Hello, world!')]),
+    new Card(0, 'sample graph', 'some code', [
+      new CardOutput('text/html', "<script>requirejs.config({paths: { 'plotly': ['https://cdn.plot.ly/plotly-latest.min']},});if(!window.Plotly) {{require(['plotly'],function(plotly) {window.Plotly=plotly;});}}</script>"),
+      new CardOutput('text/html', '<div id="66f3f87d-6ec3-46a5-81b7-0d78b189a25f" style="height: 525px; width: 100%;" class="plotly-graph-div"></div><script type="text/javascript">require(["plotly"], function(Plotly) { window.PLOTLYENV=window.PLOTLYENV || {};window.PLOTLYENV.BASE_URL="https://plot.ly";Plotly.newPlot("66f3f87d-6ec3-46a5-81b7-0d78b189a25f", [{"x": [1, 2, 3], "y": [3, 1, 6]}], {}, {"showLink": true, "linkText": "Export to plot.ly"})});</script>'),
+    ])
   ];
 
   selectedCards = new Set<Card>();
@@ -22,7 +29,10 @@ export class AppComponent implements AfterViewInit {
     error: true
   };
 
-  ngOnInit() {
+  constructor(private extension: ExtensionService) {
+    extension.onAddCard.subscribe(card => {
+      this.addCard(card);
+    });
   }
 
   /* Type Filtering called via emitter in toolbar*/
@@ -90,20 +100,33 @@ export class AppComponent implements AfterViewInit {
     }
   }
 
-  deleteCard(card: Card) {
-    const index: number = this.cards.indexOf(card);
-    if (index > -1) { this.cards.splice(index, 1); }
-  }
-
   addCard(card: Card) {
     this.cards.push(card);
     this.scrollToBottom();
   }
 
-  constructor(private extension: ExtensionService) {
-    extension.onAddCard.subscribe(card => {
-      this.addCard(card);
-    });
+  deleteCard(card: Card) {
+    const index: number = this.cards.indexOf(card);
+    if (index > -1) { this.cards.splice(index, 1); }
+  }
+
+  private windowResizeThrottle;
+  onWindowResize() {
+    // make sure all scripted HTML fragments are re-sized appropriately.
+    // this can be a bit inefficient, but it's only executed on window resize,
+    // which doesn't happen very often anyway
+    clearTimeout(this.windowResizeThrottle);
+    this.windowResizeThrottle = setTimeout(() => {
+      for (let card of this.cards) {
+        for (let output of card.outputs) {
+          if (output.type === 'text/html') {
+            const o = output.output;
+            output.output = '';
+            setTimeout(() => { output.output = o; });
+          }
+        }
+      }
+    }, 400);
   }
 
   /* this code ensures that the list always scrolls to the bottom when new elements are added */
