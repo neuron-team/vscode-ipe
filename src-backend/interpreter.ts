@@ -148,8 +148,12 @@ export class ContentHelpers{
 
     static chooseTypeFromComplexData(data: JSONValue) {
         let validDataTypes = 
-            ['text/html', 'image/svg+xml', 'image/png', 'image/jpeg', 'text/markdown', 'application/pdf', 
-            'text/latex', 'application/javascript', 'application/json', 'text/plain']
+            ['application/vnd.jupyter', 'application/vnd.jupyter.cells',
+            'application/vnd.jupyter.dragindex', 'application/x-ipynb+json', 
+            'application/geo+json', 'application/vnd.plotly.v1+json', 
+            'application/vdom.v1+json', 'text/html', 'image/svg+xml', 
+            'image/png', 'image/jpeg', 'text/markdown', 'application/pdf', 
+            'text/latex', 'application/json', 'text/plain']
             .filter(dataType => this.validateData(data, dataType));
         return validDataTypes[0];
     }
