@@ -1,0 +1,6474 @@
+@charset 'UTF-8';
+/* Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See LICENSE in the project root for license information. */
+/**
+ * Office UI Fabric Core 9.6.0
+ * The front-end framework for building experiences for Office 365.
+ **/
+/*
+  Your use of the content in the files referenced here is subject to the terms of the license at http://aka.ms/fabric-assets-license
+*/
+
+/* Original Content of file that is not related to Icons have be removed for Concision*/
+
+/* Changed to Local Copy */
+@font-face {
+  font-family: 'FabricMDL2Icons';
+  src: url('fabricmdl2icons-2.68.woff2') format('woff2'), url('fabricmdl2icons-2.68.woff') format('woff'), url('fabricmdl2icons-2.68.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.ms-Icon {
+  display: inline-block;
+  font-family: 'FabricMDL2Icons';
+  font-style: normal;
+  font-weight: normal;
+  speak: none;
+}
+
+.ms-Icon--circle {
+  margin: 0 0.5em 0 0;
+  position: relative;
+  display: inline-block;
+  font-size: 1rem;
+  width: 1em;
+  height: 1em;
+  padding: 0;
+  text-align: left;
+}
+
+[dir='rtl'] .ms-Icon--circle {
+  margin: 0 0 0 0.5em;
+}
+
+.ms-Icon--circle::before,
+.ms-Icon--circle::after {
+  line-height: 1;
+  font-size: inherit;
+}
+
+.ms-Icon--circle::before {
+  display: block;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  vertical-align: top;
+  position: absolute;
+}
+
+.ms-Icon--circle::after {
+  content: '\e000';
+  position: absolute;
+  top: 0;
+  left: 0;
+  -ms-transform: scale(2);
+      transform: scale(2);
+  -ms-transform-origin: 50% 50%;
+      transform-origin: 50% 50%;
+  z-index: 0;
+}
+
+.ms-Icon--xs {
+  font-size: 10px;
+}
+
+.ms-Icon--s {
+  font-size: 12px;
+}
+
+.ms-Icon--m {
+  font-size: 16px;
+}
+
+.ms-Icon--l {
+  font-size: 20px;
+}
+
+.ms-Icon--12PointStar::before {
+  content: '';
+}
+
+.ms-Icon--6PointStar::before {
+  content: '';
+}
+
+.ms-Icon--AADLogo::before {
+  content: '';
+}
+
+.ms-Icon--Accept::before {
+  content: '';
+}
+
+.ms-Icon--AccessLogo::before {
+  content: '';
+}
+
+.ms-Icon--AccessLogoFill::before {
+  content: '';
+}
+
+.ms-Icon--AccountManagement::before {
+  content: '';
+}
+
+.ms-Icon--Accounts::before {
+  content: '';
+}
+
+.ms-Icon--ActivateOrders::before {
+  content: '';
+}
+
+.ms-Icon--ActivityFeed::before {
+  content: '';
+}
+
+.ms-Icon--Add::before {
+  content: '';
+}
+
+.ms-Icon--AddBookmark::before {
+  content: '';
+}
+
+.ms-Icon--AddEvent::before {
+  content: '';
+}
+
+.ms-Icon--AddFavorite::before {
+  content: '';
+}
+
+.ms-Icon--AddFavoriteFill::before {
+  content: '';
+}
+
+.ms-Icon--AddFriend::before {
+  content: '';
+}
+
+.ms-Icon--AddGroup::before {
+  content: '';
+}
+
+.ms-Icon--AddNotes::before {
+  content: '';
+}
+
+.ms-Icon--AddOnlineMeeting::before {
+  content: '';
+}
+
+.ms-Icon--AddPhone::before {
+  content: '';
+}
+
+.ms-Icon--AddTo::before {
+  content: '';
+}
+
+.ms-Icon--Admin::before {
+  content: '';
+}
+
+.ms-Icon--AdminALogo32::before {
+  content: '';
+}
+
+.ms-Icon--AdminALogoFill32::before {
+  content: '';
+}
+
+.ms-Icon--AdminALogoInverse32::before {
+  content: '';
+}
+
+.ms-Icon--AdminCLogoInverse32::before {
+  content: '';
+}
+
+.ms-Icon--AdminDLogoInverse32::before {
+  content: '';
+}
+
+.ms-Icon--AdminELogoInverse32::before {
+  content: '';
+}
+
+.ms-Icon--AdminLLogoInverse32::before {
+  content: '';
+}
+
+.ms-Icon--AdminMLogoInverse32::before {
+  content: '';
+}
+
+.ms-Icon--AdminOLogoInverse32::before {
+  content: '';
+}
+
+.ms-Icon--AdminPLogoInverse32::before {
+  content: '';
+}
+
+.ms-Icon--AdminSLogoInverse32::before {
+  content: '';
+}
+
+.ms-Icon--AdminYLogoInverse32::before {
+  content: '';
+}
+
+.ms-Icon--Airplane::before {
+  content: '';
+}
+
+.ms-Icon--AirplaneSolid::before {
+  content: '';
+}
+
+.ms-Icon--AirTickets::before {
+  content: '';
+}
+
+.ms-Icon--AlarmClock::before {
+  content: '';
+}
+
+.ms-Icon--Album::before {
+  content: '';
+}
+
+.ms-Icon--AlbumRemove::before {
+  content: '';
+}
+
+.ms-Icon--AlertSolid::before {
+  content: '';
+}
+
+.ms-Icon--AlignCenter::before {
+  content: '';
+}
+
+.ms-Icon--AlignHorizontalCenter::before {
+  content: '';
+}
+
+.ms-Icon--AlignHorizontalLeft::before {
+  content: '';
+}
+
+.ms-Icon--AlignHorizontalRight::before {
+  content: '';
+}
+
+.ms-Icon--AlignJustify::before {
+  content: '';
+}
+
+.ms-Icon--AlignLeft::before {
+  content: '';
+}
+
+.ms-Icon--AlignRight::before {
+  content: '';
+}
+
+.ms-Icon--AlignVerticalBottom::before {
+  content: '';
+}
+
+.ms-Icon--AlignVerticalCenter::before {
+  content: '';
+}
+
+.ms-Icon--AlignVerticalTop::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--AllApps::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--AllApps::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--AllAppsMirrored::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--AllAppsMirrored::before {
+  content: '';
+}
+
+.ms-Icon--AnalyticsLogo::before {
+  content: '';
+}
+
+.ms-Icon--AnalyticsQuery::before {
+  content: '';
+}
+
+.ms-Icon--AnalyticsReport::before {
+  content: '';
+}
+
+.ms-Icon--AnalyticsView::before {
+  content: '';
+}
+
+.ms-Icon--AnchorLock::before {
+  content: '';
+}
+
+.ms-Icon--Annotation::before {
+  content: '';
+}
+
+.ms-Icon--AppIconDefault::before {
+  content: '';
+}
+
+.ms-Icon--Archive::before {
+  content: '';
+}
+
+.ms-Icon--AreaChart::before {
+  content: '';
+}
+
+.ms-Icon--ArrangeBringForward::before {
+  content: '';
+}
+
+.ms-Icon--ArrangeBringToFront::before {
+  content: '';
+}
+
+.ms-Icon--ArrangeByFrom::before {
+  content: '';
+}
+
+.ms-Icon--ArrangeSendBackward::before {
+  content: '';
+}
+
+.ms-Icon--ArrangeSendToBack::before {
+  content: '';
+}
+
+.ms-Icon--Arrivals::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--ArrowDownRight8::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--ArrowDownRight8::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--ArrowDownRightMirrored8::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--ArrowDownRightMirrored8::before {
+  content: '';
+}
+
+.ms-Icon--ArrowTallDownLeft::before {
+  content: '';
+}
+
+.ms-Icon--ArrowTallDownRight::before {
+  content: '';
+}
+
+.ms-Icon--ArrowTallUpLeft::before {
+  content: '';
+}
+
+.ms-Icon--ArrowTallUpRight::before {
+  content: '';
+}
+
+.ms-Icon--ArrowUpRight::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--ArrowUpRight8::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--ArrowUpRight8::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--ArrowUpRightMirrored8::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--ArrowUpRightMirrored8::before {
+  content: '';
+}
+
+.ms-Icon--Articles::before {
+  content: '';
+}
+
+.ms-Icon--Ascending::before {
+  content: '';
+}
+
+.ms-Icon--AspectRatio::before {
+  content: '';
+}
+
+.ms-Icon--AssessmentGroup::before {
+  content: '';
+}
+
+.ms-Icon--AssessmentGroupTemplate::before {
+  content: '';
+}
+
+.ms-Icon--AssetLibrary::before {
+  content: '';
+}
+
+.ms-Icon--Assign::before {
+  content: '';
+}
+
+.ms-Icon--Asterisk::before {
+  content: '';
+}
+
+.ms-Icon--AsteriskSolid::before {
+  content: '';
+}
+
+.ms-Icon--ATPLogo::before {
+  content: '';
+}
+
+.ms-Icon--Attach::before {
+  content: '';
+}
+
+.ms-Icon--AustralianRules::before {
+  content: '';
+}
+
+.ms-Icon--AutoEnhanceOff::before {
+  content: '';
+}
+
+.ms-Icon--AutoEnhanceOn::before {
+  content: '';
+}
+
+.ms-Icon--AutoFillTemplate::before {
+  content: '';
+}
+
+.ms-Icon--AutoHeight::before {
+  content: '';
+}
+
+.ms-Icon--AutoRacing::before {
+  content: '';
+}
+
+.ms-Icon--AwayStatus::before {
+  content: '';
+}
+
+.ms-Icon--AzureAPIManagement::before {
+  content: '';
+}
+
+.ms-Icon--AzureKeyVault::before {
+  content: '';
+}
+
+.ms-Icon--AzureLogo::before {
+  content: '';
+}
+
+.ms-Icon--AzureServiceEndpoint::before {
+  content: '';
+}
+
+.ms-Icon--Back::before {
+  content: '';
+}
+
+.ms-Icon--BackgroundColor::before {
+  content: '';
+}
+
+.ms-Icon--Backlog::before {
+  content: '';
+}
+
+.ms-Icon--BacklogBoard::before {
+  content: '';
+}
+
+.ms-Icon--BackToWindow::before {
+  content: '';
+}
+
+.ms-Icon--Badge::before {
+  content: '';
+}
+
+.ms-Icon--Balloons::before {
+  content: '';
+}
+
+.ms-Icon--BankSolid::before {
+  content: '';
+}
+
+.ms-Icon--BarChart4::before {
+  content: '';
+}
+
+.ms-Icon--BarChartHorizontal::before {
+  content: '';
+}
+
+.ms-Icon--BarChartVertical::before {
+  content: '';
+}
+
+.ms-Icon--Baseball::before {
+  content: '';
+}
+
+.ms-Icon--BeerMug::before {
+  content: '';
+}
+
+.ms-Icon--BIDashboard::before {
+  content: '';
+}
+
+.ms-Icon--BidiLtr::before {
+  content: '';
+}
+
+.ms-Icon--BidiRtl::before {
+  content: '';
+}
+
+.ms-Icon--BingLogo::before {
+  content: '';
+}
+
+.ms-Icon--BirthdayCake::before {
+  content: '';
+}
+
+.ms-Icon--BlockContact::before {
+  content: '';
+}
+
+.ms-Icon--Blocked::before {
+  content: '';
+}
+
+.ms-Icon--Blocked12::before {
+  content: '';
+}
+
+.ms-Icon--Blocked2::before {
+  content: '';
+}
+
+.ms-Icon--BlockedSite::before {
+  content: '';
+}
+
+.ms-Icon--BlockedSolid::before {
+  content: '';
+}
+
+.ms-Icon--BlowingSnow::before {
+  content: '';
+}
+
+.ms-Icon--Blur::before {
+  content: '';
+}
+
+.ms-Icon--Boards::before {
+  content: '';
+}
+
+.ms-Icon--Bold::before {
+  content: '';
+}
+
+.ms-Icon--BookingsLogo::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--Bookmarks::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--Bookmarks::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--BookmarksMirrored::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--BookmarksMirrored::before {
+  content: '';
+}
+
+.ms-Icon--BorderDash::before {
+  content: '';
+}
+
+.ms-Icon--BorderDot::before {
+  content: '';
+}
+
+.ms-Icon--BoxAdditionSolid::before {
+  content: '';
+}
+
+.ms-Icon--BoxCheckmarkSolid::before {
+  content: '';
+}
+
+.ms-Icon--BoxMultiplySolid::before {
+  content: '';
+}
+
+.ms-Icon--BoxPlaySolid::before {
+  content: '';
+}
+
+.ms-Icon--BoxSubtractSolid::before {
+  content: '';
+}
+
+.ms-Icon--BranchCommit::before {
+  content: '';
+}
+
+.ms-Icon--BranchCompare::before {
+  content: '';
+}
+
+.ms-Icon--BranchFork::before {
+  content: '';
+}
+
+.ms-Icon--BranchFork2::before {
+  content: '';
+}
+
+.ms-Icon--BranchLocked::before {
+  content: '';
+}
+
+.ms-Icon--BranchMerge::before {
+  content: '';
+}
+
+.ms-Icon--BranchPullRequest::before {
+  content: '';
+}
+
+.ms-Icon--BranchSearch::before {
+  content: '';
+}
+
+.ms-Icon--BranchShelveset::before {
+  content: '';
+}
+
+.ms-Icon--Breadcrumb::before {
+  content: '';
+}
+
+.ms-Icon--Breakfast::before {
+  content: '';
+}
+
+.ms-Icon--Brightness::before {
+  content: '';
+}
+
+.ms-Icon--Broom::before {
+  content: '';
+}
+
+.ms-Icon--BrowserScreenShot::before {
+  content: '';
+}
+
+.ms-Icon--BrowserTab::before {
+  content: '';
+}
+
+.ms-Icon--BrowserTabScreenshot::before {
+  content: '';
+}
+
+.ms-Icon--Brunch::before {
+  content: '';
+}
+
+.ms-Icon--BucketColor::before {
+  content: '';
+}
+
+.ms-Icon--BucketColorFill::before {
+  content: '';
+}
+
+.ms-Icon--BufferTimeAfter::before {
+  content: '';
+}
+
+.ms-Icon--BufferTimeBefore::before {
+  content: '';
+}
+
+.ms-Icon--BufferTimeBoth::before {
+  content: '';
+}
+
+.ms-Icon--Bug::before {
+  content: '';
+}
+
+.ms-Icon--BugSolid::before {
+  content: '';
+}
+
+.ms-Icon--Build::before {
+  content: '';
+}
+
+.ms-Icon--BuildIssue::before {
+  content: '';
+}
+
+.ms-Icon--BuildQueue::before {
+  content: '';
+}
+
+.ms-Icon--BuildQueueNew::before {
+  content: '';
+}
+
+.ms-Icon--BulkUpload::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--BulletedList2::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--BulletedList2::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--BulletedList2Mirrored::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--BulletedList2Mirrored::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--BulletedList::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--BulletedList::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--BulletedListMirrored::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--BulletedListMirrored::before {
+  content: '';
+}
+
+.ms-Icon--Bullseye::before {
+  content: '';
+}
+
+.ms-Icon--Bus::before {
+  content: '';
+}
+
+.ms-Icon--BusinessCenterLogo::before {
+  content: '';
+}
+
+.ms-Icon--BusinessHoursSign::before {
+  content: '';
+}
+
+.ms-Icon--BusSolid::before {
+  content: '';
+}
+
+.ms-Icon--Cafe::before {
+  content: '';
+}
+
+.ms-Icon--Cake::before {
+  content: '';
+}
+
+.ms-Icon--Calculator::before {
+  content: '';
+}
+
+.ms-Icon--CalculatorAddition::before {
+  content: '';
+}
+
+.ms-Icon--CalculatorEqualTo::before {
+  content: '';
+}
+
+.ms-Icon--CalculatorMultiply::before {
+  content: '';
+}
+
+.ms-Icon--CalculatorNotEqualTo::before {
+  content: '';
+}
+
+.ms-Icon--CalculatorSubtract::before {
+  content: '';
+}
+
+.ms-Icon--CalendarAgenda::before {
+  content: '';
+}
+
+.ms-Icon--CalendarDay::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--Calendar::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--Calendar::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--CalendarMirrored::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--CalendarMirrored::before {
+  content: '';
+}
+
+.ms-Icon--CalendarReply::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--CalendarSettings::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--CalendarSettings::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--CalendarSettingsMirrored::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--CalendarSettingsMirrored::before {
+  content: '';
+}
+
+.ms-Icon--CalendarWeek::before {
+  content: '';
+}
+
+.ms-Icon--CalendarWorkWeek::before {
+  content: '';
+}
+
+.ms-Icon--CaloriesAdd::before {
+  content: '';
+}
+
+.ms-Icon--Camera::before {
+  content: '';
+}
+
+.ms-Icon--Cancel::before {
+  content: '';
+}
+
+.ms-Icon--CannedChat::before {
+  content: '';
+}
+
+.ms-Icon--Car::before {
+  content: '';
+}
+
+.ms-Icon--CaretBottomLeftCenter8::before {
+  content: '';
+}
+
+.ms-Icon--CaretBottomLeftSolid8::before {
+  content: '';
+}
+
+.ms-Icon--CaretBottomRightCenter8::before {
+  content: '';
+}
+
+.ms-Icon--CaretBottomRightSolid8::before {
+  content: '';
+}
+
+.ms-Icon--CaretDown8::before {
+  content: '';
+}
+
+.ms-Icon--CaretDownSolid8::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--CaretHollow::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--CaretHollow::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--CaretHollowMirrored::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--CaretHollowMirrored::before {
+  content: '';
+}
+
+.ms-Icon--CaretLeft8::before {
+  content: '';
+}
+
+.ms-Icon--CaretLeftSolid8::before {
+  content: '';
+}
+
+.ms-Icon--CaretRight::before {
+  content: '';
+}
+
+.ms-Icon--CaretRight8::before {
+  content: '';
+}
+
+.ms-Icon--CaretRightSolid8::before {
+  content: '';
+}
+
+.ms-Icon--CaretSolid16::before {
+  content: '';
+}
+
+.ms-Icon--CaretSolidDown::before {
+  content: '';
+}
+
+.ms-Icon--CaretSolidLeft::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--CaretSolid::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--CaretSolid::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--CaretSolidMirrored::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--CaretSolidMirrored::before {
+  content: '';
+}
+
+.ms-Icon--CaretSolidRight::before {
+  content: '';
+}
+
+.ms-Icon--CaretSolidUp::before {
+  content: '';
+}
+
+.ms-Icon--CaretTopLeftCenter8::before {
+  content: '';
+}
+
+.ms-Icon--CaretTopLeftSolid8::before {
+  content: '';
+}
+
+.ms-Icon--CaretTopRightCenter8::before {
+  content: '';
+}
+
+.ms-Icon--CaretTopRightSolid8::before {
+  content: '';
+}
+
+.ms-Icon--CaretUp8::before {
+  content: '';
+}
+
+.ms-Icon--CaretUpSolid8::before {
+  content: '';
+}
+
+.ms-Icon--Cat::before {
+  content: '';
+}
+
+.ms-Icon--CellPhone::before {
+  content: '';
+}
+
+.ms-Icon--Certificate::before {
+  content: '';
+}
+
+.ms-Icon--CertifiedDatabase::before {
+  content: '';
+}
+
+.ms-Icon--Chart::before {
+  content: '';
+}
+
+.ms-Icon--ChartSeries::before {
+  content: '';
+}
+
+.ms-Icon--ChartXAngle::before {
+  content: '';
+}
+
+.ms-Icon--ChartYAngle::before {
+  content: '';
+}
+
+.ms-Icon--Chat::before {
+  content: '';
+}
+
+.ms-Icon--ChatInviteFriend::before {
+  content: '';
+}
+
+.ms-Icon--ChatSolid::before {
+  content: '';
+}
+
+.ms-Icon--Checkbox::before {
+  content: '';
+}
+
+.ms-Icon--CheckboxComposite::before {
+  content: '';
+}
+
+.ms-Icon--CheckboxCompositeReversed::before {
+  content: '';
+}
+
+.ms-Icon--CheckboxIndeterminate::before {
+  content: '';
+}
+
+.ms-Icon--CheckedOutByOther12::before {
+  content: '';
+}
+
+.ms-Icon--CheckedOutByYou12::before {
+  content: '';
+}
+
+.ms-Icon--CheckList::before {
+  content: '';
+}
+
+.ms-Icon--CheckMark::before {
+  content: '';
+}
+
+.ms-Icon--ChevronDown::before {
+  content: '';
+}
+
+.ms-Icon--ChevronDownEnd6::before {
+  content: '';
+}
+
+.ms-Icon--ChevronDownMed::before {
+  content: '';
+}
+
+.ms-Icon--ChevronDownSmall::before {
+  content: '';
+}
+
+.ms-Icon--ChevronFold10::before {
+  content: '';
+}
+
+.ms-Icon--ChevronLeft::before {
+  content: '';
+}
+
+.ms-Icon--ChevronLeftEnd6::before {
+  content: '';
+}
+
+.ms-Icon--ChevronLeftMed::before {
+  content: '';
+}
+
+.ms-Icon--ChevronLeftSmall::before {
+  content: '';
+}
+
+.ms-Icon--ChevronRight::before {
+  content: '';
+}
+
+.ms-Icon--ChevronRightEnd6::before {
+  content: '';
+}
+
+.ms-Icon--ChevronRightMed::before {
+  content: '';
+}
+
+.ms-Icon--ChevronRightSmall::before {
+  content: '';
+}
+
+.ms-Icon--ChevronUnfold10::before {
+  content: '';
+}
+
+.ms-Icon--ChevronUp::before {
+  content: '';
+}
+
+.ms-Icon--ChevronUpEnd6::before {
+  content: '';
+}
+
+.ms-Icon--ChevronUpMed::before {
+  content: '';
+}
+
+.ms-Icon--ChevronUpSmall::before {
+  content: '';
+}
+
+.ms-Icon--Chopsticks::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--ChromeBack::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--ChromeBack::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--ChromeBackMirrored::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--ChromeBackMirrored::before {
+  content: '';
+}
+
+.ms-Icon--ChromeClose::before {
+  content: '';
+}
+
+.ms-Icon--ChromeMinimize::before {
+  content: '';
+}
+
+.ms-Icon--CircleAddition::before {
+  content: '';
+}
+
+.ms-Icon--CircleAdditionSolid::before {
+  content: '';
+}
+
+.ms-Icon--CircleFill::before {
+  content: '';
+}
+
+.ms-Icon--CircleHalfFull::before {
+  content: '';
+}
+
+.ms-Icon--CirclePause::before {
+  content: '';
+}
+
+.ms-Icon--CirclePauseSolid::before {
+  content: '';
+}
+
+.ms-Icon--CirclePlus::before {
+  content: '';
+}
+
+.ms-Icon--CircleRing::before {
+  content: '';
+}
+
+.ms-Icon--CircleShapeSolid::before {
+  content: '';
+}
+
+.ms-Icon--CircleStop::before {
+  content: '';
+}
+
+.ms-Icon--CircleStopSolid::before {
+  content: '';
+}
+
+.ms-Icon--CityNext::before {
+  content: '';
+}
+
+.ms-Icon--ClassNotebookLogo16::before {
+  content: '';
+}
+
+.ms-Icon--ClassNotebookLogo32::before {
+  content: '';
+}
+
+.ms-Icon--ClassNotebookLogoFill16::before {
+  content: '';
+}
+
+.ms-Icon--ClassNotebookLogoFill32::before {
+  content: '';
+}
+
+.ms-Icon--ClassNotebookLogoInverse::before {
+  content: '';
+}
+
+.ms-Icon--ClassNotebookLogoInverse16::before {
+  content: '';
+}
+
+.ms-Icon--ClassNotebookLogoInverse32::before {
+  content: '';
+}
+
+.ms-Icon--ClassroomLogo::before {
+  content: '';
+}
+
+.ms-Icon--Clear::before {
+  content: '';
+}
+
+.ms-Icon--ClearFilter::before {
+  content: '';
+}
+
+.ms-Icon--ClearFormatting::before {
+  content: '';
+}
+
+.ms-Icon--ClearNight::before {
+  content: '';
+}
+
+.ms-Icon--ClipboardSolid::before {
+  content: '';
+}
+
+.ms-Icon--Clock::before {
+  content: '';
+}
+
+.ms-Icon--CloneToDesktop::before {
+  content: '';
+}
+
+.ms-Icon--ClosedCaption::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--ClosePane::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--ClosePane::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--ClosePaneMirrored::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--ClosePaneMirrored::before {
+  content: '';
+}
+
+.ms-Icon--Cloud::before {
+  content: '';
+}
+
+.ms-Icon--CloudAdd::before {
+  content: '';
+}
+
+.ms-Icon--CloudDownload::before {
+  content: '';
+}
+
+.ms-Icon--CloudUpload::before {
+  content: '';
+}
+
+.ms-Icon--CloudWeather::before {
+  content: '';
+}
+
+.ms-Icon--Cloudy::before {
+  content: '';
+}
+
+.ms-Icon--Cocktails::before {
+  content: '';
+}
+
+.ms-Icon--Code::before {
+  content: '';
+}
+
+.ms-Icon--CodeEdit::before {
+  content: '';
+}
+
+.ms-Icon--Coffee::before {
+  content: '';
+}
+
+.ms-Icon--CoffeeScript::before {
+  content: '';
+}
+
+.ms-Icon--CollapseContent::before {
+  content: '';
+}
+
+.ms-Icon--CollapseContentSingle::before {
+  content: '';
+}
+
+.ms-Icon--CollapseMenu::before {
+  content: '';
+}
+
+.ms-Icon--CollegeFootball::before {
+  content: '';
+}
+
+.ms-Icon--CollegeHoops::before {
+  content: '';
+}
+
+.ms-Icon--Color::before {
+  content: '';
+}
+
+.ms-Icon--ColorSolid::before {
+  content: '';
+}
+
+.ms-Icon--ColumnLeftTwoThirds::before {
+  content: '';
+}
+
+.ms-Icon--ColumnLeftTwoThirdsEdit::before {
+  content: '';
+}
+
+.ms-Icon--ColumnOptions::before {
+  content: '';
+}
+
+.ms-Icon--ColumnRightTwoThirds::before {
+  content: '';
+}
+
+.ms-Icon--ColumnRightTwoThirdsEdit::before {
+  content: '';
+}
+
+.ms-Icon--Combine::before {
+  content: '';
+}
+
+.ms-Icon--Combobox::before {
+  content: '';
+}
+
+.ms-Icon--CommandPrompt::before {
+  content: '';
+}
+
+.ms-Icon--Comment::before {
+  content: '';
+}
+
+.ms-Icon--CommentAdd::before {
+  content: '';
+}
+
+.ms-Icon--CommentNext::before {
+  content: '';
+}
+
+.ms-Icon--CommentPrevious::before {
+  content: '';
+}
+
+.ms-Icon--CommentUrgent::before {
+  content: '';
+}
+
+.ms-Icon--Commitments::before {
+  content: '';
+}
+
+.ms-Icon--Communications::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--CompanyDirectory::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--CompanyDirectory::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--CompanyDirectoryMirrored::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--CompanyDirectoryMirrored::before {
+  content: '';
+}
+
+.ms-Icon--CompassNW::before {
+  content: '';
+}
+
+.ms-Icon--Completed::before {
+  content: '';
+}
+
+.ms-Icon--CompletedSolid::before {
+  content: '';
+}
+
+.ms-Icon--ConfigurationSolid::before {
+  content: '';
+}
+
+.ms-Icon--ConnectContacts::before {
+  content: '';
+}
+
+.ms-Icon--ConstructionCone::before {
+  content: '';
+}
+
+.ms-Icon--ConstructionConeSolid::before {
+  content: '';
+}
+
+.ms-Icon--Contact::before {
+  content: '';
+}
+
+.ms-Icon--ContactCard::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--ContactCardSettings::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--ContactCardSettings::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--ContactCardSettingsMirrored::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--ContactCardSettingsMirrored::before {
+  content: '';
+}
+
+.ms-Icon--ContactInfo::before {
+  content: '';
+}
+
+.ms-Icon--ContactLink::before {
+  content: '';
+}
+
+.ms-Icon--ContextMenu::before {
+  content: '';
+}
+
+.ms-Icon--Contrast::before {
+  content: '';
+}
+
+.ms-Icon--Copy::before {
+  content: '';
+}
+
+.ms-Icon--Cotton::before {
+  content: '';
+}
+
+.ms-Icon--CPlusPlus::before {
+  content: '';
+}
+
+.ms-Icon--CPlusPlusLanguage::before {
+  content: '';
+}
+
+.ms-Icon--CreateMailRule::before {
+  content: '';
+}
+
+.ms-Icon--Cricket::before {
+  content: '';
+}
+
+.ms-Icon--CRMReport::before {
+  content: '';
+}
+
+.ms-Icon--Crop::before {
+  content: '';
+}
+
+.ms-Icon--Crown::before {
+  content: '';
+}
+
+.ms-Icon--CrownSolid::before {
+  content: '';
+}
+
+.ms-Icon--CSharp::before {
+  content: '';
+}
+
+.ms-Icon--CSharpLanguage::before {
+  content: '';
+}
+
+.ms-Icon--CSS::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--CustomList::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--CustomList::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--CustomListMirrored::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--CustomListMirrored::before {
+  content: '';
+}
+
+.ms-Icon--Cut::before {
+  content: '';
+}
+
+.ms-Icon--Cycling::before {
+  content: '';
+}
+
+.ms-Icon--DashboardAdd::before {
+  content: '';
+}
+
+.ms-Icon--Database::before {
+  content: '';
+}
+
+.ms-Icon--DataConnectionLibrary::before {
+  content: '';
+}
+
+.ms-Icon--DateTime2::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--DateTime::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--DateTime::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--DateTimeMirrored::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--DateTimeMirrored::before {
+  content: '';
+}
+
+.ms-Icon--DeactivateOrders::before {
+  content: '';
+}
+
+.ms-Icon--DecisionSolid::before {
+  content: '';
+}
+
+.ms-Icon--DeclineCall::before {
+  content: '';
+}
+
+.ms-Icon--DecreaseIndentLegacy::before {
+  content: '';
+}
+
+.ms-Icon--DefaultRatio::before {
+  content: '';
+}
+
+.ms-Icon--DefectSolid::before {
+  content: '';
+}
+
+.ms-Icon--Delete::before {
+  content: '';
+}
+
+.ms-Icon--DeleteColumns::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--DeleteRows::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--DeleteRows::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--DeleteRowsMirrored::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--DeleteRowsMirrored::before {
+  content: '';
+}
+
+.ms-Icon--DeleteTable::before {
+  content: '';
+}
+
+.ms-Icon--DeliveryTruck::before {
+  content: '';
+}
+
+.ms-Icon--DelveAnalytics::before {
+  content: '';
+}
+
+.ms-Icon--DelveAnalyticsLogo::before {
+  content: '';
+}
+
+.ms-Icon--DelveLogo::before {
+  content: '';
+}
+
+.ms-Icon--DelveLogoFill::before {
+  content: '';
+}
+
+.ms-Icon--DelveLogoInverse::before {
+  content: '';
+}
+
+.ms-Icon--Deploy::before {
+  content: '';
+}
+
+.ms-Icon--Descending::before {
+  content: '';
+}
+
+.ms-Icon--Design::before {
+  content: '';
+}
+
+.ms-Icon--DesktopScreenshot::before {
+  content: '';
+}
+
+.ms-Icon--DeveloperTools::before {
+  content: '';
+}
+
+.ms-Icon--Devices3::before {
+  content: '';
+}
+
+.ms-Icon--Devices4::before {
+  content: '';
+}
+
+.ms-Icon--Diagnostic::before {
+  content: '';
+}
+
+.ms-Icon--Dialpad::before {
+  content: '';
+}
+
+.ms-Icon--DiamondSolid::before {
+  content: '';
+}
+
+.ms-Icon--Dictionary::before {
+  content: '';
+}
+
+.ms-Icon--DictionaryRemove::before {
+  content: '';
+}
+
+.ms-Icon--DietPlanNotebook::before {
+  content: '';
+}
+
+.ms-Icon--DiffInline::before {
+  content: '';
+}
+
+.ms-Icon--DiffSideBySide::before {
+  content: '';
+}
+
+.ms-Icon--DisableUpdates::before {
+  content: '';
+}
+
+.ms-Icon--Dislike::before {
+  content: '';
+}
+
+.ms-Icon--DislikeSolid::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--DockLeft::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--DockLeft::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--DockLeftMirrored::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--DockLeftMirrored::before {
+  content: '';
+}
+
+.ms-Icon--DockRight::before {
+  content: '';
+}
+
+.ms-Icon--DocLibrary::before {
+  content: '';
+}
+
+.ms-Icon--DocsLogoInverse::before {
+  content: '';
+}
+
+.ms-Icon--Document::before {
+  content: '';
+}
+
+.ms-Icon--DocumentApproval::before {
+  content: '';
+}
+
+.ms-Icon--Documentation::before {
+  content: '';
+}
+
+.ms-Icon--DocumentManagement::before {
+  content: '';
+}
+
+.ms-Icon--DocumentReply::before {
+  content: '';
+}
+
+.ms-Icon--DocumentSearch::before {
+  content: '';
+}
+
+.ms-Icon--DocumentSet::before {
+  content: '';
+}
+
+.ms-Icon--DOM::before {
+  content: '';
+}
+
+.ms-Icon--DonutChart::before {
+  content: '';
+}
+
+.ms-Icon--Door::before {
+  content: '';
+}
+
+.ms-Icon--DoubleBookmark::before {
+  content: '';
+}
+
+.ms-Icon--DoubleChevronDown::before {
+  content: '';
+}
+
+.ms-Icon--DoubleChevronDown12::before {
+  content: '';
+}
+
+.ms-Icon--DoubleChevronDown8::before {
+  content: '';
+}
+
+.ms-Icon--DoubleChevronLeft::before {
+  content: '';
+}
+
+.ms-Icon--DoubleChevronLeft12::before {
+  content: '';
+}
+
+.ms-Icon--DoubleChevronLeft8::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--DoubleChevronLeftMed::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--DoubleChevronLeftMed::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--DoubleChevronLeftMedMirrored::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--DoubleChevronLeftMedMirrored::before {
+  content: '';
+}
+
+.ms-Icon--DoubleChevronRight::before {
+  content: '';
+}
+
+.ms-Icon--DoubleChevronRight12::before {
+  content: '';
+}
+
+.ms-Icon--DoubleChevronRight8::before {
+  content: '';
+}
+
+.ms-Icon--DoubleChevronUp::before {
+  content: '';
+}
+
+.ms-Icon--DoubleChevronUp12::before {
+  content: '';
+}
+
+.ms-Icon--DoubleChevronUp8::before {
+  content: '';
+}
+
+.ms-Icon--DoubleColumn::before {
+  content: '';
+}
+
+.ms-Icon--DoubleColumnEdit::before {
+  content: '';
+}
+
+.ms-Icon--Down::before {
+  content: '';
+}
+
+.ms-Icon--Download::before {
+  content: '';
+}
+
+.ms-Icon--DownloadDocument::before {
+  content: '';
+}
+
+.ms-Icon--DragObject::before {
+  content: '';
+}
+
+.ms-Icon--DrillDown::before {
+  content: '';
+}
+
+.ms-Icon--DrillDownSolid::before {
+  content: '';
+}
+
+.ms-Icon--DrillExpand::before {
+  content: '';
+}
+
+.ms-Icon--DrillShow::before {
+  content: '';
+}
+
+.ms-Icon--DrillThrough::before {
+  content: '';
+}
+
+.ms-Icon--DRM::before {
+  content: '';
+}
+
+.ms-Icon--Drop::before {
+  content: '';
+}
+
+.ms-Icon--Dropdown::before {
+  content: '';
+}
+
+.ms-Icon--DropShapeSolid::before {
+  content: '';
+}
+
+.ms-Icon--Duststorm::before {
+  content: '';
+}
+
+.ms-Icon--Dynamics365Logo::before {
+  content: '';
+}
+
+.ms-Icon--DynamicSMBLogo::before {
+  content: '';
+}
+
+.ms-Icon--EatDrink::before {
+  content: '';
+}
+
+.ms-Icon--EdgeLogo::before {
+  content: '';
+}
+
+.ms-Icon--EditContact::before {
+  content: '';
+}
+
+.ms-Icon--EditMail::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--Edit::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--Edit::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--EditMirrored::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--EditMirrored::before {
+  content: '';
+}
+
+.ms-Icon--EditNote::before {
+  content: '';
+}
+
+.ms-Icon--EditPhoto::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--EditSolid12::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--EditSolid12::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--EditSolidMirrored12::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--EditSolidMirrored12::before {
+  content: '';
+}
+
+.ms-Icon--EditStyle::before {
+  content: '';
+}
+
+.ms-Icon--Education::before {
+  content: '';
+}
+
+.ms-Icon--Ellipse::before {
+  content: '';
+}
+
+.ms-Icon--Embed::before {
+  content: '';
+}
+
+.ms-Icon--EMI::before {
+  content: '';
+}
+
+.ms-Icon--Emoji::before {
+  content: '';
+}
+
+.ms-Icon--Emoji2::before {
+  content: '';
+}
+
+.ms-Icon--EmojiDisappointed::before {
+  content: '';
+}
+
+.ms-Icon--EmojiNeutral::before {
+  content: '';
+}
+
+.ms-Icon--EmojiTabSymbols::before {
+  content: '';
+}
+
+.ms-Icon--EmptyRecycleBin::before {
+  content: '';
+}
+
+.ms-Icon--Encryption::before {
+  content: '';
+}
+
+.ms-Icon--EngineeringGroup::before {
+  content: '';
+}
+
+.ms-Icon--EntryDecline::before {
+  content: '';
+}
+
+.ms-Icon--EntryView::before {
+  content: '';
+}
+
+.ms-Icon--Equalizer::before {
+  content: '';
+}
+
+.ms-Icon--EraseTool::before {
+  content: '';
+}
+
+.ms-Icon--Error::before {
+  content: '';
+}
+
+.ms-Icon--ErrorBadge::before {
+  content: '';
+}
+
+.ms-Icon--Event::before {
+  content: '';
+}
+
+.ms-Icon--EventAccepted::before {
+  content: '';
+}
+
+.ms-Icon--EventDate::before {
+  content: '';
+}
+
+.ms-Icon--EventDeclined::before {
+  content: '';
+}
+
+.ms-Icon--EventInfo::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--EventTentative::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--EventTentative::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--EventTentativeMirrored::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--EventTentativeMirrored::before {
+  content: '';
+}
+
+.ms-Icon--ExcelDocument::before {
+  content: '';
+}
+
+.ms-Icon--ExcelLogo::before {
+  content: '';
+}
+
+.ms-Icon--ExcelLogo16::before {
+  content: '';
+}
+
+.ms-Icon--ExcelLogoFill::before {
+  content: '';
+}
+
+.ms-Icon--ExcelLogoFill16::before {
+  content: '';
+}
+
+.ms-Icon--ExcelLogoInverse::before {
+  content: '';
+}
+
+.ms-Icon--ExcelLogoInverse16::before {
+  content: '';
+}
+
+.ms-Icon--ExchangeLogo::before {
+  content: '';
+}
+
+.ms-Icon--ExchangeLogoFill::before {
+  content: '';
+}
+
+.ms-Icon--ExchangeLogoInverse::before {
+  content: '';
+}
+
+.ms-Icon--ExerciseTracker::before {
+  content: '';
+}
+
+.ms-Icon--ExpandMenu::before {
+  content: '';
+}
+
+.ms-Icon--ExploreContent::before {
+  content: '';
+}
+
+.ms-Icon--ExploreContentSingle::before {
+  content: '';
+}
+
+.ms-Icon--ExploreData::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--Export::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--Export::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--ExportMirrored::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--ExportMirrored::before {
+  content: '';
+}
+
+.ms-Icon--ExternalBuild::before {
+  content: '';
+}
+
+.ms-Icon--ExternalGit::before {
+  content: '';
+}
+
+.ms-Icon--ExternalTFVC::before {
+  content: '';
+}
+
+.ms-Icon--ExternalXAML::before {
+  content: '';
+}
+
+.ms-Icon--F12DevTools::before {
+  content: '';
+}
+
+.ms-Icon--FabricAssetLibrary::before {
+  content: '';
+}
+
+.ms-Icon--FabricDataConnectionLibrary::before {
+  content: '';
+}
+
+.ms-Icon--FabricDocLibrary::before {
+  content: '';
+}
+
+.ms-Icon--FabricFolder::before {
+  content: '';
+}
+
+.ms-Icon--FabricFolderFill::before {
+  content: '';
+}
+
+.ms-Icon--FabricFolderSearch::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--FabricFormLibrary::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--FabricFormLibrary::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--FabricFormLibraryMirrored::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--FabricFormLibraryMirrored::before {
+  content: '';
+}
+
+.ms-Icon--FabricMovetoFolder::before {
+  content: '';
+}
+
+.ms-Icon--FabricNewFolder::before {
+  content: '';
+}
+
+.ms-Icon--FabricOpenFolderHorizontal::before {
+  content: '';
+}
+
+.ms-Icon--FabricPictureLibrary::before {
+  content: '';
+}
+
+.ms-Icon--FabricPublicFolder::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--FabricReportLibrary::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--FabricReportLibrary::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--FabricReportLibraryMirrored::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--FabricReportLibraryMirrored::before {
+  content: '';
+}
+
+.ms-Icon--FabricSyncFolder::before {
+  content: '';
+}
+
+.ms-Icon--FabricUnsyncFolder::before {
+  content: '';
+}
+
+.ms-Icon--Family::before {
+  content: '';
+}
+
+.ms-Icon--FangBody::before {
+  content: '';
+}
+
+.ms-Icon--FastForward::before {
+  content: '';
+}
+
+.ms-Icon--FastMode::before {
+  content: '';
+}
+
+.ms-Icon--Favicon::before {
+  content: '';
+}
+
+.ms-Icon--FavoriteList::before {
+  content: '';
+}
+
+.ms-Icon--FavoriteStar::before {
+  content: '';
+}
+
+.ms-Icon--FavoriteStarFill::before {
+  content: '';
+}
+
+.ms-Icon--Fax::before {
+  content: '';
+}
+
+.ms-Icon--Feedback::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--FeedbackRequestSolid::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--FeedbackRequestSolid::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--FeedbackRequestMirroredSolid::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--FeedbackRequestMirroredSolid::before {
+  content: '';
+}
+
+.ms-Icon--FeedbackResponseSolid::before {
+  content: '';
+}
+
+.ms-Icon--Ferry::before {
+  content: '';
+}
+
+.ms-Icon--FerrySolid::before {
+  content: '';
+}
+
+.ms-Icon--FieldChanged::before {
+  content: '';
+}
+
+.ms-Icon--FieldEmpty::before {
+  content: '';
+}
+
+.ms-Icon--FieldFilled::before {
+  content: '';
+}
+
+.ms-Icon--FieldNotChanged::before {
+  content: '';
+}
+
+.ms-Icon--FieldReadOnly::before {
+  content: '';
+}
+
+.ms-Icon--FieldRequired::before {
+  content: '';
+}
+
+.ms-Icon--FileASPX::before {
+  content: '';
+}
+
+.ms-Icon--FileBug::before {
+  content: '';
+}
+
+.ms-Icon--FileCode::before {
+  content: '';
+}
+
+.ms-Icon--FileComment::before {
+  content: '';
+}
+
+.ms-Icon--FileCSS::before {
+  content: '';
+}
+
+.ms-Icon--FileHTML::before {
+  content: '';
+}
+
+.ms-Icon--FileImage::before {
+  content: '';
+}
+
+.ms-Icon--FileJAVA::before {
+  content: '';
+}
+
+.ms-Icon--FileLess::before {
+  content: '';
+}
+
+.ms-Icon--FilePDB::before {
+  content: '';
+}
+
+.ms-Icon--FileSass::before {
+  content: '';
+}
+
+.ms-Icon--FileSQL::before {
+  content: '';
+}
+
+.ms-Icon--FileSymlink::before {
+  content: '';
+}
+
+.ms-Icon--FileTemplate::before {
+  content: '';
+}
+
+.ms-Icon--FileTypeSolution::before {
+  content: '';
+}
+
+.ms-Icon--FileYML::before {
+  content: '';
+}
+
+.ms-Icon--Filter::before {
+  content: '';
+}
+
+.ms-Icon--Filters::before {
+  content: '';
+}
+
+.ms-Icon--FilterSolid::before {
+  content: '';
+}
+
+.ms-Icon--FiltersSolid::before {
+  content: '';
+}
+
+.ms-Icon--Financial::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--FinancialSolid::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--FinancialSolid::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--FinancialMirroredSolid::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--FinancialMirroredSolid::before {
+  content: '';
+}
+
+.ms-Icon--Fingerprint::before {
+  content: '';
+}
+
+.ms-Icon--FiveTileGrid::before {
+  content: '';
+}
+
+.ms-Icon--Flag::before {
+  content: '';
+}
+
+.ms-Icon--FlameSolid::before {
+  content: '';
+}
+
+.ms-Icon--FlickDown::before {
+  content: '';
+}
+
+.ms-Icon--FlickLeft::before {
+  content: '';
+}
+
+.ms-Icon--FlickRight::before {
+  content: '';
+}
+
+.ms-Icon--FlickUp::before {
+  content: '';
+}
+
+.ms-Icon--Flow::before {
+  content: '';
+}
+
+.ms-Icon--FocalPoint::before {
+  content: '';
+}
+
+.ms-Icon--Fog::before {
+  content: '';
+}
+
+.ms-Icon--Folder::before {
+  content: '';
+}
+
+.ms-Icon--FolderFill::before {
+  content: '';
+}
+
+.ms-Icon--FolderHorizontal::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--FolderList::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--FolderList::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--FolderListMirrored::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--FolderListMirrored::before {
+  content: '';
+}
+
+.ms-Icon--FolderOpen::before {
+  content: '';
+}
+
+.ms-Icon--FolderQuery::before {
+  content: '';
+}
+
+.ms-Icon--FolderSearch::before {
+  content: '';
+}
+
+.ms-Icon--FollowUser::before {
+  content: '';
+}
+
+.ms-Icon--Font::before {
+  content: '';
+}
+
+.ms-Icon--FontColor::before {
+  content: '';
+}
+
+.ms-Icon--FontColorA::before {
+  content: '';
+}
+
+.ms-Icon--FontColorSwatch::before {
+  content: '';
+}
+
+.ms-Icon--FontDecrease::before {
+  content: '';
+}
+
+.ms-Icon--FontIncrease::before {
+  content: '';
+}
+
+.ms-Icon--FontSize::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--FormLibrary::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--FormLibrary::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--FormLibraryMirrored::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--FormLibraryMirrored::before {
+  content: '';
+}
+
+.ms-Icon--Forward::before {
+  content: '';
+}
+
+.ms-Icon--ForwardEvent::before {
+  content: '';
+}
+
+.ms-Icon--Freezing::before {
+  content: '';
+}
+
+.ms-Icon--Frigid::before {
+  content: '';
+}
+
+.ms-Icon--FSharp::before {
+  content: '';
+}
+
+.ms-Icon--FSharpLanguage::before {
+  content: '';
+}
+
+.ms-Icon--FullCircleMask::before {
+  content: '';
+}
+
+.ms-Icon--FullHistory::before {
+  content: '';
+}
+
+.ms-Icon--FullScreen::before {
+  content: '';
+}
+
+.ms-Icon--FullWidth::before {
+  content: '';
+}
+
+.ms-Icon--FullWidthEdit::before {
+  content: '';
+}
+
+.ms-Icon--FunctionalManagerDashboard::before {
+  content: '';
+}
+
+.ms-Icon--GallatinLogo::before {
+  content: '';
+}
+
+.ms-Icon--Generate::before {
+  content: '';
+}
+
+.ms-Icon--GenericScan::before {
+  content: '';
+}
+
+.ms-Icon--Giftbox::before {
+  content: '';
+}
+
+.ms-Icon--GiftboxOpen::before {
+  content: '';
+}
+
+.ms-Icon--GiftBoxSolid::before {
+  content: '';
+}
+
+.ms-Icon--GiftCard::before {
+  content: '';
+}
+
+.ms-Icon--GitFork::before {
+  content: '';
+}
+
+.ms-Icon--GitGraph::before {
+  content: '';
+}
+
+.ms-Icon--Glasses::before {
+  content: '';
+}
+
+.ms-Icon--Glimmer::before {
+  content: '';
+}
+
+.ms-Icon--GlobalNavButton::before {
+  content: '';
+}
+
+.ms-Icon--Globe::before {
+  content: '';
+}
+
+.ms-Icon--Globe2::before {
+  content: '';
+}
+
+.ms-Icon--GlobeFavorite::before {
+  content: '';
+}
+
+.ms-Icon--Golf::before {
+  content: '';
+}
+
+.ms-Icon--GotoToday::before {
+  content: '';
+}
+
+.ms-Icon--GridViewLarge::before {
+  content: '';
+}
+
+.ms-Icon--GridViewMedium::before {
+  content: '';
+}
+
+.ms-Icon--GridViewSmall::before {
+  content: '';
+}
+
+.ms-Icon--GripperBarHorizontal::before {
+  content: '';
+}
+
+.ms-Icon--GripperBarVertical::before {
+  content: '';
+}
+
+.ms-Icon--GripperTool::before {
+  content: '';
+}
+
+.ms-Icon--Group::before {
+  content: '';
+}
+
+.ms-Icon--GroupedAscending::before {
+  content: '';
+}
+
+.ms-Icon--GroupedDescending::before {
+  content: '';
+}
+
+.ms-Icon--GroupedList::before {
+  content: '';
+}
+
+.ms-Icon--GroupObject::before {
+  content: '';
+}
+
+.ms-Icon--GUID::before {
+  content: '';
+}
+
+.ms-Icon--Guitar::before {
+  content: '';
+}
+
+.ms-Icon--HailDay::before {
+  content: '';
+}
+
+.ms-Icon--HailNight::before {
+  content: '';
+}
+
+.ms-Icon--HalfAlpha::before {
+  content: '';
+}
+
+.ms-Icon--HalfCircle::before {
+  content: '';
+}
+
+.ms-Icon--HandsFree::before {
+  content: '';
+}
+
+.ms-Icon--Handwriting::before {
+  content: '';
+}
+
+.ms-Icon--HardDrive::before {
+  content: '';
+}
+
+.ms-Icon--HardDriveGroup::before {
+  content: '';
+}
+
+.ms-Icon--HardDriveLock::before {
+  content: '';
+}
+
+.ms-Icon--HardDriveUnlock::before {
+  content: '';
+}
+
+.ms-Icon--Header1::before {
+  content: '';
+}
+
+.ms-Icon--Header2::before {
+  content: '';
+}
+
+.ms-Icon--Header3::before {
+  content: '';
+}
+
+.ms-Icon--Header4::before {
+  content: '';
+}
+
+.ms-Icon--Headset::before {
+  content: '';
+}
+
+.ms-Icon--HeadsetSolid::before {
+  content: '';
+}
+
+.ms-Icon--Health::before {
+  content: '';
+}
+
+.ms-Icon--HealthSolid::before {
+  content: '';
+}
+
+.ms-Icon--Heart::before {
+  content: '';
+}
+
+.ms-Icon--HeartBroken::before {
+  content: '';
+}
+
+.ms-Icon--HeartFill::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--Help::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--Help::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--HelpMirrored::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--HelpMirrored::before {
+  content: '';
+}
+
+.ms-Icon--Hexagon::before {
+  content: '';
+}
+
+.ms-Icon--Hide::before {
+  content: '';
+}
+
+.ms-Icon--Hide2::before {
+  content: '';
+}
+
+.ms-Icon--Highlight::before {
+  content: '';
+}
+
+.ms-Icon--HighlightMappedShapes::before {
+  content: '';
+}
+
+.ms-Icon--HintText::before {
+  content: '';
+}
+
+.ms-Icon--History::before {
+  content: '';
+}
+
+.ms-Icon--Home::before {
+  content: '';
+}
+
+.ms-Icon--HomeSolid::before {
+  content: '';
+}
+
+.ms-Icon--HorizontalDistributeCenter::before {
+  content: '';
+}
+
+.ms-Icon--Hospital::before {
+  content: '';
+}
+
+.ms-Icon--Hotel::before {
+  content: '';
+}
+
+.ms-Icon--HourGlass::before {
+  content: '';
+}
+
+.ms-Icon--IconSetsFlag::before {
+  content: '';
+}
+
+.ms-Icon--IDBadge::before {
+  content: '';
+}
+
+.ms-Icon--ImageCrosshair::before {
+  content: '';
+}
+
+.ms-Icon--ImageDiff::before {
+  content: '';
+}
+
+.ms-Icon--ImagePixel::before {
+  content: '';
+}
+
+.ms-Icon--ImageSearch::before {
+  content: '';
+}
+
+.ms-Icon--Important::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--Import::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--Import::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--ImportMirrored::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--ImportMirrored::before {
+  content: '';
+}
+
+.ms-Icon--Inbox::before {
+  content: '';
+}
+
+.ms-Icon--InboxCheck::before {
+  content: '';
+}
+
+.ms-Icon--IncidentTriangle::before {
+  content: '';
+}
+
+.ms-Icon--IncreaseIndentLegacy::before {
+  content: '';
+}
+
+.ms-Icon--Info::before {
+  content: '';
+}
+
+.ms-Icon--Info2::before {
+  content: '';
+}
+
+.ms-Icon--InfoSolid::before {
+  content: '';
+}
+
+.ms-Icon--InsertColumnsLeft::before {
+  content: '';
+}
+
+.ms-Icon--InsertColumnsRight::before {
+  content: '';
+}
+
+.ms-Icon--InsertRowsAbove::before {
+  content: '';
+}
+
+.ms-Icon--InsertRowsBelow::before {
+  content: '';
+}
+
+.ms-Icon--InsertSignatureLine::before {
+  content: '';
+}
+
+.ms-Icon--InsertTextBox::before {
+  content: '';
+}
+
+.ms-Icon--InstallToDrive::before {
+  content: '';
+}
+
+.ms-Icon--InternetSharing::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--IRMForward::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--IRMForward::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--IRMForwardMirrored::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--IRMForwardMirrored::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--IRMReply::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--IRMReply::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--IRMReplyMirrored::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--IRMReplyMirrored::before {
+  content: '';
+}
+
+.ms-Icon--IssueSolid::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--IssueTracking::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--IssueTracking::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--IssueTrackingMirrored::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--IssueTrackingMirrored::before {
+  content: '';
+}
+
+.ms-Icon--Italic::before {
+  content: '';
+}
+
+.ms-Icon--JavaScriptLanguage::before {
+  content: '';
+}
+
+.ms-Icon--JoinOnlineMeeting::before {
+  content: '';
+}
+
+.ms-Icon--JS::before {
+  content: '';
+}
+
+.ms-Icon--KaizalaLogo::before {
+  content: '';
+}
+
+.ms-Icon--Label::before {
+  content: '';
+}
+
+.ms-Icon--LadybugSolid::before {
+  content: '';
+}
+
+.ms-Icon--Lamp::before {
+  content: '';
+}
+
+.ms-Icon--LandscapeOrientation::before {
+  content: '';
+}
+
+.ms-Icon--LaptopSecure::before {
+  content: '';
+}
+
+.ms-Icon--LaptopSelected::before {
+  content: '';
+}
+
+.ms-Icon--LargeGrid::before {
+  content: '';
+}
+
+.ms-Icon--Leave::before {
+  content: '';
+}
+
+.ms-Icon--Library::before {
+  content: '';
+}
+
+.ms-Icon--Lifesaver::before {
+  content: '';
+}
+
+.ms-Icon--LifesaverLock::before {
+  content: '';
+}
+
+.ms-Icon--Light::before {
+  content: '';
+}
+
+.ms-Icon--Lightbulb::before {
+  content: '';
+}
+
+.ms-Icon--LightningBolt::before {
+  content: '';
+}
+
+.ms-Icon--LightWeight::before {
+  content: '';
+}
+
+.ms-Icon--Like::before {
+  content: '';
+}
+
+.ms-Icon--LikeSolid::before {
+  content: '';
+}
+
+.ms-Icon--Line::before {
+  content: '';
+}
+
+.ms-Icon--LineChart::before {
+  content: '';
+}
+
+.ms-Icon--LineSpacing::before {
+  content: '';
+}
+
+.ms-Icon--LineStyle::before {
+  content: '';
+}
+
+.ms-Icon--LineThickness::before {
+  content: '';
+}
+
+.ms-Icon--Link::before {
+  content: '';
+}
+
+.ms-Icon--LinkedInLogo::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--List::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--List::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--ListMirrored::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--ListMirrored::before {
+  content: '';
+}
+
+.ms-Icon--LocaleLanguage::before {
+  content: '';
+}
+
+.ms-Icon--Location::before {
+  content: '';
+}
+
+.ms-Icon--LocationCircle::before {
+  content: '';
+}
+
+.ms-Icon--LocationDot::before {
+  content: '';
+}
+
+.ms-Icon--LocationFill::before {
+  content: '';
+}
+
+.ms-Icon--LocationOutline::before {
+  content: '';
+}
+
+.ms-Icon--Lock::before {
+  content: '';
+}
+
+.ms-Icon--LockSolid::before {
+  content: '';
+}
+
+.ms-Icon--LogRemove::before {
+  content: '';
+}
+
+.ms-Icon--LookupEntities::before {
+  content: '';
+}
+
+.ms-Icon--LowerBrightness::before {
+  content: '';
+}
+
+.ms-Icon--LyncLogo::before {
+  content: '';
+}
+
+.ms-Icon--Mail::before {
+  content: '';
+}
+
+.ms-Icon--MailAlert::before {
+  content: '';
+}
+
+.ms-Icon--MailCheck::before {
+  content: '';
+}
+
+.ms-Icon--MailFill::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--MailForward::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--MailForward::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--MailForwardMirrored::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--MailForwardMirrored::before {
+  content: '';
+}
+
+.ms-Icon--MailLowImportance::before {
+  content: '';
+}
+
+.ms-Icon--MailPause::before {
+  content: '';
+}
+
+.ms-Icon--MailReminder::before {
+  content: '';
+}
+
+.ms-Icon--MailRepeat::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--MailReplyAll::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--MailReplyAll::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--MailReplyAllMirrored::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--MailReplyAllMirrored::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--MailReply::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--MailReply::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--MailReplyMirrored::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--MailReplyMirrored::before {
+  content: '';
+}
+
+.ms-Icon--MailSolid::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--MailTentative::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--MailTentative::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--MailTentativeMirrored::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--MailTentativeMirrored::before {
+  content: '';
+}
+
+.ms-Icon--MailUndelivered::before {
+  content: '';
+}
+
+.ms-Icon--ManagerSelfService::before {
+  content: '';
+}
+
+.ms-Icon--MapDirections::before {
+  content: '';
+}
+
+.ms-Icon--MapPin::before {
+  content: '';
+}
+
+.ms-Icon--MapPinSolid::before {
+  content: '';
+}
+
+.ms-Icon--MarkDownLanguage::before {
+  content: '';
+}
+
+.ms-Icon--Market::before {
+  content: '';
+}
+
+.ms-Icon--MarketDown::before {
+  content: '';
+}
+
+.ms-Icon--MasterDatabase::before {
+  content: '';
+}
+
+.ms-Icon--MaximumValue::before {
+  content: '';
+}
+
+.ms-Icon--Medal::before {
+  content: '';
+}
+
+.ms-Icon--MediaAdd::before {
+  content: '';
+}
+
+.ms-Icon--Medical::before {
+  content: '';
+}
+
+.ms-Icon--Megaphone::before {
+  content: '';
+}
+
+.ms-Icon--MegaphoneSolid::before {
+  content: '';
+}
+
+.ms-Icon--Memo::before {
+  content: '';
+}
+
+.ms-Icon--Merge::before {
+  content: '';
+}
+
+.ms-Icon--MergeDuplicate::before {
+  content: '';
+}
+
+.ms-Icon--Message::before {
+  content: '';
+}
+
+.ms-Icon--MessageFill::before {
+  content: '';
+}
+
+.ms-Icon--MicOff::before {
+  content: '';
+}
+
+.ms-Icon--Microphone::before {
+  content: '';
+}
+
+.ms-Icon--MicrosoftFlowLogo::before {
+  content: '';
+}
+
+.ms-Icon--MicrosoftStaffhubLogo::before {
+  content: '';
+}
+
+.ms-Icon--MiniContract::before {
+  content: '';
+}
+
+.ms-Icon--MiniExpand::before {
+  content: '';
+}
+
+.ms-Icon--MiniLink::before {
+  content: '';
+}
+
+.ms-Icon--MinimumValue::before {
+  content: '';
+}
+
+.ms-Icon--MobileReport::before {
+  content: '';
+}
+
+.ms-Icon--MobileSelected::before {
+  content: '';
+}
+
+.ms-Icon--Money::before {
+  content: '';
+}
+
+.ms-Icon--More::before {
+  content: '';
+}
+
+.ms-Icon--MoreSports::before {
+  content: '';
+}
+
+.ms-Icon--MoreVertical::before {
+  content: '';
+}
+
+.ms-Icon--Move::before {
+  content: '';
+}
+
+.ms-Icon--Movers::before {
+  content: '';
+}
+
+.ms-Icon--MoveToFolder::before {
+  content: '';
+}
+
+.ms-Icon--MSNLogo::before {
+  content: '';
+}
+
+.ms-Icon--MSNVideos::before {
+  content: '';
+}
+
+.ms-Icon--MSNVideosSolid::before {
+  content: '';
+}
+
+.ms-Icon--MTMLogo::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--MultiSelect::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--MultiSelect::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--MultiSelectMirrored::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--MultiSelectMirrored::before {
+  content: '';
+}
+
+.ms-Icon--MusicInCollection::before {
+  content: '';
+}
+
+.ms-Icon--MusicInCollectionFill::before {
+  content: '';
+}
+
+.ms-Icon--MusicNote::before {
+  content: '';
+}
+
+.ms-Icon--MyMoviesTV::before {
+  content: '';
+}
+
+.ms-Icon--Nav2DMapView::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--NavigateBack::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--NavigateBack::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--NavigateBackMirrored::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--NavigateBackMirrored::before {
+  content: '';
+}
+
+.ms-Icon--NavigateExternalInline::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--NavigateForward::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--NavigateForward::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--NavigateForwardMirrored::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--NavigateForwardMirrored::before {
+  content: '';
+}
+
+.ms-Icon--NavigationFlipper::before {
+  content: '';
+}
+
+.ms-Icon--NetworkTower::before {
+  content: '';
+}
+
+.ms-Icon--NewAnalyticsQuery::before {
+  content: '';
+}
+
+.ms-Icon--NewFolder::before {
+  content: '';
+}
+
+.ms-Icon--News::before {
+  content: '';
+}
+
+.ms-Icon--NewsSearch::before {
+  content: '';
+}
+
+.ms-Icon--NewTeamProject::before {
+  content: '';
+}
+
+.ms-Icon--Next::before {
+  content: '';
+}
+
+.ms-Icon--NonprofitLogo32::before {
+  content: '';
+}
+
+.ms-Icon--NormalWeight::before {
+  content: '';
+}
+
+.ms-Icon--NoteForward::before {
+  content: '';
+}
+
+.ms-Icon--NotePinned::before {
+  content: '';
+}
+
+.ms-Icon--NoteReply::before {
+  content: '';
+}
+
+.ms-Icon--NotExecuted::before {
+  content: '';
+}
+
+.ms-Icon--NotImpactedSolid::before {
+  content: '';
+}
+
+.ms-Icon--NugetLogo::before {
+  content: '';
+}
+
+.ms-Icon--NumberedList::before {
+  content: '';
+}
+
+.ms-Icon--NumberField::before {
+  content: '';
+}
+
+.ms-Icon--NumberSequence::before {
+  content: '';
+}
+
+.ms-Icon--Octagon::before {
+  content: '';
+}
+
+.ms-Icon--OEM::before {
+  content: '';
+}
+
+.ms-Icon--OfficeAddinsLogo::before {
+  content: '';
+}
+
+.ms-Icon--OfficeAssistantLogo::before {
+  content: '';
+}
+
+.ms-Icon--OfficeFormsLogo::before {
+  content: '';
+}
+
+.ms-Icon--OfficeFormsLogo16::before {
+  content: '';
+}
+
+.ms-Icon--OfficeFormsLogo24::before {
+  content: '';
+}
+
+.ms-Icon--OfficeFormsLogoFill::before {
+  content: '';
+}
+
+.ms-Icon--OfficeFormsLogoFill16::before {
+  content: '';
+}
+
+.ms-Icon--OfficeFormsLogoFill24::before {
+  content: '';
+}
+
+.ms-Icon--OfficeFormsLogoInverse::before {
+  content: '';
+}
+
+.ms-Icon--OfficeFormsLogoInverse16::before {
+  content: '';
+}
+
+.ms-Icon--OfficeFormsLogoInverse24::before {
+  content: '';
+}
+
+.ms-Icon--OfficeLogo::before {
+  content: '';
+}
+
+.ms-Icon--OfficeStoreLogo::before {
+  content: '';
+}
+
+.ms-Icon--OfficeVideoLogo::before {
+  content: '';
+}
+
+.ms-Icon--OfficeVideoLogoFill::before {
+  content: '';
+}
+
+.ms-Icon--OfficeVideoLogoInverse::before {
+  content: '';
+}
+
+.ms-Icon--OfflineOneDriveParachute::before {
+  content: '';
+}
+
+.ms-Icon--OfflineOneDriveParachuteDisabled::before {
+  content: '';
+}
+
+.ms-Icon--OfflineStorageSolid::before {
+  content: '';
+}
+
+.ms-Icon--OneDrive::before {
+  content: '';
+}
+
+.ms-Icon--OneDriveAdd::before {
+  content: '';
+}
+
+.ms-Icon--OneDriveFolder16::before {
+  content: '';
+}
+
+.ms-Icon--OneNoteEduLogoInverse::before {
+  content: '';
+}
+
+.ms-Icon--OneNoteLogo::before {
+  content: '';
+}
+
+.ms-Icon--OneNoteLogo16::before {
+  content: '';
+}
+
+.ms-Icon--OneNoteLogoFill::before {
+  content: '';
+}
+
+.ms-Icon--OneNoteLogoFill16::before {
+  content: '';
+}
+
+.ms-Icon--OneNoteLogoInverse::before {
+  content: '';
+}
+
+.ms-Icon--OneNoteLogoInverse16::before {
+  content: '';
+}
+
+.ms-Icon--OpenFile::before {
+  content: '';
+}
+
+.ms-Icon--OpenFolderHorizontal::before {
+  content: '';
+}
+
+.ms-Icon--OpenInNewWindow::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--OpenPane::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--OpenPane::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--OpenPaneMirrored::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--OpenPaneMirrored::before {
+  content: '';
+}
+
+.ms-Icon--OpenSource::before {
+  content: '';
+}
+
+.ms-Icon--Org::before {
+  content: '';
+}
+
+.ms-Icon--Orientation::before {
+  content: '';
+}
+
+.ms-Icon--OutlookLogo::before {
+  content: '';
+}
+
+.ms-Icon--OutlookLogo16::before {
+  content: '';
+}
+
+.ms-Icon--OutlookLogoFill::before {
+  content: '';
+}
+
+.ms-Icon--OutlookLogoFill16::before {
+  content: '';
+}
+
+.ms-Icon--OutlookLogoInverse::before {
+  content: '';
+}
+
+.ms-Icon--OutlookLogoInverse16::before {
+  content: '';
+}
+
+.ms-Icon--OutOfOffice::before {
+  content: '';
+}
+
+.ms-Icon--Package::before {
+  content: '';
+}
+
+.ms-Icon--Packages::before {
+  content: '';
+}
+
+.ms-Icon--Padding::before {
+  content: '';
+}
+
+.ms-Icon--PaddingBottom::before {
+  content: '';
+}
+
+.ms-Icon--PaddingLeft::before {
+  content: '';
+}
+
+.ms-Icon--PaddingRight::before {
+  content: '';
+}
+
+.ms-Icon--PaddingTop::before {
+  content: '';
+}
+
+.ms-Icon--Page::before {
+  content: '';
+}
+
+.ms-Icon--PageAdd::before {
+  content: '';
+}
+
+.ms-Icon--PageCheckedin::before {
+  content: '';
+}
+
+.ms-Icon--PageCheckedOut::before {
+  content: '';
+}
+
+.ms-Icon--PageEdit::before {
+  content: '';
+}
+
+.ms-Icon--PageLeft::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--PageListSolid::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--PageListSolid::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--PageListMirroredSolid::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--PageListMirroredSolid::before {
+  content: '';
+}
+
+.ms-Icon--PageLock::before {
+  content: '';
+}
+
+.ms-Icon--PageRemove::before {
+  content: '';
+}
+
+.ms-Icon--PageRight::before {
+  content: '';
+}
+
+.ms-Icon--PageSolid::before {
+  content: '';
+}
+
+.ms-Icon--PanoIndicator::before {
+  content: '';
+}
+
+.ms-Icon--Parachute::before {
+  content: '';
+}
+
+.ms-Icon--ParachuteSolid::before {
+  content: '';
+}
+
+.ms-Icon--Parameter::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--ParkingLocation::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--ParkingLocation::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--ParkingLocationMirrored::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--ParkingLocationMirrored::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--ParkingSolid::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--ParkingSolid::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--ParkingMirroredSolid::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--ParkingMirroredSolid::before {
+  content: '';
+}
+
+.ms-Icon--PartlyCloudyDay::before {
+  content: '';
+}
+
+.ms-Icon--PartlyCloudyNight::before {
+  content: '';
+}
+
+.ms-Icon--PartyLeader::before {
+  content: '';
+}
+
+.ms-Icon--Paste::before {
+  content: '';
+}
+
+.ms-Icon--PasteAsCode::before {
+  content: '';
+}
+
+.ms-Icon--PasteAsText::before {
+  content: '';
+}
+
+.ms-Icon--Pause::before {
+  content: '';
+}
+
+.ms-Icon--PaymentCard::before {
+  content: '';
+}
+
+.ms-Icon--PC1::before {
+  content: '';
+}
+
+.ms-Icon--PDF::before {
+  content: '';
+}
+
+.ms-Icon--PencilReply::before {
+  content: '';
+}
+
+.ms-Icon--Pentagon::before {
+  content: '';
+}
+
+.ms-Icon--People::before {
+  content: '';
+}
+
+.ms-Icon--PeopleAdd::before {
+  content: '';
+}
+
+.ms-Icon--PeopleAlert::before {
+  content: '';
+}
+
+.ms-Icon--PeopleBlock::before {
+  content: '';
+}
+
+.ms-Icon--PeoplePause::before {
+  content: '';
+}
+
+.ms-Icon--PeopleRepeat::before {
+  content: '';
+}
+
+.ms-Icon--Permissions::before {
+  content: '';
+}
+
+.ms-Icon--PermissionsSolid::before {
+  content: '';
+}
+
+.ms-Icon--Personalize::before {
+  content: '';
+}
+
+.ms-Icon--Phishing::before {
+  content: '';
+}
+
+.ms-Icon--Phone::before {
+  content: '';
+}
+
+.ms-Icon--Photo2::before {
+  content: '';
+}
+
+.ms-Icon--Photo2Add::before {
+  content: '';
+}
+
+.ms-Icon--Photo2Remove::before {
+  content: '';
+}
+
+.ms-Icon--PhotoCollection::before {
+  content: '';
+}
+
+.ms-Icon--Picture::before {
+  content: '';
+}
+
+.ms-Icon--PictureCenter::before {
+  content: '';
+}
+
+.ms-Icon--PictureFill::before {
+  content: '';
+}
+
+.ms-Icon--PictureLibrary::before {
+  content: '';
+}
+
+.ms-Icon--PicturePosition::before {
+  content: '';
+}
+
+.ms-Icon--PictureStretch::before {
+  content: '';
+}
+
+.ms-Icon--PictureTile::before {
+  content: '';
+}
+
+.ms-Icon--PieDouble::before {
+  content: '';
+}
+
+.ms-Icon--PieSingle::before {
+  content: '';
+}
+
+.ms-Icon--PieSingleSolid::before {
+  content: '';
+}
+
+.ms-Icon--Pill::before {
+  content: '';
+}
+
+.ms-Icon--Pin::before {
+  content: '';
+}
+
+.ms-Icon--Pinned::before {
+  content: '';
+}
+
+.ms-Icon--PinnedFill::before {
+  content: '';
+}
+
+.ms-Icon--PivotChart::before {
+  content: '';
+}
+
+.ms-Icon--PlannerLogo::before {
+  content: '';
+}
+
+.ms-Icon--PlanView::before {
+  content: '';
+}
+
+.ms-Icon--Play::before {
+  content: '';
+}
+
+.ms-Icon--PlayerSettings::before {
+  content: '';
+}
+
+.ms-Icon--PlayResume::before {
+  content: '';
+}
+
+.ms-Icon--Plug::before {
+  content: '';
+}
+
+.ms-Icon--PlugConnected::before {
+  content: '';
+}
+
+.ms-Icon--PlugDisconnected::before {
+  content: '';
+}
+
+.ms-Icon--PlugSolid::before {
+  content: '';
+}
+
+.ms-Icon--POI::before {
+  content: '';
+}
+
+.ms-Icon--POISolid::before {
+  content: '';
+}
+
+.ms-Icon--PostUpdate::before {
+  content: '';
+}
+
+.ms-Icon--PowerApps::before {
+  content: '';
+}
+
+.ms-Icon--PowerApps2Logo::before {
+  content: '';
+}
+
+.ms-Icon--PowerAppsLogo::before {
+  content: '';
+}
+
+.ms-Icon--PowerBILogo::before {
+  content: '';
+}
+
+.ms-Icon--PowerButton::before {
+  content: '';
+}
+
+.ms-Icon--PowerPointDocument::before {
+  content: '';
+}
+
+.ms-Icon--PowerPointLogo::before {
+  content: '';
+}
+
+.ms-Icon--PowerPointLogo16::before {
+  content: '';
+}
+
+.ms-Icon--PowerPointLogoFill::before {
+  content: '';
+}
+
+.ms-Icon--PowerPointLogoFill16::before {
+  content: '';
+}
+
+.ms-Icon--PowerPointLogoInverse::before {
+  content: '';
+}
+
+.ms-Icon--PowerPointLogoInverse16::before {
+  content: '';
+}
+
+.ms-Icon--Precipitation::before {
+  content: '';
+}
+
+.ms-Icon--PresenceChickletVideo::before {
+  content: '';
+}
+
+.ms-Icon--Preview::before {
+  content: '';
+}
+
+.ms-Icon--PreviewLink::before {
+  content: '';
+}
+
+.ms-Icon--Previous::before {
+  content: '';
+}
+
+.ms-Icon--PrimaryCalendar::before {
+  content: '';
+}
+
+.ms-Icon--Print::before {
+  content: '';
+}
+
+.ms-Icon--PrintfaxPrinterFile::before {
+  content: '';
+}
+
+.ms-Icon--Processing::before {
+  content: '';
+}
+
+.ms-Icon--ProcessMetaTask::before {
+  content: '';
+}
+
+.ms-Icon--Product::before {
+  content: '';
+}
+
+.ms-Icon--ProfileSearch::before {
+  content: '';
+}
+
+.ms-Icon--ProFootball::before {
+  content: '';
+}
+
+.ms-Icon--ProgressLoopInner::before {
+  content: '';
+}
+
+.ms-Icon--ProgressLoopOuter::before {
+  content: '';
+}
+
+.ms-Icon--ProgressRingDots::before {
+  content: '';
+}
+
+.ms-Icon--ProHockey::before {
+  content: '';
+}
+
+.ms-Icon--ProjectCollection::before {
+  content: '';
+}
+
+.ms-Icon--ProjectLogo16::before {
+  content: '';
+}
+
+.ms-Icon--ProjectLogo32::before {
+  content: '';
+}
+
+.ms-Icon--ProjectLogoFill16::before {
+  content: '';
+}
+
+.ms-Icon--ProjectLogoFill32::before {
+  content: '';
+}
+
+.ms-Icon--ProjectLogoInverse::before {
+  content: '';
+}
+
+.ms-Icon--ProtectedDocument::before {
+  content: '';
+}
+
+.ms-Icon--ProtectionCenterLogo32::before {
+  content: '';
+}
+
+.ms-Icon--ProtectRestrict::before {
+  content: '';
+}
+
+.ms-Icon--PublicCalendar::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--PublicContactCard::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--PublicContactCard::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--PublicContactCardMirrored::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--PublicContactCardMirrored::before {
+  content: '';
+}
+
+.ms-Icon--PublicEmail::before {
+  content: '';
+}
+
+.ms-Icon--PublicFolder::before {
+  content: '';
+}
+
+.ms-Icon--PublishCourse::before {
+  content: '';
+}
+
+.ms-Icon--PublisherLogo::before {
+  content: '';
+}
+
+.ms-Icon--PublisherLogo16::before {
+  content: '';
+}
+
+.ms-Icon--PublisherLogoFill::before {
+  content: '';
+}
+
+.ms-Icon--PublisherLogoFill16::before {
+  content: '';
+}
+
+.ms-Icon--PublisherLogoInverse16::before {
+  content: '';
+}
+
+.ms-Icon--Puzzle::before {
+  content: '';
+}
+
+.ms-Icon--PY::before {
+  content: '';
+}
+
+.ms-Icon--PythonLanguage::before {
+  content: '';
+}
+
+.ms-Icon--QuarterCircle::before {
+  content: '';
+}
+
+.ms-Icon--QueryList::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--Questionnaire::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--Questionnaire::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--QuestionnaireMirrored::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--QuestionnaireMirrored::before {
+  content: '';
+}
+
+.ms-Icon--QuickNote::before {
+  content: '';
+}
+
+.ms-Icon--QuickNoteSolid::before {
+  content: '';
+}
+
+.ms-Icon--R::before {
+  content: '';
+}
+
+.ms-Icon--RadioBtnOff::before {
+  content: '';
+}
+
+.ms-Icon--RadioBtnOn::before {
+  content: '';
+}
+
+.ms-Icon--RadioBullet::before {
+  content: '';
+}
+
+.ms-Icon--Rain::before {
+  content: '';
+}
+
+.ms-Icon--RainShowersDay::before {
+  content: '';
+}
+
+.ms-Icon--RainShowersNight::before {
+  content: '';
+}
+
+.ms-Icon--RainSnow::before {
+  content: '';
+}
+
+.ms-Icon--RawSource::before {
+  content: '';
+}
+
+.ms-Icon--Read::before {
+  content: '';
+}
+
+.ms-Icon--ReadingMode::before {
+  content: '';
+}
+
+.ms-Icon--ReadingModeSolid::before {
+  content: '';
+}
+
+.ms-Icon--ReadOutLoud::before {
+  content: '';
+}
+
+.ms-Icon--ReceiptCheck::before {
+  content: '';
+}
+
+.ms-Icon--ReceiptForward::before {
+  content: '';
+}
+
+.ms-Icon--ReceiptReply::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--ReceiptTentative::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--ReceiptTentative::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--ReceiptTentativeMirrored::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--ReceiptTentativeMirrored::before {
+  content: '';
+}
+
+.ms-Icon--ReceiptUndelivered::before {
+  content: '';
+}
+
+.ms-Icon--Recent::before {
+  content: '';
+}
+
+.ms-Icon--Record2::before {
+  content: '';
+}
+
+.ms-Icon--RectangleShapeSolid::before {
+  content: '';
+}
+
+.ms-Icon--RectangularClipping::before {
+  content: '';
+}
+
+.ms-Icon--RecurringEvent::before {
+  content: '';
+}
+
+.ms-Icon--RecurringTask::before {
+  content: '';
+}
+
+.ms-Icon--RecycleBin::before {
+  content: '';
+}
+
+.ms-Icon--Redeploy::before {
+  content: '';
+}
+
+.ms-Icon--RedEye::before {
+  content: '';
+}
+
+.ms-Icon--Redo::before {
+  content: '';
+}
+
+.ms-Icon--Refresh::before {
+  content: '';
+}
+
+.ms-Icon--ReminderGroup::before {
+  content: '';
+}
+
+.ms-Icon--ReminderPerson::before {
+  content: '';
+}
+
+.ms-Icon--Remote::before {
+  content: '';
+}
+
+.ms-Icon--Remove::before {
+  content: '';
+}
+
+.ms-Icon--RemoveEvent::before {
+  content: '';
+}
+
+.ms-Icon--RemoveFilter::before {
+  content: '';
+}
+
+.ms-Icon--RemoveLink::before {
+  content: '';
+}
+
+.ms-Icon--RemoveOccurrence::before {
+  content: '';
+}
+
+.ms-Icon--Rename::before {
+  content: '';
+}
+
+.ms-Icon--RenewalCurrent::before {
+  content: '';
+}
+
+.ms-Icon--RenewalFuture::before {
+  content: '';
+}
+
+.ms-Icon--ReopenPages::before {
+  content: '';
+}
+
+.ms-Icon--Repair::before {
+  content: '';
+}
+
+.ms-Icon--ReplyAllAlt::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--ReplyAll::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--ReplyAll::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--ReplyAllMirrored::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--ReplyAllMirrored::before {
+  content: '';
+}
+
+.ms-Icon--ReplyAlt::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--Reply::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--Reply::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--ReplyMirrored::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--ReplyMirrored::before {
+  content: '';
+}
+
+.ms-Icon--Repo::before {
+  content: '';
+}
+
+.ms-Icon--ReportAdd::before {
+  content: '';
+}
+
+.ms-Icon--ReportHacked::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--ReportLibrary::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--ReportLibrary::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--ReportLibraryMirrored::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--ReportLibraryMirrored::before {
+  content: '';
+}
+
+.ms-Icon--RepoSolid::before {
+  content: '';
+}
+
+.ms-Icon--ReturnToSession::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--ReviewRequestSolid::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--ReviewRequestSolid::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--ReviewRequestMirroredSolid::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--ReviewRequestMirroredSolid::before {
+  content: '';
+}
+
+.ms-Icon--ReviewResponseSolid::before {
+  content: '';
+}
+
+.ms-Icon--ReviewSolid::before {
+  content: '';
+}
+
+.ms-Icon--RevToggleKey::before {
+  content: '';
+}
+
+.ms-Icon--Rewind::before {
+  content: '';
+}
+
+.ms-Icon--Ribbon::before {
+  content: '';
+}
+
+.ms-Icon--RibbonSolid::before {
+  content: '';
+}
+
+.ms-Icon--RightDoubleQuote::before {
+  content: '';
+}
+
+.ms-Icon--RightTriangle::before {
+  content: '';
+}
+
+.ms-Icon--Ringer::before {
+  content: '';
+}
+
+.ms-Icon--RingerOff::before {
+  content: '';
+}
+
+.ms-Icon--RingerRemove::before {
+  content: '';
+}
+
+.ms-Icon--Robot::before {
+  content: '';
+}
+
+.ms-Icon--Rocket::before {
+  content: '';
+}
+
+.ms-Icon--Room::before {
+  content: '';
+}
+
+.ms-Icon--Rotate::before {
+  content: '';
+}
+
+.ms-Icon--RowsChild::before {
+  content: '';
+}
+
+.ms-Icon--RowsGroup::before {
+  content: '';
+}
+
+.ms-Icon--Rugby::before {
+  content: '';
+}
+
+.ms-Icon--Running::before {
+  content: '';
+}
+
+.ms-Icon--Sad::before {
+  content: '';
+}
+
+.ms-Icon--SadSolid::before {
+  content: '';
+}
+
+.ms-Icon--Save::before {
+  content: '';
+}
+
+.ms-Icon--SaveAll::before {
+  content: '';
+}
+
+.ms-Icon--SaveAndClose::before {
+  content: '';
+}
+
+.ms-Icon--SaveAs::before {
+  content: '';
+}
+
+.ms-Icon--Savings::before {
+  content: '';
+}
+
+.ms-Icon--ScaleUp::before {
+  content: '';
+}
+
+.ms-Icon--ScheduleEventAction::before {
+  content: '';
+}
+
+.ms-Icon--ScopeTemplate::before {
+  content: '';
+}
+
+.ms-Icon--Script::before {
+  content: '';
+}
+
+.ms-Icon--ScrollUpDown::before {
+  content: '';
+}
+
+.ms-Icon--Search::before {
+  content: '';
+}
+
+.ms-Icon--SearchAndApps::before {
+  content: '';
+}
+
+.ms-Icon--SearchBookmark::before {
+  content: '';
+}
+
+.ms-Icon--SearchCalendar::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--SearchIssue::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--SearchIssue::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--SearchIssueMirrored::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--SearchIssueMirrored::before {
+  content: '';
+}
+
+.ms-Icon--Section::before {
+  content: '';
+}
+
+.ms-Icon--Sections::before {
+  content: '';
+}
+
+.ms-Icon--SecurityGroup::before {
+  content: '';
+}
+
+.ms-Icon--SelectAll::before {
+  content: '';
+}
+
+.ms-Icon--Sell::before {
+  content: '';
+}
+
+.ms-Icon--SemiboldWeight::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--Send::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--Send::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--SendMirrored::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--SendMirrored::before {
+  content: '';
+}
+
+.ms-Icon--Separator::before {
+  content: '';
+}
+
+.ms-Icon--Server::before {
+  content: '';
+}
+
+.ms-Icon--ServerEnviroment::before {
+  content: '';
+}
+
+.ms-Icon--ServerProcesses::before {
+  content: '';
+}
+
+.ms-Icon--SetAction::before {
+  content: '';
+}
+
+.ms-Icon--Settings::before {
+  content: '';
+}
+
+.ms-Icon--Share::before {
+  content: '';
+}
+
+.ms-Icon--ShareiOS::before {
+  content: '';
+}
+
+.ms-Icon--SharepointLogo::before {
+  content: '';
+}
+
+.ms-Icon--SharepointLogoFill::before {
+  content: '';
+}
+
+.ms-Icon--SharepointLogoInverse::before {
+  content: '';
+}
+
+.ms-Icon--Shield::before {
+  content: '';
+}
+
+.ms-Icon--ShieldSolid::before {
+  content: '';
+}
+
+.ms-Icon--Shop::before {
+  content: '';
+}
+
+.ms-Icon--ShoppingCart::before {
+  content: '';
+}
+
+.ms-Icon--ShoppingCartSolid::before {
+  content: '';
+}
+
+.ms-Icon--ShopServer::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--ShowResults::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--ShowResults::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--ShowResultsMirrored::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--ShowResultsMirrored::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--SidePanel::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--SidePanel::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--SidePanelMirrored::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--SidePanelMirrored::before {
+  content: '';
+}
+
+.ms-Icon--SignOut::before {
+  content: '';
+}
+
+.ms-Icon--SingleBookmark::before {
+  content: '';
+}
+
+.ms-Icon--SingleBookmarkSolid::before {
+  content: '';
+}
+
+.ms-Icon--SingleColumn::before {
+  content: '';
+}
+
+.ms-Icon--SingleColumnEdit::before {
+  content: '';
+}
+
+.ms-Icon--SIPMove::before {
+  content: '';
+}
+
+.ms-Icon--SiteScan::before {
+  content: '';
+}
+
+.ms-Icon--SizeLegacy::before {
+  content: '';
+}
+
+.ms-Icon--SkiResorts::before {
+  content: '';
+}
+
+.ms-Icon--SkypeCheck::before {
+  content: '';
+}
+
+.ms-Icon--SkypeCircleCheck::before {
+  content: '';
+}
+
+.ms-Icon--SkypeCircleClock::before {
+  content: '';
+}
+
+.ms-Icon--SkypeCircleMinus::before {
+  content: '';
+}
+
+.ms-Icon--SkypeClock::before {
+  content: '';
+}
+
+.ms-Icon--SkypeForBusinessLogo::before {
+  content: '';
+}
+
+.ms-Icon--SkypeForBusinessLogo16::before {
+  content: '';
+}
+
+.ms-Icon--SkypeForBusinessLogoFill::before {
+  content: '';
+}
+
+.ms-Icon--SkypeForBusinessLogoFill16::before {
+  content: '';
+}
+
+.ms-Icon--SkypeLogo::before {
+  content: '';
+}
+
+.ms-Icon--SkypeLogo16::before {
+  content: '';
+}
+
+.ms-Icon--SkypeMessage::before {
+  content: '';
+}
+
+.ms-Icon--SkypeMinus::before {
+  content: '';
+}
+
+.ms-Icon--Slider::before {
+  content: '';
+}
+
+.ms-Icon--SliderHandleSize::before {
+  content: '';
+}
+
+.ms-Icon--SliderThumb::before {
+  content: '';
+}
+
+.ms-Icon--Snooze::before {
+  content: '';
+}
+
+.ms-Icon--Snow::before {
+  content: '';
+}
+
+.ms-Icon--Snowflake::before {
+  content: '';
+}
+
+.ms-Icon--SnowShowerDay::before {
+  content: '';
+}
+
+.ms-Icon--SnowShowerNight::before {
+  content: '';
+}
+
+.ms-Icon--Soccer::before {
+  content: '';
+}
+
+.ms-Icon--SocialListeningLogo::before {
+  content: '';
+}
+
+.ms-Icon--Sort::before {
+  content: '';
+}
+
+.ms-Icon--SortDown::before {
+  content: '';
+}
+
+.ms-Icon--SortLines::before {
+  content: '';
+}
+
+.ms-Icon--SortUp::before {
+  content: '';
+}
+
+.ms-Icon--Source::before {
+  content: '';
+}
+
+.ms-Icon--Spacer::before {
+  content: '';
+}
+
+.ms-Icon--Speakers::before {
+  content: '';
+}
+
+.ms-Icon--SpeedHigh::before {
+  content: '';
+}
+
+.ms-Icon--Split::before {
+  content: '';
+}
+
+.ms-Icon--SplitObject::before {
+  content: '';
+}
+
+.ms-Icon--Sprint::before {
+  content: '';
+}
+
+.ms-Icon--Squalls::before {
+  content: '';
+}
+
+.ms-Icon--SquareShapeSolid::before {
+  content: '';
+}
+
+.ms-Icon--Stack::before {
+  content: '';
+}
+
+.ms-Icon--StackedBarChart::before {
+  content: '';
+}
+
+.ms-Icon--StackedLineChart::before {
+  content: '';
+}
+
+.ms-Icon--StackIndicator::before {
+  content: '';
+}
+
+.ms-Icon--StaffNotebookLogo16::before {
+  content: '';
+}
+
+.ms-Icon--StaffNotebookLogo32::before {
+  content: '';
+}
+
+.ms-Icon--StaffNotebookLogoFill16::before {
+  content: '';
+}
+
+.ms-Icon--StaffNotebookLogoFill32::before {
+  content: '';
+}
+
+.ms-Icon--StaffNotebookLogoInverted16::before {
+  content: '';
+}
+
+.ms-Icon--StaffNotebookLogoInverted32::before {
+  content: '';
+}
+
+.ms-Icon--Starburst::before {
+  content: '';
+}
+
+.ms-Icon--StarburstSolid::before {
+  content: '';
+}
+
+.ms-Icon--StatusCircleBlock2::before {
+  content: '';
+}
+
+.ms-Icon--StatusCircleCheckmark::before {
+  content: '';
+}
+
+.ms-Icon--StatusCircleErrorX::before {
+  content: '';
+}
+
+.ms-Icon--StatusCircleExclamation::before {
+  content: '';
+}
+
+.ms-Icon--StatusCircleInfo::before {
+  content: '';
+}
+
+.ms-Icon--StatusCircleInner::before {
+  content: '';
+}
+
+.ms-Icon--StatusCircleOuter::before {
+  content: '';
+}
+
+.ms-Icon--StatusCircleQuestionMark::before {
+  content: '';
+}
+
+.ms-Icon--StatusCircleRing::before {
+  content: '';
+}
+
+.ms-Icon--StatusErrorFull::before {
+  content: '';
+}
+
+.ms-Icon--StatusTriangle::before {
+  content: '';
+}
+
+.ms-Icon--StatusTriangleExclamation::before {
+  content: '';
+}
+
+.ms-Icon--StatusTriangleInner::before {
+  content: '';
+}
+
+.ms-Icon--StatusTriangleOuter::before {
+  content: '';
+}
+
+.ms-Icon--Step::before {
+  content: '';
+}
+
+.ms-Icon--StepInsert::before {
+  content: '';
+}
+
+.ms-Icon--StepShared::before {
+  content: '';
+}
+
+.ms-Icon--StepSharedAdd::before {
+  content: '';
+}
+
+.ms-Icon--StepSharedInsert::before {
+  content: '';
+}
+
+.ms-Icon--StockDown::before {
+  content: '';
+}
+
+.ms-Icon--StockUp::before {
+  content: '';
+}
+
+.ms-Icon--Stop::before {
+  content: '';
+}
+
+.ms-Icon--StopSolid::before {
+  content: '';
+}
+
+.ms-Icon--Stopwatch::before {
+  content: '';
+}
+
+.ms-Icon--StoreLogo16::before {
+  content: '';
+}
+
+.ms-Icon--StoreLogoMed20::before {
+  content: '';
+}
+
+.ms-Icon--Storyboard::before {
+  content: '';
+}
+
+.ms-Icon--Streaming::before {
+  content: '';
+}
+
+.ms-Icon--StreamingOff::before {
+  content: '';
+}
+
+.ms-Icon--StreamLogo::before {
+  content: '';
+}
+
+.ms-Icon--Strikethrough::before {
+  content: '';
+}
+
+.ms-Icon--Subscribe::before {
+  content: '';
+}
+
+.ms-Icon--Subscript::before {
+  content: '';
+}
+
+.ms-Icon--SubstitutionsIn::before {
+  content: '';
+}
+
+.ms-Icon--Suitcase::before {
+  content: '';
+}
+
+.ms-Icon--SunAdd::before {
+  content: '';
+}
+
+.ms-Icon--Sunny::before {
+  content: '';
+}
+
+.ms-Icon--SunQuestionMark::before {
+  content: '';
+}
+
+.ms-Icon--Superscript::before {
+  content: '';
+}
+
+.ms-Icon--SurveyQuestions::before {
+  content: '';
+}
+
+.ms-Icon--SwayLogo16::before {
+  content: '';
+}
+
+.ms-Icon--SwayLogo32::before {
+  content: '';
+}
+
+.ms-Icon--SwayLogoFill16::before {
+  content: '';
+}
+
+.ms-Icon--SwayLogoFill32::before {
+  content: '';
+}
+
+.ms-Icon--SwayLogoInverse::before {
+  content: '';
+}
+
+.ms-Icon--Switch::before {
+  content: '';
+}
+
+.ms-Icon--SwitcherStartEnd::before {
+  content: '';
+}
+
+.ms-Icon--Sync::before {
+  content: '';
+}
+
+.ms-Icon--SyncFolder::before {
+  content: '';
+}
+
+.ms-Icon--SyncOccurence::before {
+  content: '';
+}
+
+.ms-Icon--SyncToPC::before {
+  content: '';
+}
+
+.ms-Icon--System::before {
+  content: '';
+}
+
+.ms-Icon--Tab::before {
+  content: '';
+}
+
+.ms-Icon--Table::before {
+  content: '';
+}
+
+.ms-Icon--Tablet::before {
+  content: '';
+}
+
+.ms-Icon--TabletMode::before {
+  content: '';
+}
+
+.ms-Icon--TabletSelected::before {
+  content: '';
+}
+
+.ms-Icon--Tag::before {
+  content: '';
+}
+
+.ms-Icon--Taskboard::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--TaskGroup::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--TaskGroup::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--TaskGroupMirrored::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--TaskGroupMirrored::before {
+  content: '';
+}
+
+.ms-Icon--TaskLogo::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--TaskManager::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--TaskManager::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--TaskManagerMirrored::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--TaskManagerMirrored::before {
+  content: '';
+}
+
+.ms-Icon--TaskSolid::before {
+  content: '';
+}
+
+.ms-Icon--Taxi::before {
+  content: '';
+}
+
+.ms-Icon--TeamFavorite::before {
+  content: '';
+}
+
+.ms-Icon--TeamsLogo::before {
+  content: '';
+}
+
+.ms-Icon--TeamsLogoFill::before {
+  content: '';
+}
+
+.ms-Icon--TeamsLogoInverse::before {
+  content: '';
+}
+
+.ms-Icon--Teamwork::before {
+  content: '';
+}
+
+.ms-Icon--Teeth::before {
+  content: '';
+}
+
+.ms-Icon--TemporaryUser::before {
+  content: '';
+}
+
+.ms-Icon--Tennis::before {
+  content: '';
+}
+
+.ms-Icon--TestAutoSolid::before {
+  content: '';
+}
+
+.ms-Icon--TestBeaker::before {
+  content: '';
+}
+
+.ms-Icon--TestBeakerSolid::before {
+  content: '';
+}
+
+.ms-Icon--TestCase::before {
+  content: '';
+}
+
+.ms-Icon--TestExploreSolid::before {
+  content: '';
+}
+
+.ms-Icon--TestImpactSolid::before {
+  content: '';
+}
+
+.ms-Icon--TestParameter::before {
+  content: '';
+}
+
+.ms-Icon--TestPlan::before {
+  content: '';
+}
+
+.ms-Icon--TestStep::before {
+  content: '';
+}
+
+.ms-Icon--TestSuite::before {
+  content: '';
+}
+
+.ms-Icon--TestUserSolid::before {
+  content: '';
+}
+
+.ms-Icon--TextBox::before {
+  content: '';
+}
+
+.ms-Icon--TextCallout::before {
+  content: '';
+}
+
+.ms-Icon--TextDocument::before {
+  content: '';
+}
+
+.ms-Icon--TextDocumentShared::before {
+  content: '';
+}
+
+.ms-Icon--TextField::before {
+  content: '';
+}
+
+.ms-Icon--TextOverflow::before {
+  content: '';
+}
+
+.ms-Icon--TFVCLogo::before {
+  content: '';
+}
+
+.ms-Icon--ThisPC::before {
+  content: '';
+}
+
+.ms-Icon--ThreeQuarterCircle::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--ThumbnailView::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--ThumbnailView::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--ThumbnailViewMirrored::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--ThumbnailViewMirrored::before {
+  content: '';
+}
+
+.ms-Icon--Thunderstorms::before {
+  content: '';
+}
+
+.ms-Icon--Ticket::before {
+  content: '';
+}
+
+.ms-Icon--Tiles::before {
+  content: '';
+}
+
+.ms-Icon--Tiles2::before {
+  content: '';
+}
+
+.ms-Icon--TimeEntry::before {
+  content: '';
+}
+
+.ms-Icon--Timeline::before {
+  content: '';
+}
+
+.ms-Icon--TimelineDelivery::before {
+  content: '';
+}
+
+.ms-Icon--TimelineMatrixView::before {
+  content: '';
+}
+
+.ms-Icon--TimelineProgress::before {
+  content: '';
+}
+
+.ms-Icon--Timer::before {
+  content: '';
+}
+
+.ms-Icon--TimeSheet::before {
+  content: '';
+}
+
+.ms-Icon--ToDoLogoBottom::before {
+  content: '';
+}
+
+.ms-Icon--ToDoLogoInverse::before {
+  content: '';
+}
+
+.ms-Icon--ToDoLogoTop::before {
+  content: '';
+}
+
+.ms-Icon--ToggleBorder::before {
+  content: '';
+}
+
+.ms-Icon--ToggleFilled::before {
+  content: '';
+}
+
+.ms-Icon--ToggleOff::before {
+  content: '';
+}
+
+.ms-Icon--ToggleThumb::before {
+  content: '';
+}
+
+.ms-Icon--Toll::before {
+  content: '';
+}
+
+.ms-Icon--Touch::before {
+  content: '';
+}
+
+.ms-Icon--TouchPointer::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--Trackers::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--Trackers::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--TrackersMirrored::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--TrackersMirrored::before {
+  content: '';
+}
+
+.ms-Icon--Train::before {
+  content: '';
+}
+
+.ms-Icon--TrainSolid::before {
+  content: '';
+}
+
+.ms-Icon--TransferCall::before {
+  content: '';
+}
+
+.ms-Icon--Transition::before {
+  content: '';
+}
+
+.ms-Icon--TransitionEffect::before {
+  content: '';
+}
+
+.ms-Icon--TransitionPop::before {
+  content: '';
+}
+
+.ms-Icon--TransitionPush::before {
+  content: '';
+}
+
+.ms-Icon--Trending12::before {
+  content: '';
+}
+
+.ms-Icon--TriangleDown12::before {
+  content: '';
+}
+
+.ms-Icon--TriangleLeft12::before {
+  content: '';
+}
+
+.ms-Icon--TriangleRight12::before {
+  content: '';
+}
+
+.ms-Icon--TriangleShapeSolid::before {
+  content: '';
+}
+
+.ms-Icon--TriangleSolid::before {
+  content: '';
+}
+
+.ms-Icon--TriangleSolidDown12::before {
+  content: '';
+}
+
+.ms-Icon--TriangleSolidLeft12::before {
+  content: '';
+}
+
+.ms-Icon--TriangleSolidRight12::before {
+  content: '';
+}
+
+.ms-Icon--TriangleSolidUp12::before {
+  content: '';
+}
+
+.ms-Icon--TriangleUp12::before {
+  content: '';
+}
+
+.ms-Icon--TriggerApproval::before {
+  content: '';
+}
+
+.ms-Icon--TriggerAuto::before {
+  content: '';
+}
+
+.ms-Icon--TriggerUser::before {
+  content: '';
+}
+
+.ms-Icon--TripleColumn::before {
+  content: '';
+}
+
+.ms-Icon--TripleColumnEdit::before {
+  content: '';
+}
+
+.ms-Icon--Trophy::before {
+  content: '';
+}
+
+.ms-Icon--Trophy2::before {
+  content: '';
+}
+
+.ms-Icon--Trophy2Solid::before {
+  content: '';
+}
+
+.ms-Icon--TurnRight::before {
+  content: '';
+}
+
+.ms-Icon--TVMonitor::before {
+  content: '';
+}
+
+.ms-Icon--TVMonitorSelected::before {
+  content: '';
+}
+
+.ms-Icon--TypeScriptLanguage::before {
+  content: '';
+}
+
+.ms-Icon--Umbrella::before {
+  content: '';
+}
+
+.ms-Icon--Underline::before {
+  content: '';
+}
+
+.ms-Icon--Undo::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--Uneditable::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--Uneditable::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--UneditableMirrored::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--UneditableMirrored::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--UneditableSolid12::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--UneditableSolid12::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--UneditableSolidMirrored12::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--UneditableSolidMirrored12::before {
+  content: '';
+}
+
+.ms-Icon--Unfavorite::before {
+  content: '';
+}
+
+.ms-Icon--UngroupObject::before {
+  content: '';
+}
+
+.ms-Icon--UnknownCall::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--Unknown::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--Unknown::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--UnknownMirrored::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--UnknownMirrored::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--UnknownSolid::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--UnknownSolid::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--UnknownMirroredSolid::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--UnknownMirroredSolid::before {
+  content: '';
+}
+
+.ms-Icon--Unlock::before {
+  content: '';
+}
+
+.ms-Icon--UnlockSolid::before {
+  content: '';
+}
+
+.ms-Icon--Unpin::before {
+  content: '';
+}
+
+.ms-Icon--Unsubscribe::before {
+  content: '';
+}
+
+.ms-Icon--UnsyncFolder::before {
+  content: '';
+}
+
+.ms-Icon--UnsyncOccurence::before {
+  content: '';
+}
+
+.ms-Icon--Up::before {
+  content: '';
+}
+
+.ms-Icon--Upload::before {
+  content: '';
+}
+
+.ms-Icon--UserEvent::before {
+  content: '';
+}
+
+.ms-Icon--UserFollowed::before {
+  content: '';
+}
+
+.ms-Icon--UserPause::before {
+  content: '';
+}
+
+.ms-Icon--UserRemove::before {
+  content: '';
+}
+
+.ms-Icon--UserSync::before {
+  content: '';
+}
+
+.ms-Icon--Vacation::before {
+  content: '';
+}
+
+.ms-Icon--Variable::before {
+  content: '';
+}
+
+.ms-Icon--VariableGroup::before {
+  content: '';
+}
+
+.ms-Icon--VB::before {
+  content: '';
+}
+
+.ms-Icon--VennDiagram::before {
+  content: '';
+}
+
+.ms-Icon--VersionControlPush::before {
+  content: '';
+}
+
+.ms-Icon--VerticalDistributeCenter::before {
+  content: '';
+}
+
+.ms-Icon--Video::before {
+  content: '';
+}
+
+.ms-Icon--VideoOff::before {
+  content: '';
+}
+
+.ms-Icon--VideoSearch::before {
+  content: '';
+}
+
+.ms-Icon--VideoSolid::before {
+  content: '';
+}
+
+.ms-Icon--View::before {
+  content: '';
+}
+
+.ms-Icon--ViewAll::before {
+  content: '';
+}
+
+.ms-Icon--ViewAll2::before {
+  content: '';
+}
+
+.ms-Icon--ViewDashboard::before {
+  content: '';
+}
+
+.ms-Icon--ViewList::before {
+  content: '';
+}
+
+.ms-Icon--ViewListGroup::before {
+  content: '';
+}
+
+.ms-Icon--ViewListTree::before {
+  content: '';
+}
+
+.ms-Icon--VisioDiagram::before {
+  content: '';
+}
+
+.ms-Icon--VisioDocument::before {
+  content: '';
+}
+
+.ms-Icon--VisioLogo::before {
+  content: '';
+}
+
+.ms-Icon--VisioLogo16::before {
+  content: '';
+}
+
+.ms-Icon--VisioLogoFill::before {
+  content: '';
+}
+
+.ms-Icon--VisioLogoFill16::before {
+  content: '';
+}
+
+.ms-Icon--VisioLogoInverse::before {
+  content: '';
+}
+
+.ms-Icon--VisioLogoInverse16::before {
+  content: '';
+}
+
+.ms-Icon--VisualBasicLanguage::before {
+  content: '';
+}
+
+.ms-Icon--VisualsFolder::before {
+  content: '';
+}
+
+.ms-Icon--VisualsStore::before {
+  content: '';
+}
+
+.ms-Icon--VisualStudioIDELogo32::before {
+  content: '';
+}
+
+.ms-Icon--VisualStudioLogo::before {
+  content: '';
+}
+
+.ms-Icon--VoicemailForward::before {
+  content: '';
+}
+
+.ms-Icon--VoicemailIRM::before {
+  content: '';
+}
+
+.ms-Icon--VoicemailReply::before {
+  content: '';
+}
+
+.ms-Icon--Volume0::before {
+  content: '';
+}
+
+.ms-Icon--Volume1::before {
+  content: '';
+}
+
+.ms-Icon--Volume2::before {
+  content: '';
+}
+
+.ms-Icon--Volume3::before {
+  content: '';
+}
+
+.ms-Icon--VolumeDisabled::before {
+  content: '';
+}
+
+.ms-Icon--VSTSAltLogo1::before {
+  content: '';
+}
+
+.ms-Icon--VSTSAltLogo2::before {
+  content: '';
+}
+
+.ms-Icon--VSTSLogo::before {
+  content: '';
+}
+
+.ms-Icon--Waffle::before {
+  content: '';
+}
+
+.ms-Icon--WaffleOffice365::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--WaitlistConfirm::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--WaitlistConfirm::before {
+  content: '';
+}
+
+[dir='ltr'] .ms-Icon--WaitlistConfirmMirrored::before {
+  content: '';
+}
+
+[dir='rtl'] .ms-Icon--WaitlistConfirmMirrored::before {
+  content: '';
+}
+
+.ms-Icon--Warning::before {
+  content: '';
+}
+
+.ms-Icon--Warning12::before {
+  content: '';
+}
+
+.ms-Icon--WebPublish::before {
+  content: '';
+}
+
+.ms-Icon--Website::before {
+  content: '';
+}
+
+.ms-Icon--Weights::before {
+  content: '';
+}
+
+.ms-Icon--WhiteBoardApp16::before {
+  content: '';
+}
+
+.ms-Icon--WhiteBoardApp32::before {
+  content: '';
+}
+
+.ms-Icon--WifiEthernet::before {
+  content: '';
+}
+
+.ms-Icon--WindDirection::before {
+  content: '';
+}
+
+.ms-Icon--WindowEdit::before {
+  content: '';
+}
+
+.ms-Icon--WindowsLogo::before {
+  content: '';
+}
+
+.ms-Icon--Wines::before {
+  content: '';
+}
+
+.ms-Icon--WipePhone::before {
+  content: '';
+}
+
+.ms-Icon--WordDocument::before {
+  content: '';
+}
+
+.ms-Icon--WordLogo::before {
+  content: '';
+}
+
+.ms-Icon--WordLogo16::before {
+  content: '';
+}
+
+.ms-Icon--WordLogoFill::before {
+  content: '';
+}
+
+.ms-Icon--WordLogoFill16::before {
+  content: '';
+}
+
+.ms-Icon--WordLogoInverse::before {
+  content: '';
+}
+
+.ms-Icon--WordLogoInverse16::before {
+  content: '';
+}
+
+.ms-Icon--Work::before {
+  content: '';
+}
+
+.ms-Icon--WorkFlow::before {
+  content: '';
+}
+
+.ms-Icon--WorkforceManagement::before {
+  content: '';
+}
+
+.ms-Icon--WorkItem::before {
+  content: '';
+}
+
+.ms-Icon--WorkItemBar::before {
+  content: '';
+}
+
+.ms-Icon--WorkItemBarSolid::before {
+  content: '';
+}
+
+.ms-Icon--WorkItemBug::before {
+  content: '';
+}
+
+.ms-Icon--World::before {
+  content: '';
+}
+
+.ms-Icon--WorldClock::before {
+  content: '';
+}
+
+.ms-Icon--YammerLogo::before {
+  content: '';
+}
+
+.ms-Icon--ZipFolder::before {
+  content: '';
+}
+
+.ms-Icon--Zoom::before {
+  content: '';
+}
+
+.ms-Icon--ZoomIn::before {
+  content: '';
+}
+
+.ms-Icon--ZoomOut::before {
+  content: '';
+}
+
+.ms-Icon--HumanResources::before {
+  content: '';
+}
+
+.ms-Icon--StoreLogo::before {
+  content: '';
+}
+
+.ms-Icon--StoreLogoMed::before {
+  content: '';
+}
