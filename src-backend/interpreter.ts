@@ -143,14 +143,14 @@ export class ContentHelpers{
         }
     }
 
-    static interpretRich(data: JSONValue){
+    static interpretRich(data: JSONValue): CardOutput{
         let chosenType = this.chooseTypeFromComplexData(data);
         let output: string = '';
 
         if(chosenType === 'application/vnd.plotly.v1+json'){
             let plotlyJson = data[chosenType];
             if(ContentHelpers.validateData(plotlyJson, 'data')){
-                let guid = this.generateGuid()
+                let guid = this.generateGuid();
                 output = 
                     '<div id="' + guid + '" style="height: 525px; width: 100%;" class="plotly-graph-div">'
                     + '</div><script type="text/javascript">require(["plotly"], function(Plotly)'
@@ -166,17 +166,19 @@ export class ContentHelpers{
     }
 
     static getMissingModule(evalue: string){
-        if(evalue.match(/No module named/i)){
-            let moduleMatch = /'.+'/i.exec(evalue);
-            if(moduleMatch && moduleMatch.length){
-                let module = moduleMatch[0].replace(/\'/g, '');
-                vscode.window.showInformationMessage('Jupyter requires the module ' + moduleMatch[0] + ' to be installed. Install now?', 'Install')
-                    .then(data => this.installMissingModule(data, module));
-            }
+        let moduleMatch = evalue.match(/No module named|\'.+\'/g);
+        if(moduleMatch && moduleMatch.length===2){
+            let module = moduleMatch[1].replace(/\'/g, '');
+            vscode.window.showInformationMessage('Jupyter requires the module ' + moduleMatch[1] + ' to be installed. Install now?', 'Install')
+                .then(data => {
+                    if(data) { 
+                        this.installMissingModule(module);
+                    }
+                });
         }
     }
 
-    static installMissingModule(data, module: string){
+    static installMissingModule(module: string){
         if (module) {
             let terminal = vscode.window.createTerminal('pip');
             terminal.show();
