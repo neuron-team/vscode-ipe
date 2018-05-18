@@ -76,7 +76,6 @@ export class ContentHelpers{
     static sourceTmp = '';
     static contentTmp: Array<CardOutput> = [];
     static id = 0;
-    static contentId = 0;
 
     private static _onStatusChanged: EventEmitter<string> = new EventEmitter();
     static get onStatusChanged(): Event<string> { return this._onStatusChanged.event; }
@@ -133,38 +132,55 @@ export class ContentHelpers{
         // The output is rich
         } else if('data' in content){
             let data = content.data;
-            this.interpretRich(data);
+            this.contentTmp.push(this.interpretRich(data));
         // The code could not be executed, an error was returned
         } else if(['ename', 'evalue', 'traceback'].every(value => value in content)) {
             let ename = content['ename'];
             let evalue = content['evalue'];
+            this.getMissingModule(evalue as string);
             let traceback = (content['traceback'] as string[]).join('\n');
             this.contentTmp.push(new CardOutput('error', traceback));
         }
     }
 
-    static interpretRich(data){
+    static interpretRich(data: JSONValue){
         let chosenType = this.chooseTypeFromComplexData(data);
-        let output = '';
+        let output: string = '';
 
         if(chosenType === 'application/vnd.plotly.v1+json'){
             let plotlyJson = data[chosenType];
             if(ContentHelpers.validateData(plotlyJson, 'data')){
+                let guid = this.generateGuid()
                 output = 
-                    '<div id="' + this.contentId + '" style="height: 525px; width: 100%;" class="plotly-graph-div">'
+                    '<div id="' + guid + '" style="height: 525px; width: 100%;" class="plotly-graph-div">'
                     + '</div><script type="text/javascript">require(["plotly"], function(Plotly)'
                     + '{ window.PLOTLYENV=window.PLOTLYENV || {};window.PLOTLYENV.BASE_URL="https://plot.ly";Plotly.newPlot("'
-                    + this.contentId + '",' + JSON.stringify(plotlyJson.data) + ', {}, {"showLink": true, "linkText": "Export to plot.ly"})});</script>';
-                    
-                    this.contentId++;
+                    + guid + '",' + JSON.stringify(plotlyJson.data) + ', {}, {"showLink": true, "linkText": "Export to plot.ly"})});</script>';
             }
             chosenType = 'text/html';
         }
         else{
             output = data[chosenType];
         }
-        if(typeof output === 'string'){
-            this.contentTmp.push(new CardOutput(chosenType, output));
+        return new CardOutput(chosenType, output);
+    }
+
+    static getMissingModule(evalue: string){
+        if(evalue.match(/No module named/i)){
+            let moduleMatch = /'.+'/i.exec(evalue);
+            if(moduleMatch && moduleMatch.length){
+                let module = moduleMatch[0].replace(/\'/g, '');
+                vscode.window.showInformationMessage('Jupyter requires the module ' + moduleMatch[0] + ' to be installed. Install now?', 'Install')
+                    .then(data => this.installMissingModule(data, module));
+            }
+        }
+    }
+
+    static installMissingModule(data, module: string){
+        if (module) {
+            let terminal = vscode.window.createTerminal('pip');
+            terminal.show();
+            terminal.sendText('pip install '+module, true);
         }
     }
 
@@ -185,4 +201,13 @@ export class ContentHelpers{
         this.contentTmp = [];
         this.id++;
     }
+
+    static generateGuid() {
+        function s4() {
+          return Math.floor((1 + Math.random()) * 0x10000)
+            .toString(16)
+            .substring(1);
+        }
+        return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
+      }
 }
