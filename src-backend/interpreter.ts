@@ -132,24 +132,68 @@ export class ContentHelpers{
         // The output is rich
         } else if('data' in content){
             let data = content.data;
-            let chosenType = this.chooseTypeFromComplexData(data);
-            let output = data[chosenType];
-            if(typeof output === 'string'){
-                this.contentTmp.push(new CardOutput(chosenType, output));
-            }
+            this.contentTmp.push(this.interpretRich(data));
         // The code could not be executed, an error was returned
         } else if(['ename', 'evalue', 'traceback'].every(value => value in content)) {
             let ename = content['ename'];
             let evalue = content['evalue'];
+            this.getMissingModule(evalue as string);
             let traceback = (content['traceback'] as string[]).join('\n');
             this.contentTmp.push(new CardOutput('error', traceback));
         }
     }
 
+    static interpretRich(data: JSONValue): CardOutput{
+        let chosenType = this.chooseTypeFromComplexData(data);
+        let output: string = '';
+
+        if(chosenType === 'application/vnd.plotly.v1+json'){
+            let plotlyJson = data[chosenType];
+            if(ContentHelpers.validateData(plotlyJson, 'data')){
+                let guid = this.generateGuid();
+                output = 
+                    '<div id="' + guid + '" style="height: 525px; width: 100%;" class="plotly-graph-div">'
+                    + '</div><script type="text/javascript">require(["plotly"], function(Plotly)'
+                    + '{ window.PLOTLYENV=window.PLOTLYENV || {};window.PLOTLYENV.BASE_URL="https://plot.ly";Plotly.newPlot("'
+                    + guid + '",' + JSON.stringify(plotlyJson.data) + ', {}, {"showLink": true, "linkText": "Export to plot.ly"})});</script>';
+            }
+            chosenType = 'text/html';
+        }
+        else{
+            output = data[chosenType];
+        }
+        return new CardOutput(chosenType, output);
+    }
+
+    static getMissingModule(evalue: string){
+        let moduleMatch = evalue.match(/No module named \'(.+?)\'/);
+        if(moduleMatch){
+            let module = moduleMatch[1].replace(/\'/g, '');
+            vscode.window.showInformationMessage('Jupyter requires the module \'' + moduleMatch[1] + '\' to be installed. Install now?', 'Install')
+                .then(data => {
+                    if(data) { 
+                        this.installMissingModule(module);
+                    }
+                });
+        }
+    }
+
+    static installMissingModule(module: string){
+        if (module) {
+            let terminal = vscode.window.createTerminal('pip');
+            terminal.show();
+            terminal.sendText('pip install '+module, true);
+        }
+    }
+
     static chooseTypeFromComplexData(data: JSONValue) {
         let validDataTypes = 
-            ['text/html', 'image/svg+xml', 'image/png', 'image/jpeg', 'text/markdown', 'application/pdf', 
-            'text/latex', 'application/javascript', 'application/json', 'text/plain']
+            ['application/vnd.jupyter', 'application/vnd.jupyter.cells',
+            'application/vnd.jupyter.dragindex', 'application/x-ipynb+json', 
+            'application/geo+json', 'application/vnd.plotly.v1+json', 
+            'application/vdom.v1+json', 'text/html', 'image/svg+xml', 
+            'image/png', 'image/jpeg', 'text/markdown', 'application/pdf', 
+            'text/latex', 'application/json', 'text/plain']
             .filter(dataType => this.validateData(data, dataType));
         return validDataTypes[0];
     }
@@ -159,4 +203,13 @@ export class ContentHelpers{
         this.contentTmp = [];
         this.id++;
     }
+
+    static generateGuid() {
+        function s4() {
+          return Math.floor((1 + Math.random()) * 0x10000)
+            .toString(16)
+            .substring(1);
+        }
+        return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
+      }
 }
