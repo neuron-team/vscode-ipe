@@ -15,7 +15,7 @@ import {DomSanitizer} from "@angular/platform-browser";
 @Component({
   selector: 'app-card',
   templateUrl: './card.component.html',
-  styleUrls: ['./card.component.css', '../../assets/./fabric.css'],
+  styleUrls: ['./card.component.css'],
   animations: [
     trigger('cardState', [
       state('selected',   style({
