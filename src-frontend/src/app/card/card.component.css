@@ -73,6 +73,10 @@ hr {
   overflow-x: scroll;
 }
 
+.output-rich {
+  user-select: text;
+}
+
 button {
   align-items: flex-start;
   text-align: center;

@@ -81,7 +81,7 @@
           </div>
 
           <div *ngSwitchCase="'text/html'">
-            <div [innerHTML]="output.output" runScripts></div>
+            <div class="output-rich" [innerHTML]="output.output" runScripts></div>
           </div>
 
           <div *ngSwitchCase="'image/svg+xml'">
