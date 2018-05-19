@@ -9,9 +9,6 @@ export class HighlightPipe implements PipeTransform {
       .replace(/>/g, "&gt;");
     if (search) {
       let pattern = search.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&');
-      pattern = pattern.split(' ').filter((t) => {
-        return t.length > 0;
-      }).join('|');
       const regex = new RegExp(pattern, 'gi');
 
       return sanitizedText.replace(regex, (match) => `<span class="search-highlight">${match}</span>`);
