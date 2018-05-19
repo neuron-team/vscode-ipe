@@ -47,8 +47,10 @@ export class AppComponent implements AfterViewInit {
   /* Searching */
   cardMatchesSearchQuery(card: Card): boolean {
     if (this.searchQuery == '') { return true; }
-    if (card.title.search(new RegExp(this.searchQuery, "i")) > -1) { return true; }
-    if (card.sourceCode.search(new RegExp(this.searchQuery, "i")) > -1) { return true; }
+    
+    let pattern = this.searchQuery.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&');
+    if (card.title.search(new RegExp(pattern, 'gi')) > -1) { return true; }
+    if (card.sourceCode.search(new RegExp(pattern, 'gi')) > -1) { return true; }
     return false;
   }
 
