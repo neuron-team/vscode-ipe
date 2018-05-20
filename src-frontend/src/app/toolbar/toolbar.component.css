@@ -33,6 +33,16 @@ button:active {
   background-color: rgba(0, 119, 198, 1.0);
 }
 
+.red {
+  background-color: rgba(231, 69, 69, 0.3);
+}
+.red:hover {
+  background-color: rgba(231, 69, 69, 0.7);
+}
+.red:active {
+  background-color: rgba(231, 69, 69, 1.0);
+}
+
 input[type=text] {
   color: var(--color);
   background-color: transparent;
