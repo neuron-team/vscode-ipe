@@ -9,11 +9,11 @@ declare var google: any;
 export class MapComponent implements OnInit {
 
   @Input() geojson: string;
-  @ViewChild('map') mapChild: ElementRef;
+  @ViewChild('map') mapDiv: ElementRef;
 
   constructor() {}
   ngOnInit(){
-    const map = new google.maps.Map(this.mapChild.nativeElement as HTMLElement);
+    const map = new google.maps.Map(this.mapDiv.nativeElement);
     // // NOTE: This uses cross-domain XHR, and may not work on older browsers.
     map.data.addGeoJson(this.geojson);
     this.zoom(map);
@@ -21,7 +21,7 @@ export class MapComponent implements OnInit {
 
   private zoom(map) {
     const bounds = new google.maps.LatLngBounds();
-    map.data.forEach((feature) =>
+    map.data.forEach(feature =>
       this.processPoints(feature.getGeometry(), bounds.extend, bounds)
     );
     map.fitBounds(bounds);
@@ -33,7 +33,7 @@ export class MapComponent implements OnInit {
     } else if (geometry instanceof google.maps.Data.Point) {
       callback.call(thisArg, geometry.get());
     } else {
-      geometry.getArray().forEach(function(g) {
+      geometry.getArray().forEach(g => {
         this.processPoints(g, callback, thisArg);
       });
     }
