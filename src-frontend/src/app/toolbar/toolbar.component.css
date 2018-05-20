@@ -13,7 +13,6 @@
   user-select: none;
 }
 
-
 button {
   align-items: flex-start;
   text-align: center;
@@ -25,6 +24,7 @@ button {
   outline: none;
   box-shadow: none;
   height: 100%;
+  padding: 5px 5px;
 }
 button:hover {
   background-color: rgba(0, 119, 198, 0.7);
@@ -46,6 +46,7 @@ input:focus {
   outline: rgba(0, 119, 198, 0.7);
   background-color: rgba(170, 170, 170, 0.05);
 }
+
 /* Search Toolbar */
 .search-filters {
   background-color: var(--background-color);
@@ -70,7 +71,7 @@ input:focus {
   background-color: rgba(170, 170, 170, 0.3);
   border-style: none;
   height: 100%;
-  margin: -1.8px;
+  margin-right: -3.5px;
 }
 
 
