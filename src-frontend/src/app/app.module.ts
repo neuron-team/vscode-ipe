@@ -11,6 +11,7 @@ import { AnsiColorizePipe } from './classes/ansi-colorize.pipe';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { RunScriptsDirective } from './classes/run-scripts.directive';
 import {PreviewPipe} from "./classes/preview.pipe";
+import { MapComponent } from './map/map.component';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import {PreviewPipe} from "./classes/preview.pipe";
     AnsiColorizePipe,
     RunScriptsDirective,
     PreviewPipe,
-    ToolbarComponent
+    ToolbarComponent,
+    MapComponent
   ],
   imports: [
     BrowserModule,

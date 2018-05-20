@@ -84,6 +84,10 @@
             <div class="output-rich" [innerHTML]="output.output" runScripts></div>
           </div>
 
+          <div *ngSwitchCase="'application/geo+json'">
+            <app-map [geojson]="output.output"></app-map>
+          </div>
+
           <div *ngSwitchCase="'image/svg+xml'">
             <div [innerHTML]="sanitizer.bypassSecurityTrustHtml(output.output)"></div>
           </div>

@@ -11,6 +11,7 @@ import {Card, CardOutput} from 'vscode-ipe-types';
   }
 })
 export class AppComponent implements AfterViewInit {
+
   cards: Card[] = [
     new Card(0, 'sample card', 'print("Hello, world!")', [new CardOutput('stdout', 'Hello, world!')]),
     new Card(0, 'sample graph', 'some code', [
