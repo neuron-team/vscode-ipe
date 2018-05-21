@@ -10,3 +10,9 @@
   height: 100%;
   box-sizing: border-box;
 }
+
+@media screen and (max-width: 200px){
+  .cards-list {
+    padding: 0;
+  }
+}

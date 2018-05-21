@@ -32,6 +32,9 @@ button:hover {
 button:active {
   background-color: rgba(0, 119, 198, 1.0);
 }
+button i {
+  display: none;
+}
 
 .red {
   background-color: rgba(231, 69, 69, 0.3);
@@ -57,8 +60,8 @@ input:focus {
   background-color: rgba(170, 170, 170, 0.05);
 }
 
-/* Search Toolbar */
-.search-filters {
+/* Search/Select Toolbar */
+.extra-toolbar {
   background-color: var(--background-color);
   padding-top: 10px;
   width: 100%;
@@ -69,13 +72,14 @@ input:focus {
   border-bottom-width: 1px;
 }
 
-.checkbox {
+.filter {
   -webkit-margin-before: 0.4em;
   -webkit-margin-after: 0.4em;
   -webkit-margin-start: 5px;
+  font-size: 11px;
 }
 
-.checkbox label span {
+.filter label span {
   text-align: center;
   padding: 5px 5px;
   background-color: rgba(170, 170, 170, 0.3);
@@ -84,16 +88,40 @@ input:focus {
   margin-right: -3.5px;
 }
 
-
+/* Checkboxes */
 input[type=checkbox]{
   -webkit-appearance: none;
   appearance: none;
   display: none;
 }
-.checkbox input:hover + span {
+.filter input:hover + span {
    background: rgba(0, 119, 198, 0.3);
 }
 
-.checkbox input:checked + span{
+.filter input:checked + span{
    background-color: rgba(0, 119, 198, 1.0);
+}
+
+
+/* Display Size */
+@media screen and (max-width: 400px){
+  .select {
+    display: none !important;
+  }
+}
+
+@media screen and (max-width: 280px){
+  button span {
+    display: none;
+  }
+  button i {
+    display: block;
+    width: 30px;
+  }
+}
+
+@media screen and (max-width: 200px){
+  .toolbar {
+    display: none;
+  }
 }
