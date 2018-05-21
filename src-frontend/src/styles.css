@@ -4,6 +4,10 @@ html, body {
   margin: 0px;
 }
 
+body {
+  padding: 0 0 0 10px;
+}
+
 app-root {
   display: block;
   height: 100%;
