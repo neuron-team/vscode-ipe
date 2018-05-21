@@ -1,13 +1,10 @@
 .toolbar {
-  white-space: nowrap;
   position: fixed;
   top: 0;
-  display: block;
   height: 30px;
   width: 100%;
   margin: 0 0 2px 0;
   background-color: var(--background-color);
-  border-radius: 1px;
   border: 0 solid rgba(200, 200, 200, 0.5);
   border-bottom-width: 1px;
   user-select: none;
@@ -15,15 +12,11 @@
 
 button {
   align-items: flex-start;
-  text-align: center;
   cursor: pointer;
   color: inherit;
   background-color: rgba(0, 119, 198, 0.3);
-  box-sizing: border-box;
   border-style: none;
   outline: none;
-  box-shadow: none;
-  height: 100%;
   padding: 5px 5px;
 }
 button:hover {
@@ -65,27 +58,19 @@ input:focus {
   background-color: var(--background-color);
   padding-top: 6px;
   height: 26px;
-  width: 100%;
-  height: 100%;
-  vertical-align: middle;
-  border-radius: 1px;
   border: 0 solid rgba(200, 200, 200, 0.5);
   border-bottom-width: 1px;
 }
 
 .filter {
-  -webkit-margin-after: 0.4em;
   -webkit-margin-start: 5px;
   font-size: 11px;
   margin-top: -3px;
 }
 
 .filter label span {
-  text-align: center;
   padding: 5px 5px;
   background-color: rgba(170, 170, 170, 0.3);
-  border-style: none;
-  height: 100%;
   margin-right: -3.5px;
 }
 
@@ -127,7 +112,7 @@ input[type=checkbox]{
   }
 }
 
-@media screen and (max-width: 200px){
+@media screen and (max-width: 220px){
   .toolbar {
     display: none;
   }
