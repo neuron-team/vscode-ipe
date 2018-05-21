@@ -1,6 +1,6 @@
-import {AfterViewInit, Component, QueryList, ViewChild, ViewChildren} from '@angular/core';
-import {ExtensionService} from './classes/extension.service';
-import {Card, CardOutput} from 'vscode-ipe-types';
+import { AfterViewInit, Component, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { ExtensionService } from './classes/extension.service';
+import { Card, CardOutput } from 'vscode-ipe-types';
 
 @Component({
   selector: 'app-root',
@@ -20,8 +20,7 @@ export class AppComponent implements AfterViewInit {
   ];
 
   selectedCards = new Set<Card>();
-  visibleCards = new Map<Card,boolean>();
-
+  visibleCards = new Map<Card, boolean>();
   searchQuery = '';
   typeFilters = {
     text: true,
@@ -36,21 +35,44 @@ export class AppComponent implements AfterViewInit {
   }
 
   /* Type Filtering called via emitter in toolbar*/
-  updateFilters(event: {search: string, filters: any}): void {
+  updateFilters(event: { search: string, filters: any }): void {
     this.searchQuery = event.search;
     this.typeFilters = event.filters;
-    for (let card of this.cards){
-      this.visibleCards.set(card,this.cardMatchesFilter(card) && this.cardMatchesSearchQuery(card));
+    for (let card of this.cards) {
+      this.visibleCards.set(card, this.cardMatchesFilter(card) && this.cardMatchesSearchQuery(card));
     }
   }
 
   /* Searching */
+  isRegex(search: string): { isRegex: boolean, flags: string, regexp: string } {
+    //If there is match between slash
+    if (/\/([\s\S]*?)\//.test(search)) {
+      // Return string with regex flags, after last /
+      let flags = /[^/]*$/.exec(search)[0];
+      //Get regex between first 2 /.../
+      let regexp = /\/([\s\S]*?)\//.exec(search)[0];
+      //Scrub slashes
+      regexp = regexp.slice(1, -1);
+
+      return { isRegex: true, flags: flags, regexp: regexp };
+    }
+    return { isRegex: false, flags: '', regexp: '' };
+  }
   cardMatchesSearchQuery(card: Card): boolean {
-    if (this.searchQuery == '') { return true; }
-    
-    let pattern = this.searchQuery.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&');
-    if (card.title.search(new RegExp(pattern, 'gi')) > -1) { return true; }
-    if (card.sourceCode.search(new RegExp(pattern, 'gi')) > -1) { return true; }
+    if (this.searchQuery === '') { return true; }
+
+    let regexResult = this.isRegex(this.searchQuery);
+    //If is a regex search
+    if (regexResult.isRegex) {
+      if (card.title.search(new RegExp(regexResult.regexp, regexResult.flags)) > -1) { return true; }
+      if (card.sourceCode.search(new RegExp(regexResult.regexp, regexResult.flags)) > -1) { return true; }
+    }
+    //Normal search
+    else {
+      let pattern = this.searchQuery.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&');
+      if (card.title.search(new RegExp(pattern, 'gi')) > -1) { return true; }
+      if (card.sourceCode.search(new RegExp(pattern, 'gi')) > -1) { return true; }
+    }
     return false;
   }
 
@@ -80,13 +102,13 @@ export class AppComponent implements AfterViewInit {
 
   /* Ordering */
   cardMoved(card: Card, direction: string) {
-    if(direction === "up") this.moveUp(card);
-    else if (direction ==="down") this.moveDown(card);
+    if (direction === "up") this.moveUp(card);
+    else if (direction === "down") this.moveDown(card);
   }
 
   moveUp(card: Card) {
     const index: number = this.cards.indexOf(card, 1);
-    if (index > -1){
+    if (index > -1) {
       const tmp: Card = this.cards[index - 1];
       this.cards[index - 1] = this.cards[index];
       this.cards[index] = tmp;
@@ -95,7 +117,7 @@ export class AppComponent implements AfterViewInit {
 
   moveDown(card: Card) {
     const index: number = this.cards.indexOf(card);
-    if (index > -1 && index < this.cards.length - 1){
+    if (index > -1 && index < this.cards.length - 1) {
       const tmp: Card = this.cards[index + 1];
       this.cards[index + 1] = this.cards[index];
       this.cards[index] = tmp;
