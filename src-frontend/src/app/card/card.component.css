@@ -102,6 +102,7 @@ button {
   -webkit-margin-after: 0.4em;
   -webkit-margin-start: 5px;
 }
+
 input {
   color: var(--color);
   background-color: transparent;
@@ -113,9 +114,22 @@ input {
   -webkit-margin-after: 0.4em;
   -webkit-margin-start: 5px;
 }
-
 input:focus {
   border-color: rgba(0, 119, 198, 0.7);
   outline: rgba(0, 119, 198, 0.7);
   background-color: rgba(170, 170, 170, 0.05);
+}
+
+.edit-title {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.edit-title input {
+  flex-basis: 400px;
+  min-width: 50px;
+}
+
+.edit-title button {
+  flex-shrink: 0;
 }

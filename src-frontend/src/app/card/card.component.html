@@ -25,7 +25,7 @@
       <div class="title" [innerHTML]="card.title | highlight : searchQuery"></div>
     </button>
   </div>
-  <div *ngIf="editingTitle">
+  <div class="edit-title" *ngIf="editingTitle">
     <input #titleEditInput
            placeholder="Title"
            autofocus
