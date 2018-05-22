@@ -23,6 +23,13 @@ export class ToolbarComponent implements OnInit {
   }
 
   fireEvent() {
+    if (this.searchQuery === '') {
+      this.filterState = {
+        text: true,
+        rich: true,
+        error: true
+      };
+    }
     this.onSearchChanged.emit({
       search: this.searchQuery,
       filters: this.filterState
