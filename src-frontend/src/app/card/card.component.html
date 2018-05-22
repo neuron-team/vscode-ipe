@@ -21,8 +21,8 @@
 
   <!-- Card title and title edit box -->
   <div *ngIf="!editingTitle">
-    <button class="react" (click)="editingTitle = true">
-      <h2 [innerHTML]="card.title | highlight : searchQuery"></h2>
+    <button class="react full-left" (click)="editingTitle = true">
+      <div class="title" [innerHTML]="card.title | highlight : searchQuery"></div>
     </button>
   </div>
   <div *ngIf="editingTitle">

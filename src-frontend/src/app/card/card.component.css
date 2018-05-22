@@ -1,9 +1,3 @@
-h2 {
-  font-size: 16px;
-  -webkit-margin-before: 0.4em;
-  -webkit-margin-after: 0.4em;
-  -webkit-margin-start: 5px;
-}
 
 hr {
   border-style: solid;
@@ -98,6 +92,16 @@ button {
 }
 
 /* Title Edit Box */
+.title {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: 16px;
+  font-weight: bold;
+  -webkit-margin-before: 0.4em;
+  -webkit-margin-after: 0.4em;
+  -webkit-margin-start: 5px;
+}
 input {
   color: var(--color);
   background-color: transparent;
