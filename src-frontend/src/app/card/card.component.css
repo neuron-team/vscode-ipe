@@ -11,6 +11,11 @@ hr {
   color: rgba(170, 170, 170, 0.3);
 }
 
+.full-left {
+  width: 100%;
+  text-align: left;
+}
+
 .prv{
   overflow: hidden;
   white-space: nowrap;
@@ -63,6 +68,8 @@ hr {
 
 .output-plain {
   word-wrap: break-word;
+  overflow: hidden;
+  white-space: normal;
   padding: 0 6px;
   user-select: text;
 }
