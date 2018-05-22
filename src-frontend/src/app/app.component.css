@@ -12,6 +12,12 @@
   overflow-x: hidden;
 }
 
+app-toolbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
 @media screen and (max-width: 220px){
   .cards-list {
     padding: 0 10px 0 0;

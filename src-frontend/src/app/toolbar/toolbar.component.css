@@ -1,13 +1,24 @@
 .toolbar {
-  position: fixed;
-  top: 0;
   height: 30px;
-  width: 100%;
   margin: 0 0 2px 0;
   background-color: var(--background-color);
   border: 0 solid rgba(200, 200, 200, 0.5);
   border-bottom-width: 1px;
   user-select: none;
+}
+
+.main-bar {
+  display: flex;
+  flex-wrap: nowrap;
+  margin-right: 10px;
+}
+
+.main-bar input {
+  flex-basis: 400px;
+}
+
+.main-bar button {
+  flex-shrink: 0;
 }
 
 button {
@@ -90,12 +101,6 @@ input[type=checkbox]{
 
 
 /* Display Size */
-@media screen  and (min-width: 390px){
-  input[type=text] {
-    width: 33%;
-  }
-}
-
 @media screen and (max-width: 390px){
   .select {
     display: none !important;

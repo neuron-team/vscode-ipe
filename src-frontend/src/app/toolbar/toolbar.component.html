@@ -1,8 +1,9 @@
 <div class="toolbar">
-  <input type="text" name="searchBox" placeholder="Search cards" [(ngModel)]="searchQuery" (keyup)="fireEvent()">
-
-  <button class="select" (click)="selection = !selection;">Select</button>
-  <button><span>Export to Jupyter</span><i class="ms-Icon ms-Icon--Generate" aria-label="Export to Jupyter"></i></button>
+  <div class="main-bar">
+    <input type="text" name="searchBox" placeholder="Search cards" [(ngModel)]="searchQuery" (keyup)="fireEvent()">
+    <button class="select" (click)="selection = !selection;">Select</button>
+    <button><span>Export to Jupyter</span><i class="ms-Icon ms-Icon--Generate" aria-label="Export to Jupyter"></i></button>
+  </div>
 
   <div class="extra-toolbar" [style.display]="(searchQuery || selection) ? 'block' : 'none'">
     <span class="filter" [style.display]="searchQuery ? 'inline-block' : 'none'">
