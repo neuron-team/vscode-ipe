@@ -10,7 +10,8 @@ import { HighlightPipe } from './classes/highlight.pipe';
 import { AnsiColorizePipe } from './classes/ansi-colorize.pipe';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { RunScriptsDirective } from './classes/run-scripts.directive';
-import {PreviewPipe} from "./classes/preview.pipe";
+import { PreviewPipe } from "./classes/preview.pipe";
+import { RegexService } from './classes/regex.service';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import {PreviewPipe} from "./classes/preview.pipe";
     BrowserAnimationsModule
   ],
   providers: [
-    ExtensionService
+    ExtensionService,
+    RegexService
   ],
   bootstrap: [AppComponent]
 })

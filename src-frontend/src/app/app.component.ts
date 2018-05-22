@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { ExtensionService } from './classes/extension.service';
 import { Card, CardOutput } from 'vscode-ipe-types';
+import { RegexService } from './classes/regex.service';
 
 @Component({
   selector: 'app-root',
@@ -28,7 +29,7 @@ export class AppComponent implements AfterViewInit {
     error: true
   };
 
-  constructor(private extension: ExtensionService) {
+  constructor(private extension: ExtensionService, private regexService: RegexService) {
     extension.onAddCard.subscribe(card => {
       this.addCard(card);
     });
@@ -44,34 +45,16 @@ export class AppComponent implements AfterViewInit {
   }
 
   /* Searching */
-  isRegex(search: string): { isRegex: boolean, flags: string, regexp: string } {
-    //If there is match between slash
-    if (/\/([\s\S]*?)\//.test(search)) {
-      // Return string with regex flags, after last /
-      let flags = /[^/]*$/.exec(search)[0];
-      //Get regex between first 2 /.../
-      let regexp = /\/([\s\S]*?)\//.exec(search)[0];
-      //Scrub slashes
-      regexp = regexp.slice(1, -1);
-
-      return { isRegex: true, flags: flags, regexp: regexp };
-    }
-    return { isRegex: false, flags: '', regexp: '' };
-  }
   cardMatchesSearchQuery(card: Card): boolean {
     if (this.searchQuery === '') { return true; }
 
-    let regexResult = this.isRegex(this.searchQuery);
-    //If is a regex search
-    if (regexResult.isRegex) {
-      if (card.title.search(new RegExp(regexResult.regexp, regexResult.flags)) > -1) { return true; }
-      if (card.sourceCode.search(new RegExp(regexResult.regexp, regexResult.flags)) > -1) { return true; }
+    let regexResult = this.regexService.regexQuery(this.searchQuery);
+    if (regexResult) { // Regex search
+      if (regexResult.test(card.title) || regexResult.test(card.sourceCode)) { return true; }
     }
-    //Normal search
-    else {
-      let pattern = this.searchQuery.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&');
-      if (card.title.search(new RegExp(pattern, 'gi')) > -1) { return true; }
-      if (card.sourceCode.search(new RegExp(pattern, 'gi')) > -1) { return true; }
+    else { // Normal search
+      let pattern = this.searchQuery.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/gi, '\\$&');
+      if (new RegExp(pattern, 'gi').test(card.title) || new RegExp(pattern, 'gi').test(card.sourceCode)) { return true; }
     }
     return false;
   }

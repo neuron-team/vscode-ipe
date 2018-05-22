@@ -1,25 +1,9 @@
 import { PipeTransform, Pipe } from '@angular/core';
+import { RegexService } from './regex.service';
 
 @Pipe({ name: 'highlight' })
 export class HighlightPipe implements PipeTransform {
-  /* Search regex using /.../flags */
-  isRegex(search: string): { isRegex: boolean, flags: string, regexp: string } {
-    //If there is regex match
-    if (/\/([\s\S]*?)\//.test(search)) {
-      // Return string with regex flags, after last /
-      let flags = /[^/]*$/.exec(search)[0];
-      //Get regex between first 2 /.../
-      let regexp = /\/([\s\S]*?)\//.exec(search)[0];
-      //Scrub slashes
-      regexp = regexp.slice(1, -1);
-      //If there is a match between slashes
-
-      return { isRegex: true, flags: flags, regexp: regexp };
-    }
-
-    return { isRegex: false, flags: '', regexp: '' };
-
-  }
+  constructor(private regexService: RegexService) { }
 
   transform(text: string, search): string {
     let sanitizedText = text
@@ -28,12 +12,12 @@ export class HighlightPipe implements PipeTransform {
       .replace(/>/g, "&gt;");
 
     if (search) {
-      let regexResult = this.isRegex(search);
+      let regexResult = this.regexService.regexQuery(search);
       let pattern = '';
       let regex;
       // Regex search
-      if (regexResult.isRegex) {
-        regex = new RegExp(regexResult.regexp, regexResult.flags);
+      if (regexResult) {
+        regex = regexResult;
       }
       // Normal search
       else {
