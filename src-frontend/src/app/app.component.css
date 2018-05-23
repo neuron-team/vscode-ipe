@@ -5,8 +5,14 @@
 }
 
 .cards-list {
-  padding: 48px 0 0 0;
+  padding: 65px 10px 0 0;
   overflow-y: scroll;
   height: 100%;
   box-sizing: border-box;
+}
+
+@media screen and (max-width: 220px){
+  .cards-list {
+    padding: 0 10px 0 0;
+  }
 }

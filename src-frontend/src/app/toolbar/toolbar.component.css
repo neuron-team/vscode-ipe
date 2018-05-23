@@ -1,32 +1,23 @@
 .toolbar {
-  white-space: nowrap;
   position: fixed;
   top: 0;
-  display: block;
   height: 30px;
   width: 100%;
   margin: 0 0 2px 0;
   background-color: var(--background-color);
-  border-radius: 1px;
   border: 0 solid rgba(200, 200, 200, 0.5);
   border-bottom-width: 1px;
-}
-
-.search-filters {
-  background-color: var(--background-color);
+  user-select: none;
 }
 
 button {
   align-items: flex-start;
-  text-align: center;
   cursor: pointer;
   color: inherit;
   background-color: rgba(0, 119, 198, 0.3);
-  box-sizing: border-box;
   border-style: none;
   outline: none;
-  box-shadow: none;
-  height: 100%;
+  padding: 5px 5px;
 }
 button:hover {
   background-color: rgba(0, 119, 198, 0.7);
@@ -34,18 +25,95 @@ button:hover {
 button:active {
   background-color: rgba(0, 119, 198, 1.0);
 }
+button i {
+  display: none;
+}
 
-input {
+.red {
+  background-color: rgba(231, 69, 69, 0.3);
+}
+.red:hover {
+  background-color: rgba(231, 69, 69, 0.7);
+}
+.red:active {
+  background-color: rgba(231, 69, 69, 1.0);
+}
+
+/* Search Box */
+input[type=text] {
   color: var(--color);
   background-color: transparent;
   border: 1px solid rgba(255, 255, 255, 0.3);
-  -webkit-margin-before: 0.4em;
-  -webkit-margin-after: 0.4em;
   -webkit-margin-start: 5px;
+  font-size: 14px;
 }
-
 input:focus {
   border-color: rgba(0, 119, 198, 0.7);
   outline: rgba(0, 119, 198, 0.7);
-  background-color: rgba(255, 255, 255, 0.05);
+  background-color: rgba(170, 170, 170, 0.05);
+}
+
+/* Search/Select Toolbar */
+.extra-toolbar {
+  background-color: var(--background-color);
+  padding-top: 6px;
+  height: 26px;
+  border: 0 solid rgba(200, 200, 200, 0.5);
+  border-bottom-width: 1px;
+}
+
+.filter {
+  -webkit-margin-start: 5px;
+  font-size: 11px;
+  margin-top: -3px;
+}
+
+.filter label span {
+  padding: 5px 5px;
+  background-color: rgba(170, 170, 170, 0.3);
+  margin-right: -3.5px;
+}
+
+/* Checkboxes */
+input[type=checkbox]{
+  -webkit-appearance: none;
+  appearance: none;
+  display: none;
+}
+.filter input:hover + span {
+   background: rgba(0, 119, 198, 0.3);
+}
+
+.filter input:checked + span{
+   background-color: rgba(0, 119, 198, 1.0);
+}
+
+
+/* Display Size */
+@media screen  and (min-width: 390px){
+  input[type=text] {
+    width: 33%;
+  }
+}
+
+@media screen and (max-width: 390px){
+  .select {
+    display: none !important;
+  }
+}
+
+@media screen and (max-width: 280px){
+  button span {
+    display: none;
+  }
+  button i {
+    display: block;
+    width: 30px;
+  }
+}
+
+@media screen and (max-width: 220px){
+  .toolbar {
+    display: none;
+  }
 }

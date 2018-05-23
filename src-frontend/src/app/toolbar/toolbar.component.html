@@ -1,14 +1,21 @@
 <div class="toolbar">
   <input type="text" name="searchBox" placeholder="Search cards" [(ngModel)]="searchQuery" (keyup)="fireEvent()">
 
-  <button>Export to Jupyter</button>
+  <button class="select" (click)="selection = !selection;">Select</button>
+  <button><span>Export to Jupyter</span><i class="ms-Icon ms-Icon--Generate" aria-label="Export to Jupyter"></i></button>
 
-  <div class="search-filters" [style.display]="searchQuery ? 'block' : 'none'">
-    Only show cards with:
-    <span>
-      <label class="css-checkbox"><input type="checkbox" [(ngModel)]="filterState.text" name="text" (change)="fireEvent()">Plain text</label>
-      <label class="css-checkbox"><input type="checkbox" [(ngModel)]="filterState.rich" name="rich" (change)="fireEvent()">Rich output</label>
-      <label class="css-checkbox"><input type="checkbox" [(ngModel)]="filterState.error" name="error" (change)="fireEvent()">Errors</label>
-  </span>
+  <div class="extra-toolbar" [style.display]="(searchQuery || selection) ? 'block' : 'none'">
+    <span class="filter" [style.display]="searchQuery ? 'inline-block' : 'none'">
+      <label><input type="checkbox" [(ngModel)]="filterState.text" name="text" (change)="fireEvent()"><span>Plain text</span></label>
+      <label><input type="checkbox" [(ngModel)]="filterState.rich" name="rich" (change)="fireEvent()"><span>Rich output</span></label>
+      <label><input type="checkbox" [(ngModel)]="filterState.error" name="error" (change)="fireEvent()"><span>Errors</span></label>
+    </span>
+
+    <span class="filter select" [style.display]="selection ? 'inline-block' : 'none'">
+        <button>Select/Deselect All</button>
+        <button class="red">Delete</button>
+        <button>Export</button>
+      </span>
   </div>
+
 </div>

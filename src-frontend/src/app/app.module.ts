@@ -12,6 +12,7 @@ import { ToolbarComponent } from './toolbar/toolbar.component';
 import { RunScriptsDirective } from './classes/run-scripts.directive';
 import { PreviewPipe } from "./classes/preview.pipe";
 import { RegexService } from './classes/regex.service';
+import { MapComponent } from './map/map.component';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import { RegexService } from './classes/regex.service';
     AnsiColorizePipe,
     RunScriptsDirective,
     PreviewPipe,
-    ToolbarComponent
+    ToolbarComponent,
+    MapComponent
   ],
   imports: [
     BrowserModule,

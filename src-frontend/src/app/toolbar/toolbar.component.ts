@@ -7,6 +7,7 @@ import { Component, OnInit,Output,EventEmitter } from '@angular/core';
 })
 export class ToolbarComponent implements OnInit {
   searchQuery: string = '';
+  selection: boolean = false;
 
   @Output() onSearchChanged = new EventEmitter<{search: string, filters: any}>();
 
