@@ -60,11 +60,15 @@ hr {
   background-color: rgba(255, 255, 255, 0.96);
 }
 
+.card-output {
+  padding: 0 6px;
+}
+
 .output-plain {
   word-wrap: break-word;
   overflow: hidden;
   white-space: normal;
-  padding: 0 6px;
+
   user-select: text;
 }
 
