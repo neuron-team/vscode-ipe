@@ -47,7 +47,7 @@
         <div *ngIf="!card.codeCollapsed">
             <i class="ms-Icon ms-Icon--CaretBottomRightSolid8" aria-label="Expand"></i>
         </div>
-        <div class="prv" *ngIf="card.codeCollapsed">
+        <div class="code-preview" *ngIf="card.codeCollapsed">
             <i class="ms-Icon ms-Icon--CaretRight" aria-label="Collapse"></i>
             <span [innerHTML]="card.sourceCode | preview | highlight : searchQuery"></span>
         </div>
