@@ -1,15 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-math',
-  templateUrl: './math.component.html',
-  styleUrls: ['./math.component.css']
+  template: `<ng-katex [equation]="equation"></ng-katex>`
 })
-export class MathComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit() {
-  }
-
+export class MathComponent {
+  @Input() mathExpr: string;
+  equation = '\\sum_{i=1}^nx_i';
 }

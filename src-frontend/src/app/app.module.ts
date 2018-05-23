@@ -14,7 +14,7 @@ import { PreviewPipe } from "./classes/preview.pipe";
 import { RegexService } from './classes/regex.service';
 import { MapComponent } from './map/map.component';
 import { MathComponent } from './math/math.component';
-
+import { KatexModule } from 'ng-katex';
 
 @NgModule({
   declarations: [
@@ -31,7 +31,8 @@ import { MathComponent } from './math/math.component';
   imports: [
     BrowserModule,
     FormsModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    KatexModule
   ],
   providers: [
     ExtensionService,
