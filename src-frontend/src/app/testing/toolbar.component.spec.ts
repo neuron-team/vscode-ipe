@@ -72,6 +72,47 @@ describe('ToolbarComponent', () => {
           expect(component.searchQuery).toEqual(searchInputText);
           done();
         });
-   
       });
+
+      it('Checkboxes should be intialized to be true once user has entered value in search  ', done => {
+        const hostElement = fixture.nativeElement;
+        const textInput: HTMLInputElement = hostElement.querySelector('#text-checkbox');
+        const richInput: HTMLInputElement = hostElement.querySelector('#rich-checkbox');
+        const errorInput: HTMLInputElement = hostElement.querySelector('#error-checkbox');
+
+        const searchInputText: string = 'test';
+        const searchField: HTMLInputElement = hostElement.querySelector('input');
+
+        sendInput(searchInputText, searchField).then(() => {
+          expect(textInput.checked).toBeTruthy(); 
+          expect(richInput.checked).toBeTruthy(); 
+          expect(errorInput.checked).toBeTruthy(); 
+          done();
+        });
+      });
+
+      it('Checkboxes should be be linked to filterstate variable', done => {
+        const hostElement = fixture.nativeElement;
+        const textInput: HTMLInputElement = hostElement.querySelector('#text-checkbox');
+        const richInput: HTMLInputElement = hostElement.querySelector('#rich-checkbox');
+        const errorInput: HTMLInputElement = hostElement.querySelector('#error-checkbox');
+
+        const searchInputText: string = 'test';
+        const searchField: HTMLInputElement = hostElement.querySelector('input');
+
+        sendInput(searchInputText, searchField).then(() => {
+          textInput.click();
+          richInput.click();
+          expect(textInput.checked).toBeFalsy(); 
+          expect(richInput.checked).toBeFalsy(); 
+          expect(errorInput.checked).toBeTruthy(); 
+          expect(component.filterState.text).toEqual(false);
+          expect(component.filterState.rich).toEqual(false);
+          expect(component.filterState.error).toEqual(true);
+
+          done();
+        });
+      });
+
+      
   });

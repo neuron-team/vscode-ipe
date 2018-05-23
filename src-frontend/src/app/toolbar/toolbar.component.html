@@ -6,9 +6,9 @@
 
   <div class="extra-toolbar" [style.display]="(searchQuery || selection) ? 'block' : 'none'">
     <span class="filter" [style.display]="searchQuery ? 'inline-block' : 'none'">
-      <label><input type="checkbox" [(ngModel)]="filterState.text" name="text" (change)="fireEvent()"><span>Plain text</span></label>
-      <label><input type="checkbox" [(ngModel)]="filterState.rich" name="rich" (change)="fireEvent()"><span>Rich output</span></label>
-      <label><input type="checkbox" [(ngModel)]="filterState.error" name="error" (change)="fireEvent()"><span>Errors</span></label>
+      <label><input id="text-checkbox" type="checkbox" [(ngModel)]="filterState.text" name="text" (change)="fireEvent()"><span>Plain text</span></label>
+      <label><input id="rich-checkbox" type="checkbox" [(ngModel)]="filterState.rich" name="rich" (change)="fireEvent()"><span>Rich output</span></label>
+      <label><input id="error-checkbox"type="checkbox" [(ngModel)]="filterState.error" name="error" (change)="fireEvent()"><span>Errors</span></label>
     </span>
 
     <span class="filter select" [style.display]="selection ? 'inline-block' : 'none'">
