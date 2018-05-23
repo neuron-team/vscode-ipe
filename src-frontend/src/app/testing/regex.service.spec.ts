@@ -1,4 +1,4 @@
-// Straight Jasmine testing without Angular's testing support
+
 import { RegexService } from '../classes/regex.service';
 
 describe('RegexService', () => {
