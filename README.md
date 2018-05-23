@@ -14,22 +14,16 @@ To get started on developing this extension, visit [the guide for developers](DE
 
 This extension makes available several commands starting with `IPE:` to control the behaviour.
 
-To get started, run the `Show output pane` command. This will ask for the address and token of a running Jupyter notebook, so make sure you have this info ready.
+To get started, open a Python or R file and run the `Show output pane` command (or click the icon in the top right corner). You will have the choice to create a new notebook or use an existing one (this is for development only, not a production feature).
 
-To add a card, select some Python code and run the `Send code to output` command.
+To add a card, select some Python code and run the `Send code to output` command, or use the keyboard shortcut <kbd>alt</kbd>+<kbd>enter</kbd>.
 
 ## Requirements
 
-Note: this is for development only. It will be sorted before production.
-
-Have an instance of Jupyter running on localhost.
-
 * Install Jupyter: `pip install jupyter`
-* Run `jupyter notebook --no-browser`
-* Take note of the token, you will need to paste this into VS Code
 
 ## Release Notes
 
-### 1.0.0
+### 0.1.0
 
 Initial release
