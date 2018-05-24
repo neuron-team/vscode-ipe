@@ -9,7 +9,6 @@ export class PreviewPipe implements PipeTransform {
     const preview = value.split('\n');
 
     if (preview.length == 0) return '';
-
     if (preview[0].length <= 50 && preview.length <= 1) {
       return value;
     } else {

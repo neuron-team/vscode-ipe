@@ -13,7 +13,8 @@ import { RunScriptsDirective } from './classes/run-scripts.directive';
 import { PreviewPipe } from "./classes/preview.pipe";
 import { RegexService } from './classes/regex.service';
 import { MapComponent } from './map/map.component';
-
+import { MathComponent } from './math/math.component';
+import { KatexModule } from 'ng-katex';
 
 @NgModule({
   declarations: [
@@ -24,12 +25,14 @@ import { MapComponent } from './map/map.component';
     RunScriptsDirective,
     PreviewPipe,
     ToolbarComponent,
-    MapComponent
+    MapComponent,
+    MathComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    KatexModule
   ],
   providers: [
     ExtensionService,

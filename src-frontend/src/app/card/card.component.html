@@ -87,6 +87,10 @@
             <app-map [geojson]="output.output"></app-map>
           </div>
 
+          <div *ngSwitchCase="'text/latex'">
+            <app-math [mathExpr]="output.output"></app-math>
+          </div>
+
           <div *ngSwitchCase="'image/svg+xml'">
             <div [innerHTML]="sanitizer.bypassSecurityTrustHtml(output.output)"></div>
           </div>
