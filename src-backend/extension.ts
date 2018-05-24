@@ -7,11 +7,13 @@ import {WebviewController} from "./webviewController";
 import {Interpreter, ContentHelpers} from "./interpreter";
 import {UserInteraction} from "./userInteraction";
 import {JupyterManager} from './jupyterManager';
+import {JupyterExport} from './jupyterExport';
 
 export function activate(context: vscode.ExtensionContext) {
 
     let webview: WebviewController = new WebviewController(context);
     let userInteraction: UserInteraction = new UserInteraction(context);
+    let jupyterExport: JupyterExport = new JupyterExport(context);
     let panelInitialised: Boolean = false;
 
     let interpreter = new Interpreter();
@@ -20,6 +22,7 @@ export function activate(context: vscode.ExtensionContext) {
     });
     ContentHelpers.onCardReady((card: Card) => {
         webview.addCard(card);
+        jupyterExport.addCard(card);
     });
 
     function initialisePanel({baseUrl, token}){
@@ -78,6 +81,12 @@ export function activate(context: vscode.ExtensionContext) {
             // Open new kernel if new file is in a different language
             interpreter.startKernel(UserInteraction.determineKernel());
         }
+    });
+
+    // Not needed if there is no interaction with the other modules
+    // Probably required to determine the type of kernel used
+    jupyterExport.onExportToJupyter(() => {
+        // Call a function that converts the array of cards into a .ipynb file
     });
 }
 
