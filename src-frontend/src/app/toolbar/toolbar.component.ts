@@ -8,6 +8,8 @@ import { Component, OnInit,Output,EventEmitter } from '@angular/core';
 export class ToolbarComponent implements OnInit {
   searchQuery: string = '';
   selection: boolean = false;
+  filter: boolean = false;
+  filterSet: boolean = false;
 
   @Output() onSearchChanged = new EventEmitter<{search: string, filters: any}>();
 
@@ -23,6 +25,11 @@ export class ToolbarComponent implements OnInit {
   }
 
   fireEvent() {
+    if (this.filterState.text && this.filterState.rich && this.filterState.error) {
+      this.filterSet = false;
+    } else {
+      this.filterSet = true;
+    }
     this.onSearchChanged.emit({
       search: this.searchQuery,
       filters: this.filterState

@@ -1,13 +1,22 @@
 .toolbar {
-  position: fixed;
-  top: 0;
   height: 30px;
-  width: 100%;
   margin: 0 0 2px 0;
   background-color: var(--background-color);
   border: 0 solid rgba(200, 200, 200, 0.5);
   border-bottom-width: 1px;
   user-select: none;
+}
+
+.main-bar {
+  display: flex;
+  flex-wrap: nowrap;
+  margin-right: 10px;
+}
+.main-bar input {
+  flex-basis: 400px;
+}
+.main-bar button {
+  flex-shrink: 0;
 }
 
 button {
@@ -20,10 +29,10 @@ button {
   padding: 5px 5px;
 }
 button:hover {
-  background-color: rgba(0, 119, 198, 0.7);
+  background-color: rgba(0, 119, 198, 0.7) !important;
 }
 button:active {
-  background-color: rgba(0, 119, 198, 1.0);
+  background-color: rgba(0, 119, 198, 1.0) !important;
 }
 button i {
   display: none;
@@ -68,7 +77,7 @@ input:focus {
   margin-top: -3px;
 }
 
-.filter label span {
+label span {
   padding: 5px 5px;
   background-color: rgba(170, 170, 170, 0.3);
   margin-right: -3.5px;
@@ -80,38 +89,29 @@ input[type=checkbox]{
   appearance: none;
   display: none;
 }
-.filter input:hover + span {
+input[type=checkbox]:hover + span {
    background: rgba(0, 119, 198, 0.3);
 }
-
-.filter input:checked + span{
+input[type=checkbox]:checked + span{
    background-color: rgba(0, 119, 198, 1.0);
 }
 
 
 /* Display Size */
-@media screen  and (min-width: 390px){
-  input[type=text] {
-    width: 33%;
-  }
-}
-
 @media screen and (max-width: 390px){
   .select {
     display: none !important;
   }
 }
-
-@media screen and (max-width: 280px){
+@media screen and (max-width: 300px){
   button span {
     display: none;
   }
   button i {
     display: block;
-    width: 30px;
+    width: 20px;
   }
 }
-
 @media screen and (max-width: 220px){
   .toolbar {
     display: none;
