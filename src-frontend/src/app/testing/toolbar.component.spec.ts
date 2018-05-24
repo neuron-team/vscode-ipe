@@ -114,5 +114,37 @@ describe('ToolbarComponent', () => {
         });
       });
 
+      it('Eventemitter should emit inputted search query once query has been inputted', done => {
+        const hostElement = fixture.nativeElement;
+        const textInput: HTMLInputElement = hostElement.querySelector('#text-checkbox');
+        const richInput: HTMLInputElement = hostElement.querySelector('#rich-checkbox');
+        const errorInput: HTMLInputElement = hostElement.querySelector('#error-checkbox');
+
+        const searchInputText: string = 'test';
+        const searchField: HTMLInputElement = hostElement.querySelector('input');
+        component.onSearchChanged.subscribe(g => {
+          expect(g).toEqual(({
+            search:'test',
+            filters: {
+              text: false,
+              rich: true,
+              error: true
+            }
+          }));
+       });
+        sendInput(searchInputText, searchField).then(() => {
+          textInput.click();
+          
+          expect(textInput.checked).toBeFalsy(); 
+          expect(richInput.checked).toBeTruthy(); 
+          expect(errorInput.checked).toBeTruthy(); 
+          expect(component.filterState.text).toEqual(false);
+          expect(component.filterState.rich).toEqual(true);
+          expect(component.filterState.error).toEqual(true);
+
+          done();
+        });
+      });
+
       
   });
