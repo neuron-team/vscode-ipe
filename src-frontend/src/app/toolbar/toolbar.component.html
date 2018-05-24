@@ -2,11 +2,16 @@
   <div class="main-bar">
     <input type="text" name="searchBox" placeholder="Search cards" [(ngModel)]="searchQuery" (keyup)="fireEvent()">
     <button class="select" (click)="selection = !selection;">Select</button>
+    <button 
+      [style.background-color]="filterSet ? 'rgba(231,69,69,0.3)' : 'rgba(0,119,198,0.3)'" 
+      (click)="filter = !filter;">
+      <span>Filter</span><i class="ms-Icon ms-Icon--Filter" aria-label="Filter"></i>
+    </button>
     <button><span>Export to Jupyter</span><i class="ms-Icon ms-Icon--Generate" aria-label="Export to Jupyter"></i></button>
   </div>
 
-  <div class="extra-toolbar" [style.display]="(searchQuery || selection) ? 'block' : 'none'">
-    <span class="filter" [style.display]="searchQuery ? 'inline-block' : 'none'">
+  <div class="extra-toolbar" [style.display]="(filter || selection) ? 'block' : 'none'">
+    <span class="filter" [style.display]="filter ? 'inline-block' : 'none'">
       <label><input type="checkbox" [(ngModel)]="filterState.text" name="text" (change)="fireEvent()"><span>Plain text</span></label>
       <label><input type="checkbox" [(ngModel)]="filterState.rich" name="rich" (change)="fireEvent()"><span>Rich output</span></label>
       <label><input type="checkbox" [(ngModel)]="filterState.error" name="error" (change)="fireEvent()"><span>Errors</span></label>

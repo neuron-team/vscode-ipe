@@ -29,10 +29,10 @@ button {
   padding: 5px 5px;
 }
 button:hover {
-  background-color: rgba(0, 119, 198, 0.7);
+  background-color: rgba(0, 119, 198, 0.7) !important;
 }
 button:active {
-  background-color: rgba(0, 119, 198, 1.0);
+  background-color: rgba(0, 119, 198, 1.0) !important;
 }
 button i {
   display: none;
@@ -103,13 +103,13 @@ input[type=checkbox]:checked + span{
     display: none !important;
   }
 }
-@media screen and (max-width: 280px){
+@media screen and (max-width: 300px){
   button span {
     display: none;
   }
   button i {
     display: block;
-    width: 30px;
+    width: 20px;
   }
 }
 @media screen and (max-width: 220px){
