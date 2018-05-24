@@ -32,7 +32,7 @@ export class JupyterManager{
     private defineTimeout(numTries: number, resolve, reject){
         setTimeout(() => {
             if(!JupyterManager.url){
-                if(numTries == 0){
+                if(numTries === 0){
                     JupyterManager.process.stderr.removeAllListeners();
                     reject('Jupyter could not be executed automatically');
                 }
