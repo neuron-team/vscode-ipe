@@ -2,10 +2,10 @@
 <div class="card-container"  [@cardState]="selected ? 'selected' : 'notSelected'" *ngIf="visible">
   <!-- Card toolbar -->
   <span class="card-toolbar">
-    <button class="react toolbar-icon" (click)="move('up')">
+    <button id ="moveUpButton"class="react toolbar-icon" (click)="move('up')">
         <i class="ms-Icon ms-Icon--ChevronUp" aria-label="Move Up"></i>
     </button>
-    <button class="react toolbar-icon" (click)="move('down')">
+    <button id ="moveDownButton"class="react toolbar-icon" (click)="move('down')">
         <i class="ms-Icon ms-Icon--ChevronDown" aria-label="Move Down"></i>
     </button>
     <button id="selectButton"class="react toolbar-icon"  (click)="selectCard()">select</button>
@@ -22,12 +22,13 @@
 
   <!-- Card title and title edit box -->
   <div *ngIf="!editingTitle">
-    <button class="react" (click)="editingTitle = true">
+    <button id="editingTitleButton"class="react" (click)="editingTitle = true">
       <h2 [innerHTML]="card.title | highlight : searchQuery"></h2>
     </button>
   </div>
   <div *ngIf="editingTitle">
     <input #titleEditInput
+           id ="titleEditInput"
            placeholder="Title"
            autofocus
            [value]="card.title"

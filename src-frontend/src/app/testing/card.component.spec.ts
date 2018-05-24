@@ -81,10 +81,64 @@ describe('CardComponent', () => {
       sendClick(deleteButton).then(()=> {
         expect(component.onDelete.emit).toHaveBeenCalledTimes(1);
       });
-
-
-
     });
+
+    it('When clicking up should call move() with arguments "up" ', () => {
+      spyOn(component, 'move');
+      const hostElement = fixture.nativeElement;
+      const moveUpButton = hostElement.querySelector('#moveUpButton');
+      sendClick(moveUpButton).then(()=> {
+        expect(component.move).toHaveBeenCalledTimes(1);
+        expect(component.move).toHaveBeenCalledWith('up');
+      });
+    });
+
+    it('When clicking down should call move() with arguments "down" ', () => {
+      spyOn(component, 'move');
+      const hostElement = fixture.nativeElement;
+      const moveDownButton = hostElement.querySelector('#moveDownButton');
+      sendClick(moveDownButton).then(()=> {
+        expect(component.move).toHaveBeenCalledTimes(1);
+        expect(component.move).toHaveBeenCalledWith('down');
+      });
+    });
+
+    it('When clicking editing title editing title property should change ', () => {
+      const hostElement = fixture.nativeElement;
+      const Button = hostElement.querySelector('#editingTitleButton');
+      //One click
+      sendClick(Button).then(()=> {
+        expect(component.editingTitle).toBeDefined();
+        expect(component.editingTitle).toEqual(true);
+      });
+    });
+
+    it('After editing title, pressing enter should set editing title to false ', () => {
+      const hostElement = fixture.nativeElement;
+      const Button = hostElement.querySelector('#editingTitleButton');
+      //Button clicked
+      sendClick(Button).then(()=> {
+        expect(component.editingTitle).toBeDefined();
+        expect(component.editingTitle).toEqual(true);
+      });
+
+      // Pressing enter
+      // const element = hostElement.querySelector('#titleEditInput');
+      // const event = new KeyboardEvent("keypress",{
+      //   "key": "Enter"
+      // });
+      // element.dispatchEvent(event);
+      let debugElement = fixture.debugElement.query(By.css('#titleEditInput'));
+
+      debugElement.triggerEventHandler('keyup.enter', {});
+      fixture.detectChanges();
+      fixture.whenStable().then ( ()=> {
+        expect(component.editingTitle).toEqual(false);
+      });
+   
+     
+    });
+
 
 
 
