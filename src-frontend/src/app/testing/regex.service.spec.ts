@@ -1,4 +1,3 @@
-
 import { RegexService } from '../classes/regex.service';
 
 describe('RegexService', () => {
