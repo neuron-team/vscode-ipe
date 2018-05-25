@@ -210,7 +210,19 @@ export class ContentHelpers{
     }
 
     static makeCard(){
+<<<<<<< HEAD
         this._onCardReady.fire(new Card(this.id, this.makeCardTitle(this.sourceTmp), this.sourceTmp, this.contentTmp, this.jupyterData));
+=======
+        this._onCardReady.fire(
+            new Card(
+                this.id, 
+                this.makeCardTitle(this.sourceTmp), 
+                this.sourceTmp, 
+                this.contentTmp, 
+                JSON.parse(JSON.stringify(this.jupyterData)))
+        );
+        console.log(this.jupyterData);
+>>>>>>> 63b58e943f65c825735c42666253f8601a48d926
         this.contentTmp = [];
         this.id++;
     }
