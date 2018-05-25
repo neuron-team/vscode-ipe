@@ -126,7 +126,7 @@ export class ContentHelpers{
             }
             this.jupyterData['cell_type'] = 'code';
             this.jupyterData['execution_count'] = msg.content.execution_count;
-            this.jupyterData['source'] = [(msg.content.code as string).split('\n').map((el) => el+'\n')];
+            this.jupyterData['source'] = (msg.content.code as string).split('\n').map((el) => el+'\n');
         // The output is stdout
         } else if('name' in msg.content){
             let output = msg.content['text'];
