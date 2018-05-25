@@ -34,10 +34,10 @@
            [value]="card.title"
            (keyup.enter)="card.title = titleEditInput.value; editingTitle = false"
            (keyup.esc)="editingTitle = false" />
-    <button class="react" (click)="card.title = titleEditInput.value; editingTitle = false">
+    <button id = "acceptButton"class="react" (click)="card.title = titleEditInput.value; editingTitle = false">
       <i class="ms-Icon ms-Icon--Accept" aria-label="Accept"></i>
     </button>
-    <button class="react" (click)="editingTitle = false">
+    <button id = "clearButton"class="react" (click)="editingTitle = false">
       <i class="ms-Icon ms-Icon--Clear" aria-label="Cancel"></i>
     </button>
   </div>
@@ -45,7 +45,7 @@
   <div *ngIf="!card.collapsed">
     <hr>
     <!-- Source code -->
-    <button (click)="card.codeCollapsed = !card.codeCollapsed">
+    <button id = "codeCollapseButton" (click)="card.codeCollapsed = !card.codeCollapsed">
         <div *ngIf="!card.codeCollapsed">
             <i class="ms-Icon ms-Icon--CaretBottomRightSolid8" aria-label="Expand"></i>
         </div>
