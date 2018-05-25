@@ -211,7 +211,6 @@ export class ContentHelpers{
 
     static makeCard(){
         this._onCardReady.fire(new Card(this.id, this.makeCardTitle(this.sourceTmp), this.sourceTmp, this.contentTmp, this.jupyterData));
-        console.log(this.jupyterData);
         this.contentTmp = [];
         this.id++;
     }
