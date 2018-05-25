@@ -95,6 +95,10 @@
             <div [innerHTML]="sanitizer.bypassSecurityTrustHtml(output.output)"></div>
           </div>
 
+          <div *ngSwitchCase="'text/markdown'">
+            <markdown [data]="output.output"></markdown>
+          </div>
+
           <div *ngSwitchCase="'error'">
             <p class="output-error" [innerHTML]="sanitizer.bypassSecurityTrustHtml(output.output | ansiColorize)"></p>
           </div>
