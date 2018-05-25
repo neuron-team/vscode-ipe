@@ -15,6 +15,7 @@ export class ToolbarComponent implements OnInit {
   @Output() onSelectMode = new EventEmitter<boolean>();
   @Output() onSelectDelete = new EventEmitter<void>();
   @Output() onSelectAll = new EventEmitter<void>();
+  @Output() onNewMarkdown = new EventEmitter<void>();
 
   filterState = {
     text: true,

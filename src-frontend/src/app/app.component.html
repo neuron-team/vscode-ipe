@@ -5,7 +5,8 @@
     (onSearchChanged)="updateFilters($event)"
     (onSelectMode)="updateSelectMode($event)"
     (onSelectDelete)="selectDelete()"
-    (onSelectAll)="selectAll()"></app-toolbar>
+    (onSelectAll)="selectAll()"
+    (onNewMarkdown)="newMarkdownCard()"></app-toolbar>
 
   <div #scrollingList class="cards-list">
     <app-card
