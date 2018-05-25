@@ -16,6 +16,8 @@ export class Interpreter {
     // Kernel promise used for code execution
     private kernelPromise = {};
     
+    private docUriList: vscode.Uri[] = [];
+
     constructor(){}
 
     connectToServer(baseUrl: string, token: string){
@@ -66,6 +68,21 @@ export class Interpreter {
         }
         else{
             vscode.window.showErrorMessage("The " + kernelName + " kernel is not available");
+        }
+    }
+
+    autoImportModules(){
+        let docUri = vscode.window.activeTextEditor.document.uri;
+        if(this.docUriList.indexOf(docUri) === -1){
+            this.docUriList.push(docUri);
+            let docText = vscode.window.activeTextEditor.document.getText();
+            let importList = docText.match(/import .+|from .+ import .+/g);
+            vscode.window.showInformationMessage(importList.length + ' imports were found in the current python file. Import now?', 'Import')
+            .then(data => {
+                if(data) { 
+                    this.executeCode(importList.join('\n'), 'python3');
+                }
+            });
         }
     }
 

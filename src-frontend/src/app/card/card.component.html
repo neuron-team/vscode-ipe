@@ -8,7 +8,6 @@
     <button class="react toolbar-icon" (click)="move('down')">
         <i class="ms-Icon ms-Icon--ChevronDown" aria-label="Move Down"></i>
     </button>
-    <button class="react toolbar-icon"  (click)="selectCard()">select</button>
     <button class="react right" (click)="deleteCard()">
         <i class="ms-Icon ms-Icon--Clear" aria-label="Delete"></i>
     </button>
@@ -22,11 +21,11 @@
 
   <!-- Card title and title edit box -->
   <div *ngIf="!editingTitle">
-    <button class="react" (click)="editingTitle = true">
-      <h2 [innerHTML]="card.title | highlight : searchQuery"></h2>
+    <button class="react full-left" (click)="editingTitle = true">
+      <div class="title" [innerHTML]="card.title | highlight : searchQuery"></div>
     </button>
   </div>
-  <div *ngIf="editingTitle">
+  <div class="edit-title" *ngIf="editingTitle">
     <input #titleEditInput
            placeholder="Title"
            autofocus
@@ -44,11 +43,11 @@
   <div *ngIf="!card.collapsed">
     <hr>
     <!-- Source code -->
-    <button (click)="card.codeCollapsed = !card.codeCollapsed">
+    <button class="full-left" (click)="card.codeCollapsed = !card.codeCollapsed">
         <div *ngIf="!card.codeCollapsed">
             <i class="ms-Icon ms-Icon--CaretBottomRightSolid8" aria-label="Expand"></i>
         </div>
-        <div class="prv" *ngIf="card.codeCollapsed">
+        <div class="code-preview" *ngIf="card.codeCollapsed">
             <i class="ms-Icon ms-Icon--CaretRight" aria-label="Collapse"></i>
             <span [innerHTML]="card.sourceCode | preview | highlight : searchQuery"></span>
         </div>
@@ -86,6 +85,10 @@
 
           <div *ngSwitchCase="'application/geo+json'">
             <app-map [geojson]="output.output"></app-map>
+          </div>
+
+          <div *ngSwitchCase="'text/latex'">
+            <app-math [mathExpr]="output.output"></app-math>
           </div>
 
           <div *ngSwitchCase="'image/svg+xml'">
