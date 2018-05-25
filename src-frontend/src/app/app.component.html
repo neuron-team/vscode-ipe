@@ -2,7 +2,10 @@
 <div class="container">
 
   <app-toolbar
-    (onSearchChanged)="updateFilters($event)"></app-toolbar>
+    (onSearchChanged)="updateFilters($event)"
+    (onSelectMode)="updateSelectMode($event)"
+    (onSelectDelete)="selectDelete()"
+    (onSelectAll)="selectAll()"></app-toolbar>
 
   <div #scrollingList class="cards-list">
     <app-card
@@ -11,6 +14,7 @@
       [card]="card"
       [visible] = "visibleCards.get(card) !== false"
       [searchQuery]="searchQuery"
+      [selectMode]="selectMode"
       (onMove)="cardMoved(card, $event.direction)"
       (onSelect)="cardSelected(card, $event)"
       (onDelete)="deleteCard(card)">

@@ -21,6 +21,7 @@ export class AppComponent implements AfterViewInit {
     ])
   ];
 
+  selectMode = false;
   selectedCards = new Set<Card>();
   visibleCards = new Map<Card, boolean>();
   searchQuery = '';
@@ -83,6 +84,20 @@ export class AppComponent implements AfterViewInit {
       this.selectedCards.delete(card);
     }
   }
+
+  updateSelectMode(mode: boolean) {
+    this.selectMode = mode;
+  }
+
+  selectDelete() {
+    this.selectedCards.forEach(value => {
+      this.deleteCard(value);
+    })
+  }
+
+  selectAll(){
+  }
+
 
   /* Ordering */
   cardMoved(card: Card, direction: string) {
