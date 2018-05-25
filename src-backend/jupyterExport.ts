@@ -23,7 +23,7 @@ export class JupyterExport{
 
     private exportToJupyter(){
         let fullPath = vscode.window.activeTextEditor.document.uri.path;
-        let fileName = fullPath.replace(path.extname(fullPath), '.ipynb').slice(1);
+        let fileName = fullPath.replace(new RegExp(path.extname(fullPath)+'$'), '.ipynb').slice(1);
 
 
         // call a function that converts Card type to cell type
