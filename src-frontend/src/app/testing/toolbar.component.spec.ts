@@ -45,14 +45,14 @@ describe('ToolbarComponent', () => {
           error: false
         };
         component.onSearchChanged.subscribe(g => {
-            expect(g).toEqual(({
+            expect(g).toEqual({
               search:"testing search query",
               filters: {
                 text: false,
                 rich: true,
                 error: false
               }
-            }));
+            });
          });
          component.fireEvent();
       });

@@ -112,7 +112,7 @@ describe('AppComponent', () => {
         expect(appComponent.selectedCards.size).toEqual(0, 'selectedCards has 0 element again');
     });
 
-    it('Triggers correct move function - cardMoved()', () => {
+    it('Correctly triggers move function - cardMoved()', () => {
         appComponent.cards = [textPlainCard, richCard, errorCard];
         expect(appComponent.cards).toEqual([textPlainCard, richCard, errorCard], 'original Card[] at first');
 
