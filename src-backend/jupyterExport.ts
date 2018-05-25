@@ -23,13 +23,44 @@ export class JupyterExport{
 
     private exportToJupyter(){
         let folderPath = path.dirname(vscode.window.activeTextEditor.document.uri.path)
-        let fileName = path.join(folderPath, '/newHelloWorld.txt').slice(1);
+        let currName = path.basename(vscode.window.activeTextEditor.document.uri.path, path.extname(vscode.window.activeTextEditor.document.uri.path))
+        //let fileName = path.join(folderPath, '/', currName, '.ipynb').slice(1);
+        let fileName = path.join(folderPath, '/new.ipynb').slice(1);
 
         // call a function that converts Card type to cell type
+        let jupyterFileData = {
+            "metadata": {
+                "kernelspec": {
+                    "display_name": "Python 3",
+                    "language": "python",
+                    "name": "python3"
+                },
+                "language_info": {
+                    "codemirror_mode": {
+                        "name": "ipython",
+                        "version": 3
+                    },
+                    "file_extension": ".py",
+                    "mimetype": "text/x-python",
+                    "name": "python",
+                    "nbconvert_exporter": "python",
+                    "pygments_lexer": "ipython3",
+                    "version": "3.6.4"
+                }
+            },
+            "nbformat": 4,
+            "nbformat_minor": 2
+        };
+
+        jupyterFileData["cells"] = this.cardsExecuted.map(el => el.jupyterData);
+        console.log(jupyterFileData)
+
+
+
 
         // convert the array of cards into a .ipynb file
 
-        fs.writeFile(fileName, 'hey there', err => {
+        fs.writeFile(fileName, JSON.stringify(jupyterFileData), err => {
             if (err) console.log(err);
             console.log(fileName);
             // Also, pop out information box to show that it has been saved

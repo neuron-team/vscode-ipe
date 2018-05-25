@@ -241,7 +241,8 @@ export class ContentHelpers{
                 this.makeCardTitle(this.sourceTmp), 
                 this.sourceTmp, 
                 this.contentTmp, 
-                JSON.parse(JSON.stringify(this.jupyterData)))
+                JSON.parse(JSON.stringify(this.jupyterData))
+            )
         );
 
         this.contentTmp = []
