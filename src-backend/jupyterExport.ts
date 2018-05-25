@@ -25,7 +25,7 @@ export class JupyterExport{
         let folderPath = path.dirname(vscode.window.activeTextEditor.document.uri.path)
         let currName = path.basename(vscode.window.activeTextEditor.document.uri.path, path.extname(vscode.window.activeTextEditor.document.uri.path))
         //let fileName = path.join(folderPath, '/', currName, '.ipynb').slice(1);
-        let fileName = path.join(folderPath, '/new.txt').slice(1);
+        let fileName = path.join(folderPath, '/new.ipynb').slice(1);
 
         // call a function that converts Card type to cell type
         let jupyterFileData = {
