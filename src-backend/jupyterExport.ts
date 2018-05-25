@@ -5,14 +5,13 @@ import * as path from "path";
 import * as vscode from 'vscode';
 import { Event, EventEmitter } from "vscode";
 
-export class JupyterExport extends EventEmitter<void>{
+export class JupyterExport{
     private _onExportToJupyter : EventEmitter<void> = new EventEmitter();
     get onExportToJupyter(): Event<void> { return this._onExportToJupyter.event; }
-
+    
     cardsExecuted: Array<Card> = [];
 
     constructor(private context: vscode.ExtensionContext) {
-        super();
         context.subscriptions.push(vscode.commands.registerCommand('ipe.exportToJupyter', () => {
             this.exportToJupyter();
         }));
