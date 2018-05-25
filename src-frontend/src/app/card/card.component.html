@@ -20,12 +20,12 @@
   </span>
 
   <!-- Card title and title edit box -->
-  <div *ngIf="!editingTitle && card.title != '<markdown>'">
+  <div *ngIf="!editingTitle && !card.isCustomMarkdown">
     <button class="react full-left" (click)="editingTitle = true">
       <div class="title" [innerHTML]="card.title | highlight : searchQuery"></div>
     </button>
   </div>
-  <div class="edit-title" *ngIf="editingTitle && card.title != '<user>'">
+  <div class="edit-title" *ngIf="editingTitle && !card.isCustomMarkdown">
     <input #titleEditInput
            placeholder="Title"
            autofocus
@@ -40,7 +40,7 @@
     </button>
   </div>
 
-  <div *ngIf="!card.collapsed && card.title != '<markdown>'">
+  <div *ngIf="!card.collapsed && !card.isCustomMarkdown">
     <hr>
     <!-- Source code -->
     <button class="full-left" (click)="card.codeCollapsed = !card.codeCollapsed">
@@ -110,7 +110,7 @@
     </div>
   </div>
 
-  <div *ngIf="card.title == '<markdown>'" class="custom-markdown">
+  <div *ngIf="card.isCustomMarkdown" class="custom-markdown">
     <div *ngIf="!editingMarkdown" (click)="editingMarkdown = true">
       <markdown [data]="card.sourceCode"></markdown>
     </div>
