@@ -1,8 +1,6 @@
-import {Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
+import {Component, Input, Output, EventEmitter} from '@angular/core';
 import { Card } from 'vscode-ipe-types';
-import { Pipe, PipeTransform } from '@angular/core';
 
-import { AppComponent } from '../app.component';
 import {
   trigger,
   state,
