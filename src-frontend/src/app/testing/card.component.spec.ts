@@ -123,10 +123,6 @@ describe('CardComponent', () => {
         expect(component.editingTitle).toEqual(true);
       });
     });
-
-    /*Issue with testing title- testbed does not detect changes set manually in html, e.g. (click)= property = true
-    May have to refactor into (click) = function for testing to work */
-
     /*it('After editing title, pressing enter should set editing title to false ', () => {
     const hostElement = fixture.nativeElement;
     const Button = hostElement.querySelector('#editingTitleButton');
@@ -178,6 +174,4 @@ describe('CardComponent', () => {
 
   
 
-
-      
-  });
+});
