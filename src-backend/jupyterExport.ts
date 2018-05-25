@@ -8,7 +8,7 @@ import { Event, EventEmitter } from "vscode";
 export class JupyterExport{
     private _onExportToJupyter : EventEmitter<void> = new EventEmitter();
     get onExportToJupyter(): Event<void> { return this._onExportToJupyter.event; }
-
+    
     cardsExecuted: Array<Card> = [];
 
     constructor(private context: vscode.ExtensionContext) {
