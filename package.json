@@ -36,6 +36,31 @@
         "command": "ipe.exportToJupyter",
         "title": "Export to Jupyter",
         "category": "IPE"
+      },
+      {
+        "command": "ipe.deleteCard",
+        "title": "Delete Card",
+        "category": "IPE"
+      },
+      {
+        "command": "ipe.reorderCard",
+        "title": "Reorder Card",
+        "category": "IPE"
+      },
+      {
+        "command": "ipe.toggleCollapseOutput",
+        "title": "Toggle Collapse Output",
+        "category": "IPE"
+      },
+      {
+        "command": "ipe.toggleCollapseCode",
+        "title": "Toggle Collapse Code",
+        "category": "IPE"
+      },
+      {
+        "command": "ipe.toggleCollapseCard",
+        "title": "Toggle Collapse Card",
+        "category": "IPE"
       }
     ],
     "keybindings": [
