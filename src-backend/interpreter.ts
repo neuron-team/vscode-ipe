@@ -210,6 +210,11 @@ export class ContentHelpers{
     }
 
     static makeCard(){
+        if(!("metadata" in this.jupyterData) && !("outputs" in this.jupyterData)){
+            this.jupyterData['metadata'] = {};
+            this.jupyterData['outputs'] = [];
+        }
+
         this._onCardReady.fire(
             new Card(
                 this.id, 
@@ -219,8 +224,9 @@ export class ContentHelpers{
                 JSON.parse(JSON.stringify(this.jupyterData))
             )
         );
-        console.log(this.jupyterData);
-        this.contentTmp = [];
+
+        this.contentTmp = []
+        this.jupyterData = {}
         this.id++;
     }
 
