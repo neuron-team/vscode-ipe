@@ -77,11 +77,11 @@ export class AppComponent implements AfterViewInit {
   }
 
   /* Selecting - will remove/add element if it's in/not_in array */
-  cardSelected(card: Card, selected: boolean) {
-    if (selected) {
-      this.selectedCards.add(card);
-    } else {
+  cardSelected(card: Card) {
+    if (this.selectedCards.has(card)) {
       this.selectedCards.delete(card);
+    } else {
+      this.selectedCards.add(card);
     }
   }
 
@@ -96,6 +96,11 @@ export class AppComponent implements AfterViewInit {
   }
 
   selectAll(){
+    if (this.selectedCards.size == this.cards.length) {
+      this.selectedCards = new Set<Card>();
+    } else {
+      this.selectedCards = new Set<Card>(this.cards);
+    }
   }
 
 

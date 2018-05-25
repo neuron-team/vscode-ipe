@@ -33,6 +33,7 @@ export class CardComponent {
   @Input() searchQuery: string = '';
   @Input() card: Card;
   @Input() selectMode: boolean = false;
+  @Input() selected: boolean = false;
   //Movement of cards up/down
   @Output() onMove = new EventEmitter();
   //Select a card
@@ -41,17 +42,15 @@ export class CardComponent {
   @Output() onDelete = new EventEmitter<void>();
 
   editingTitle: boolean;
-  selected: boolean = false;
   constructor(public sanitizer: DomSanitizer) { }
 
-  //Emit to parent app.component.ts
+
   move(direction: string) {
     this.onMove.emit({direction: direction});
   }
 
   selectCard() {
-    this.selected = !this.selected; // Toggle state for animation
-    this.onSelect.emit(this.selected);
+    this.onSelect.emit();
   }
 
   deleteCard() {

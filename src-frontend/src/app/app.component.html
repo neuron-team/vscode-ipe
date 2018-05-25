@@ -15,6 +15,7 @@
       [visible] = "visibleCards.get(card) !== false"
       [searchQuery]="searchQuery"
       [selectMode]="selectMode"
+      [selected]="selectedCards.has(card)"
       (onMove)="cardMoved(card, $event.direction)"
       (onSelect)="cardSelected(card, $event)"
       (onDelete)="deleteCard(card)">
