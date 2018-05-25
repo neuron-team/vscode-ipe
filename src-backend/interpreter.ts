@@ -214,6 +214,9 @@ export class ContentHelpers{
             this.jupyterData['metadata'] = {};
             this.jupyterData['outputs'] = [];
         }
+        if("transient" in this.jupyterData){
+            delete this.jupyterData['transient'];
+        }
 
         this._onCardReady.fire(
             new Card(
