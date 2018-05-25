@@ -1,9 +1,10 @@
 <div class="toolbar">
   <div class="main-bar">
     <input type="text" name="searchBox" placeholder="Search cards" [(ngModel)]="searchQuery" (keyup)="fireEvent()">
+    <button class="select" (click)="onNewMarkdown.emit()">Add markdown</button>
     <button class="select" (click)="selection = !selection;">Select</button>
-    <button 
-      [style.background-color]="filterSet ? 'rgba(231,69,69,0.3)' : 'rgba(0,119,198,0.3)'" 
+    <button
+      [style.background-color]="filterSet ? 'rgba(231,69,69,0.3)' : 'rgba(0,119,198,0.3)'"
       (click)="filter = !filter;">
       <span>Filter</span><i class="ms-Icon ms-Icon--Filter" aria-label="Filter"></i>
     </button>

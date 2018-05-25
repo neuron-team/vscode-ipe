@@ -2,7 +2,8 @@
 <div class="container">
 
   <app-toolbar
-    (onSearchChanged)="updateFilters($event)"></app-toolbar>
+    (onSearchChanged)="updateFilters($event)"
+    (onNewMarkdown)="newMarkdownCard()"></app-toolbar>
 
   <div #scrollingList class="cards-list">
     <app-card

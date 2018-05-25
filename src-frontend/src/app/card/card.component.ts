@@ -1,8 +1,6 @@
-import {Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
+import {Component, Input, Output, EventEmitter} from '@angular/core';
 import { Card } from 'vscode-ipe-types';
-import { Pipe, PipeTransform } from '@angular/core';
 
-import { AppComponent } from '../app.component';
 import {
   trigger,
   state,
@@ -39,7 +37,8 @@ export class CardComponent {
   //Delete
   @Output() onDelete = new EventEmitter<void>();
 
-  editingTitle: boolean;
+  editingTitle: boolean = false;
+  editingMarkdown: boolean = false;
   selected: boolean = false;
   constructor(public sanitizer: DomSanitizer) { }
 

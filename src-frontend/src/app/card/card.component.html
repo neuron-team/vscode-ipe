@@ -20,12 +20,12 @@
   </span>
 
   <!-- Card title and title edit box -->
-  <div *ngIf="!editingTitle">
+  <div *ngIf="!editingTitle && !card.isCustomMarkdown">
     <button class="react full-left" (click)="editingTitle = true">
       <div class="title" [innerHTML]="card.title | highlight : searchQuery"></div>
     </button>
   </div>
-  <div class="edit-title" *ngIf="editingTitle">
+  <div class="edit-title" *ngIf="editingTitle && !card.isCustomMarkdown">
     <input #titleEditInput
            placeholder="Title"
            autofocus
@@ -40,7 +40,7 @@
     </button>
   </div>
 
-  <div *ngIf="!card.collapsed">
+  <div *ngIf="!card.collapsed && !card.isCustomMarkdown">
     <hr>
     <!-- Source code -->
     <button class="full-left" (click)="card.codeCollapsed = !card.codeCollapsed">
@@ -95,6 +95,10 @@
             <div [innerHTML]="sanitizer.bypassSecurityTrustHtml(output.output)"></div>
           </div>
 
+          <div *ngSwitchCase="'text/markdown'">
+            <markdown [data]="output.output"></markdown>
+          </div>
+
           <div *ngSwitchCase="'error'">
             <p class="output-error" [innerHTML]="sanitizer.bypassSecurityTrustHtml(output.output | ansiColorize)"></p>
           </div>
@@ -103,6 +107,18 @@
             <pre class="output-plain">{{output.output}}</pre>
           </div>
         </div>
+    </div>
+  </div>
+
+  <div *ngIf="card.isCustomMarkdown" class="custom-markdown">
+    <div *ngIf="!editingMarkdown" (click)="editingMarkdown = true">
+      <markdown [data]="card.sourceCode"></markdown>
+    </div>
+    <div *ngIf="editingMarkdown">
+      <textarea #markdownEditor>{{card.sourceCode}}</textarea>
+      <br>
+      <button (click)="card.sourceCode = markdownEditor.value; editingMarkdown = false">Done</button>
+      <button (click)="editingMarkdown = false">Cancel</button>
     </div>
   </div>
 </div>
