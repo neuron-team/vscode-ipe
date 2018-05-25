@@ -137,6 +137,11 @@ export class AppComponent implements AfterViewInit {
     }, 400);
   }
 
+  newMarkdownCard() {
+    this.cards.push(new Card(0, '<markdown>', '*Click to edit markdown*', []));
+    this.scrollToBottom();
+  }
+
   /* this code ensures that the list always scrolls to the bottom when new elements are added */
   @ViewChildren('listItems') listItems: QueryList<any>;
   @ViewChild('scrollingList') scrollContainer;

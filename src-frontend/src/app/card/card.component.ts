@@ -39,7 +39,8 @@ export class CardComponent {
   //Delete
   @Output() onDelete = new EventEmitter<void>();
 
-  editingTitle: boolean;
+  editingTitle: boolean = false;
+  editingMarkdown: boolean = false;
   selected: boolean = false;
   constructor(public sanitizer: DomSanitizer) { }
 

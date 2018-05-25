@@ -12,6 +12,7 @@ export class ToolbarComponent implements OnInit {
   filterSet: boolean = false;
 
   @Output() onSearchChanged = new EventEmitter<{search: string, filters: any}>();
+  @Output() onNewMarkdown = new EventEmitter<void>();
 
   filterState = {
     text: true,
