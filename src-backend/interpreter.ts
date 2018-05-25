@@ -167,6 +167,9 @@ export class ContentHelpers{
             this.jupyterData['metadata'] = msg.metadata;
             let outputs = msg.content;
             outputs['output_type'] = msg.header.msg_type;
+            if('transient' in outputs){
+                delete outputs['transient'];
+            }
             this.jupyterData['outputs'] = [outputs];
         }
     }
@@ -230,9 +233,6 @@ export class ContentHelpers{
         if(!("metadata" in this.jupyterData) && !("outputs" in this.jupyterData)){
             this.jupyterData['metadata'] = {};
             this.jupyterData['outputs'] = [];
-        }
-        if("transient" in this.jupyterData){
-            delete this.jupyterData['transient'];
         }
 
         this._onCardReady.fire(
