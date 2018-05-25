@@ -25,7 +25,7 @@ describe('AppComponent', () => {
         expect(appComponent.typeFilters).toEqual({text: true, rich: true, error: true}, 'typeFilters');
     });
 
-    it('updateFilters() correctly change searchQuery and typeFilters', () => {
+    it('Correctly change searchQuery and typeFilters - updateFilters()', () => {
         appComponent.updateFilters( {search: 'return 0', filters: {text: false, rich: false, error: false}} );
         expect(appComponent.searchQuery).toEqual('return 0', 'searchQuery is different after first change');
         expect(appComponent.typeFilters).toEqual({text: false, rich: false, error: false}, 'typeFilters = {false, false, false} after first change');
@@ -35,7 +35,7 @@ describe('AppComponent', () => {
         expect(appComponent.typeFilters).toEqual({text: false, rich: true, error: false}, 'typeFilters = {true, false, true} after second change');
     });
 
-    it('updateFilters() correctly change visibleCards: Map<Card, boolean>', () => {
+    it('Correctly update visibleCards map for all cards visibility - updateFilters()', () => {
         appComponent.cards = [textPlainCard, richCard, errorCard];
         expect(appComponent.cards).toEqual([textPlainCard, richCard, errorCard], 'original Card[] at first');
         
@@ -47,7 +47,7 @@ describe('AppComponent', () => {
         expect(appComponent.visibleCards).toEqual(new Map( [[textPlainCard, true], [richCard, true], [errorCard, false]] ));
     });
 
-    it('cardMatchesSearchQuery() returns correct boolean', () => {
+    it('Correctly evaluate search query to card - cardMatchesSearchQuery()', () => {
         expect(appComponent.cardMatchesSearchQuery(sampleCard)).toEqual(true, 'searchQuery empty, return true');
         
         appComponent.searchQuery = 'card';
@@ -68,7 +68,7 @@ describe('AppComponent', () => {
         expect(appComponent.cardMatchesSearchQuery(sampleCard)).toEqual(false, 'neither card.title nor card.sourceCode contains normal/regex searchQuery, return true');
     });
 
-    it('cardMatchesFilter() returns correct boolean', () => {
+    it('Correctly evaluate type filter to card - cardMatchesFilter()', () => {
         // All visible, initially
         expect(appComponent.cardMatchesFilter(noOutputCard)).toEqual(true, 'treat empty cards as plain');
         expect(appComponent.cardMatchesFilter(stdoutCard)).toEqual(true, 'stdout plain text');
@@ -93,7 +93,7 @@ describe('AppComponent', () => {
         expect(appComponent.cardMatchesFilter(richCard)).toEqual(true, 'rich output');
     });
 
-    it('cardSelected() correctly manages selectedCards array', () => {
+    it('Correctly manage selectedCards array - cardSelected()', () => {
         appComponent.cards = [textPlainCard, richCard, errorCard];
         expect(appComponent.cards).toEqual([textPlainCard, richCard, errorCard], 'original Card[] at first');
         expect(appComponent.selectedCards.size).toEqual(0, 'selectedCards has 0 element at first');
@@ -112,7 +112,7 @@ describe('AppComponent', () => {
         expect(appComponent.selectedCards.size).toEqual(0, 'selectedCards has 0 element again');
     });
 
-    it('cardMoved() triggers correct move function', () => {
+    it('Triggers correct move function - cardMoved()', () => {
         appComponent.cards = [textPlainCard, richCard, errorCard];
         expect(appComponent.cards).toEqual([textPlainCard, richCard, errorCard], 'original Card[] at first');
 
@@ -122,7 +122,7 @@ describe('AppComponent', () => {
         expect(appComponent.cards).toEqual([richCard, errorCard, textPlainCard], 'corectly moved textPlainCard down');
     });
 
-    it('moveUp() correctly moves a card up', () => {
+    it('Correctly moves a card up - moveUp()', () => {
         appComponent.cards = [textPlainCard, richCard, errorCard];
         expect(appComponent.cards).toEqual([textPlainCard, richCard, errorCard], 'original Card[] at first');
 
@@ -134,7 +134,7 @@ describe('AppComponent', () => {
         expect(appComponent.cards).toEqual([errorCard, textPlainCard, richCard], 'move first card up, expect no change');
     });
 
-    it('moveDown() correctly moves a card down', () => {
+    it('Correctly move a card down - moveDown()', () => {
         appComponent.cards = [textPlainCard, richCard, errorCard];
         expect(appComponent.cards).toEqual([textPlainCard, richCard, errorCard], 'original Card[] at first');
 
@@ -146,7 +146,7 @@ describe('AppComponent', () => {
         expect(appComponent.cards).toEqual([richCard, errorCard, textPlainCard], 'move last card down, expect no change');
     });
 
-    it('addCard() correctly adds a card', () => {
+    it('Correctly add a card - addCard()', () => {
         appComponent.cards = [];
         expect(appComponent.cards).toEqual([], 'no cards at first');
 
@@ -158,7 +158,7 @@ describe('AppComponent', () => {
         expect(appComponent.cards).toEqual([sampleCard, textPlainCard, richCard], 'richCard added at the end');
     });
 
-    it('deleteCard() correctly deletes a card', () => {
+    it('Correctly delete a card - deleteCard()', () => {
         appComponent.cards = [textPlainCard, richCard, errorCard];
         expect(appComponent.cards).toEqual([textPlainCard, richCard, errorCard], 'original Card[] at first');
 
