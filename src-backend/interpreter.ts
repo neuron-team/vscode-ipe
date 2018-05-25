@@ -30,7 +30,7 @@ export class Interpreter {
                 init: {cache: "no-store", credentials: "same-origin"}
             });
         
-        for(var key in this.kernelPromise){
+        for(let key in this.kernelPromise){
             this.kernelPromise[key].then(kernel => kernel.shutdown());
         }
         this.kernelPromise = {};
