@@ -91,12 +91,6 @@ export function activate(context: vscode.ExtensionContext) {
             }
         }
     });
-
-    // Not needed if there is no interaction with the other modules
-    // Probably required to determine the type of kernel used
-    jupyterExport.onExportToJupyter(() => {
-        // Call a function that converts the array of cards into a .ipynb file
-    });
 }
 
 export function deactivate(context: vscode.ExtensionContext) {

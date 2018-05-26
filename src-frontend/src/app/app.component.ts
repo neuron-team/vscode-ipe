@@ -138,7 +138,7 @@ export class AppComponent implements AfterViewInit {
   }
 
   newMarkdownCard() {
-    let markdownCard = new Card(0, '', '*Click to edit markdown*', []);
+    let markdownCard = new Card(0, '', '*Click to edit markdown*', [], {});
     markdownCard.isCustomMarkdown = true;
     this.cards.push(markdownCard);
     this.scrollToBottom();
