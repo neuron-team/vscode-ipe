@@ -20,7 +20,7 @@ export class Interpreter {
 
     constructor(){}
 
-    connectToServer(baseUrl: string, token: string){
+    connectToServer(baseUrl: string, token: string) {
         this.serverSettings = ServerConnection.makeSettings(
             {
                 baseUrl: baseUrl, 
@@ -30,15 +30,15 @@ export class Interpreter {
                 init: {cache: "no-store", credentials: "same-origin"}
             });
         
-        for(var key in this.kernelPromise){
+        for(let key in this.kernelPromise) {
             this.kernelPromise[key].then(kernel => kernel.shutdown());
         }
         this.kernelPromise = {};
     }
 
-    startKernel(kernelName: string){
-        if(!(kernelName in this.kernelPromise)){
-            let options: Kernel.IOptions = {name : kernelName, serverSettings : this.serverSettings}; 
+    startKernel(kernelName: string) {
+        if(!(kernelName in this.kernelPromise)) {
+            let options: Kernel.IOptions = { name : kernelName, serverSettings : this.serverSettings };
             this.kernelPromise[kernelName] = Kernel.startNew(options);
             if (kernelName === 'python3'){
                 this.executeCode('%matplotlib inline', 'python3');
@@ -71,9 +71,9 @@ export class Interpreter {
         }
     }
 
-    autoImportModules(){
+    autoImportModules() {
         let docUri = vscode.window.activeTextEditor.document.uri;
-        if(this.docUriList.indexOf(docUri) === -1){
+        if(this.docUriList.indexOf(docUri) === -1) {
             this.docUriList.push(docUri);
             let docText = vscode.window.activeTextEditor.document.getText();
             let importList = docText.match(/import .+|from .+ import .+/g);
@@ -88,7 +88,7 @@ export class Interpreter {
 
 }
 
-export class ContentHelpers{
+export class ContentHelpers {
     // Used to store temporary card data
     static sourceTmp = '';
     static contentTmp: Array<CardOutput> = [];

@@ -15,6 +15,7 @@ import { RegexService } from './classes/regex.service';
 import { MapComponent } from './map/map.component';
 import { MathComponent } from './math/math.component';
 import { KatexModule } from 'ng-katex';
+import { MarkdownModule } from 'ngx-markdown';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { KatexModule } from 'ng-katex';
     BrowserModule,
     FormsModule,
     BrowserAnimationsModule,
-    KatexModule
+    KatexModule,
+    MarkdownModule.forRoot()
   ],
   providers: [
     ExtensionService,
