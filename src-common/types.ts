@@ -10,7 +10,8 @@ export class Card {
         public title: string,
         public sourceCode: string,
         public outputs: CardOutput[],
-        public jupyterData: object
+        public jupyterData: object,
+        public kernel: string
     ) {}
 }
 
