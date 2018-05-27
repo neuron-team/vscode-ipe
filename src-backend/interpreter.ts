@@ -63,7 +63,7 @@ export class Interpreter {
     executeCode(source : string, kernelName: string) {
         if(kernelName in this.kernelPromise){
             this.kernelPromise[kernelName]
-                .then(kernel => kernel.requestExecute({code : source, stop_on_error: false, allow_stdin: false}).onIOPub = ContentHelpers.interpretOutput)
+                .then(kernel => kernel.requestExecute({code : source, stop_on_error: false, allow_stdin: false}).onIOPub = (msg: KernelMessage.IIOPubMessage) => ContentHelpers.interpretOutput(msg, kernelName))
                 .catch(reason => vscode.window.showErrorMessage(String(reason)));
         }
         else{
@@ -94,6 +94,7 @@ export class ContentHelpers {
     static contentTmp: Array<CardOutput> = [];
     static id = 0;
     static jupyterData: JSONObject = {};
+    static currentKernel: string;
 
     private static _onStatusChanged: EventEmitter<string> = new EventEmitter();
     static get onStatusChanged(): Event<string> { return this._onStatusChanged.event; }
@@ -118,11 +119,12 @@ export class ContentHelpers {
         return (<JSONObject>inputData)[field] !== undefined;
     }
 
-    static interpretOutput(msg: KernelMessage.IIOPubMessage){
+    static interpretOutput(msg: KernelMessage.IIOPubMessage, kernelName: string){
         // Get the Json content of the output
         //let content = msg.content;
         console.log(msg.content);
         ContentHelpers.processContent(msg);
+        this.currentKernel = kernelName;
     }
 
     static processContent(msg: KernelMessage.IIOPubMessage){
@@ -241,7 +243,8 @@ export class ContentHelpers {
                 this.makeCardTitle(this.sourceTmp), 
                 this.sourceTmp, 
                 this.contentTmp, 
-                JSON.parse(JSON.stringify(this.jupyterData))
+                JSON.parse(JSON.stringify(this.jupyterData)),
+                this.currentKernel
             )
         );
 
