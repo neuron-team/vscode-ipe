@@ -17,6 +17,7 @@ export class ToolbarComponent implements OnInit {
   @Output() onSelectDelete = new EventEmitter<void>();
   @Output() onSelectAll = new EventEmitter<void>();
   @Output() onNewMarkdown = new EventEmitter<void>();
+  @Output() onExport = new EventEmitter<void>();
 
   filterState = {
     text: true,
@@ -42,6 +43,10 @@ export class ToolbarComponent implements OnInit {
     this.onSelectAll.emit();
   }
 
+  newMarkdown() {
+    this.onNewMarkdown.emit()
+  }
+
   updateFilter() {
     if (this.filterState.text && this.filterState.rich && this.filterState.error) {
       this.filterSet = false;
@@ -53,5 +58,8 @@ export class ToolbarComponent implements OnInit {
   updateSearch() {
     this.onSearchChange.emit(this.searchQuery)
   }
-
+  
+  export() {
+    this.onExport.emit()
+  }
 }

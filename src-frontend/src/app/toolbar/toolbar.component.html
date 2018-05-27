@@ -6,13 +6,13 @@
       (click)="filter = !filter;">
       <span>Filter</span><i title="Filter" class="ms-Icon ms-Icon--Filter" aria-label="Filter"></i>
     </button>
-    <button id="markdown" (click)="onNewMarkdown.emit()">
+    <button id="markdown" (click)="newMarkdown()">
         <span>Add Markdown</span><i title="Add Markdown" class="ms-Icon ms-Icon--MarkDownLanguage" aria-label="Add Markdown"></i>
     </button>
     <button id="select" (click)="toggleSelecting()">
         <span>Select</span><i title="Select" class="ms-Icon ms-Icon--CheckList" aria-label="Select"></i>
     </button>
-    <button id="export">
+    <button id="export" (click)="export()">
       <span>Export</span><i title="Export to Jupyter" class="ms-Icon ms-Icon--Generate" aria-label="Export to Jupyter"></i>
     </button>
   </div>

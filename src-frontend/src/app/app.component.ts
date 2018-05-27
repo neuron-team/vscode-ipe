@@ -144,6 +144,11 @@ export class AppComponent implements AfterViewInit {
     if (index > -1) { this.cards.splice(index, 1); }
   }
 
+  /* Exporting */
+  export() {
+    // Connect to Backend
+  }
+
   private windowResizeThrottle;
   onWindowResize() {
     // make sure all scripted HTML fragments are re-sized appropriately.

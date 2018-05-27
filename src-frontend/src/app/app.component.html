@@ -7,8 +7,8 @@
     (onSelectingToggle)="updateSelecting($event)"
     (onSelectDelete)="deleteSelectedCards()"
     (onSelectAll)="selectAll()"
-    (onNewMarkdown)="newMarkdownCard()"></app-toolbar>
-
+    (onNewMarkdown)="newMarkdownCard()"
+    (onExport)="export()"></app-toolbar>
 
   <div #scrollingList class="cards-list">
     <app-card
