@@ -46,22 +46,10 @@ export class JupyterExport {
         }
     };
 
-    cardsExecuted: Array<Card> = [];
-
-    constructor(private context: vscode.ExtensionContext) {
-        context.subscriptions.push(vscode.commands.registerCommand('ipe.exportToJupyter', () => {
-            this.exportToJupyter();
-        }));
-    }
-
-    addCard(card: Card){
-        this.cardsExecuted.push(card);
-    }
-
     private writeToFile(jupyterFileData: JSONObject, kernelName: string) {
         let fullPath = vscode.window.activeTextEditor.document.uri.path;
         let fileName = fullPath.replace(new RegExp(path.extname(fullPath)+'$'), '_'+kernelName+'.ipynb').slice(1);
-        if((jupyterFileData['cells'] as JSONArray).length){
+        if((jupyterFileData['cells'] as JSONArray).length > 0) {
             fs.writeFile(fileName, JSON.stringify(jupyterFileData), err => {
                 if (err) console.log(err);
                 vscode.window.showInformationMessage(`Saved as: ${fileName}`);
@@ -70,7 +58,7 @@ export class JupyterExport {
         }
     }
 
-    private exportToJupyter() {
+    exportToJupyter(cardsToExport: Card[]) {
         let jupyterFileDataPython: JSONObject, jupyterFileDataR: JSONObject;
         jupyterFileDataPython = {
             "nbformat": 4,
@@ -85,7 +73,8 @@ export class JupyterExport {
         jupyterFileDataR["metadata"] = this.metadataR;
 
         let pyJupyterData: Array<JSONObject> = [], rJupyterData: Array<JSONObject> = [];
-        this.cardsExecuted
+
+        cardsToExport
             .map(el => {
                 if(el.kernel === 'python3') {
                     pyJupyterData.push(el.jupyterData as JSONObject);
