@@ -60,9 +60,8 @@ export class JupyterExport{
 
     private writeToFile(jupyterFileData: JSONObject, kernelName: string){
         let fullPath = vscode.window.activeTextEditor.document.uri.path;
-        let fileName = fullPath.replace(new RegExp(path.extname(fullPath)+'$'), kernelName+'.ipynb').slice(1);
-
-        if(jupyterFileData['cells'] != []){
+        let fileName = fullPath.replace(new RegExp(path.extname(fullPath)+'$'), '_'+kernelName+'.ipynb').slice(1);
+        if((jupyterFileData['cells'] as JSONArray).length){
             fs.writeFile(fileName, JSON.stringify(jupyterFileData), err => {
                 if (err) console.log(err);
                 vscode.window.showInformationMessage(`Saved as: ${fileName}`);
