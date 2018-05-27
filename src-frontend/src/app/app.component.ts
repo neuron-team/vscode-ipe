@@ -143,6 +143,26 @@ export class AppComponent implements AfterViewInit {
     }
   }
 
+  collapseOutput(card: Card, value: boolean){
+    const index: number = this.cards.indexOf(card);
+    this.extension.onCollapseOutput.next({index: index, value: value});
+  }
+
+  collapseCode(card: Card, value: boolean){
+    const index: number = this.cards.indexOf(card);
+    this.extension.onCollapseCode.next({index: index, value: value});
+  }
+
+  collapseCard(card: Card, value: boolean){
+    const index: number = this.cards.indexOf(card);
+    this.extension.onCollapseCard.next({index: index, value: value});
+  }
+
+  changeTitle(card: Card, newTitle: string){
+    const index: number = this.cards.indexOf(card);
+    this.extension.onChangeTitle.next({index: index, newTitle: newTitle});
+  }
+
   private windowResizeThrottle;
   onWindowResize() {
     // make sure all scripted HTML fragments are re-sized appropriately.
