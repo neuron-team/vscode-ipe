@@ -119,7 +119,7 @@ export class ContentHelpers {
         return (<JSONObject>inputData)[field] !== undefined;
     }
 
-    static interpretOutput(msg: KernelMessage.IIOPubMessage, kernelName: string){
+    static interpretOutput(msg: KernelMessage.IIOPubMessage, kernelName: string) {
         // Get the Json content of the output
         //let content = msg.content;
         console.log(msg.content);
@@ -127,33 +127,33 @@ export class ContentHelpers {
         this.currentKernel = kernelName;
     }
 
-    static processContent(msg: KernelMessage.IIOPubMessage){
+    static processContent(msg: KernelMessage.IIOPubMessage) {
         // Process execution state ['busy', 'idle']
-        if('execution_state' in msg.content){
+        if('execution_state' in msg.content) {
             let status = msg.content['execution_state'];
-            if(status === 'idle'){
+            if(status === 'idle') {
                 this.makeCard();
             }
-            if(typeof status === 'string'){
+            if(typeof status === 'string') {
                 this._onStatusChanged.fire(status);
             }
         // Receive back the source code
-        } else if('code' in msg.content){
+        } else if('code' in msg.content) {
             let code = msg.content['code'];
-            if(typeof code === 'string'){
+            if(typeof code === 'string') {
                 this.sourceTmp = code;
             }
             this.jupyterData['cell_type'] = 'code';
             this.jupyterData['execution_count'] = msg.content.execution_count;
             this.jupyterData['source'] = (msg.content.code as string).split('\n').map((el) => el+'\n');
         // The output is stdout
-        } else if('name' in msg.content){
+        } else if('name' in msg.content) {
             let output = msg.content['text'];
-            if(typeof output === 'string'){
+            if(typeof output === 'string') {
                 this.contentTmp.push(new CardOutput('stdout', output));
             }
         // The output is rich
-        } else if('data' in msg.content){
+        } else if('data' in msg.content) {
             let data = msg.content.data;
             this.contentTmp.push(this.interpretRich(data));
         // The code could not be executed, an error was returned
@@ -165,24 +165,24 @@ export class ContentHelpers {
             this.contentTmp.push(new CardOutput('error', traceback));
         }
 
-        if(!('execution_state' in msg.content) && !('code' in msg.content)){
+        if(!('execution_state' in msg.content) && !('code' in msg.content)) {
             this.jupyterData['metadata'] = msg.metadata;
             let outputs = msg.content;
             outputs['output_type'] = msg.header.msg_type;
-            if('transient' in outputs){
+            if('transient' in outputs) {
                 delete outputs['transient'];
             }
             this.jupyterData['outputs'] = [outputs];
         }
     }
 
-    static interpretRich(data: JSONValue): CardOutput{
+    static interpretRich(data: JSONValue): CardOutput {
         let chosenType = this.chooseTypeFromComplexData(data);
         let output: string = '';
 
-        if(chosenType === 'application/vnd.plotly.v1+json'){
+        if(chosenType === 'application/vnd.plotly.v1+json') {
             let plotlyJson = data[chosenType];
-            if(ContentHelpers.validateData(plotlyJson, 'data')){
+            if(ContentHelpers.validateData(plotlyJson, 'data')) {
                 let guid = this.generateGuid();
                 output = 
                     '<div id="' + guid + '" style="height: 525px; width: 100%;" class="plotly-graph-div">'
@@ -198,7 +198,7 @@ export class ContentHelpers {
         return new CardOutput(chosenType, output);
     }
 
-    static getMissingModule(evalue: string){
+    static getMissingModule(evalue: string) {
         let moduleMatch = evalue.match(/No module named \'(.+?)\'/);
         if(moduleMatch){
             let module = moduleMatch[1].replace(/\'/g, '');
@@ -211,7 +211,7 @@ export class ContentHelpers {
         }
     }
 
-    static installMissingModule(module: string){
+    static installMissingModule(module: string) {
         if (module) {
             let terminal = vscode.window.createTerminal('pip');
             terminal.show();
@@ -231,8 +231,8 @@ export class ContentHelpers {
         return validDataTypes[0];
     }
 
-    static makeCard(){
-        if(!("metadata" in this.jupyterData) && !("outputs" in this.jupyterData)){
+    static makeCard() {
+        if(!("metadata" in this.jupyterData) && !("outputs" in this.jupyterData)) {
             this.jupyterData['metadata'] = {};
             this.jupyterData['outputs'] = [];
         }
@@ -248,8 +248,8 @@ export class ContentHelpers {
             )
         );
 
-        this.contentTmp = []
-        this.jupyterData = {}
+        this.contentTmp = [];
+        this.jupyterData = {};
         this.id++;
     }
 

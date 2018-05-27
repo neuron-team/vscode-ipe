@@ -6,9 +6,9 @@ import * as vscode from 'vscode';
 import { Event, EventEmitter } from "vscode";
 import { JSONObject, JSONArray } from '@phosphor/coreutils';
 
-export class JupyterExport{
-    private _onExportToJupyter : EventEmitter<void> = new EventEmitter();
-    get onExportToJupyter(): Event<void> { return this._onExportToJupyter.event; }
+export class JupyterExport {
+    private _onExportComplete : EventEmitter<void> = new EventEmitter();
+    get onExportComplete(): Event<void> { return this._onExportComplete.event; }
     
     private metadataPy = {
         "kernelspec": {
@@ -58,7 +58,7 @@ export class JupyterExport{
         this.cardsExecuted.push(card);
     }
 
-    private writeToFile(jupyterFileData: JSONObject, kernelName: string){
+    private writeToFile(jupyterFileData: JSONObject, kernelName: string) {
         let fullPath = vscode.window.activeTextEditor.document.uri.path;
         let fileName = fullPath.replace(new RegExp(path.extname(fullPath)+'$'), '_'+kernelName+'.ipynb').slice(1);
         if((jupyterFileData['cells'] as JSONArray).length){
@@ -70,7 +70,7 @@ export class JupyterExport{
         }
     }
 
-    private exportToJupyter(){
+    private exportToJupyter() {
         let jupyterFileDataPython: JSONObject, jupyterFileDataR: JSONObject;
         jupyterFileDataPython = {
             "nbformat": 4,
@@ -79,7 +79,7 @@ export class JupyterExport{
         jupyterFileDataR = {
             "nbformat": 4,
             "nbformat_minor": 2
-        }
+        };
 
         jupyterFileDataPython["metadata"] = this.metadataPy;
         jupyterFileDataR["metadata"] = this.metadataR;
@@ -87,10 +87,10 @@ export class JupyterExport{
         let pyJupyterData: Array<JSONObject> = [], rJupyterData: Array<JSONObject> = [];
         this.cardsExecuted
             .map(el => {
-                if(el.kernel === 'python3'){
+                if(el.kernel === 'python3') {
                     pyJupyterData.push(el.jupyterData as JSONObject);
                 }
-                else if(el.kernel === 'r'){
+                else if(el.kernel === 'r') {
                     rJupyterData.push(el.jupyterData as JSONObject);
                 }
             });
@@ -102,7 +102,7 @@ export class JupyterExport{
         this.writeToFile(jupyterFileDataR, 'r');
 
         // fire an event to onExportToJupyter
-        this._onExportToJupyter.fire();
+        this._onExportComplete.fire();
     }
 }
 
