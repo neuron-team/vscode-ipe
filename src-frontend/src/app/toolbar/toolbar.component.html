@@ -1,26 +1,40 @@
 <div class="toolbar">
   <div class="main-bar">
     <input type="text" name="searchBox" placeholder="Search cards" [(ngModel)]="searchQuery" (keyup)="updateFilter()">
-    <button class="select" (click)="toggleSelecting()">Select</button>
-    <button 
-      [style.background-color]="filterSet ? 'rgba(231,69,69,0.3)' : 'rgba(0,119,198,0.3)'" 
+    <button id="filter"
+      [style.background-color]="filterSet ? 'rgba(231,69,69,0.3)' : 'rgba(0,119,198,0.3)'"
       (click)="filter = !filter;">
-      <span>Filter</span><i class="ms-Icon ms-Icon--Filter" aria-label="Filter"></i>
+      <span>Filter</span><i title="Filter" class="ms-Icon ms-Icon--Filter" aria-label="Filter"></i>
     </button>
-    <button class="select" (click)="onNewMarkdown.emit()">Add markdown</button>
-    <button><span>Export to Jupyter</span><i class="ms-Icon ms-Icon--Generate" aria-label="Export to Jupyter"></i></button>
+    <button id="markdown" (click)="onNewMarkdown.emit()">
+        <span>Add Markdown</span><i title="Add Markdown" class="ms-Icon ms-Icon--MarkDownLanguage" aria-label="Add Markdown"></i>
+    </button>
+    <button id="select" (click)="toggleSelecting()">
+        <span>Select</span><i title="Select" class="ms-Icon ms-Icon--CheckList" aria-label="Select"></i>
+    </button>
+    <button id="export">
+      <span>Export</span><i title="Export to Jupyter" class="ms-Icon ms-Icon--Generate" aria-label="Export to Jupyter"></i>
+    </button>
   </div>
 
   <div class="extra-toolbar" [style.display]="(filter || isSelecting) ? 'block' : 'none'">
     <span class="filter" [style.display]="filter ? 'inline-block' : 'none'">
-      <label><input type="checkbox" [(ngModel)]="filterState.text" name="text" (change)="updateFilter()"><span>Plain text</span></label>
-      <label><input type="checkbox" [(ngModel)]="filterState.rich" name="rich" (change)="updateFilter()"><span>Rich output</span></label>
-      <label><input type="checkbox" [(ngModel)]="filterState.error" name="error" (change)="updateFilter()"><span>Errors</span></label>
+      <label><input type="checkbox" [(ngModel)]="filterState.text" name="text" (change)="updateFilter()">
+        <span>Plain Text</span><i title="Plain Text" class="ms-Icon ms-Icon--AlignLeft" aria-label="Plain Text"></i>
+      </label>
+      <label><input type="checkbox" [(ngModel)]="filterState.rich" name="rich" (change)="updateFilter()">
+        <span>Rich Output</span><i title="Rich Output" class="ms-Icon ms-Icon--BarChartVertical" aria-label="Rich Output"></i>
+      </label>
+      <label><input type="checkbox" [(ngModel)]="filterState.error" name="error" (change)="updateFilter()">
+        <span>Errors</span><i title="Errors" class="ms-Icon ms-Icon--Error" aria-label="Errors"></i>
+      </label>
     </span>
 
     <span class="filter select" [style.display]="isSelecting ? 'inline-block' : 'none'">
-        <button (click)="selectAll()">Select/Deselect All</button>
-        <button class="red" (click)="deleteSelectedCards()">Delete</button>
+        <button (click)="selectAll()"><span id="selectText">Select/Deselect All</span><span id="selectIcon">All</span></button>
+        <button class="red" (click)="deleteSelectedCards()">
+          <span id="selectText">Delete</span><i id="selectIcon" title="Delete" class="ms-Icon ms-Icon--Delete" aria-label="Delete"></i>
+        </button>
       </span>
   </div>
 
