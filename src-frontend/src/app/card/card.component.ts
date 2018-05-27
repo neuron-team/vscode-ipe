@@ -41,7 +41,6 @@ export class CardComponent {
 
   editingTitle: boolean = false;
   editingMarkdown: boolean = false;
-  selected: boolean = false;
 
   constructor(public sanitizer: DomSanitizer) { }
 
