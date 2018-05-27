@@ -1,6 +1,5 @@
 import {Card} from 'vscode-ipe-types';
 import * as fs from "fs";
-import * as path from "path";
 
 import * as vscode from 'vscode';
 import { Event, EventEmitter } from "vscode";
@@ -48,49 +47,45 @@ export class JupyterExport {
 
     private writeToFile(jupyterFileData: JSONObject, kernelName: string) {
         let fullPath = vscode.window.activeTextEditor.document.uri.path;
-        let fileName = fullPath.replace(new RegExp(path.extname(fullPath)+'$'), '_'+kernelName+'.ipynb').slice(1);
+
+        let pathWithoutExtension = path => path.replace(/\.[^/\\.]+$/, '');
+        let fileName = pathWithoutExtension(fullPath) + '_' + kernelName + '.ipynb';
+
         if((jupyterFileData['cells'] as JSONArray).length > 0) {
             fs.writeFile(fileName, JSON.stringify(jupyterFileData), err => {
-                if (err) console.log(err);
-                vscode.window.showInformationMessage(`Saved as: ${fileName}`);
-                // Also, pop out information box to show that it has been saved
+                if (err) {
+                    console.log(err);
+                } else {
+                    vscode.window.showInformationMessage(`Exported to ${fileName}`);
+                }
             });
         }
     }
 
     exportToJupyter(cardsToExport: Card[]) {
-        let jupyterFileDataPython: JSONObject, jupyterFileDataR: JSONObject;
-        jupyterFileDataPython = {
+
+        let pythonData: JSONObject = {
             "nbformat": 4,
-            "nbformat_minor": 2
+            "nbformat_minor": 2,
+            "metadata": this.metadataPy,
+            "cells": cardsToExport
+                .filter(card => card.kernel === 'python3')
+                .map(card => card.jupyterData as JSONObject)
         };
-        jupyterFileDataR = {
+
+        let rData: JSONObject = {
             "nbformat": 4,
-            "nbformat_minor": 2
+            "nbformat_minor": 2,
+            "metadata": this.metadataR,
+            "cells": cardsToExport
+                .filter(card => card.kernel === 'r')
+                .map(card => card.jupyterData as JSONObject)
         };
 
-        jupyterFileDataPython["metadata"] = this.metadataPy;
-        jupyterFileDataR["metadata"] = this.metadataR;
+        this.writeToFile(pythonData, 'python3');
+        this.writeToFile(rData, 'r');
 
-        let pyJupyterData: Array<JSONObject> = [], rJupyterData: Array<JSONObject> = [];
-
-        cardsToExport
-            .map(el => {
-                if(el.kernel === 'python3') {
-                    pyJupyterData.push(el.jupyterData as JSONObject);
-                }
-                else if(el.kernel === 'r') {
-                    rJupyterData.push(el.jupyterData as JSONObject);
-                }
-            });
-
-        jupyterFileDataPython["cells"] = pyJupyterData;
-        jupyterFileDataR["cells"] = rJupyterData;
-
-        this.writeToFile(jupyterFileDataPython, 'python3');
-        this.writeToFile(jupyterFileDataR, 'r');
-
-        // fire an event to onExportToJupyter
+        // let everyone know we're done
         this._onExportComplete.fire();
     }
 }
