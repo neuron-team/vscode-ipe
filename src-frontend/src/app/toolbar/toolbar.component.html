@@ -1,6 +1,6 @@
 <div class="toolbar">
   <div class="main-bar">
-    <input type="text" name="searchBox" placeholder="Search cards" [(ngModel)]="searchQuery" (keyup)="updateFilter()">
+    <input type="text" name="searchBox" placeholder="Search cards" [(ngModel)]="searchQuery" (keyup)="updateSearch()">
     <button id="filter"
       [style.background-color]="filterSet ? 'rgba(231,69,69,0.3)' : 'rgba(0,119,198,0.3)'"
       (click)="filter = !filter;">

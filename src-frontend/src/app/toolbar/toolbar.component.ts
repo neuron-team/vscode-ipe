@@ -11,7 +11,8 @@ export class ToolbarComponent implements OnInit {
   filter: boolean = false;
   filterSet: boolean = false;
 
-  @Output() onSearchChanged = new EventEmitter<{search: string, filters: any}>();
+  @Output() onSearchChange = new EventEmitter<string>();
+  @Output() onFilterChange = new EventEmitter<any>();
   @Output() onSelectingToggle = new EventEmitter<boolean>();
   @Output() onSelectDelete = new EventEmitter<void>();
   @Output() onSelectAll = new EventEmitter<void>();
@@ -47,10 +48,10 @@ export class ToolbarComponent implements OnInit {
     } else {
       this.filterSet = true;
     }
-    this.onSearchChanged.emit({
-      search: this.searchQuery,
-      filters: this.filterState
-    })
+    this.onFilterChange.emit(this.filterState)
+  }
+  updateSearch() {
+    this.onSearchChange.emit(this.searchQuery)
   }
 
 }

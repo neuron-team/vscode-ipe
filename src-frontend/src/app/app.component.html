@@ -2,7 +2,8 @@
 <div class="container">
 
   <app-toolbar
-    (onSearchChanged)="updateFilters($event)"
+    (onFilterChange)="updateFilters($event)"
+    (onSearchChange)="updateSearch($event)"
     (onSelectingToggle)="updateSelecting($event)"
     (onSelectDelete)="deleteSelectedCards()"
     (onSelectAll)="selectAll()"
