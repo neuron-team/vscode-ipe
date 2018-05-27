@@ -7,14 +7,12 @@ import {WebviewController} from "./webviewController";
 import {Interpreter, ContentHelpers} from "./interpreter";
 import {UserInteraction} from "./userInteraction";
 import {JupyterManager} from './jupyterManager';
-import {JupyterExport} from './jupyterExport';
+import {CardManager} from './CardManager';
 
 export function activate(context: vscode.ExtensionContext) {
-
-    let cards: Card[] = [];
     let webview: WebviewController = new WebviewController(context);
     let userInteraction: UserInteraction = new UserInteraction(context);
-    let jupyterExport: JupyterExport = new JupyterExport();
+    let cardManager: CardManager = new CardManager();
     let panelInitialised: Boolean = false;
 
     let interpreter = new Interpreter();
@@ -22,7 +20,7 @@ export function activate(context: vscode.ExtensionContext) {
         userInteraction.updateStatus(`Jupyter: ${status}`);
     });
     ContentHelpers.onCardReady((card: Card) => {
-        cards.push(card);
+        cardManager.addCard(card);
         webview.addCard(card);
     });
 
@@ -39,6 +37,11 @@ export function activate(context: vscode.ExtensionContext) {
         });
 
         webview.show();
+
+        context.subscriptions.push(vscode.commands.registerCommand('ipe.exportToJupyter', () => {
+            cardManager.exportToJupyter();
+        }));
+
         panelInitialised = true;
 
         if(kernel==="python3"){
@@ -92,10 +95,6 @@ export function activate(context: vscode.ExtensionContext) {
             }
         }
     });
-
-    context.subscriptions.push(vscode.commands.registerCommand('ipe.exportToJupyter', () => {
-        jupyterExport.exportToJupyter(cards);
-    }));
 }
 
 export function deactivate(context: vscode.ExtensionContext) {

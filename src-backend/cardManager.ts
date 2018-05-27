@@ -5,10 +5,12 @@ import * as vscode from 'vscode';
 import { Event, EventEmitter } from "vscode";
 import { JSONObject, JSONArray } from '@phosphor/coreutils';
 
-export class JupyterExport {
+export class CardManager {
     private _onExportComplete : EventEmitter<void> = new EventEmitter();
     get onExportComplete(): Event<void> { return this._onExportComplete.event; }
     
+    private cards: Card[] = [];
+
     private metadataPy = {
         "kernelspec": {
             "display_name": "Python 3",
@@ -62,13 +64,13 @@ export class JupyterExport {
         }
     }
 
-    exportToJupyter(cardsToExport: Card[]) {
+    exportToJupyter() {
 
         let pythonData: JSONObject = {
             "nbformat": 4,
             "nbformat_minor": 2,
             "metadata": this.metadataPy,
-            "cells": cardsToExport
+            "cells": this.cards
                 .filter(card => card.kernel === 'python3')
                 .map(card => card.jupyterData as JSONObject)
         };
@@ -77,7 +79,7 @@ export class JupyterExport {
             "nbformat": 4,
             "nbformat_minor": 2,
             "metadata": this.metadataR,
-            "cells": cardsToExport
+            "cells": this.cards
                 .filter(card => card.kernel === 'r')
                 .map(card => card.jupyterData as JSONObject)
         };
@@ -87,6 +89,54 @@ export class JupyterExport {
 
         // let everyone know we're done
         this._onExportComplete.fire();
+    }
+
+    addCard(card: Card){
+        this.cards.push(card);
+    }
+
+    moveCardUp(index: number){
+        if (index > -1) {
+            const tmp: Card = this.cards[index - 1];
+            this.cards[index - 1] = this.cards[index];
+            this.cards[index] = tmp;
+        }
+    }
+
+    moveCardDown(index: number){
+        if (index > -1 && index < this.cards.length - 1) {
+            const tmp: Card = this.cards[index + 1];
+            this.cards[index + 1] = this.cards[index];
+            this.cards[index] = tmp;
+        }
+    }
+
+    deleteCard(index: number){
+        if (index > -1) { this.cards.splice(index, 1); }
+    }
+
+    changeTitle(index: number, newTitle: string){
+        if (index > -1){
+            this.cards[index].title = newTitle;
+        }
+    }
+    
+    collapseCode(index: number, value: boolean){
+        if (index > -1){
+            this.cards[index].codeCollapsed = value;
+        }
+    }
+
+    collapseOutput(index: number, value: boolean){
+        if (index > -1){
+            this.cards[index].outputCollapsed = value;
+        }
+    }
+
+    collapseCard(index: number, value: boolean){
+        if (index > -1){
+            this.cards[index].collapsed = value;
+        }
     }
 }
 
