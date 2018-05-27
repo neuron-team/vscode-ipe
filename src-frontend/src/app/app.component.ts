@@ -21,6 +21,7 @@ export class AppComponent implements AfterViewInit {
     ])
   ];
 
+  isSelecting = false;
   selectedCards = new Set<Card>();
   visibleCards = new Map<Card, boolean>();
   searchQuery = '';
@@ -76,13 +77,32 @@ export class AppComponent implements AfterViewInit {
   }
 
   /* Selecting - will remove/add element if it's in/not_in array */
-  cardSelected(card: Card, selected: boolean) {
-    if (selected) {
-      this.selectedCards.add(card);
-    } else {
+  cardSelected(card: Card) {
+    if (this.selectedCards.has(card)) {
       this.selectedCards.delete(card);
+    } else {
+      this.selectedCards.add(card);
     }
   }
+
+  updateSelecting(mode: boolean) {
+    this.isSelecting = mode;
+  }
+
+  deleteSelectedCards() {
+    this.selectedCards.forEach(value => {
+      this.deleteCard(value);
+    })
+  }
+
+  selectAll() {
+    if (this.selectedCards.size == this.cards.length) {
+      this.selectedCards = new Set<Card>();
+    } else {
+      this.selectedCards = new Set<Card>(this.cards);
+    }
+  }
+
 
   /* Ordering */
   cardMoved(card: Card, direction: string) {
@@ -135,6 +155,13 @@ export class AppComponent implements AfterViewInit {
         }
       }
     }, 400);
+  }
+
+  newMarkdownCard() {
+    let markdownCard = new Card(0, '', '*Click to edit markdown*', []);
+    markdownCard.isCustomMarkdown = true;
+    this.cards.push(markdownCard);
+    this.scrollToBottom();
   }
 
   /* this code ensures that the list always scrolls to the bottom when new elements are added */

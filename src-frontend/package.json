@@ -23,6 +23,8 @@
     "@angular/platform-browser-dynamic": "^5.2.0",
     "@angular/router": "^5.2.0",
     "core-js": "^2.4.1",
+    "ng-katex": "^1.0.3",
+    "ngx-markdown": "^1.6.0",
     "rxjs": "^5.5.6",
     "zone.js": "^0.8.19"
   },
@@ -43,7 +45,6 @@
     "karma-jasmine-html-reporter": "^0.2.2",
     "protractor": "~5.1.2",
     "ts-node": "~4.1.0",
-    "tslint": "~5.9.1",
     "typescript": "~2.5.3"
   }
 }

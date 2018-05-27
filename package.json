@@ -103,7 +103,6 @@
     "@types/mocha": "^2.2.42",
     "@types/node": "^7.0.43",
     "shx": "^0.2.2",
-    "tslint": "^5.8.0",
     "typescript": "^2.6.1",
     "vscode": "^1.1.6"
   },

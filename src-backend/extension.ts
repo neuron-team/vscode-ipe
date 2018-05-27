@@ -28,13 +28,18 @@ export function activate(context: vscode.ExtensionContext) {
         // Start needed kernel
         interpreter.startKernel(UserInteraction.determineKernel());  
 
+        let kernel = UserInteraction.determineKernel();
         // Execute code when new card is created
         userInteraction.onNewCard(sourceCode => {
-            interpreter.executeCode(sourceCode, UserInteraction.determineKernel());
+            interpreter.executeCode(sourceCode, kernel);
         });
 
         webview.show();
         panelInitialised = true;
+
+        if(kernel==="python3"){
+            interpreter.autoImportModules();
+        }
     }
 
     userInteraction.onShowPane(() => {
@@ -76,7 +81,11 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.window.onDidChangeActiveTextEditor(input => {
         if(panelInitialised){
             // Open new kernel if new file is in a different language
-            interpreter.startKernel(UserInteraction.determineKernel());
+            let kernel = UserInteraction.determineKernel();
+            interpreter.startKernel(kernel);
+            if(kernel==="python3"){
+                interpreter.autoImportModules();
+            }
         }
     });
 }
