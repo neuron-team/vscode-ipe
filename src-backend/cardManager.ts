@@ -1,6 +1,6 @@
 import {Card} from 'vscode-ipe-types';
 import * as fs from "fs";
-
+import * as path from "path";
 import * as vscode from 'vscode';
 import { Event, EventEmitter } from "vscode";
 import { JSONObject, JSONArray } from '@phosphor/coreutils';
@@ -50,8 +50,7 @@ export class CardManager {
     private writeToFile(jupyterFileData: JSONObject, kernelName: string) {
         let fullPath = vscode.window.activeTextEditor.document.uri.path;
 
-        let pathWithoutExtension = path => path.replace(/\.[^/\\.]+$/, '');
-        let fileName = pathWithoutExtension(fullPath) + '_' + kernelName + '.ipynb';
+        let fileName = fullPath.replace(new RegExp(path.extname(fullPath)+'$'), '_'+kernelName+'.ipynb').slice(1);
 
         if((jupyterFileData['cells'] as JSONArray).length > 0) {
             fs.writeFile(fileName, JSON.stringify(jupyterFileData), err => {
@@ -65,24 +64,32 @@ export class CardManager {
     }
 
     exportToJupyter() {
-
+        console.log(this.cards);
         let pythonData: JSONObject = {
             "nbformat": 4,
             "nbformat_minor": 2,
-            "metadata": this.metadataPy,
-            "cells": this.cards
-                .filter(card => card.kernel === 'python3')
-                .map(card => card.jupyterData as JSONObject)
+            "metadata": this.metadataPy
         };
 
         let rData: JSONObject = {
             "nbformat": 4,
             "nbformat_minor": 2,
-            "metadata": this.metadataR,
-            "cells": this.cards
-                .filter(card => card.kernel === 'r')
-                .map(card => card.jupyterData as JSONObject)
+            "metadata": this.metadataR
         };
+
+        let pyJupyterData: Array<JSONObject> = [], rJupyterData: Array<JSONObject> = [];
+
+        this.cards.map(el => {
+            if(el.kernel === 'python3') {
+                pyJupyterData.push(el.jupyterData as JSONObject);
+            }
+            else if(el.kernel === 'r') {
+                rJupyterData.push(el.jupyterData as JSONObject);
+            }
+        });
+
+        pythonData["cells"] = pyJupyterData;
+        rData["cells"] = rJupyterData;
 
         this.writeToFile(pythonData, 'python3');
         this.writeToFile(rData, 'r');

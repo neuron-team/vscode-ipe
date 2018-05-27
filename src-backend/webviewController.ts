@@ -33,32 +33,7 @@ export class WebviewController {
     private _onCollapseCard: EventEmitter<{index: number, value: boolean}> = new EventEmitter();
     get onCollapseCard(): Event<{index: number, value: boolean}> { return this._onCollapseCard.event; }
 
-    constructor(private context: vscode.ExtensionContext) {
-        this.panel.webview.onDidReceiveMessage(message => {
-            switch (message.command){
-                case 'moveCardUp':
-                    this._onMoveCardUp.fire(message.index);
-                    break;
-                case 'moveCardDown':
-                    this._onMoveCardDown.fire(message.index);
-                    break;
-                case 'deleteCard':
-                    this._onDeleteCard.fire(message.index);
-                    break;
-                case 'changeTitle':
-                    this._onChangeTitle.fire({index: message.index, newTitle: message.title});
-                    break;
-                case 'collapseCode':
-                    this._onCollapseCode.fire({index: message.index, value: message.value});
-                    break;
-                case 'collapseOutput':
-                    this._onCollapseOutput.fire({index: message.index, value: message.value});
-                    break;
-                case 'collapseCard':
-                    this._onCollapseCard.fire({index: message.index, value: message.value});
-            }
-        })
-    }
+    constructor(private context: vscode.ExtensionContext) {}
 
     show() {
         if (this.panel) {
@@ -85,6 +60,31 @@ export class WebviewController {
                 this.panel = undefined;
                 this._onDisposed.fire();
             }, null, this.context.subscriptions);
+
+            this.panel.webview.onDidReceiveMessage(message => {
+                switch (message.command){
+                    case 'moveCardUp':
+                        this._onMoveCardUp.fire(message.index);
+                        break;
+                    case 'moveCardDown':
+                        this._onMoveCardDown.fire(message.index);
+                        break;
+                    case 'deleteCard':
+                        this._onDeleteCard.fire(message.index);
+                        break;
+                    case 'changeTitle':
+                        this._onChangeTitle.fire({index: message.index, newTitle: message.title});
+                        break;
+                    case 'collapseCode':
+                        this._onCollapseCode.fire({index: message.index, value: message.value});
+                        break;
+                    case 'collapseOutput':
+                        this._onCollapseOutput.fire({index: message.index, value: message.value});
+                        break;
+                    case 'collapseCard':
+                        this._onCollapseCard.fire({index: message.index, value: message.value});
+                }
+            })
         }
     }
 
