@@ -12,7 +12,53 @@ export class WebviewController {
     private _onDisposed: EventEmitter<void> = new EventEmitter();
     get onDisposed(): Event<void> { return this._onDisposed.event; }
 
-    constructor(private context: vscode.ExtensionContext) {}
+    private _onMoveCardUp: EventEmitter<number> = new EventEmitter();
+    get onMoveCardUp(): Event<number> { return this._onMoveCardUp.event; }
+
+    private _onMoveCardDown: EventEmitter<number> = new EventEmitter();
+    get onMoveCardDown(): Event<number> { return this._onMoveCardDown.event; }
+
+    private _onDeleteCard: EventEmitter<number> = new EventEmitter();
+    get onDeleteCard(): Event<number> { return this._onDeleteCard.event; }
+    
+    private _onChangeTitle: EventEmitter<{index: number, newTitle: string}> = new EventEmitter();
+    get onChangeTitle(): Event<{index: number, newTitle: string}> { return this._onChangeTitle.event; }
+    
+    private _onCollapseCode: EventEmitter<{index: number, value: boolean}> = new EventEmitter();
+    get onCollapseCode(): Event<{index: number, value: boolean}> { return this._onCollapseCode.event; }
+    
+    private _onCollapseOutput: EventEmitter<{index: number, value: boolean}> = new EventEmitter();
+    get onCollapseOutput(): Event<{index: number, value: boolean}> { return this._onCollapseOutput.event; }
+    
+    private _onCollapseCard: EventEmitter<{index: number, value: boolean}> = new EventEmitter();
+    get onCollapseCard(): Event<{index: number, value: boolean}> { return this._onCollapseCard.event; }
+
+    constructor(private context: vscode.ExtensionContext) {
+        this.panel.webview.onDidReceiveMessage(message => {
+            switch (message.command){
+                case 'moveCardUp':
+                    this._onMoveCardUp.fire(message.index);
+                    break;
+                case 'moveCardDown':
+                    this._onMoveCardDown.fire(message.index);
+                    break;
+                case 'deleteCard':
+                    this._onDeleteCard.fire(message.index);
+                    break;
+                case 'changeTitle':
+                    this._onChangeTitle.fire({index: message.index, newTitle: message.title});
+                    break;
+                case 'collapseCode':
+                    this._onCollapseCode.fire({index: message.index, value: message.value});
+                    break;
+                case 'collapseOutput':
+                    this._onCollapseOutput.fire({index: message.index, value: message.value});
+                    break;
+                case 'collapseCard':
+                    this._onCollapseCard.fire({index: message.index, value: message.value});
+            }
+        })
+    }
 
     show() {
         if (this.panel) {
@@ -48,5 +94,5 @@ export class WebviewController {
             card: card
         });
     }
-
+    
 }

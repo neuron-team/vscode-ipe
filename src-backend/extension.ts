@@ -10,9 +10,18 @@ import {JupyterManager} from './jupyterManager';
 import {CardManager} from './CardManager';
 
 export function activate(context: vscode.ExtensionContext) {
-    let webview: WebviewController = new WebviewController(context);
     let userInteraction: UserInteraction = new UserInteraction(context);
+    
+    let webview: WebviewController = new WebviewController(context);
     let cardManager: CardManager = new CardManager();
+    webview.onMoveCardUp(index => cardManager.moveCardUp(index));
+    webview.onMoveCardDown(index => cardManager.moveCardDown(index));
+    webview.onDeleteCard(index => cardManager.deleteCard(index));
+    webview.onChangeTitle(data => cardManager.changeTitle(data.index, data.newTitle));
+    webview.onCollapseCode(data => cardManager.collapseCode(data.index, data.value));
+    webview.onCollapseOutput(data => cardManager.collapseOutput(data.index, data.value));
+    webview.onCollapseCard(data => cardManager.collapseCard(data.index, data.value));
+    
     let panelInitialised: Boolean = false;
 
     let interpreter = new Interpreter();

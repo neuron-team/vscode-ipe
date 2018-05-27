@@ -116,6 +116,7 @@ export class AppComponent implements AfterViewInit {
       const tmp: Card = this.cards[index - 1];
       this.cards[index - 1] = this.cards[index];
       this.cards[index] = tmp;
+      this.extension.onMoveCardUp.next(index);
     }
   }
 
@@ -125,6 +126,7 @@ export class AppComponent implements AfterViewInit {
       const tmp: Card = this.cards[index + 1];
       this.cards[index + 1] = this.cards[index];
       this.cards[index] = tmp;
+      this.extension.onMoveCardDown.next(index);
     }
   }
 
@@ -135,7 +137,10 @@ export class AppComponent implements AfterViewInit {
 
   deleteCard(card: Card) {
     const index: number = this.cards.indexOf(card);
-    if (index > -1) { this.cards.splice(index, 1); }
+    if (index > -1) { 
+      this.cards.splice(index, 1); 
+      this.extension.onDeleteCard.next(index);
+    }
   }
 
   private windowResizeThrottle;
