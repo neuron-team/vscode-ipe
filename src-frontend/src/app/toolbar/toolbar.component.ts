@@ -7,12 +7,12 @@ import { Component, OnInit,Output,EventEmitter } from '@angular/core';
 })
 export class ToolbarComponent implements OnInit {
   searchQuery: string = '';
-  selectMode: boolean = false;
+  isSelecting: boolean = false;
   filter: boolean = false;
   filterSet: boolean = false;
 
   @Output() onSearchChanged = new EventEmitter<{search: string, filters: any}>();
-  @Output() onSelectMode = new EventEmitter<boolean>();
+  @Output() onSelectingToggle = new EventEmitter<boolean>();
   @Output() onSelectDelete = new EventEmitter<void>();
   @Output() onSelectAll = new EventEmitter<void>();
 
@@ -27,12 +27,12 @@ export class ToolbarComponent implements OnInit {
   ngOnInit() {
   }
 
-  toggleSelectMode() {
-    this.selectMode = !this.selectMode;
-    this.onSelectMode.emit(this.selectMode);
+  toggleSelecting() {
+    this.isSelecting = !this.isSelecting;
+    this.onSelectingToggle.emit(this.isSelecting);
   }
 
-  selectDelete() {
+  deleteSelectedCards() {
     this.onSelectDelete.emit();
   }
 

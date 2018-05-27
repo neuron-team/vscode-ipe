@@ -21,7 +21,7 @@ export class AppComponent implements AfterViewInit {
     ])
   ];
 
-  selectMode = false;
+  isSelecting = false;
   selectedCards = new Set<Card>();
   visibleCards = new Map<Card, boolean>();
   searchQuery = '';
@@ -85,17 +85,17 @@ export class AppComponent implements AfterViewInit {
     }
   }
 
-  updateSelectMode(mode: boolean) {
-    this.selectMode = mode;
+  updateSelecting(mode: boolean) {
+    this.isSelecting = mode;
   }
 
-  selectDelete() {
+  deleteSelectedCards() {
     this.selectedCards.forEach(value => {
       this.deleteCard(value);
     })
   }
 
-  selectAll(){
+  selectAll() {
     if (this.selectedCards.size == this.cards.length) {
       this.selectedCards = new Set<Card>();
     } else {

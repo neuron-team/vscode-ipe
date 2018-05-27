@@ -8,7 +8,7 @@
     <button class="react toolbar-icon" (click)="move('down')">
         <i class="ms-Icon ms-Icon--ChevronDown" aria-label="Move Down"></i>
     </button>
-    <button [style.display]="selectMode ? 'inline-block' : 'none'" class="react toolbar-icon"  (click)="selectCard()">select</button>
+    <button [style.display]="isSelecting ? 'inline-block' : 'none'" class="react toolbar-icon"  (click)="selectCard()">select</button>
     <button class="react right" (click)="deleteCard()">
         <i class="ms-Icon ms-Icon--Clear" aria-label="Delete"></i>
     </button>

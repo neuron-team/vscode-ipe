@@ -3,8 +3,8 @@
 
   <app-toolbar
     (onSearchChanged)="updateFilters($event)"
-    (onSelectMode)="updateSelectMode($event)"
-    (onSelectDelete)="selectDelete()"
+    (onSelectingToggle)="updateSelecting($event)"
+    (onSelectDelete)="deleteSelectedCards()"
     (onSelectAll)="selectAll()"></app-toolbar>
 
   <div #scrollingList class="cards-list">
@@ -14,7 +14,7 @@
       [card]="card"
       [visible] = "visibleCards.get(card) !== false"
       [searchQuery]="searchQuery"
-      [selectMode]="selectMode"
+      [isSelecting]="isSelecting"
       [selected]="selectedCards.has(card)"
       (onMove)="cardMoved(card, $event.direction)"
       (onSelect)="cardSelected(card, $event)"

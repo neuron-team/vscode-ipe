@@ -32,7 +32,7 @@ export class CardComponent {
   @Input() visible: boolean = true;
   @Input() searchQuery: string = '';
   @Input() card: Card;
-  @Input() selectMode: boolean = false;
+  @Input() isSelecting: boolean = false;
   @Input() selected: boolean = false;
   //Movement of cards up/down
   @Output() onMove = new EventEmitter();
