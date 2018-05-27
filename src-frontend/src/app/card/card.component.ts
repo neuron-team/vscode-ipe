@@ -30,6 +30,8 @@ export class CardComponent {
   @Input() visible: boolean = true;
   @Input() searchQuery: string = '';
   @Input() card: Card;
+  @Input() isSelecting: boolean = false;
+  @Input() selected: boolean = false;
   //Movement of cards up/down
   @Output() onMove = new EventEmitter();
   //Select a card
@@ -39,21 +41,16 @@ export class CardComponent {
 
   editingTitle: boolean = false;
   editingMarkdown: boolean = false;
-  selected: boolean = false;
+
   constructor(public sanitizer: DomSanitizer) { }
 
-   //Toggle state for animation
-  toggleState() {
-    this.selected = !this.selected;
-  }
-  //Emit to parent app.component.ts
+
   move(direction: string) {
     this.onMove.emit({direction: direction});
   }
 
   selectCard() {
-    this.toggleState();
-    this.onSelect.emit(this.selected);
+    this.onSelect.emit();
   }
 
   deleteCard() {
