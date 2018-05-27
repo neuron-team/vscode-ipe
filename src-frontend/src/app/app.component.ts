@@ -14,11 +14,11 @@ import { RegexService } from './classes/regex.service';
 export class AppComponent implements AfterViewInit {
 
   cards: Card[] = [
-    new Card(0, 'sample card', 'print("Hello, world!")', [new CardOutput('stdout', 'Hello, world!')]),
+    new Card(0, 'sample card', 'print("Hello, world!")', [new CardOutput('stdout', 'Hello, world!')], {}, 'python3'),
     new Card(0, 'sample graph', 'some code', [
       new CardOutput('text/html', "<script>requirejs.config({paths: { 'plotly': ['https://cdn.plot.ly/plotly-latest.min']},});if(!window.Plotly) {{require(['plotly'],function(plotly) {window.Plotly=plotly;});}}</script>"),
       new CardOutput('text/html', '<div id="66f3f87d-6ec3-46a5-81b7-0d78b189a25f" style="height: 525px; width: 100%;" class="plotly-graph-div"></div><script type="text/javascript">require(["plotly"], function(Plotly) { window.PLOTLYENV=window.PLOTLYENV || {};window.PLOTLYENV.BASE_URL="https://plot.ly";Plotly.newPlot("66f3f87d-6ec3-46a5-81b7-0d78b189a25f", [{"x": [1, 2, 3], "y": [3, 1, 6]}], {}, {"showLink": true, "linkText": "Export to plot.ly"})});</script>'),
-    ])
+    ], {}, 'python3')
   ];
 
   isSelecting = false;
@@ -158,7 +158,7 @@ export class AppComponent implements AfterViewInit {
   }
 
   newMarkdownCard() {
-    let markdownCard = new Card(0, '', '*Click to edit markdown*', []);
+    let markdownCard = new Card(0, '', '*Click to edit markdown*', [], {}, '');
     markdownCard.isCustomMarkdown = true;
     this.cards.push(markdownCard);
     this.scrollToBottom();
