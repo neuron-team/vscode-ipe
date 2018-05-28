@@ -1,4 +1,3 @@
-
 export class Card {
     public collapsed: boolean = false;
     public codeCollapsed: boolean = true;
@@ -10,7 +9,9 @@ export class Card {
         public id: number,
         public title: string,
         public sourceCode: string,
-        public outputs: CardOutput[]
+        public outputs: CardOutput[],
+        public jupyterData: object,
+        public kernel: string
     ) {}
 }
 
