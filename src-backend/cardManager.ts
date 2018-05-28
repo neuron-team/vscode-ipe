@@ -53,37 +53,30 @@ export class CardManager {
         let fileName = fullPath.replace(new RegExp(path.extname(fullPath)+'$'), '_'+kernelName+'.ipynb').slice(1);
 
         if((jupyterFileData['cells'] as JSONArray).length > 0) {
-            fs.writeFileSync(fileName, JSON.stringify(jupyterFileData), {encoding:'utf8',flag:'w'})
+            fs.writeFileSync(fileName, JSON.stringify(jupyterFileData), {encoding:'utf8',flag:'w'});
             vscode.window.showInformationMessage(`Exported to ${fileName}`);
         }
     }
 
     exportToJupyter() {
+
         let pythonData: JSONObject = {
             "nbformat": 4,
             "nbformat_minor": 2,
-            "metadata": this.metadataPy
+            "metadata": this.metadataPy,
+            "cells": this.cards
+                .filter(card => card.kernel === 'python3')
+                .map(card => card.jupyterData as JSONObject)
         };
 
         let rData: JSONObject = {
             "nbformat": 4,
             "nbformat_minor": 2,
-            "metadata": this.metadataR
+            "metadata": this.metadataR,
+            "cells": this.cards
+                .filter(card => card.kernel === 'r')
+                .map(card => card.jupyterData as JSONObject)
         };
-
-        let pyJupyterData: Array<JSONObject> = [], rJupyterData: Array<JSONObject> = [];
-
-        this.cards.map(el => {
-            if(el.kernel === 'python3') {
-                pyJupyterData.push(el.jupyterData as JSONObject);
-            }
-            else if(el.kernel === 'r') {
-                rJupyterData.push(el.jupyterData as JSONObject);
-            }
-        });
-
-        pythonData["cells"] = pyJupyterData;
-        rData["cells"] = rJupyterData;
 
         this.writeToFile(pythonData, 'python3');
         this.writeToFile(rData, 'r');
