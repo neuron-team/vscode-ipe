@@ -13,7 +13,7 @@ export class ToolbarComponent implements OnInit {
 
   @Output() onSearchChange = new EventEmitter<string>();
   @Output() onFilterChange = new EventEmitter<any>();
-  @Output() onSelectingToggle = new EventEmitter<boolean>();
+  @Output() onSelectingToggle = new EventEmitter<void>();
   @Output() onSelectDelete = new EventEmitter<void>();
   @Output() onSelectAll = new EventEmitter<void>();
   @Output() onNewMarkdown = new EventEmitter<void>();
@@ -32,7 +32,7 @@ export class ToolbarComponent implements OnInit {
 
   toggleSelecting() {
     this.isSelecting = !this.isSelecting;
-    this.onSelectingToggle.emit(this.isSelecting);
+    this.onSelectingToggle.emit();
   }
 
   deleteSelectedCards() {

@@ -91,8 +91,11 @@ export class AppComponent implements AfterViewInit {
     }
   }
 
-  updateSelecting(mode: boolean) {
-    this.isSelecting = mode;
+  updateSelecting() {
+    this.isSelecting = !this.isSelecting;
+    if (!this.isSelecting) {
+      this.selectedCards = new Set<Card>();
+    }
   }
 
   deleteSelectedCards() {

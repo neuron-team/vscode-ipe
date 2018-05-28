@@ -50,7 +50,9 @@ export class CardComponent {
   }
 
   selectCard() {
-    this.onSelect.emit();
+    if (this.isSelecting) {
+      this.onSelect.emit();
+    }
   }
 
   deleteCard() {
