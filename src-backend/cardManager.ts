@@ -92,11 +92,11 @@ export class CardManager {
         this._onExportComplete.fire();
     }
 
-    addCard(card: Card){
+    addCard(card: Card) {
         this.cards.push(card);
     }
 
-    moveCardUp(index: number){
+    moveCardUp(index: number) {
         if (index > -1) {
             const tmp: Card = this.cards[index - 1];
             this.cards[index - 1] = this.cards[index];
@@ -104,7 +104,7 @@ export class CardManager {
         }
     }
 
-    moveCardDown(index: number){
+    moveCardDown(index: number) {
         if (index > -1 && index < this.cards.length - 1) {
             const tmp: Card = this.cards[index + 1];
             this.cards[index + 1] = this.cards[index];
@@ -112,60 +112,60 @@ export class CardManager {
         }
     }
 
-    deleteCard(index: number){
+    deleteCard(index: number) {
         if (index > -1) { this.cards.splice(index, 1); }
     }
 
-    changeTitle(index: number, newTitle: string){
-        if (index > -1){
+    changeTitle(index: number, newTitle: string) {
+        if (index > -1) {
             this.cards[index].title = newTitle;
         }
     }
     
-    collapseCode(index: number, value: boolean){
-        if (index > -1){
+    collapseCode(index: number, value: boolean) {
+        if (index > -1) {
             this.cards[index].codeCollapsed = value;
         }
     }
 
-    collapseOutput(index: number, value: boolean){
-        if (index > -1){
+    collapseOutput(index: number, value: boolean) {
+        if (index > -1) {
             this.cards[index].outputCollapsed = value;
         }
     }
 
-    collapseCard(index: number, value: boolean){
-        if (index > -1){
+    collapseCard(index: number, value: boolean) {
+        if (index > -1) {
             this.cards[index].collapsed = value;
         }
     }
 
-    addCustomCard(card: Card, id: number){
+    addCustomCard(card: Card, id: number) {
         let cardToAdd = card;
         cardToAdd.id = id;
-        if(cardToAdd.isCustomMarkdown){
-            cardToAdd.kernel = 'python3'
+        if(cardToAdd.isCustomMarkdown) {
+            cardToAdd.kernel = 'python3';
             cardToAdd.jupyterData = 
                 {
                     "cell_type": "markdown",
                     "metadata": {},
                     "source": cardToAdd.sourceCode
-                }
+                };
         }
         this.cards.push(cardToAdd);
     }
 
-    editCustomCard(index: number, card: Card){
-        if (index > -1){
-            let cardEdited = card
+    editCustomCard(index: number, card: Card) {
+        if (index > -1) {
+            let cardEdited = card;
             if(cardEdited.isCustomMarkdown){
-                cardEdited.kernel = 'python3'
+                cardEdited.kernel = 'python3';
                 cardEdited.jupyterData = 
                     {
                         "cell_type": "markdown",
                         "metadata": {},
                         "source": cardEdited.sourceCode
-                    }
+                    };
             }
             this.cards[index] = cardEdited;
         }
