@@ -41,7 +41,7 @@ button {
 }
 
 /* Code */
-.code-preview{
+.code-preview {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -76,13 +76,23 @@ button {
   background-color: rgba(255, 255, 255, 0.96);
 }
 
+/* Markdown */
 .custom-markdown {
-  padding: 4px;
+  padding: 0 6px;
 }
-.custom-markdown textarea {
-  width: 100%;
-  height: 200px;
+textarea {
+  color: var(--color);
+  background-color: transparent;
+  border-style: solid;
+  border-color: rgba(255, 255, 255, 0.3);
   font-family: monospace;
+  font-size: 12px;
+  margin: 5px 0;
+  width: 100%;
+  resize: vertical;
+  height: 100px;
+  max-height: 200px;
+  box-sizing: border-box;
 }
 
 
@@ -109,7 +119,8 @@ input {
   -webkit-margin-after: 0.4em;
   -webkit-margin-start: 5px;
 }
-input:focus {
+input:focus,
+textarea:focus {
   border-color: rgba(0, 119, 198, 0.7);
   outline: rgba(0, 119, 198, 0.7);
   background-color: rgba(170, 170, 170, 0.05);

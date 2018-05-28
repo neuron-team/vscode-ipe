@@ -112,14 +112,23 @@
   </div>
 
   <div *ngIf="card.isCustomMarkdown" class="custom-markdown">
+
+
     <div *ngIf="!editingMarkdown" (click)="editingMarkdown = true">
-      <markdown [data]="card.sourceCode"></markdown>
+      <button class="react full-left" (click)="editingMarkdown = true">
+        <markdown [data]="card.sourceCode"></markdown>
+      </button>
     </div>
-    <div *ngIf="editingMarkdown">
-      <textarea #markdownEditor>{{card.sourceCode}}</textarea>
+    <div *ngIf="editingMarkdown"
+    (keyup.esc)="editingMarkdown = false">
+      <textarea #markdownEditor autofocus>{{card.sourceCode}}</textarea>
       <br>
-      <button (click)="card.sourceCode = markdownEditor.value; editingMarkdown = false">Done</button>
-      <button (click)="editingMarkdown = false">Cancel</button>
+      <button class="react" (click)="card.sourceCode = markdownEditor.value; editingMarkdown = false">
+          <i class="ms-Icon ms-Icon--Accept" aria-label="Accept"></i>
+        </button>
+        <button class="react" (click)="editingMarkdown = false">
+          <i class="ms-Icon ms-Icon--Clear" aria-label="Cancel"></i>
+        </button>
     </div>
   </div>
 </div>
