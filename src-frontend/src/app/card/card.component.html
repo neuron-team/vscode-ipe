@@ -3,20 +3,20 @@
   <!-- Card toolbar -->
   <span class="card-toolbar">
     <button class="react toolbar-icon" (click)="move('up')">
-        <i class="ms-Icon ms-Icon--ChevronUp" aria-label="Move Up"></i>
+        <i title="Move Up" class="ms-Icon ms-Icon--ChevronUp" aria-label="Move Up"></i>
     </button>
     <button class="react toolbar-icon" (click)="move('down')">
-        <i class="ms-Icon ms-Icon--ChevronDown" aria-label="Move Down"></i>
+        <i title="Move Down" class="ms-Icon ms-Icon--ChevronDown" aria-label="Move Down"></i>
     </button>
     <button [style.display]="isSelecting ? 'inline-block' : 'none'" class="react"  (click)="selectCard()">Select</button>
-    <button class="react right" (click)="deleteCard()">
-        <i class="ms-Icon ms-Icon--Clear" aria-label="Delete"></i>
+    <button class="red right" (click)="deleteCard()">
+        <i title="Delete" class="ms-Icon ms-Icon--Clear" aria-label="Delete"></i>
     </button>
     <button class="react toolbar-icon right">
-        <i class="ms-Icon ms-Icon--MiniExpand" aria-label="Open in Browser"></i>
+        <i title="Open in Browser" class="ms-Icon ms-Icon--MiniExpand" aria-label="Open in Browser"></i>
     </button>
     <button class="react toolbar-icon right" (click)="card.collapsed = !card.collapsed; editingTitle = false">
-        <i class="ms-Icon ms-Icon--ChromeMinimize" aria-label="Minimize"></i>
+        <i title="Minimize" class="ms-Icon ms-Icon--ChromeMinimize" aria-label="Minimize"></i>
     </button>
   </span>
 
@@ -34,10 +34,10 @@
            (keyup.enter)="card.title = titleEditInput.value; editingTitle = false"
            (keyup.esc)="editingTitle = false" />
     <button class="react" (click)="card.title = titleEditInput.value; editingTitle = false">
-      <i class="ms-Icon ms-Icon--Accept" aria-label="Accept"></i>
+      <i title="Accept" class="ms-Icon ms-Icon--Accept" aria-label="Accept"></i>
     </button>
-    <button class="react" (click)="editingTitle = false">
-      <i class="ms-Icon ms-Icon--Clear" aria-label="Cancel"></i>
+    <button class="red" (click)="editingTitle = false">
+      <i title="Cancel" class="ms-Icon ms-Icon--Clear" aria-label="Cancel"></i>
     </button>
   </div>
 
@@ -46,10 +46,10 @@
     <!-- Source code -->
     <button class="full-left" (click)="card.codeCollapsed = !card.codeCollapsed">
         <div *ngIf="!card.codeCollapsed">
-            <i class="ms-Icon ms-Icon--CaretBottomRightSolid8" aria-label="Expand"></i>
+            <i title="Collapse" class="ms-Icon ms-Icon--CaretBottomRightSolid8" aria-label="Expand"></i>
         </div>
         <div class="code-preview" *ngIf="card.codeCollapsed">
-            <i class="ms-Icon ms-Icon--CaretRight" aria-label="Collapse"></i>
+            <i title="Expand" class="ms-Icon ms-Icon--CaretRight" aria-label="Collapse"></i>
             <span [innerHTML]="card.sourceCode | preview | highlight : searchQuery"></span>
         </div>
     </button>
@@ -61,10 +61,10 @@
     <hr>
     <button (click)="card.outputCollapsed = !card.outputCollapsed">
       <div *ngIf="!card.outputCollapsed">
-          <i class="ms-Icon ms-Icon--CaretBottomRightSolid8" aria-label="Expand"></i>
+          <i title="Collapse" class="ms-Icon ms-Icon--CaretBottomRightSolid8" aria-label="Expand"></i>
       </div>
       <div *ngIf="card.outputCollapsed">
-          <i class="ms-Icon ms-Icon--CaretRight" aria-label="Collapse"></i>
+          <i title="Expand" class="ms-Icon ms-Icon--CaretRight" aria-label="Collapse"></i>
           <span>Output</span>
       </div>
     </button>
@@ -124,10 +124,10 @@
       <textarea #markdownEditor autofocus>{{card.sourceCode}}</textarea>
       <br>
       <button class="react" (click)="card.sourceCode = markdownEditor.value; editingMarkdown = false">
-          <i class="ms-Icon ms-Icon--Accept" aria-label="Accept"></i>
+          <i title="Accept" class="ms-Icon ms-Icon--Accept" aria-label="Accept"></i>
         </button>
-        <button class="react" (click)="editingMarkdown = false">
-          <i class="ms-Icon ms-Icon--Clear" aria-label="Cancel"></i>
+        <button class="red" (click)="editingMarkdown = false">
+          <i title="Cancel" class="ms-Icon ms-Icon--Clear" aria-label="Cancel"></i>
         </button>
     </div>
   </div>

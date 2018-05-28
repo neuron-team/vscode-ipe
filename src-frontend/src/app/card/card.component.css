@@ -39,13 +39,16 @@ button {
 .react:hover {
   color: rgb(0, 119, 198);
 }
+.red:hover {
+  color: rgb(231, 69, 69);
+}
 
 /* Code */
 .code-preview {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-  font-family: monospace;
+  font-family: Menlo, Monaco, "Courier New", monospace;
 }
 .card-code > div {
   flex: 1;
@@ -54,6 +57,9 @@ button {
   padding: 0 3px;
   margin: 0 3px;
   user-select: text;
+}
+pre {
+  font-family: Menlo, Monaco, "Courier New", monospace;
 }
 
 
@@ -68,7 +74,7 @@ button {
   white-space: normal;
 }
 .output-error {
-  font-family: monospace;
+  font-family: Menlo, Monaco, "Courier New", monospace;
   overflow-x: scroll;
   white-space: pre;
 }
@@ -85,7 +91,7 @@ textarea {
   background-color: transparent;
   border-style: solid;
   border-color: rgba(255, 255, 255, 0.3);
-  font-family: monospace;
+  font-family: Menlo, Monaco, "Courier New", monospace;
   font-size: 12px;
   margin: 5px 0;
   width: 100%;

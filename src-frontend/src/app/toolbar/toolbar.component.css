@@ -18,6 +18,7 @@
 }
 .main-bar button {
   flex-shrink: 0;
+  margin-left: 3px
 }
 
 button {
@@ -28,7 +29,6 @@ button {
   border-style: none;
   outline: none;
   padding: 5px;
-  margin-left: 3px
 }
 button:hover {
   background-color: rgba(0, 119, 198, 0.7) !important;
@@ -57,6 +57,7 @@ input[type=text] {
   border: 1px solid rgba(255, 255, 255, 0.3);
   -webkit-margin-start: 5px;
   font-size: 14px;
+  padding-left: 3px;
 }
 input:focus {
   border-color: rgba(0, 119, 198, 0.7);
