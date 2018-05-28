@@ -118,40 +118,53 @@ describe('CardComponent', () => {
         expect(component.editingTitle).toEqual(true);
       });
     });
-    /*it('After editing title, pressing enter should set editing title to false ', () => {
+
+    it('After editing title, pressing enter should set editing title to false ', () => {
     const hostElement = fixture.nativeElement;
-    const Button = hostElement.querySelector('#editingTitleButton');
+    const Button = hostElement.querySelector('#collapseButton');
     //Button clicked
     sendClick(Button).then(()=> {
       expect(component.editingTitle).toBeDefined();
-      expect(component.editingTitle).toEqual(true);
+      expect(component.editingTitle).toEqual(false);
     });
+  });
+  it('After editing title, pressing enter should set editing title to false ', () => {
+    const hostElement = fixture.nativeElement;
+    component.editingTitle = true;
+    fixture.detectChanges();
     let debugElement = fixture.debugElement.query(By.css('input'));
-    debugElement.triggerEventHandler('keyup.space', {});
+    debugElement.triggerEventHandler('keyup.enter', {});
     fixture.detectChanges();
     fixture.whenStable().then(()=> {
       expect(component.editingTitle).toBe(false);
     })
 
   });
-
-  it('When clicking button the title property should be false', () => {
+  it('After editing title, pressing esc should set editing title to false ', () => {
     const hostElement = fixture.nativeElement;
-    const Button = hostElement.querySelector('#editingTitleButton');
-    //Button clicked
-    sendClick(Button).then(()=> {
-      expect(component.editingTitle).toBeDefined();
-      expect(component.editingTitle).toEqual(true);
-    });
+    component.editingTitle = true;
+    fixture.detectChanges();
+    let debugElement = fixture.debugElement.query(By.css('input'));
+    debugElement.triggerEventHandler('keyup.esc', {});
+    fixture.detectChanges();
+    fixture.whenStable().then(()=> {
+      expect(component.editingTitle).toBe(false);
+    })
 
+  });
+  
+  it('When clicking accept button the title property should be false', () => {
+    const hostElement = fixture.nativeElement;
+    component.editingTitle = true;
+    fixture.detectChanges();
     const acceptTitleButton = hostElement.querySelector('#acceptButton');
     //Button clicked
-    sendClick(Button).then(()=> {
+    sendClick(acceptTitleButton).then(()=> {
       expect(component.editingTitle).toEqual(false);
     });
 
   });
-  */
+  
 
  it('When clicking card collapse button card.collapse property should change ', () => {
   expect(component.card.codeCollapsed).toEqual(true);
