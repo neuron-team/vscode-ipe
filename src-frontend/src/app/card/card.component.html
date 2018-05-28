@@ -29,7 +29,7 @@
   <div class="edit-title" *ngIf="editingTitle && !card.isCustomMarkdown">
     <input #titleEditInput
            placeholder="Title"
-           autofocus
+           Autofocus
            [value]="card.title"
            (keyup.enter)="card.title = titleEditInput.value; editingTitle = false"
            (keyup.esc)="editingTitle = false" />
@@ -121,7 +121,7 @@
     </div>
     <div *ngIf="editingMarkdown"
     (keyup.esc)="editingMarkdown = false">
-      <textarea #markdownEditor autofocus>{{card.sourceCode}}</textarea>
+      <textarea #markdownEditor Autofocus>{{card.sourceCode}}</textarea>
       <br>
       <button class="react" (click)="card.sourceCode = markdownEditor.value; editingMarkdown = false">
           <i title="Accept" class="ms-Icon ms-Icon--Accept" aria-label="Accept"></i>

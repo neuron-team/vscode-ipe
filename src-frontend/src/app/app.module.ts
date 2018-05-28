@@ -10,6 +10,7 @@ import { HighlightPipe } from './classes/highlight.pipe';
 import { AnsiColorizePipe } from './classes/ansi-colorize.pipe';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { RunScriptsDirective } from './classes/run-scripts.directive';
+import { AutofocusDirective } from './classes/autofocus.directive';
 import { PreviewPipe } from "./classes/preview.pipe";
 import { RegexService } from './classes/regex.service';
 import { MapComponent } from './map/map.component';
@@ -24,6 +25,7 @@ import { MarkdownModule } from 'ngx-markdown';
     HighlightPipe,
     AnsiColorizePipe,
     RunScriptsDirective,
+    AutofocusDirective,
     PreviewPipe,
     ToolbarComponent,
     MapComponent,
