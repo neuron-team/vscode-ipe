@@ -123,7 +123,6 @@ export class CardManager {
 
     changeTitle(index: number, newTitle: string){
         if (index > -1){
-            console.log(newTitle);
             this.cards[index].title = newTitle;
         }
     }
