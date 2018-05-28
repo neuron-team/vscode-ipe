@@ -18,6 +18,7 @@ describe('AppComponent', () => {
     beforeEach(() => { appComponent = new AppComponent(new ExtensionService, new RegexService); });
    
     it('AppComponent is correctly initialised', () => {
+        expect(appComponent.isSelecting).toEqual(false, 'isSelecting');
         expect(appComponent.selectedCards).toEqual(new Set<Card>(), 'selectedCards');
         expect(appComponent.visibleCards).toEqual(new Map<Card, boolean>(), 'visibleCards');
         expect(appComponent.searchQuery).toEqual('', 'searchQuery');
@@ -92,7 +93,7 @@ describe('AppComponent', () => {
         expect(appComponent.cardMatchesFilter(richCard)).toEqual(true, 'rich output');
     });
 
-    it('Correctly manage selectedCards array - cardSelected()', () => {
+    it('Correctly push/pop selectedCards array - cardSelected()', () => {
         appComponent.cards = [textPlainCard, richCard, errorCard];
         expect(appComponent.cards).toEqual([textPlainCard, richCard, errorCard], 'original Card[] at first');
         expect(appComponent.selectedCards.size).toEqual(0, 'selectedCards has 0 element at first');
@@ -109,6 +110,42 @@ describe('AppComponent', () => {
         appComponent.cardSelected(textPlainCard);
         expect(appComponent.selectedCards.has(richCard)).toEqual(false, 'richCard and textPlainCard are removed');
         expect(appComponent.selectedCards.size).toEqual(0, 'selectedCards has 0 element again');
+    });
+
+    it('Correctly update isSelecting mode - updateSelecting()', () => {
+        appComponent.updateSelecting(true);
+        expect(appComponent.isSelecting).toEqual(true, 'isSelecting should be true');
+        appComponent.updateSelecting(false);
+        expect(appComponent.isSelecting).toEqual(false, 'isSelecting should be false');
+    });
+
+    it('Correctly delete selected cards - deleteSelectedCards()', () => {
+        appComponent.cards = [textPlainCard, richCard, errorCard];
+
+        appComponent.selectedCards = new Set<Card>();
+        appComponent.deleteSelectedCards();
+        expect(appComponent.cards).toEqual([textPlainCard, richCard, errorCard], 'empty selectedCards, nothing is deleted');
+
+        appComponent.selectedCards = new Set<Card>([richCard, errorCard]);
+        appComponent.deleteSelectedCards();
+        expect(appComponent.cards).toEqual([textPlainCard], 'richCard and errorCard deleted');
+
+        appComponent.selectedCards = new Set<Card>([textPlainCard]);
+        appComponent.deleteSelectedCards();
+        expect(appComponent.cards).toEqual([], 'all cards deleted');
+    });
+
+    it('Correctly adds/removes all cards to/from  selectedCards array - selectAll()', () => {
+        appComponent.cards = [];
+        expect(appComponent.cards.length).toEqual(0);
+        expect(appComponent.selectedCards.size).toEqual(0);
+
+        appComponent.cards = [textPlainCard, richCard, errorCard];
+        appComponent.selectAll();
+        expect(appComponent.selectedCards).toEqual(new Set<Card>([textPlainCard, richCard, errorCard]));
+
+        appComponent.selectAll();
+        expect(appComponent.selectedCards).toEqual(new Set<Card>());
     });
 
     it('Correctly triggers move function - cardMoved()', () => {
@@ -161,6 +198,8 @@ describe('AppComponent', () => {
         appComponent.cards = [textPlainCard, richCard, errorCard];
         expect(appComponent.cards).toEqual([textPlainCard, richCard, errorCard], 'original Card[] at first');
 
+        appComponent.deleteCard(stdoutCard);
+        expect(appComponent.cards).toEqual([textPlainCard, richCard, errorCard], 'card passed in not exists, nothing is deleted');
         appComponent.deleteCard(errorCard);
         expect(appComponent.cards).toEqual([textPlainCard, richCard], 'errorCard deleted');
         appComponent.deleteCard(textPlainCard);
