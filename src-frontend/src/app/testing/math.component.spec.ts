@@ -11,4 +11,12 @@ describe('MathComponent', () => {
         component.ngOnInit();
         expect(component.mathExprNorm).toEqual("hello");
       });
+
+      it('Normal Characters should not be replaced', () => {
+        component.mathExpr = "hello testing 123";
+        component.ngOnInit();
+        expect(component.mathExprNorm).toEqual("hello testing 123");
+      });
+
+      
 });
