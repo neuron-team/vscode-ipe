@@ -5,16 +5,15 @@ import { Card, CardOutput } from 'vscode-ipe-types';
 
 describe('AppComponent', () => {
     let appComponent: AppComponent;
-
-    const sampleCard = new Card(0, 'sample Hello World card', 'print("Hello, World!")', [new CardOutput('stdout', 'Hello, world!')]);
-    const noOutputCard = new Card(0, 'sample card', 'print("Hello, World!")', []);
-    const stdoutCard = new Card(0, 'stdout card', 'print("Hello, world!")', [new CardOutput('stdout', 'Hello, world!')]);
-    const textPlainCard = new Card(0, 'text/plain card', 'print("Hello, world!")', [new CardOutput('text/plain', 'Hello, world!')]);
-    const errorCard = new Card(0, 'error card', 'print("Hello, world!")', [new CardOutput('error', 'code errors')]);
-    const richCard = new Card(0, 'sample graph', 'some code', [
+    const sampleCard = new Card(0, 'sample Hello World card', 'print("Hello, World!")', [new CardOutput('stdout', 'Hello, world!')], {}, 'python3');
+    const noOutputCard = new Card(1, 'sample card', 'print("Hello, World!")', [], {}, 'python3');
+    const stdoutCard = new Card(2, 'stdout card', 'print("Hello, world!")', [new CardOutput('stdout', 'Hello, world!')], {}, 'python3');
+    const textPlainCard = new Card(3, 'text/plain card', 'print("Hello, world!")', [new CardOutput('text/plain', 'Hello, world!')], {}, 'python3');
+    const errorCard = new Card(4, 'error card', 'print("Hello, world!")', [new CardOutput('error', 'code errors')], {}, 'python3');
+    const richCard = new Card(5, 'sample graph', 'some code', [
         new CardOutput('text/html', "<script>requirejs.config({paths: { 'plotly': ['https://cdn.plot.ly/plotly-latest.min']},});if(!window.Plotly) {{require(['plotly'],function(plotly) {window.Plotly=plotly;});}}</script>"),
         new CardOutput('text/html', '<div id="66f3f87d-6ec3-46a5-81b7-0d78b189a25f" style="height: 525px; width: 100%;" class="plotly-graph-div"></div><script type="text/javascript">require(["plotly"], function(Plotly) { window.PLOTLYENV=window.PLOTLYENV || {};window.PLOTLYENV.BASE_URL="https://plot.ly";Plotly.newPlot("66f3f87d-6ec3-46a5-81b7-0d78b189a25f", [{"x": [1, 2, 3], "y": [3, 1, 6]}], {}, {"showLink": true, "linkText": "Export to plot.ly"})});</script>')
-    ]);
+        ], {}, 'python3');
 
     beforeEach(() => { appComponent = new AppComponent(new ExtensionService, new RegexService); });
    
@@ -98,17 +97,17 @@ describe('AppComponent', () => {
         expect(appComponent.cards).toEqual([textPlainCard, richCard, errorCard], 'original Card[] at first');
         expect(appComponent.selectedCards.size).toEqual(0, 'selectedCards has 0 element at first');
 
-        appComponent.cardSelected(richCard, true);
+        appComponent.cardSelected(richCard);
         expect(appComponent.selectedCards.has(richCard)).toEqual(true);
         expect(appComponent.selectedCards.size).toEqual(1, 'selectedCards has 1 element');
 
-        appComponent.cardSelected(textPlainCard, false);
-        expect(appComponent.selectedCards.has(textPlainCard)).toEqual(false, 'false, does not add card');
-        expect(appComponent.selectedCards.has(richCard)).toEqual(true, 'current state preserved');
-        expect(appComponent.selectedCards.size).toEqual(1, 'selectedCards has 1 element');
+        appComponent.cardSelected(textPlainCard);
+        expect(appComponent.selectedCards.has(textPlainCard)).toEqual(true, 'added textPlainCard');
+        expect(appComponent.selectedCards.size).toEqual(2, 'selectedCards has 2 element');
 
-        appComponent.cardSelected(richCard, false);
-        expect(appComponent.selectedCards.has(richCard)).toEqual(false, 'richCard is removed');
+        appComponent.cardSelected(richCard);
+        appComponent.cardSelected(textPlainCard);
+        expect(appComponent.selectedCards.has(richCard)).toEqual(false, 'richCard and textPlainCard are removed');
         expect(appComponent.selectedCards.size).toEqual(0, 'selectedCards has 0 element again');
     });
 
