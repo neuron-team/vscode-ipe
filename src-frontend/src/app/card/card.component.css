@@ -90,7 +90,7 @@ textarea {
   color: var(--color);
   background-color: transparent;
   border-style: solid;
-  border-color: rgba(255, 255, 255, 0.3);
+  border-color: rgba(170, 170, 170, 0.3);
   font-family: Menlo, Monaco, "Courier New", monospace;
   font-size: 12px;
   margin: 5px 0;
@@ -118,7 +118,7 @@ input {
   color: var(--color);
   background-color: transparent;
   border-style: solid;
-  border-color: rgba(255, 255, 255, 0.3);
+  border-color: rgba(170, 170, 170, 0.3);
   font-size: 16px;
   font-weight: bold;
   -webkit-margin-before: 0.4em;
@@ -142,4 +142,11 @@ textarea:focus {
 }
 .edit-title button {
   flex-shrink: 0;
+}
+
+/* Remove button reaction when in isSelecting */
+button:disabled,
+button:disabled:hover {
+  user-select: none;
+  color: var(--color) !important;
 }

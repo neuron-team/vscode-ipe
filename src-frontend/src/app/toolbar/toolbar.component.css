@@ -54,7 +54,7 @@ button i {
 input[type=text] {
   color: var(--color);
   background-color: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  border: 1px solid rgba(170, 170, 170, 0.3);
   -webkit-margin-start: 5px;
   font-size: 14px;
   padding-left: 3px;

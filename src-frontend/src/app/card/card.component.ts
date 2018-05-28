@@ -17,7 +17,7 @@ import {DomSanitizer} from "@angular/platform-browser";
   animations: [
     trigger('cardState', [
       state('selected',   style({
-        borderColor: '#2874A6',
+        borderColor: '#0077c6',
         transform: 'scale(1.0)'
       })),
       transition('notSelected => selected', animate('100ms ease-in')),
