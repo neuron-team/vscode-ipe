@@ -53,13 +53,8 @@ export class CardManager {
         let fileName = fullPath.replace(new RegExp(path.extname(fullPath)+'$'), '_'+kernelName+'.ipynb').slice(1);
 
         if((jupyterFileData['cells'] as JSONArray).length > 0) {
-            fs.writeFile(fileName, JSON.stringify(jupyterFileData), err => {
-                if (err) {
-                    console.log(err);
-                } else {
-                    vscode.window.showInformationMessage(`Exported to ${fileName}`);
-                }
-            });
+            fs.writeFileSync(fileName, JSON.stringify(jupyterFileData), {encoding:'utf8',flag:'w'})
+            vscode.window.showInformationMessage(`Exported to ${fileName}`);
         }
     }
 
