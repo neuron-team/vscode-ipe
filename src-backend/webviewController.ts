@@ -33,6 +33,12 @@ export class WebviewController {
     private _onCollapseCard: EventEmitter<{index: number, value: boolean}> = new EventEmitter();
     get onCollapseCard(): Event<{index: number, value: boolean}> { return this._onCollapseCard.event; }
 
+    private _onAddCustomCard: EventEmitter<Card> = new EventEmitter();
+    get onAddCustomCard(): Event<Card> { return this._onAddCustomCard.event; }
+    
+    private _onEditCustomCard: EventEmitter<{index: number, card: Card}> = new EventEmitter();
+    get onEditCustomCard(): Event<{index: number, card: Card}> { return this._onEditCustomCard.event; }
+
     constructor(private context: vscode.ExtensionContext) {}
 
     show() {
@@ -83,6 +89,12 @@ export class WebviewController {
                         break;
                     case 'collapseCard':
                         this._onCollapseCard.fire({index: message.index, value: message.value});
+                        break;
+                    case 'addCustomCard':
+                        this._onAddCustomCard.fire(message.card);
+                        break;
+                    case 'editCustomCard':
+                        this._onEditCustomCard.fire({index: message.index, card: message.card});
                 }
             })
         }

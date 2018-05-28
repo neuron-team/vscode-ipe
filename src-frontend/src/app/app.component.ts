@@ -157,6 +157,11 @@ export class AppComponent implements AfterViewInit {
     this.extension.onChangeTitle.next({index: index, newTitle: newTitle});
   }
 
+  editCustomCard(card: Card){
+    const index: number = this.cards.indexOf(card);
+    this.extension.onEditCustomCard.next({index: index, card: card});
+  }
+
   private windowResizeThrottle;
   onWindowResize() {
     // make sure all scripted HTML fragments are re-sized appropriately.
@@ -180,6 +185,7 @@ export class AppComponent implements AfterViewInit {
     let markdownCard = new Card(0, '', '*Click to edit markdown*', [], {}, '');
     markdownCard.isCustomMarkdown = true;
     this.cards.push(markdownCard);
+    this.extension.onAddCustomCard.next(markdownCard);
     this.scrollToBottom();
   }
 

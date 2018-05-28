@@ -16,6 +16,8 @@ export class ExtensionService {
   onCollapseCode: EventEmitter<{index: number, value: boolean}> = new EventEmitter();
   onCollapseOutput: EventEmitter<{index: number, value: boolean}> = new EventEmitter();
   onCollapseCard: EventEmitter<{index: number, value: boolean}> = new EventEmitter();
+  onAddCustomCard: EventEmitter<Card> = new EventEmitter();
+  onEditCustomCard: EventEmitter<{index: number, card: Card}> = new EventEmitter();
 
   constructor() {
     window.addEventListener('message', event => {
@@ -58,6 +60,15 @@ export class ExtensionService {
       command: 'collapseCard',
       index: data.index,
       value: data.value
+    }));
+    this.onAddCustomCard.subscribe(card => this.vscode.postMessage({
+      command: 'addCustomCard',
+      card: card
+    }));
+    this.onEditCustomCard.subscribe(data => this.vscode.postMessage({
+      command: 'editCustomCard',
+      index: data.index,
+      card: data.card
     }));
   }
 }

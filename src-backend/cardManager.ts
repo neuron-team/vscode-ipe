@@ -145,6 +145,18 @@ export class CardManager {
             this.cards[index].collapsed = value;
         }
     }
+
+    addCustomCard(card: Card, id: number){
+        let cardToAdd = card;
+        cardToAdd.id = id;
+        this.cards.push(cardToAdd);
+    }
+
+    editCustomCard(index: number, card: Card){
+        if (index > -1){
+            this.cards[index] = card;
+        }
+    }
 }
 
 

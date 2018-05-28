@@ -261,4 +261,8 @@ export class ContentHelpers {
         }
         return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
     }
+
+    static assignId(){
+        return this.id++;
+    }
 }

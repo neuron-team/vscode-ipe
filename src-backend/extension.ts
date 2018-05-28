@@ -22,7 +22,9 @@ export function activate(context: vscode.ExtensionContext) {
     webview.onCollapseCode(data => cardManager.collapseCode(data.index, data.value));
     webview.onCollapseOutput(data => cardManager.collapseOutput(data.index, data.value));
     webview.onCollapseCard(data => cardManager.collapseCard(data.index, data.value));
-    
+    webview.onAddCustomCard(card => cardManager.addCustomCard(card, ContentHelpers.assignId()));
+    webview.onEditCustomCard(data => cardManager.editCustomCard(data.index, data.card));
+
     let panelInitialised: Boolean = false;
 
     let interpreter = new Interpreter();

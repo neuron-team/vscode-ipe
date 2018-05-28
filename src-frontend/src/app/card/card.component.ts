@@ -42,6 +42,7 @@ export class CardComponent {
   @Output() onCollapseCode = new EventEmitter();
   @Output() onCollapseOutput = new EventEmitter();
   @Output() onCollapseCard = new EventEmitter();
+  @Output() onEditCustomCard = new EventEmitter();
 
   editingTitle: boolean = false;
   editingMarkdown: boolean = false;
@@ -75,5 +76,9 @@ export class CardComponent {
 
   changeTitle(newTitle: string){
     this.onChangeTitle.emit({newTitle: newTitle});
+  }
+
+  editCustomCard(){
+    this.onEditCustomCard.emit();
   }
 }
