@@ -52,16 +52,6 @@ describe('CardComponent', () => {
     it('Card component should be created', () => {
         expect(component).toBeDefined();
       });
-    
-    // it('Toggle state should switch between true and false states', () => {
-    //   //component.toggleState();
-    //   expect(component.selected).toEqual(true);
-    // });
-
-    // it('Selecting card should toggle state', () => {
-    //   component.selectCard();
-    //   expect(component.selected).toEqual(true);
-    // });
 
     it('OnMove emitter should output inputted string when function is called', () => {
       component.onMove.subscribe(g => {
@@ -70,12 +60,14 @@ describe('CardComponent', () => {
       component.move("up");
     });
 
-    // it('Selecting card should emit true via onSelect event emitter', () => {
-    //   component.onSelect.subscribe(g => {
-    //     expect(g).toEqual(true);
-    //  });
-    //   component.selectCard();
-    // });
+    it('Selecting card should emit true via onSelect event emitter', () => {
+      spyOn(component.onSelect, 'emit');
+      const hostElement = fixture.nativeElement;
+      const selectButton = hostElement.querySelector('#selectButton');
+      sendClick(selectButton).then(()=> {
+        expect(component.onSelect.emit).toHaveBeenCalledTimes(1);
+      });
+    });
 
     it('When select button is clicked select function should be called',async( () => {
       spyOn(component, 'selectCard');
