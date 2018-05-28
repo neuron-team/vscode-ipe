@@ -208,4 +208,14 @@ describe('AppComponent', () => {
         expect(appComponent.cards).toEqual([], 'all cards deleted');
     });
 
+    it('Correctly add new markdown card - newMarkdownCard()', () => {
+        appComponent.cards = [];
+        appComponent.newMarkdownCard();
+        expect(appComponent.cards[0].isCustomMarkdown).toEqual(true);
+
+        appComponent.cards = [textPlainCard, richCard, errorCard];
+        appComponent.newMarkdownCard();
+        expect(appComponent.cards[3].isCustomMarkdown).toEqual(true);
+    });
+
   });
