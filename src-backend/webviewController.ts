@@ -73,7 +73,7 @@ export class WebviewController {
                         this._onDeleteCard.fire(message.index);
                         break;
                     case 'changeTitle':
-                        this._onChangeTitle.fire({index: message.index, newTitle: message.title});
+                        this._onChangeTitle.fire({index: message.index, newTitle: message.newTitle});
                         break;
                     case 'collapseCode':
                         this._onCollapseCode.fire({index: message.index, value: message.value});

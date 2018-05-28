@@ -31,9 +31,9 @@
            placeholder="Title"
            autofocus
            [value]="card.title"
-           (keyup.enter)="card.title = titleEditInput.value; editingTitle = false; changeTitle(card.title)"
+           (keyup.enter)="card.title = titleEditInput.value; editingTitle = false; changeTitle(titleEditInput.value)"
            (keyup.esc)="editingTitle = false" />
-    <button class="react" (click)="card.title = titleEditInput.value; editingTitle = false">
+    <button class="react" (click)="card.title = titleEditInput.value; editingTitle = false; changeTitle(titleEditInput.value)">
       <i class="ms-Icon ms-Icon--Accept" aria-label="Accept"></i>
     </button>
     <button class="react" (click)="editingTitle = false">

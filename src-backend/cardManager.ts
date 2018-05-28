@@ -64,7 +64,6 @@ export class CardManager {
     }
 
     exportToJupyter() {
-        console.log(this.cards);
         let pythonData: JSONObject = {
             "nbformat": 4,
             "nbformat_minor": 2,
@@ -124,6 +123,7 @@ export class CardManager {
 
     changeTitle(index: number, newTitle: string){
         if (index > -1){
+            console.log(newTitle);
             this.cards[index].title = newTitle;
         }
     }
