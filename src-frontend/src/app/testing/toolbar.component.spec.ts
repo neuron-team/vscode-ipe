@@ -54,7 +54,7 @@ describe('ToolbarComponent', () => {
               }
             });
          });
-         component.fireEvent();
+         component.updateFilter();
       });
 
       it('Toolbar should contain text: plain text ', () => {
