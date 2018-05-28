@@ -143,12 +143,31 @@ export class CardManager {
     addCustomCard(card: Card, id: number){
         let cardToAdd = card;
         cardToAdd.id = id;
+        if(cardToAdd.isCustomMarkdown){
+            cardToAdd.kernel = 'python3'
+            cardToAdd.jupyterData = 
+                {
+                    "cell_type": "markdown",
+                    "metadata": {},
+                    "source": cardToAdd.sourceCode
+                }
+        }
         this.cards.push(cardToAdd);
     }
 
     editCustomCard(index: number, card: Card){
         if (index > -1){
-            this.cards[index] = card;
+            let cardEdited = card
+            if(cardEdited.isCustomMarkdown){
+                cardEdited.kernel = 'python3'
+                cardEdited.jupyterData = 
+                    {
+                        "cell_type": "markdown",
+                        "metadata": {},
+                        "source": cardEdited.sourceCode
+                    }
+            }
+            this.cards[index] = cardEdited;
         }
     }
 }
