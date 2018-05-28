@@ -27,7 +27,8 @@ button {
   background-color: rgba(0, 119, 198, 0.3);
   border-style: none;
   outline: none;
-  padding: 5px 5px;
+  padding: 5px;
+  margin-left: 3px
 }
 button:hover {
   background-color: rgba(0, 119, 198, 0.7) !important;
@@ -81,7 +82,6 @@ input:focus {
 label span {
   padding: 5px;
   background-color: rgba(170, 170, 170, 0.3);
-  margin-right: -3.5px;
 }
 
 label i {
@@ -89,7 +89,6 @@ label i {
   padding: 6px;
   width: 15px;
   background-color: rgba(170, 170, 170, 0.3);
-  margin-right: -3px;
   text-align: center;
 }
 
@@ -132,7 +131,7 @@ input[type=checkbox]:checked + span + i {
     width: 15px;
   }
 }
-@media screen and (max-width: 350px){
+@media screen and (max-width: 360px){
   #select span {
     display: none;
   }
