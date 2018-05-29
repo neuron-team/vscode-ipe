@@ -29,7 +29,7 @@
       },
       {
         "command": "ipe.fullSetup",
-        "title": "Jupyter Full Setup",
+        "title": "Open output pane with existing Jupyter notebook",
         "category": "IPE"
       },
       {
