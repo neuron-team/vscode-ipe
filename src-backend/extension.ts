@@ -68,6 +68,25 @@ export function activate(context: vscode.ExtensionContext) {
                     .then(data => JupyterManager.installJupyter(data));
             }
             else{
+                let jupyterManager = new JupyterManager();
+                jupyterManager.getJupyterAddressAndToken()
+                    .then(initialisePanel)
+                    .catch(() => vscode.window.showErrorMessage('Could not start a notebook automatically'));
+            }
+        
+        }
+        else{
+            webview.show();
+        }
+    });
+
+    userInteraction.onFullSetup(() => {
+        if(!panelInitialised){
+            if(!JupyterManager.isJupyterInPath()){
+                vscode.window.showInformationMessage('The IPE extension requires Jupyter to be installed. Install now?', 'Install')
+                    .then(data => JupyterManager.installJupyter(data));
+            }
+            else{
                 let choices = ['Create a new notebook', 'Enter details manually'];
                 let runningNotebooks = JupyterManager.getRunningNotebooks();
                 runningNotebooks.map(input => {
@@ -89,10 +108,6 @@ export function activate(context: vscode.ExtensionContext) {
                     }
                 });
             }
-        
-        }
-        else{
-            webview.show();
         }
     });
 

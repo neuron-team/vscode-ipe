@@ -9,6 +9,9 @@ export class UserInteraction {
     private _onNewCard: EventEmitter<string> = new EventEmitter();
     get onNewCard(): Event<string> { return this._onNewCard.event; }
 
+    private _onFullSetup: EventEmitter<string> = new EventEmitter();
+    get onFullSetup(): Event<string> { return this._onFullSetup.event; }
+
     private statusIndicator: StatusBarItem;
 
     constructor(private context: vscode.ExtensionContext) {
@@ -17,9 +20,14 @@ export class UserInteraction {
             this.showWebview();
         }));
 
+        context.subscriptions.push(vscode.commands.registerCommand('ipe.fullSetup', () => {
+            this.fullSetup();
+         }));
+
+
         context.subscriptions.push(vscode.commands.registerCommand('ipe.newCard', () => {
            this.newCard();
-        }));
+        }));        
 
         this.statusIndicator = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right);
         this.statusIndicator.show();
@@ -27,6 +35,10 @@ export class UserInteraction {
 
     private showWebview() {
         this._onShowPane.fire();
+    }
+
+    private fullSetup() {
+        this._onFullSetup.fire();
     }
 
     private newCard() {

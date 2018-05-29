@@ -28,6 +28,11 @@
         }
       },
       {
+        "command": "ipe.fullSetup",
+        "title": "Jupyter Full Setup",
+        "category": "IPE"
+      },
+      {
         "command": "ipe.newCard",
         "title": "Send Code to Output Window",
         "category": "IPE"
