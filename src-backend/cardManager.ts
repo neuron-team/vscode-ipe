@@ -75,7 +75,7 @@ export class CardManager {
             "nbformat_minor": 2,
             "metadata": this.metadataR,
             "cells": this.cards
-                .filter(card => card.kernel === 'r')
+                .filter(card => card.kernel === 'ir')
                 .map(card => card.jupyterData as JSONObject)
         };
 
