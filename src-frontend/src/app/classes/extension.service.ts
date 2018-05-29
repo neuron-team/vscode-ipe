@@ -18,6 +18,7 @@ export class ExtensionService {
   onCollapseCard: EventEmitter<{index: number, value: boolean}> = new EventEmitter();
   onAddCustomCard: EventEmitter<Card> = new EventEmitter();
   onEditCustomCard: EventEmitter<{index: number, card: Card}> = new EventEmitter();
+  onJupyterExport: EventEmitter<number[]> = new EventEmitter();
 
   constructor() {
     window.addEventListener('message', event => {
@@ -69,6 +70,10 @@ export class ExtensionService {
       command: 'editCustomCard',
       index: data.index,
       card: data.card
+    }));
+    this.onJupyterExport.subscribe(indexes => this.vscode.postMessage({
+      command: 'jupyterExport',
+      indexes: indexes
     }));
   }
 }

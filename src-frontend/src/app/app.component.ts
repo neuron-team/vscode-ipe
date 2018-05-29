@@ -171,9 +171,14 @@ export class AppComponent implements AfterViewInit {
     this.extension.onEditCustomCard.next({index: index, card: card});
   }
 
-  /* Exporting */
   export() {
-    // Connect to Backend
+    let indexes = null;
+    if (this.isSelecting) {
+      indexes = this.cards
+          .filter(card => this.selectedCards.has(card))
+          .map((card, index) => index);
+    }
+    this.extension.onJupyterExport.next(indexes);
   }
 
   private windowResizeThrottle;
