@@ -183,6 +183,9 @@ export class ContentHelpers {
         if(chosenType === 'application/vnd.plotly.v1+json') {
             let plotlyJson = data[chosenType];
             if(ContentHelpers.validateData(plotlyJson, 'data')) {
+                // make sure plotly runs along with the card
+                this.contentTmp.push(new CardOutput('text/html', '<script>requirejs.config({paths: { \'plotly\': [\'https://cdn.plot.ly/plotly-latest.min\']},});if(!window.Plotly) {{require([\'plotly\'],function(plotly) {window.Plotly=plotly;});}}</script>'));
+
                 let guid = this.generateGuid();
                 output = 
                     '<div id="' + guid + '" style="height: 525px; width: 100%;" class="plotly-graph-div">'
