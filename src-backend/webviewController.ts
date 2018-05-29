@@ -25,7 +25,8 @@ export class WebviewController {
                 vscode.ViewColumn.Two,
                 {
                     enableScripts: true,
-                    retainContextWhenHidden: true
+                    retainContextWhenHidden: true,
+                    localResourceRoots: [vscode.Uri.file(this.context.extensionPath)]
                 }
             );
             let htmlFile = path.join(this.context.extensionPath, "html", "index.html");
