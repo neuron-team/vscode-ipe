@@ -176,6 +176,17 @@ describe('CardComponent', () => {
   });
 });
 
+it('Editing Markdown cards  ', () => {
+  component.card.isCustomMarkdown = true;
+  component.editingMarkdown = true;
+  fixture.detectChanges();
+  const hostElement = fixture.nativeElement;
+  const Button = hostElement.querySelector('#editingMarkdownButton');
+  sendClick(Button).then(()=> {
+    expect(component.editingMarkdown).toEqual(false);
+  });
+});
+
 
 
 
