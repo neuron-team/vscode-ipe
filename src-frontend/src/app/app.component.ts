@@ -13,13 +13,7 @@ import { RegexService } from './classes/regex.service';
 })
 export class AppComponent implements AfterViewInit {
 
-  cards: Card[] = [
-    new Card(0, 'sample card', 'print("Hello, world!")', [new CardOutput('stdout', 'Hello, world!')], {}, 'python3'),
-    new Card(0, 'sample graph', 'some code', [
-      new CardOutput('text/html', "<script>requirejs.config({paths: { 'plotly': ['https://cdn.plot.ly/plotly-latest.min']},});if(!window.Plotly) {{require(['plotly'],function(plotly) {window.Plotly=plotly;});}}</script>"),
-      new CardOutput('text/html', '<div id="66f3f87d-6ec3-46a5-81b7-0d78b189a25f" style="height: 525px; width: 100%;" class="plotly-graph-div"></div><script type="text/javascript">require(["plotly"], function(Plotly) { window.PLOTLYENV=window.PLOTLYENV || {};window.PLOTLYENV.BASE_URL="https://plot.ly";Plotly.newPlot("66f3f87d-6ec3-46a5-81b7-0d78b189a25f", [{"x": [1, 2, 3], "y": [3, 1, 6]}], {}, {"showLink": true, "linkText": "Export to plot.ly"})});</script>'),
-    ], {}, 'python3')
-  ];
+  cards: Card[] = [];
 
   isSelecting = false;
   selectedCards = new Set<Card>();
@@ -37,16 +31,17 @@ export class AppComponent implements AfterViewInit {
     });
   }
 
-  /* Type Filtering called via emitter in toolbar*/
-  updateFilters(event: { search: string, filters: any }): void {
-    this.searchQuery = event.search;
-    this.typeFilters = event.filters;
-    for (let card of this.cards) {
-      this.visibleCards.set(card, this.cardMatchesFilter(card) && this.cardMatchesSearchQuery(card));
-    }
+  updateFilters(filters: any): void {
+    this.typeFilters = filters;
+    this.checkVisible();
   }
 
-  /* Searching */
+  updateSearch(search: string): void {
+    this.searchQuery = search;
+    this.checkVisible();
+  }
+
+// Visable Cards
   cardMatchesSearchQuery(card: Card): boolean {
     if (this.searchQuery === '') { return true; }
 
@@ -75,6 +70,11 @@ export class AppComponent implements AfterViewInit {
     }
     return false;
   }
+  checkVisible() {
+    for (let card of this.cards) {
+      this.visibleCards.set(card, this.cardMatchesFilter(card) && this.cardMatchesSearchQuery(card));
+    }
+  }
 
   /* Selecting - will remove/add element if it's in/not_in array */
   cardSelected(card: Card) {
@@ -85,8 +85,11 @@ export class AppComponent implements AfterViewInit {
     }
   }
 
-  updateSelecting(mode: boolean) {
-    this.isSelecting = mode;
+  updateSelecting() {
+    this.isSelecting = !this.isSelecting;
+    if (!this.isSelecting) {
+      this.selectedCards = new Set<Card>();
+    }
   }
 
   deleteSelectedCards() {
@@ -116,6 +119,7 @@ export class AppComponent implements AfterViewInit {
       const tmp: Card = this.cards[index - 1];
       this.cards[index - 1] = this.cards[index];
       this.cards[index] = tmp;
+      this.extension.onMoveCardUp.next(index);
     }
   }
 
@@ -125,6 +129,7 @@ export class AppComponent implements AfterViewInit {
       const tmp: Card = this.cards[index + 1];
       this.cards[index + 1] = this.cards[index];
       this.cards[index] = tmp;
+      this.extension.onMoveCardDown.next(index);
     }
   }
 
@@ -135,7 +140,45 @@ export class AppComponent implements AfterViewInit {
 
   deleteCard(card: Card) {
     const index: number = this.cards.indexOf(card);
-    if (index > -1) { this.cards.splice(index, 1); }
+    if (index > -1) { 
+      this.cards.splice(index, 1); 
+      this.extension.onDeleteCard.next(index);
+    }
+  }
+
+  collapseOutput(card: Card, value: boolean){
+    const index: number = this.cards.indexOf(card);
+    this.extension.onCollapseOutput.next({index: index, value: value});
+  }
+
+  collapseCode(card: Card, value: boolean){
+    const index: number = this.cards.indexOf(card);
+    this.extension.onCollapseCode.next({index: index, value: value});
+  }
+
+  collapseCard(card: Card, value: boolean){
+    const index: number = this.cards.indexOf(card);
+    this.extension.onCollapseCard.next({index: index, value: value});
+  }
+
+  changeTitle(card: Card, newTitle: string){
+    const index: number = this.cards.indexOf(card);
+    this.extension.onChangeTitle.next({index: index, newTitle: newTitle});
+  }
+
+  editCustomCard(card: Card){
+    const index: number = this.cards.indexOf(card);
+    this.extension.onEditCustomCard.next({index: index, card: card});
+  }
+
+  export() {
+    let indexes = null;
+    if (this.isSelecting) {
+      indexes = this.cards
+          .filter(card => this.selectedCards.has(card))
+          .map((card, index) => index);
+    }
+    this.extension.onJupyterExport.next(indexes);
   }
 
   private windowResizeThrottle;
@@ -161,6 +204,7 @@ export class AppComponent implements AfterViewInit {
     let markdownCard = new Card(0, '', '*Click to edit markdown*', [], {}, '');
     markdownCard.isCustomMarkdown = true;
     this.cards.push(markdownCard);
+    this.extension.onAddCustomCard.next(markdownCard);
     this.scrollToBottom();
   }
 

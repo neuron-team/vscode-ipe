@@ -7,14 +7,25 @@ import {WebviewController} from "./webviewController";
 import {Interpreter, ContentHelpers} from "./interpreter";
 import {UserInteraction} from "./userInteraction";
 import {JupyterManager} from './jupyterManager';
-import {JupyterExport} from './jupyterExport';
+import {CardManager} from './CardManager';
 
-export function activate(context: vscode.ExtensionContext) {
-
-    let cards: Card[] = [];
+export function activate(context: vscode.ExtensionContext) {    
     let webview: WebviewController = new WebviewController(context);
+
     let userInteraction: UserInteraction = new UserInteraction(context);
-    let jupyterExport: JupyterExport = new JupyterExport();
+    
+    let cardManager: CardManager = new CardManager();
+    webview.onMoveCardUp(index => cardManager.moveCardUp(index));
+    webview.onMoveCardDown(index => cardManager.moveCardDown(index));
+    webview.onDeleteCard(index => cardManager.deleteCard(index));
+    webview.onChangeTitle(data => cardManager.changeTitle(data.index, data.newTitle));
+    webview.onCollapseCode(data => cardManager.collapseCode(data.index, data.value));
+    webview.onCollapseOutput(data => cardManager.collapseOutput(data.index, data.value));
+    webview.onCollapseCard(data => cardManager.collapseCard(data.index, data.value));
+    webview.onAddCustomCard(card => cardManager.addCustomCard(card, ContentHelpers.assignId()));
+    webview.onEditCustomCard(data => cardManager.editCustomCard(data.index, data.card));
+    webview.onJupyterExport(indexes => cardManager.exportToJupyter(indexes));
+
     let panelInitialised: Boolean = false;
 
     let interpreter = new Interpreter();
@@ -22,34 +33,57 @@ export function activate(context: vscode.ExtensionContext) {
         userInteraction.updateStatus(`Jupyter: ${status}`);
     });
     ContentHelpers.onCardReady((card: Card) => {
-        cards.push(card);
+        cardManager.addCard(card);
         webview.addCard(card);
     });
 
-    function initialisePanel({baseUrl, token}){
+    function initialisePanel({baseUrl, token}) {
         // Connect to the server defined
         interpreter.connectToServer(baseUrl, token);
         // Start needed kernel
         interpreter.startKernel(UserInteraction.determineKernel());  
 
-        let kernel = UserInteraction.determineKernel();
         // Execute code when new card is created
         userInteraction.onNewCard(sourceCode => {
-            interpreter.executeCode(sourceCode, kernel);
+            interpreter.executeCode(sourceCode, UserInteraction.determineKernel());
         });
 
         webview.show();
+
+        context.subscriptions.push(vscode.commands.registerCommand('ipe.exportToJupyter', () => {
+            cardManager.exportToJupyter();
+        }));
+
         panelInitialised = true;
 
-        if(kernel==="python3"){
+        if(UserInteraction.determineKernel()==="python3") {
             interpreter.autoImportModules();
         }
     }
 
     userInteraction.onShowPane(() => {
-        if(!panelInitialised){
+        if(!panelInitialised) {
 
-            if(!JupyterManager.isJupyterInPath()){
+            if(!JupyterManager.isJupyterInPath()) {
+                vscode.window.showInformationMessage('The IPE extension requires Jupyter to be installed. Install now?', 'Install')
+                    .then(data => JupyterManager.installJupyter(data));
+            }
+            else {
+                let jupyterManager = new JupyterManager();
+                jupyterManager.getJupyterAddressAndToken()
+                    .then(initialisePanel)
+                    .catch(() => vscode.window.showErrorMessage('Could not start a notebook automatically'));
+            }
+        
+        }
+        else {
+            webview.show();
+        }
+    });
+
+    userInteraction.onFullSetup(() => {
+        if(!panelInitialised) {
+            if(!JupyterManager.isJupyterInPath()) {
                 vscode.window.showInformationMessage('The IPE extension requires Jupyter to be installed. Install now?', 'Install')
                     .then(data => JupyterManager.installJupyter(data));
             }
@@ -75,30 +109,21 @@ export function activate(context: vscode.ExtensionContext) {
                     }
                 });
             }
-        
-        }
-        else{
-            webview.show();
         }
     });
 
     vscode.window.onDidChangeActiveTextEditor(input => {
-        if(panelInitialised){
+        if(panelInitialised) {
             // Open new kernel if new file is in a different language
             let kernel = UserInteraction.determineKernel();
             interpreter.startKernel(kernel);
-            if(kernel==="python3"){
+            if(kernel==="python3") {
                 interpreter.autoImportModules();
             }
         }
     });
-
-    context.subscriptions.push(vscode.commands.registerCommand('ipe.exportToJupyter', () => {
-        jupyterExport.exportToJupyter(cards);
-    }));
 }
 
 export function deactivate(context: vscode.ExtensionContext) {
-    console.log('Killed');
     JupyterManager.disposeNotebook();
 }

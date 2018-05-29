@@ -2,12 +2,13 @@
 <div class="container">
 
   <app-toolbar
-    (onSearchChanged)="updateFilters($event)"
-    (onSelectingToggle)="updateSelecting($event)"
+    (onFilterChange)="updateFilters($event)"
+    (onSearchChange)="updateSearch($event)"
+    (onSelectingToggle)="updateSelecting()"
     (onSelectDelete)="deleteSelectedCards()"
     (onSelectAll)="selectAll()"
-    (onNewMarkdown)="newMarkdownCard()"></app-toolbar>
-
+    (onNewMarkdown)="newMarkdownCard()"
+    (onExport)="export()"></app-toolbar>
 
   <div #scrollingList class="cards-list">
     <app-card
@@ -20,7 +21,12 @@
       [selected]="selectedCards.has(card)"
       (onMove)="cardMoved(card, $event.direction)"
       (onSelect)="cardSelected(card, $event)"
-      (onDelete)="deleteCard(card)">
+      (onDelete)="deleteCard(card)"
+      (onCollapseOutput)="collapseOutput(card, $event.value)"
+      (onCollapseCode)="collapseCode(card, $event.value)"
+      (onCollapseCard)="collapseCard(card, $event.value)"
+      (onChangeTitle)="changeTitle(card, $event.newTitle)"
+      (onEditCustomCard)="editCustomCard(card)">
   </app-card>
   </div>
 </div>

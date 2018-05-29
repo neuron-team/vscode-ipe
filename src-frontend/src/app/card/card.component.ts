@@ -17,7 +17,7 @@ import {DomSanitizer} from "@angular/platform-browser";
   animations: [
     trigger('cardState', [
       state('selected',   style({
-        borderColor: '#2874A6',
+        borderColor: '#0077c6',
         transform: 'scale(1.0)'
       })),
       transition('notSelected => selected', animate('100ms ease-in')),
@@ -38,6 +38,11 @@ export class CardComponent {
   @Output() onSelect = new EventEmitter<boolean>();
   //Delete
   @Output() onDelete = new EventEmitter<void>();
+  @Output() onChangeTitle = new EventEmitter();
+  @Output() onCollapseCode = new EventEmitter();
+  @Output() onCollapseOutput = new EventEmitter();
+  @Output() onCollapseCard = new EventEmitter();
+  @Output() onEditCustomCard = new EventEmitter();
 
   editingTitle: boolean = false;
   editingMarkdown: boolean = false;
@@ -50,11 +55,38 @@ export class CardComponent {
   }
 
   selectCard() {
-    this.onSelect.emit();
+    if (this.isSelecting) {
+      this.onSelect.emit();
+    }
   }
 
   deleteCard() {
     this.onDelete.emit();
   }
 
+  collapseOutput(){
+    this.card.outputCollapsed = !this.card.outputCollapsed;
+    this.onCollapseOutput.emit({value: this.card.outputCollapsed});
+  }
+
+  collapseCode(){
+    this.card.codeCollapsed = !this.card.codeCollapsed;
+    this.onCollapseCode.emit({value: this.card.codeCollapsed});
+  }
+
+  collapseCard(){
+    this.card.collapsed = !this.card.collapsed; 
+    this.editingTitle = false;
+    this.onCollapseCard.emit({value: this.card.collapsed});
+  }
+
+  changeTitle(){
+    this.editingTitle = false;
+    this.onChangeTitle.emit({newTitle: this.card.title});
+  }
+
+  editCustomCard(){
+    this.editingMarkdown = false;
+    this.onEditCustomCard.emit();
+  }
 }
