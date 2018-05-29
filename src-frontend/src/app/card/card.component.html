@@ -16,7 +16,7 @@
     <button class="react toolbar-icon right">
         <i title="Open in Browser" class="ms-Icon ms-Icon--MiniExpand" aria-label="Open in Browser"></i>
     </button>
-    <button class="react toolbar-icon right" (click)="card.collapsed = !card.collapsed; editingTitle = false; collapseCard(card.collapsed)">
+    <button class="react toolbar-icon right" (click)="collapseCard()">
         <i title="Minimize" class="ms-Icon ms-Icon--ChromeMinimize" aria-label="Minimize"></i>
     </button>
   </span>
@@ -34,9 +34,9 @@
             placeholder="Title"
             Autofocus
             [value]="card.title"
-            (keydown.enter)="card.title = titleEditInput.value; editingTitle = false; changeTitle(card.title)"
+            (keydown.enter)="card.title = titleEditInput.value; changeTitle()"
             (keydown.esc)="editingTitle = false">
-      <button class="react" (click)="card.title = titleEditInput.value; editingTitle = false; changeTitle(card.title)">
+      <button class="react" (click)="card.title = titleEditInput.value; changeTitle()">
         <i title="Accept" class="ms-Icon ms-Icon--Accept" aria-label="Accept"></i>
       </button>
       <button class="red" (click)="editingTitle = false">
@@ -47,7 +47,7 @@
     <div *ngIf="!card.collapsed">
       <hr>
       <!-- Source code -->
-      <button class="full-left" (click)="card.codeCollapsed = !card.codeCollapsed; collapseCode(card.codeCollapsed)" [disabled]="isSelecting">
+      <button class="full-left" (click)="collapseCode()" [disabled]="isSelecting">
           <div *ngIf="!card.codeCollapsed">
               <i title="Collapse" class="ms-Icon ms-Icon--CaretBottomRightSolid8" aria-label="Expand"></i>
           </div>
@@ -63,7 +63,7 @@
       </div>
 
       <hr>
-      <button (click)="card.outputCollapsed = !card.outputCollapsed; collapseOutput(card.outputCollapsed)" [disabled]="isSelecting">
+      <button (click)="collapseOutput()" [disabled]="isSelecting">
         <div *ngIf="!card.outputCollapsed">
             <i title="Collapse" class="ms-Icon ms-Icon--CaretBottomRightSolid8" aria-label="Expand"></i>
         </div>
@@ -128,7 +128,7 @@
     <div *ngIf="editingMarkdown && !isSelecting" (keydown.esc)="editingMarkdown = false">
       <textarea #markdownEditor Autofocus>{{card.sourceCode}}</textarea>
       <br>
-      <button class="react" (click)="card.sourceCode = markdownEditor.value; editingMarkdown = false; editCustomCard()">
+      <button class="react" (click)="card.sourceCode = markdownEditor.value; editCustomCard()">
           <i title="Accept" class="ms-Icon ms-Icon--Accept" aria-label="Accept"></i>
         </button>
         <button class="red" (click)="editingMarkdown = false">
