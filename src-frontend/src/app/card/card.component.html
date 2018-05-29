@@ -5,19 +5,19 @@
   <!-- Card toolbar -->
   <span class="card-toolbar" [style.visibility]="isSelecting ? 'hidden' : 'visible'">
     <button class="react toolbar-icon" (click)="move('up')">
-        <i title="Move Up" class="ms-Icon ms-Icon--ChevronUp" aria-label="Move Up"></i>
+      <i title="Move Up" class="ms-Icon ms-Icon--ChevronUp" aria-label="Move Up"></i>
     </button>
     <button class="react toolbar-icon" (click)="move('down')">
-        <i title="Move Down" class="ms-Icon ms-Icon--ChevronDown" aria-label="Move Down"></i>
+      <i title="Move Down" class="ms-Icon ms-Icon--ChevronDown" aria-label="Move Down"></i>
     </button>
     <button class="red right" (click)="deleteCard()">
-        <i title="Delete" class="ms-Icon ms-Icon--Clear" aria-label="Delete"></i>
+      <i title="Delete" class="ms-Icon ms-Icon--Clear" aria-label="Delete"></i>
     </button>
     <button class="react toolbar-icon right">
-        <i title="Open in Browser" class="ms-Icon ms-Icon--MiniExpand" aria-label="Open in Browser"></i>
+      <i title="Open in Browser" class="ms-Icon ms-Icon--MiniExpand" aria-label="Open in Browser"></i>
     </button>
     <button class="react toolbar-icon right" (click)="collapseCard()">
-        <i title="Minimize" class="ms-Icon ms-Icon--ChromeMinimize" aria-label="Minimize"></i>
+      <i title="Minimize" class="ms-Icon ms-Icon--ChromeMinimize" aria-label="Minimize"></i>
     </button>
   </span>
 
@@ -49,11 +49,11 @@
       <!-- Source code -->
       <button class="full-left" (click)="collapseCode()" [disabled]="isSelecting">
           <div *ngIf="!card.codeCollapsed">
-              <i title="Collapse" class="ms-Icon ms-Icon--CaretBottomRightSolid8" aria-label="Expand"></i>
+            <i title="Collapse" class="ms-Icon ms-Icon--CaretBottomRightSolid8" aria-label="Expand"></i>
           </div>
           <div class="code-preview" *ngIf="card.codeCollapsed">
-              <i title="Expand" class="ms-Icon ms-Icon--CaretRight" aria-label="Collapse"></i>
-              <span [innerHTML]="card.sourceCode | preview | highlight : searchQuery"></span>
+            <i title="Expand" class="ms-Icon ms-Icon--CaretRight" aria-label="Collapse"></i>
+            <span [innerHTML]="card.sourceCode | preview | highlight : searchQuery"></span>
           </div>
       </button>
       <div class="card-code">
@@ -65,53 +65,53 @@
       <hr>
       <button (click)="collapseOutput()" [disabled]="isSelecting">
         <div *ngIf="!card.outputCollapsed">
-            <i title="Collapse" class="ms-Icon ms-Icon--CaretBottomRightSolid8" aria-label="Expand"></i>
+          <i title="Collapse" class="ms-Icon ms-Icon--CaretBottomRightSolid8" aria-label="Expand"></i>
         </div>
         <div *ngIf="card.outputCollapsed">
-            <i title="Expand" class="ms-Icon ms-Icon--CaretRight" aria-label="Collapse"></i>
-            <span>Output</span>
+          <i title="Expand" class="ms-Icon ms-Icon--CaretRight" aria-label="Collapse"></i>
+          <span>Output</span>
         </div>
       </button>
 
       <!-- Outputs -->
       <div class="card-output" *ngFor="let output of card.outputs">
-          <div *ngIf="!card.outputCollapsed" [ngSwitch]="output.type">
-            <div *ngSwitchCase="'image/png'">
-              <img [src]="sanitizer.bypassSecurityTrustUrl('data:image/png;base64,'+output.output)">
-            </div>
-
-            <div *ngSwitchCase="'image/jpeg'">
-              <img [src]="sanitizer.bypassSecurityTrustUrl('data:image/jpeg;base64,'+output.output)">
-            </div>
-
-            <div *ngSwitchCase="'text/html'">
-              <div class="output-rich" [innerHTML]="output.output" runScripts></div>
-            </div>
-
-            <div *ngSwitchCase="'application/geo+json'">
-              <app-map [geojson]="output.output"></app-map>
-            </div>
-
-            <div *ngSwitchCase="'text/latex'">
-              <app-math [mathExpr]="output.output"></app-math>
-            </div>
-
-            <div *ngSwitchCase="'image/svg+xml'">
-              <div [innerHTML]="sanitizer.bypassSecurityTrustHtml(output.output)"></div>
-            </div>
-
-            <div *ngSwitchCase="'text/markdown'">
-              <markdown [data]="output.output"></markdown>
-            </div>
-
-            <div *ngSwitchCase="'error'">
-              <p class="output-error" [innerHTML]="sanitizer.bypassSecurityTrustHtml(output.output | ansiColorize)"></p>
-            </div>
-
-            <div *ngSwitchDefault>
-              <pre class="output-plain">{{output.output}}</pre>
-            </div>
+        <div *ngIf="!card.outputCollapsed" [ngSwitch]="output.type">
+          <div *ngSwitchCase="'image/png'">
+            <img [src]="sanitizer.bypassSecurityTrustUrl('data:image/png;base64,'+output.output)">
           </div>
+
+          <div *ngSwitchCase="'image/jpeg'">
+            <img [src]="sanitizer.bypassSecurityTrustUrl('data:image/jpeg;base64,'+output.output)">
+          </div>
+
+          <div *ngSwitchCase="'text/html'">
+            <div class="output-rich" [innerHTML]="output.output" runScripts></div>
+          </div>
+
+          <div *ngSwitchCase="'application/geo+json'">
+            <app-map [geojson]="output.output"></app-map>
+          </div>
+
+          <div *ngSwitchCase="'text/latex'">
+            <app-math [mathExpr]="output.output"></app-math>
+          </div>
+
+          <div *ngSwitchCase="'image/svg+xml'">
+            <div [innerHTML]="sanitizer.bypassSecurityTrustHtml(output.output)"></div>
+          </div>
+
+          <div *ngSwitchCase="'text/markdown'">
+            <markdown [data]="output.output"></markdown>
+          </div>
+
+          <div *ngSwitchCase="'error'">
+            <p class="output-error" [innerHTML]="sanitizer.bypassSecurityTrustHtml(output.output | ansiColorize)"></p>
+          </div>
+
+          <div *ngSwitchDefault>
+            <pre class="output-plain">{{output.output}}</pre>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -120,20 +120,19 @@
 
   <div *ngIf="card.isCustomMarkdown" class="custom-markdown">
 
-    <div *ngIf="!editingMarkdown || isSelecting" (click)="editingMarkdown = true">
+    <div *ngIf="!editingMarkdown || isSelecting">
       <button class="react full-left" (click)="editingMarkdown = true" [disabled]="isSelecting">
         <markdown [data]="card.sourceCode"></markdown>
       </button>
     </div>
-    <div *ngIf="editingMarkdown && !isSelecting" (keydown.esc)="editingMarkdown = false">
+    <div *ngIf="editingMarkdown && !isSelecting">
       <textarea #markdownEditor Autofocus>{{card.sourceCode}}</textarea>
-      <br>
       <button class="react" (click)="card.sourceCode = markdownEditor.value; editCustomCard()">
-          <i title="Accept" class="ms-Icon ms-Icon--Accept" aria-label="Accept"></i>
-        </button>
-        <button class="red" (click)="editingMarkdown = false">
-          <i title="Cancel" class="ms-Icon ms-Icon--Clear" aria-label="Cancel"></i>
-        </button>
+        <i title="Accept" class="ms-Icon ms-Icon--Accept" aria-label="Accept"></i>
+      </button>
+      <button class="red" (click)="editingMarkdown = false">
+        <i title="Cancel" class="ms-Icon ms-Icon--Clear" aria-label="Cancel"></i>
+      </button>
     </div>
   </div>
 
