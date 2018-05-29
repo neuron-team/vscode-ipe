@@ -56,11 +56,10 @@ export class CardManager {
         if((jupyterFileData['cells'] as JSONArray).length > 0) {
             try {
                 fs.writeFileSync(fileName, JSON.stringify(jupyterFileData), {encoding: 'utf8', flag: 'w'});
+                vscode.window.showInformationMessage(`Exported ${kernelName} cards to ${fileName}`);
             } catch {
                 throw "Unable to save exported Jupyter file";
             }
-
-            vscode.window.showInformationMessage(`Exported ${kernelName} cards to ${fileName}`);
         }
     }
 
