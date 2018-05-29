@@ -42,10 +42,9 @@ export function activate(context: vscode.ExtensionContext) {
         // Start needed kernel
         interpreter.startKernel(UserInteraction.determineKernel());  
 
-        let kernel = UserInteraction.determineKernel();
         // Execute code when new card is created
         userInteraction.onNewCard(sourceCode => {
-            interpreter.executeCode(sourceCode, kernel);
+            interpreter.executeCode(sourceCode, UserInteraction.determineKernel());
         });
 
         webview.show();
@@ -56,7 +55,7 @@ export function activate(context: vscode.ExtensionContext) {
 
         panelInitialised = true;
 
-        if(kernel==="python3"){
+        if(UserInteraction.determineKernel()==="python3"){
             interpreter.autoImportModules();
         }
     }
