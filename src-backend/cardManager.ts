@@ -1,6 +1,6 @@
 import {Card} from 'vscode-ipe-types';
-import * as fs from "fs";
 import * as path from "path";
+import * as fs from "fs";
 import * as vscode from 'vscode';
 import { Event, EventEmitter } from "vscode";
 import { JSONObject, JSONArray } from '@phosphor/coreutils';
@@ -48,14 +48,18 @@ export class CardManager {
     };
 
     private writeToFile(jupyterFileData: JSONObject, kernelName: string) {
-        let fullPath = vscode.window.activeTextEditor.document.uri.fsPath;
+        if (!vscode.workspace.workspaceFolders) throw "You must have a workspace open to export the files";
+        let fullPath = vscode.workspace.workspaceFolders[0].uri.fsPath;
 
-        let pathWithoutExtension = path => path.replace(/\.[^/\\.]+$/, '');
-        let fileName = pathWithoutExtension(fullPath) + '_' + kernelName + '.ipynb';
+        let fileName = path.join(fullPath, 'output_' + kernelName + '.ipynb');
 
         if((jupyterFileData['cells'] as JSONArray).length > 0) {
-            fs.writeFileSync(fileName, JSON.stringify(jupyterFileData), {encoding: 'utf8', flag: 'w'});
-            vscode.window.showInformationMessage(`Exported to ${fileName}`);
+            try {
+                fs.writeFileSync(fileName, JSON.stringify(jupyterFileData), {encoding: 'utf8', flag: 'w'});
+                vscode.window.showInformationMessage(`Exported ${kernelName} cards to ${fileName}`);
+            } catch {
+                throw "Unable to save exported Jupyter file";
+            }
         }
     }
 
@@ -79,8 +83,12 @@ export class CardManager {
                 .map(card => card.jupyterData as JSONObject)
         };
 
-        this.writeToFile(pythonData, 'python3');
-        this.writeToFile(rData, 'r');
+        try {
+            this.writeToFile(pythonData, 'python3');
+            this.writeToFile(rData, 'r');
+        } catch (err) {
+            vscode.window.showErrorMessage(err);
+        }
 
         // let everyone know we're done
         this._onExportComplete.fire();
