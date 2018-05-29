@@ -20,7 +20,12 @@
       [selected]="selectedCards.has(card)"
       (onMove)="cardMoved(card, $event.direction)"
       (onSelect)="cardSelected(card, $event)"
-      (onDelete)="deleteCard(card)">
+      (onDelete)="deleteCard(card)"
+      (onCollapseOutput)="collapseOutput(card, $event.value)"
+      (onCollapseCode)="collapseCode(card, $event.value)"
+      (onCollapseCard)="collapseCard(card, $event.value)"
+      (onChangeTitle)="changeTitle(card, $event.newTitle)"
+      (onEditCustomCard)="editCustomCard(card)">
   </app-card>
   </div>
 </div>
