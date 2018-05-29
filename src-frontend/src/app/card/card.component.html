@@ -117,10 +117,10 @@
       <markdown [data]="card.sourceCode"></markdown>
     </div>
     <div *ngIf="editingMarkdown">
-      <textarea #markdownEditor>{{card.sourceCode}}</textarea>
+      <textarea id ="markdownTextArea"#markdownEditor>{{card.sourceCode}}</textarea>
       <br>
-      <button (click)="card.sourceCode = markdownEditor.value; editingMarkdown = false">Done</button>
-      <button  id = "editingMarkdownButton" (click)="editingMarkdown = false">Cancel</button>
+      <button id = "finishedMarkdownButton"(click)="card.sourceCode = markdownEditor.value; editingMarkdown = false">Done</button>
+      <button  id = "cancelMarkdownButton" (click)="editingMarkdown = false">Cancel</button>
     </div>
   </div>
 </div>

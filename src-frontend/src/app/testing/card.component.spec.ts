@@ -176,17 +176,45 @@ describe('CardComponent', () => {
   });
 });
 
-it('Editing Markdown cards  ', () => {
+it('Clicking cancel button should set editing markdown to false  ', () => {
   component.card.isCustomMarkdown = true;
   component.editingMarkdown = true;
   fixture.detectChanges();
   const hostElement = fixture.nativeElement;
-  const Button = hostElement.querySelector('#editingMarkdownButton');
+  const Button = hostElement.querySelector('#cancelMarkdownButton');
   sendClick(Button).then(()=> {
     expect(component.editingMarkdown).toEqual(false);
   });
 });
 
+it('Clicking cancel button should keep card source code  ', () => {
+  component.card.isCustomMarkdown = true;
+  component.editingMarkdown = true;
+  component.card.sourceCode= "print('hello world')";
+  fixture.detectChanges();
+  const hostElement = fixture.nativeElement;
+  const Button = hostElement.querySelector('#cancelMarkdownButton');
+  sendClick(Button).then(()=> {
+    expect(component.editingMarkdown).toEqual(false);
+    expect(component.card.sourceCode).toEqual("print('hello world')");
+  });
+});
+it('Clicking finished markdown button should set editing markdown to false and modifies source code  ', () => {
+  component.card.isCustomMarkdown = true;
+  component.editingMarkdown = true;
+  fixture.detectChanges();
+  const hostElement = fixture.nativeElement;
+  const Button = hostElement.querySelector('#finishedMarkdownButton');
+  const MarkdownTextarea =hostElement.querySelector('#markdownTextArea'); 
+  let mdString = "# This is a header in markdown";
+  MarkdownTextarea.value = mdString;
+  fixture.detectChanges();
+  sendClick(Button).then(()=> {
+    expect(component.editingMarkdown).toEqual(false);
+  });
+  
+  expect(component.card.sourceCode).toEqual(mdString);
+});
 
 
 
