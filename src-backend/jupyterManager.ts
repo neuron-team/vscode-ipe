@@ -2,18 +2,18 @@ import { spawn, ChildProcess, execSync, exec } from 'child_process';
 import { URL } from 'url';
 import * as vscode from 'vscode';
 
-export class JupyterManager{
+export class JupyterManager {
     private static process: ChildProcess;
     private static url: URL;
     private static urlPattern = /http:\/\/localhost:[0-9]+\/\?token=[a-z0-9]+/g;
     private static timeout = 10; // 10 seconds
 
-    constructor(){
+    constructor() {
         JupyterManager.process = spawn('jupyter', ['notebook', '--no-browser'], {detached: false});
         JupyterManager.process.stderr.on('data', (data: string) => this.extractJupyterInfos(data));
     }
 
-    public static disposeNotebook(){
+    public static disposeNotebook() {
         if(JupyterManager.process){
             for(let i=0; i<=10 && !JupyterManager.process.killed; i++){
                 JupyterManager.process.kill('SIGINT')
@@ -21,7 +21,7 @@ export class JupyterManager{
         }
     }
 
-    private extractJupyterInfos(data: string){
+    private extractJupyterInfos(data: string) {
         let urlMatch = JupyterManager.urlPattern.exec(data);
         
         if(urlMatch){
@@ -29,7 +29,7 @@ export class JupyterManager{
         }
     }
 
-    private defineTimeout(numTries: number, resolve, reject){
+    private defineTimeout(numTries: number, resolve, reject) {
         setTimeout(() => {
             if(!JupyterManager.url){
                 if(numTries == 0){
@@ -51,13 +51,13 @@ export class JupyterManager{
         }, 1000);
     }
 
-    public getJupyterAddressAndToken(){
+    public getJupyterAddressAndToken() {
         return new Promise((resolve, reject) => {
-            this.defineTimeout(10, resolve, reject);
+            this.defineTimeout(JupyterManager.timeout, resolve, reject);
         });
     }
 
-    public static getRunningNotebooks(){
+    public static getRunningNotebooks() {
         try{
             let runningUrls = 
                 execSync(
@@ -89,7 +89,7 @@ export class JupyterManager{
         }
     }
 
-    public static isJupyterInPath(){
+    public static isJupyterInPath() {
         try{
             let jupyterHelpOutput = 
             execSync(
