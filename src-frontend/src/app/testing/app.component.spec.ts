@@ -140,12 +140,19 @@ describe('AppComponent', () => {
         expect(appComponent.cards.length).toEqual(0);
         expect(appComponent.selectedCards.size).toEqual(0);
 
+        appComponent.selectAll();
+        expect(appComponent.selectedCards).toEqual(new Set<Card>());
+
         appComponent.cards = [textPlainCard, richCard, errorCard];
+        appComponent.selectedCards = appComponent.selectedCards.add(textPlainCard);
         appComponent.selectAll();
         expect(appComponent.selectedCards).toEqual(new Set<Card>([textPlainCard, richCard, errorCard]));
 
         appComponent.selectAll();
         expect(appComponent.selectedCards).toEqual(new Set<Card>());
+
+        appComponent.selectAll();
+        expect(appComponent.selectedCards).toEqual(new Set<Card>([textPlainCard, richCard, errorCard]));
     });
 
     it('Correctly triggers move function - cardMoved()', () => {
