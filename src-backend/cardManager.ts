@@ -48,7 +48,7 @@ export class CardManager {
     };
 
     private writeToFile(jupyterFileData: JSONObject, kernelName: string) {
-        let fullPath = vscode.window.activeTextEditor.document.uri.path;
+        let fullPath = vscode.window.activeTextEditor.document.uri.fsPath;
 
         let pathWithoutExtension = path => path.replace(/\.[^/\\.]+$/, '');
         let fileName = pathWithoutExtension(fullPath) + '_' + kernelName + '.ipynb';
