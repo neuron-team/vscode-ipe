@@ -15,11 +15,7 @@
     <button class="react toolbar-icon right">
         <i class="ms-Icon ms-Icon--MiniExpand" aria-label="Open in Browser"></i>
     </button>
-<<<<<<< HEAD
-    <button id ="collapseButton"class="react toolbar-icon right" (click)="card.collapsed = !card.collapsed; editingTitle = false">
-=======
-    <button class="react toolbar-icon right" (click)="card.collapsed = !card.collapsed; editingTitle = false; collapseCard(card.collapsed)">
->>>>>>> 28e77a68996c6e7b4d1f40da3c79de436019f267
+    <button id ="collapseButton" class="react toolbar-icon right" (click)="card.collapsed = !card.collapsed; editingTitle = false; collapseCard(card.collapsed)">
         <i class="ms-Icon ms-Icon--ChromeMinimize" aria-label="Minimize"></i>
     </button>
   </span>
@@ -38,11 +34,7 @@
            [value]="card.title"
            (keyup.enter)="card.title = titleEditInput.value; editingTitle = false; changeTitle(card.title)"
            (keyup.esc)="editingTitle = false" />
-<<<<<<< HEAD
-    <button id = "acceptButton"class="react" (click)="card.title = titleEditInput.value; editingTitle = false">
-=======
-    <button class="react" (click)="card.title = titleEditInput.value; editingTitle = false; changeTitle(card.title)">
->>>>>>> 28e77a68996c6e7b4d1f40da3c79de436019f267
+    <button id = "acceptButton" class="react" (click)="card.title = titleEditInput.value; editingTitle = false; changeTitle(card.title)">
       <i class="ms-Icon ms-Icon--Accept" aria-label="Accept"></i>
     </button>
     <button id = "clearButton"class="react" (click)="editingTitle = false">
@@ -53,11 +45,7 @@
   <div *ngIf="!card.collapsed && !card.isCustomMarkdown">
     <hr>
     <!-- Source code -->
-<<<<<<< HEAD
-    <button id = "codeCollapseButton" class="full-left" (click)="card.codeCollapsed = !card.codeCollapsed">
-=======
-    <button class="full-left" (click)="card.codeCollapsed = !card.codeCollapsed; collapseCode(card.codeCollapsed)">
->>>>>>> 28e77a68996c6e7b4d1f40da3c79de436019f267
+    <button id = "codeCollapseButton" class="full-left" (click)="card.codeCollapsed = !card.codeCollapsed; collapseCode(card.codeCollapsed)">
         <div *ngIf="!card.codeCollapsed">
             <i class="ms-Icon ms-Icon--CaretBottomRightSolid8" aria-label="Expand"></i>
         </div>
