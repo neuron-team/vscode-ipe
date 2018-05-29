@@ -38,6 +38,11 @@ export class CardComponent {
   @Output() onSelect = new EventEmitter<boolean>();
   //Delete
   @Output() onDelete = new EventEmitter<void>();
+  @Output() onChangeTitle = new EventEmitter();
+  @Output() onCollapseCode = new EventEmitter();
+  @Output() onCollapseOutput = new EventEmitter();
+  @Output() onCollapseCard = new EventEmitter();
+  @Output() onEditCustomCard = new EventEmitter();
 
   editingTitle: boolean = false;
   editingMarkdown: boolean = false;
@@ -59,4 +64,23 @@ export class CardComponent {
     this.onDelete.emit();
   }
 
+  collapseOutput(value: boolean){
+    this.onCollapseOutput.emit({value: value});
+  }
+
+  collapseCode(value: boolean){
+    this.onCollapseCode.emit({value: value});
+  }
+
+  collapseCard(value: boolean){
+    this.onCollapseCard.emit({value: value});
+  }
+
+  changeTitle(newTitle: string){
+    this.onChangeTitle.emit({newTitle: newTitle});
+  }
+
+  editCustomCard(){
+    this.onEditCustomCard.emit();
+  }
 }
