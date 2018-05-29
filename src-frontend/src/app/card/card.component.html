@@ -1,76 +1,80 @@
-
-<div class="card-container"  [@cardState]="selected ? 'selected' : 'notSelected'" *ngIf="visible">
+<div class="card-container" *ngIf="visible" 
+    [@cardState]="selected ? 'selected' : 'notSelected'"
+    (click)="selectCard()"
+    [style.cursor]="isSelecting ? 'pointer' : 'default'">
   <!-- Card toolbar -->
-  <span class="card-toolbar">
+  <span class="card-toolbar" [style.visibility]="isSelecting ? 'hidden' : 'visible'">
     <button class="react toolbar-icon" (click)="move('up')">
-        <i class="ms-Icon ms-Icon--ChevronUp" aria-label="Move Up"></i>
+      <i title="Move Up" class="ms-Icon ms-Icon--ChevronUp" aria-label="Move Up"></i>
     </button>
     <button class="react toolbar-icon" (click)="move('down')">
-        <i class="ms-Icon ms-Icon--ChevronDown" aria-label="Move Down"></i>
+      <i title="Move Down" class="ms-Icon ms-Icon--ChevronDown" aria-label="Move Down"></i>
     </button>
-    <button [style.display]="isSelecting ? 'inline-block' : 'none'" class="react toolbar-icon"  (click)="selectCard()">select</button>
-    <button class="react right" (click)="deleteCard()">
-        <i class="ms-Icon ms-Icon--Clear" aria-label="Delete"></i>
+    <button class="red right" (click)="deleteCard()">
+      <i title="Delete" class="ms-Icon ms-Icon--Clear" aria-label="Delete"></i>
     </button>
     <button class="react toolbar-icon right">
-        <i class="ms-Icon ms-Icon--MiniExpand" aria-label="Open in Browser"></i>
+      <i title="Open in Browser" class="ms-Icon ms-Icon--MiniExpand" aria-label="Open in Browser"></i>
     </button>
-    <button class="react toolbar-icon right" (click)="card.collapsed = !card.collapsed; editingTitle = false; collapseCard(card.collapsed)">
-        <i class="ms-Icon ms-Icon--ChromeMinimize" aria-label="Minimize"></i>
+    <button class="react toolbar-icon right" (click)="collapseCard()">
+      <i title="Minimize" class="ms-Icon ms-Icon--ChromeMinimize" aria-label="Minimize"></i>
     </button>
   </span>
 
   <!-- Card title and title edit box -->
-  <div *ngIf="!editingTitle && !card.isCustomMarkdown">
-    <button class="react full-left" (click)="editingTitle = true">
-      <div class="title" [innerHTML]="card.title | highlight : searchQuery"></div>
-    </button>
-  </div>
-  <div class="edit-title" *ngIf="editingTitle && !card.isCustomMarkdown">
-    <input #titleEditInput
-           placeholder="Title"
-           autofocus
-           [value]="card.title"
-           (keyup.enter)="card.title = titleEditInput.value; editingTitle = false; changeTitle(card.title)"
-           (keyup.esc)="editingTitle = false" />
-    <button class="react" (click)="card.title = titleEditInput.value; editingTitle = false; changeTitle(card.title)">
-      <i class="ms-Icon ms-Icon--Accept" aria-label="Accept"></i>
-    </button>
-    <button class="react" (click)="editingTitle = false">
-      <i class="ms-Icon ms-Icon--Clear" aria-label="Cancel"></i>
-    </button>
-  </div>
+  <div *ngIf="!card.isCustomMarkdown">
 
-  <div *ngIf="!card.collapsed && !card.isCustomMarkdown">
-    <hr>
-    <!-- Source code -->
-    <button class="full-left" (click)="card.codeCollapsed = !card.codeCollapsed; collapseCode(card.codeCollapsed)">
-        <div *ngIf="!card.codeCollapsed">
-            <i class="ms-Icon ms-Icon--CaretBottomRightSolid8" aria-label="Expand"></i>
-        </div>
-        <div class="code-preview" *ngIf="card.codeCollapsed">
-            <i class="ms-Icon ms-Icon--CaretRight" aria-label="Collapse"></i>
-            <span [innerHTML]="card.sourceCode | preview | highlight : searchQuery"></span>
-        </div>
-    </button>
-    <div class="card-code">
-      <div *ngIf="!card.codeCollapsed">
-        <pre [innerHTML]="card.sourceCode | highlight : searchQuery"></pre>
-      </div>
+    <div *ngIf="!editingTitle || isSelecting">
+      <button class="react full-left" (click)="editingTitle = true" [disabled]="isSelecting">
+        <div class="title" [innerHTML]="card.title | highlight : searchQuery"></div>
+      </button>
     </div>
-    <hr>
-    <button (click)="card.outputCollapsed = !card.outputCollapsed; collapseOutput(card.outputCollapsed)">
-      <div *ngIf="!card.outputCollapsed">
-          <i class="ms-Icon ms-Icon--CaretBottomRightSolid8" aria-label="Expand"></i>
-      </div>
-      <div *ngIf="card.outputCollapsed">
-          <i class="ms-Icon ms-Icon--CaretRight" aria-label="Collapse"></i>
-          <span>Output</span>
-      </div>
-    </button>
+    <div class="edit-title" *ngIf="editingTitle && !isSelecting">
+      <input #titleEditInput
+            placeholder="Title"
+            Autofocus
+            [value]="card.title"
+            (keydown.enter)="card.title = titleEditInput.value; changeTitle()"
+            (keydown.esc)="editingTitle = false">
+      <button class="react" (click)="card.title = titleEditInput.value; changeTitle()">
+        <i title="Accept" class="ms-Icon ms-Icon--Accept" aria-label="Accept"></i>
+      </button>
+      <button class="red" (click)="editingTitle = false">
+        <i title="Cancel" class="ms-Icon ms-Icon--Clear" aria-label="Cancel"></i>
+      </button>
+    </div>
 
-    <!-- Outputs -->
-    <div class="card-output" *ngFor="let output of card.outputs">
+    <div *ngIf="!card.collapsed">
+      <hr>
+      <!-- Source code -->
+      <button class="full-left" (click)="collapseCode()" [disabled]="isSelecting">
+          <div *ngIf="!card.codeCollapsed">
+            <i title="Collapse" class="ms-Icon ms-Icon--CaretBottomRightSolid8" aria-label="Expand"></i>
+          </div>
+          <div class="code-preview" *ngIf="card.codeCollapsed">
+            <i title="Expand" class="ms-Icon ms-Icon--CaretRight" aria-label="Collapse"></i>
+            <span [innerHTML]="card.sourceCode | preview | highlight : searchQuery"></span>
+          </div>
+      </button>
+      <div class="card-code">
+        <div *ngIf="!card.codeCollapsed">
+          <pre [innerHTML]="card.sourceCode | highlight : searchQuery"></pre>
+        </div>
+      </div>
+
+      <hr>
+      <button (click)="collapseOutput()" [disabled]="isSelecting">
+        <div *ngIf="!card.outputCollapsed">
+          <i title="Collapse" class="ms-Icon ms-Icon--CaretBottomRightSolid8" aria-label="Expand"></i>
+        </div>
+        <div *ngIf="card.outputCollapsed">
+          <i title="Expand" class="ms-Icon ms-Icon--CaretRight" aria-label="Collapse"></i>
+          <span>Output</span>
+        </div>
+      </button>
+
+      <!-- Outputs -->
+      <div class="card-output" *ngFor="let output of card.outputs">
         <div *ngIf="!card.outputCollapsed" [ngSwitch]="output.type">
           <div *ngSwitchCase="'image/png'">
             <img [src]="sanitizer.bypassSecurityTrustUrl('data:image/png;base64,'+output.output)">
@@ -108,18 +112,28 @@
             <pre class="output-plain">{{output.output}}</pre>
           </div>
         </div>
+      </div>
+    </div>
+
+  </div>
+
+
+  <div *ngIf="card.isCustomMarkdown" class="custom-markdown">
+
+    <div *ngIf="!editingMarkdown || isSelecting">
+      <button class="react full-left" (click)="editingMarkdown = true" [disabled]="isSelecting">
+        <markdown [data]="card.sourceCode"></markdown>
+      </button>
+    </div>
+    <div *ngIf="editingMarkdown && !isSelecting">
+      <textarea #markdownEditor Autofocus>{{card.sourceCode}}</textarea>
+      <button class="react" (click)="card.sourceCode = markdownEditor.value; editCustomCard()">
+        <i title="Accept" class="ms-Icon ms-Icon--Accept" aria-label="Accept"></i>
+      </button>
+      <button class="red" (click)="editingMarkdown = false">
+        <i title="Cancel" class="ms-Icon ms-Icon--Clear" aria-label="Cancel"></i>
+      </button>
     </div>
   </div>
 
-  <div *ngIf="card.isCustomMarkdown" class="custom-markdown">
-    <div *ngIf="!editingMarkdown" (click)="editingMarkdown = true">
-      <markdown [data]="card.sourceCode"></markdown>
-    </div>
-    <div *ngIf="editingMarkdown">
-      <textarea #markdownEditor>{{card.sourceCode}}</textarea>
-      <br>
-      <button (click)="card.sourceCode = markdownEditor.value; editingMarkdown = false; editCustomCard()">Done</button>
-      <button (click)="editingMarkdown = false">Cancel</button>
-    </div>
-  </div>
 </div>

@@ -11,11 +11,13 @@ export class ToolbarComponent implements OnInit {
   filter: boolean = false;
   filterSet: boolean = false;
 
-  @Output() onSearchChanged = new EventEmitter<{search: string, filters: any}>();
-  @Output() onSelectingToggle = new EventEmitter<boolean>();
+  @Output() onSearchChange = new EventEmitter<string>();
+  @Output() onFilterChange = new EventEmitter<any>();
+  @Output() onSelectingToggle = new EventEmitter<void>();
   @Output() onSelectDelete = new EventEmitter<void>();
   @Output() onSelectAll = new EventEmitter<void>();
   @Output() onNewMarkdown = new EventEmitter<void>();
+  @Output() onExport = new EventEmitter<void>();
 
   filterState = {
     text: true,
@@ -30,7 +32,7 @@ export class ToolbarComponent implements OnInit {
 
   toggleSelecting() {
     this.isSelecting = !this.isSelecting;
-    this.onSelectingToggle.emit(this.isSelecting);
+    this.onSelectingToggle.emit();
   }
 
   deleteSelectedCards() {
@@ -41,16 +43,23 @@ export class ToolbarComponent implements OnInit {
     this.onSelectAll.emit();
   }
 
+  newMarkdown() {
+    this.onNewMarkdown.emit()
+  }
+
   updateFilter() {
     if (this.filterState.text && this.filterState.rich && this.filterState.error) {
       this.filterSet = false;
     } else {
       this.filterSet = true;
     }
-    this.onSearchChanged.emit({
-      search: this.searchQuery,
-      filters: this.filterState
-    })
+    this.onFilterChange.emit(this.filterState)
   }
-
+  updateSearch() {
+    this.onSearchChange.emit(this.searchQuery)
+  }
+  
+  export() {
+    this.onExport.emit()
+  }
 }

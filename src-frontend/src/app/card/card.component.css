@@ -39,13 +39,16 @@ button {
 .react:hover {
   color: rgb(0, 119, 198);
 }
+.red:hover {
+  color: rgb(231, 69, 69);
+}
 
 /* Code */
-.code-preview{
+.code-preview {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-  font-family: monospace;
+  font-family: Menlo, Monaco, "Courier New", monospace;
 }
 .card-code > div {
   flex: 1;
@@ -54,6 +57,9 @@ button {
   padding: 0 3px;
   margin: 0 3px;
   user-select: text;
+}
+pre {
+  font-family: Menlo, Monaco, "Courier New", monospace;
 }
 
 
@@ -68,7 +74,7 @@ button {
   white-space: normal;
 }
 .output-error {
-  font-family: monospace;
+  font-family: Menlo, Monaco, "Courier New", monospace;
   overflow-x: scroll;
   white-space: pre;
 }
@@ -76,13 +82,23 @@ button {
   background-color: rgba(255, 255, 255, 0.96);
 }
 
+/* Markdown */
 .custom-markdown {
-  padding: 4px;
+  padding: 0 6px;
 }
-.custom-markdown textarea {
+textarea {
+  color: var(--color);
+  background-color: transparent;
+  border-style: solid;
+  border-color: rgba(170, 170, 170, 0.3);
+  font-family: Menlo, Monaco, "Courier New", monospace;
+  font-size: 12px;
+  margin: 5px 0;
   width: 100%;
-  height: 200px;
-  font-family: monospace;
+  resize: vertical;
+  height: 100px;
+  max-height: 200px;
+  box-sizing: border-box;
 }
 
 
@@ -102,14 +118,15 @@ input {
   color: var(--color);
   background-color: transparent;
   border-style: solid;
-  border-color: rgba(255, 255, 255, 0.3);
+  border-color: rgba(170, 170, 170, 0.3);
   font-size: 16px;
   font-weight: bold;
   -webkit-margin-before: 0.4em;
   -webkit-margin-after: 0.4em;
   -webkit-margin-start: 5px;
 }
-input:focus {
+input:focus,
+textarea:focus {
   border-color: rgba(0, 119, 198, 0.7);
   outline: rgba(0, 119, 198, 0.7);
   background-color: rgba(170, 170, 170, 0.05);
@@ -125,4 +142,11 @@ input:focus {
 }
 .edit-title button {
   flex-shrink: 0;
+}
+
+/* Remove button reaction when in isSelecting */
+button:disabled,
+button:disabled:hover {
+  user-select: none;
+  color: var(--color) !important;
 }

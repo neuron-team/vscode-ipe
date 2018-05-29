@@ -63,13 +63,21 @@ export class CardManager {
         }
     }
 
-    exportToJupyter() {
+    exportToJupyter(indexes: number[] = null) {
+        let cardsToExport: Card[];
+        
+        if (indexes) {
+            cardsToExport = indexes.map(index => this.cards[index]);
+        } else {
+            cardsToExport = this.cards;
+        }
 
+        
         let pythonData: JSONObject = {
             "nbformat": 4,
             "nbformat_minor": 2,
             "metadata": this.metadataPy,
-            "cells": this.cards
+            "cells": cardsToExport
                 .filter(card => card.kernel === 'python3')
                 .map(card => card.jupyterData as JSONObject)
         };
@@ -78,7 +86,7 @@ export class CardManager {
             "nbformat": 4,
             "nbformat_minor": 2,
             "metadata": this.metadataR,
-            "cells": this.cards
+            "cells": cardsToExport
                 .filter(card => card.kernel === 'ir')
                 .map(card => card.jupyterData as JSONObject)
         };
