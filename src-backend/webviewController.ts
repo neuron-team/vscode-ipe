@@ -24,7 +24,8 @@ export class WebviewController {
                 "Output pane",
                 vscode.ViewColumn.Two,
                 {
-                    enableScripts: true
+                    enableScripts: true,
+                    retainContextWhenHidden: true
                 }
             );
             let htmlFile = path.join(this.context.extensionPath, "html", "index.html");
