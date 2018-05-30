@@ -71,7 +71,7 @@ pre {
 .output-plain {
   word-wrap: break-word;
   overflow: hidden;
-  white-space: normal;
+  white-space: pre-line;
 }
 .output-error {
   font-family: Menlo, Monaco, "Courier New", monospace;
