@@ -39,6 +39,9 @@ export class WebviewController {
     private _onEditCustomCard: EventEmitter<{index: number, card: Card}> = new EventEmitter();
     get onEditCustomCard(): Event<{index: number, card: Card}> { return this._onEditCustomCard.event; }
 
+    private _onJupyterExport: EventEmitter<number[]> = new EventEmitter();
+    get onJupyterExport(): Event<number[]> { return this._onJupyterExport.event; }
+
     constructor(private context: vscode.ExtensionContext) {}
 
     show() {
@@ -51,7 +54,9 @@ export class WebviewController {
                 "Output pane",
                 vscode.ViewColumn.Two,
                 {
-                    enableScripts: true
+                    enableScripts: true,
+                    retainContextWhenHidden: true,
+                    localResourceRoots: [vscode.Uri.file(this.context.extensionPath)]
                 }
             );
             let htmlFile = path.join(this.context.extensionPath, "html", "index.html");
@@ -95,6 +100,9 @@ export class WebviewController {
                         break;
                     case 'editCustomCard':
                         this._onEditCustomCard.fire({index: message.index, card: message.card});
+                        break;
+                    case 'jupyterExport':
+                        this._onJupyterExport.fire(message.indexes);
                 }
             })
         }

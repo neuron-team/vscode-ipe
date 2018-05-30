@@ -14,9 +14,11 @@
 }
 .main-bar input {
   flex-basis: 400px;
+  min-width: 90px;
 }
 .main-bar button {
   flex-shrink: 0;
+  margin-left: 3px
 }
 
 button {
@@ -26,7 +28,7 @@ button {
   background-color: rgba(0, 119, 198, 0.3);
   border-style: none;
   outline: none;
-  padding: 5px 5px;
+  padding: 5px;
 }
 button:hover {
   background-color: rgba(0, 119, 198, 0.7) !important;
@@ -42,19 +44,20 @@ button i {
   background-color: rgba(231, 69, 69, 0.3);
 }
 .red:hover {
-  background-color: rgba(231, 69, 69, 0.7);
+  background-color: rgba(231, 69, 69, 0.7) !important;
 }
 .red:active {
-  background-color: rgba(231, 69, 69, 1.0);
+  background-color: rgba(231, 69, 69, 1.0) !important;
 }
 
 /* Search Box */
 input[type=text] {
   color: var(--color);
   background-color: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  border: 1px solid rgba(170, 170, 170, 0.3);
   -webkit-margin-start: 5px;
   font-size: 14px;
+  padding-left: 3px;
 }
 input:focus {
   border-color: rgba(0, 119, 198, 0.7);
@@ -78,9 +81,20 @@ input:focus {
 }
 
 label span {
-  padding: 5px 5px;
+  padding: 5px;
   background-color: rgba(170, 170, 170, 0.3);
-  margin-right: -3.5px;
+}
+
+label i {
+  display: none;
+  padding: 6px;
+  width: 15px;
+  background-color: rgba(170, 170, 170, 0.3);
+  text-align: center;
+}
+
+#selectIcon {
+  display: none;
 }
 
 /* Checkboxes */
@@ -89,27 +103,66 @@ input[type=checkbox]{
   appearance: none;
   display: none;
 }
-input[type=checkbox]:hover + span {
+input[type=checkbox]:hover + span,
+input[type=checkbox]:hover + span + i {
    background: rgba(0, 119, 198, 0.3);
 }
-input[type=checkbox]:checked + span{
+input[type=checkbox]:checked + span,
+input[type=checkbox]:checked + span + i {
    background-color: rgba(0, 119, 198, 1.0);
 }
 
 
 /* Display Size */
-@media screen and (max-width: 390px){
-  .select {
-    display: none !important;
+@media screen and (max-width: 450px){
+  #filter span {
+    display: none;
+  }
+  #filter i {
+    display: block;
+    width: 15px;
+  }
+}
+@media screen and (max-width: 400px){
+  #markdown span {
+    display: none;
+  }
+  #markdown i {
+    display: block;
+    width: 15px;
+  }
+}
+@media screen and (max-width: 360px){
+  #select span {
+    display: none;
+  }
+  #select i {
+    display: block;
+    width: 15px;
+  }
+
+  label span {
+    display: none;
+  }
+  label i {
+    display: inline-block;
   }
 }
 @media screen and (max-width: 300px){
-  button span {
+  #export span {
     display: none;
   }
-  button i {
+  #export i {
     display: block;
     width: 20px;
+  }
+
+  #selectText {
+    display: none;
+  }
+  #selectIcon {
+    display: inline-block;
+    width: 15px;
   }
 }
 @media screen and (max-width: 220px){

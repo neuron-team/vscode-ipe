@@ -31,16 +31,17 @@ export class AppComponent implements AfterViewInit {
     });
   }
 
-  /* Type Filtering called via emitter in toolbar*/
-  updateFilters(event: { search: string, filters: any }): void {
-    this.searchQuery = event.search;
-    this.typeFilters = event.filters;
-    for (let card of this.cards) {
-      this.visibleCards.set(card, this.cardMatchesFilter(card) && this.cardMatchesSearchQuery(card));
-    }
+  updateFilters(filters: any): void {
+    this.typeFilters = filters;
+    this.checkVisible();
   }
 
-  /* Searching */
+  updateSearch(search: string): void {
+    this.searchQuery = search;
+    this.checkVisible();
+  }
+
+// Visable Cards
   cardMatchesSearchQuery(card: Card): boolean {
     if (this.searchQuery === '') { return true; }
 
@@ -69,6 +70,11 @@ export class AppComponent implements AfterViewInit {
     }
     return false;
   }
+  checkVisible() {
+    for (let card of this.cards) {
+      this.visibleCards.set(card, this.cardMatchesFilter(card) && this.cardMatchesSearchQuery(card));
+    }
+  }
 
   /* Selecting - will remove/add element if it's in/not_in array */
   cardSelected(card: Card) {
@@ -79,8 +85,11 @@ export class AppComponent implements AfterViewInit {
     }
   }
 
-  updateSelecting(mode: boolean) {
-    this.isSelecting = mode;
+  updateSelecting() {
+    this.isSelecting = !this.isSelecting;
+    if (!this.isSelecting) {
+      this.selectedCards = new Set<Card>();
+    }
   }
 
   deleteSelectedCards() {
@@ -160,6 +169,16 @@ export class AppComponent implements AfterViewInit {
   editCustomCard(card: Card){
     const index: number = this.cards.indexOf(card);
     this.extension.onEditCustomCard.next({index: index, card: card});
+  }
+
+  export() {
+    let indexes = null;
+    if (this.isSelecting) {
+      indexes = this.cards
+          .filter(card => this.selectedCards.has(card))
+          .map((card, index) => index);
+    }
+    this.extension.onJupyterExport.next(indexes);
   }
 
   private windowResizeThrottle;

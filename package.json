@@ -28,6 +28,11 @@
         }
       },
       {
+        "command": "ipe.fullSetup",
+        "title": "Open output pane with existing Jupyter notebook",
+        "category": "IPE"
+      },
+      {
         "command": "ipe.newCard",
         "title": "Send Code to Output Window",
         "category": "IPE"

@@ -24,6 +24,7 @@ export function activate(context: vscode.ExtensionContext) {
     webview.onCollapseCard(data => cardManager.collapseCard(data.index, data.value));
     webview.onAddCustomCard(card => cardManager.addCustomCard(card, ContentHelpers.assignId()));
     webview.onEditCustomCard(data => cardManager.editCustomCard(data.index, data.card));
+    webview.onJupyterExport(indexes => cardManager.exportToJupyter(indexes));
 
     let panelInitialised: Boolean = false;
 
@@ -36,7 +37,7 @@ export function activate(context: vscode.ExtensionContext) {
         webview.addCard(card);
     });
 
-    function initialisePanel({baseUrl, token}){
+    function initialisePanel({baseUrl, token}) {
         // Connect to the server defined
         interpreter.connectToServer(baseUrl, token);
         // Start needed kernel
@@ -55,15 +56,34 @@ export function activate(context: vscode.ExtensionContext) {
 
         panelInitialised = true;
 
-        if(UserInteraction.determineKernel()==="python3"){
+        if(UserInteraction.determineKernel()==="python3") {
             interpreter.autoImportModules();
         }
     }
 
     userInteraction.onShowPane(() => {
-        if(!panelInitialised){
+        if(!panelInitialised) {
 
-            if(!JupyterManager.isJupyterInPath()){
+            if(!JupyterManager.isJupyterInPath()) {
+                vscode.window.showInformationMessage('The IPE extension requires Jupyter to be installed. Install now?', 'Install')
+                    .then(data => JupyterManager.installJupyter(data));
+            }
+            else {
+                let jupyterManager = new JupyterManager();
+                jupyterManager.getJupyterAddressAndToken()
+                    .then(initialisePanel)
+                    .catch(() => vscode.window.showErrorMessage('Could not start a notebook automatically'));
+            }
+        
+        }
+        else {
+            webview.show();
+        }
+    });
+
+    userInteraction.onFullSetup(() => {
+        if(!panelInitialised) {
+            if(!JupyterManager.isJupyterInPath()) {
                 vscode.window.showInformationMessage('The IPE extension requires Jupyter to be installed. Install now?', 'Install')
                     .then(data => JupyterManager.installJupyter(data));
             }
@@ -89,19 +109,15 @@ export function activate(context: vscode.ExtensionContext) {
                     }
                 });
             }
-        
-        }
-        else{
-            webview.show();
         }
     });
 
     vscode.window.onDidChangeActiveTextEditor(input => {
-        if(panelInitialised){
+        if(panelInitialised) {
             // Open new kernel if new file is in a different language
             let kernel = UserInteraction.determineKernel();
             interpreter.startKernel(kernel);
-            if(kernel==="python3"){
+            if(kernel==="python3") {
                 interpreter.autoImportModules();
             }
         }
@@ -109,6 +125,5 @@ export function activate(context: vscode.ExtensionContext) {
 }
 
 export function deactivate(context: vscode.ExtensionContext) {
-    console.log('Killed');
     JupyterManager.disposeNotebook();
 }
