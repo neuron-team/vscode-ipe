@@ -44,7 +44,7 @@
             "outFiles": [
                 "${workspaceFolder}/src-frontend/out/test/**/*.js"
             ],
-            "preLaunchTask": "npm: watch"
+            "preLaunchTask": "npm: test:build-frontend"
         }
     ]
 }
