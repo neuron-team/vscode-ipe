@@ -52,20 +52,14 @@ export class Interpreter {
         activeKernels.forEach(el => this.startKernel(el));
     }
 
-    getBaseAddress() {
-        return this.serverSettings.baseUrl;
-    }
-
-    getToken() {
-        return this.serverSettings.token;
-    }
-
     openNotebookInBrowser(filename: string = null) {
         let uri;
+        let baseUrl = this.serverSettings.baseUrl;
+        let token = this.serverSettings.token;
         if (filename) {
-            uri = vscode.Uri.parse(this.getBaseAddress() + 'notebooks/' + filename + '?token=' + this.getToken());
+            uri = vscode.Uri.parse(baseUrl + 'notebooks/' + filename + '?token=' + token);
         } else {
-            uri = vscode.Uri.parse(this.getBaseAddress() + '?token=' + this.getToken());
+            uri = vscode.Uri.parse(baseUrl + '?token=' + token);
         }
         vscode.commands.executeCommand('vscode.open', uri);
     }
