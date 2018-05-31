@@ -6,8 +6,8 @@ import { Event, EventEmitter } from "vscode";
 import { JSONObject, JSONArray } from '@phosphor/coreutils';
 
 export class CardManager {
-    private _onExportComplete : EventEmitter<void> = new EventEmitter();
-    get onExportComplete(): Event<void> { return this._onExportComplete.event; }
+    private _onOpenNotebook : EventEmitter<string> = new EventEmitter();
+    get onOpenNotebook(): Event<string> { return this._onOpenNotebook.event; }
     
     private cards: Card[] = [];
 
@@ -56,7 +56,12 @@ export class CardManager {
         if((jupyterFileData['cells'] as JSONArray).length > 0) {
             try {
                 fs.writeFileSync(fileName, JSON.stringify(jupyterFileData), {encoding: 'utf8', flag: 'w'});
-                vscode.window.showInformationMessage(`Exported ${kernelName} cards to ${fileName}`);
+                vscode.window.showInformationMessage(`Exported ${kernelName} cards to ${fileName}`, 'Open in browser')
+                    .then(selection => {
+                        if (selection === 'Open in browser') {
+                            this._onOpenNotebook.fire(fileName);
+                        }
+                    });
             } catch {
                 throw "Unable to save exported Jupyter file";
             }
@@ -97,9 +102,6 @@ export class CardManager {
         } catch (err) {
             vscode.window.showErrorMessage(err);
         }
-
-        // let everyone know we're done
-        this._onExportComplete.fire();
     }
 
     addCard(card: Card) {

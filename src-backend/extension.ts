@@ -11,7 +11,7 @@ import {CardManager} from './CardManager';
 
 export function activate(context: vscode.ExtensionContext) {    
     let webview: WebviewController = new WebviewController(context);
-
+    let interpreter = new Interpreter();
     let userInteraction: UserInteraction = new UserInteraction(context);
     
     let cardManager: CardManager = new CardManager();
@@ -26,9 +26,10 @@ export function activate(context: vscode.ExtensionContext) {
     webview.onEditCustomCard(data => cardManager.editCustomCard(data.index, data.card));
     webview.onJupyterExport(indexes => cardManager.exportToJupyter(indexes));
 
+    cardManager.onOpenNotebook(fileName => fileName);
+
     let panelInitialised: Boolean = false;
 
-    let interpreter = new Interpreter();
     ContentHelpers.onStatusChanged(status => {
         userInteraction.updateStatus(`Jupyter: ${status}`);
     });

@@ -116,8 +116,8 @@
     "vscode": "^1.1.6"
   },
   "dependencies": {
+    "@jupyterlab/services": "^2.0.3",
     "ansi_up": "^3.0.0",
-    "child-process": "^1.0.2",
-    "@jupyterlab/services": "^2.0.3"
+    "child-process": "^1.0.2"
   }
 }
