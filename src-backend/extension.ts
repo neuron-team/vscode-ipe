@@ -112,6 +112,15 @@ export function activate(context: vscode.ExtensionContext) {
         }
     });
 
+    userInteraction.onRestartKernels(() => {
+        if(panelInitialised) {
+            interpreter.restartKernels();
+        }
+        else{
+            vscode.window.showInformationMessage("Output pane has not been initialised!");
+        }
+    });
+
     vscode.window.onDidChangeActiveTextEditor(input => {
         if(panelInitialised) {
             // Open new kernel if new file is in a different language

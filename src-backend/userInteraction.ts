@@ -12,6 +12,9 @@ export class UserInteraction {
     private _onFullSetup: EventEmitter<string> = new EventEmitter();
     get onFullSetup(): Event<string> { return this._onFullSetup.event; }
 
+    private _onRestartKernels: EventEmitter<void> = new EventEmitter();
+    get onRestartKernels(): Event<void> { return this._onRestartKernels.event; }
+
     private statusIndicator: StatusBarItem;
 
     constructor(private context: vscode.ExtensionContext) {
@@ -27,7 +30,11 @@ export class UserInteraction {
 
         context.subscriptions.push(vscode.commands.registerCommand('ipe.newCard', () => {
            this.newCard();
-        }));        
+        }));   
+        
+        context.subscriptions.push(vscode.commands.registerCommand('ipe.restartKernels', () => {
+            this.restartKernels();
+        }));   
 
         this.statusIndicator = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right);
         this.statusIndicator.show();
@@ -39,6 +46,10 @@ export class UserInteraction {
 
     private fullSetup() {
         this._onFullSetup.fire();
+    }
+
+    private restartKernels() {
+        this._onRestartKernels.fire();
     }
 
     private newCard() {

@@ -29,11 +29,6 @@ export class Interpreter {
                 token: token, 
                 init: {cache: "no-store", credentials: "same-origin"}
             });
-        
-        for(let key in this.kernelPromise) {
-            this.kernelPromise[key].then(kernel => kernel.shutdown());
-        }
-        this.kernelPromise = {};
     }
 
     startKernel(kernelName: string) {
@@ -44,6 +39,18 @@ export class Interpreter {
                 this.executeCode('%matplotlib inline', 'python3');
             }
         }
+    }
+
+    restartKernels(){
+        let activeKernels: string[] = []
+
+        for(let key in this.kernelPromise) {
+            activeKernels.push(key);
+            this.kernelPromise[key].then(kernel => kernel.shutdown());
+        }
+        this.kernelPromise = {};
+
+        activeKernels.map(el => this.startKernel(el));
     }
 
     // // Get list of running kernels and maintain the internal list
