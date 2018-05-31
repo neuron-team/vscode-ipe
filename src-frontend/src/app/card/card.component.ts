@@ -32,12 +32,12 @@ export class CardComponent {
   @Input() card: Card;
   @Input() isSelecting: boolean = false;
   @Input() selected: boolean = false;
-  //Movement of cards up/down
+
   @Output() onMove = new EventEmitter();
-  //Select a card
   @Output() onSelect = new EventEmitter<boolean>();
-  //Delete
   @Output() onDelete = new EventEmitter<void>();
+  @Output() onOpenBrowser = new EventEmitter<void>();
+
   @Output() onChangeTitle = new EventEmitter();
   @Output() onCollapseCode = new EventEmitter();
   @Output() onCollapseOutput = new EventEmitter();
@@ -64,28 +64,32 @@ export class CardComponent {
     this.onDelete.emit();
   }
 
-  collapseOutput(){
+  openIn() {
+    this.onOpenBrowser.emit()
+  }
+
+  collapseOutput() {
     this.card.outputCollapsed = !this.card.outputCollapsed;
     this.onCollapseOutput.emit({value: this.card.outputCollapsed});
   }
 
-  collapseCode(){
+  collapseCode() {
     this.card.codeCollapsed = !this.card.codeCollapsed;
     this.onCollapseCode.emit({value: this.card.codeCollapsed});
   }
 
-  collapseCard(){
+  collapseCard() {
     this.card.collapsed = !this.card.collapsed; 
     this.editingTitle = false;
     this.onCollapseCard.emit({value: this.card.collapsed});
   }
 
-  changeTitle(){
+  changeTitle() {
     this.editingTitle = false;
     this.onChangeTitle.emit({newTitle: this.card.title});
   }
 
-  editCustomCard(){
+  editCustomCard() {
     this.editingMarkdown = false;
     this.onEditCustomCard.emit();
   }

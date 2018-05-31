@@ -16,7 +16,7 @@
     <button class="react toolbar-icon right" (click)="collapseCard()" [style.opacity]="card.collapsed ? '1' : ''">
       <i title="Minimize" class="ms-Icon ms-Icon--ChromeMinimize" aria-label="Minimize"></i>
     </button>
-    <button *ngIf="!card.isCustomMarkdown" class="react toolbar-icon right">
+    <button *ngIf="!card.isCustomMarkdown" class="react toolbar-icon right" (click)="openIn()">
       <i title="Open in Browser" class="ms-Icon ms-Icon--MiniExpand" aria-label="Open in Browser"></i>
     </button>
   </span>
