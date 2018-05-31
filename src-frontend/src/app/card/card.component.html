@@ -1,4 +1,4 @@
-<div class="card-container" *ngIf="visible" 
+<div class="card-container" *ngIf="visible"
     [@cardState]="selected ? 'selected' : 'notSelected'"
     (click)="selectCard()"
     [style.cursor]="isSelecting ? 'pointer' : 'default'">
@@ -13,7 +13,7 @@
     <button class="red right" (click)="deleteCard()">
       <i title="Delete" class="ms-Icon ms-Icon--Clear" aria-label="Delete"></i>
     </button>
-    <button class="react toolbar-icon right">
+    <button *ngIf="!card.isCustomMarkdown" class="react toolbar-icon right">
       <i title="Open in Browser" class="ms-Icon ms-Icon--MiniExpand" aria-label="Open in Browser"></i>
     </button>
     <button class="react toolbar-icon right" (click)="collapseCard()">
@@ -120,19 +120,23 @@
 
   <div *ngIf="card.isCustomMarkdown" class="custom-markdown">
 
-    <div *ngIf="!editingMarkdown || isSelecting">
-      <button class="react full-left" (click)="editingMarkdown = true" [disabled]="isSelecting">
-        <markdown [data]="card.sourceCode"></markdown>
-      </button>
-    </div>
-    <div *ngIf="editingMarkdown && !isSelecting">
-      <textarea #markdownEditor Autofocus>{{card.sourceCode}}</textarea>
-      <button class="react" (click)="card.sourceCode = markdownEditor.value; editCustomCard()">
-        <i title="Accept" class="ms-Icon ms-Icon--Accept" aria-label="Accept"></i>
-      </button>
-      <button class="red" (click)="editingMarkdown = false">
-        <i title="Cancel" class="ms-Icon ms-Icon--Clear" aria-label="Cancel"></i>
-      </button>
+    <div *ngIf="card.collapsed" class="title">Markdown</div>
+
+    <div *ngIf="!card.collapsed">
+      <div *ngIf="!editingMarkdown || isSelecting">
+        <button class="react full-left" (click)="editingMarkdown = true" [disabled]="isSelecting">
+          <markdown [data]="card.sourceCode"></markdown>
+        </button>
+      </div>
+      <div *ngIf="editingMarkdown && !isSelecting">
+        <textarea #markdownEditor Autofocus>{{card.sourceCode}}</textarea>
+        <button class="react" (click)="card.sourceCode = markdownEditor.value; editCustomCard()">
+          <i title="Accept" class="ms-Icon ms-Icon--Accept" aria-label="Accept"></i>
+        </button>
+        <button class="red" (click)="editingMarkdown = false">
+          <i title="Cancel" class="ms-Icon ms-Icon--Clear" aria-label="Cancel"></i>
+        </button>
+      </div>
     </div>
   </div>
 
