@@ -42,15 +42,22 @@ export class Interpreter {
     }
 
     restartKernels(){
-        let activeKernels: string[] = []
+        let activeKernels: string[] = Object.keys(this.kernelPromise)
 
         for(let key in this.kernelPromise) {
-            activeKernels.push(key);
             this.kernelPromise[key].then(kernel => kernel.shutdown());
         }
         this.kernelPromise = {};
 
         activeKernels.map(el => this.startKernel(el));
+    }
+
+    getBaseAddress(){
+        return this.serverSettings.baseUrl;
+    }
+
+    getToken(){
+        return this.serverSettings.token;
     }
 
     // // Get list of running kernels and maintain the internal list

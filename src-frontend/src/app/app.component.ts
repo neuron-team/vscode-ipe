@@ -144,7 +144,8 @@ export class AppComponent implements AfterViewInit {
   }
 
   openBrowser(card: Card) {
-    // Insert open Browser code
+    const index: number = this.cards.indexOf(card);
+    this.extension.onOpenInBrowser.next(index);
   }
 
 

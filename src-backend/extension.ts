@@ -14,6 +14,9 @@ export function activate(context: vscode.ExtensionContext) {
 
     let userInteraction: UserInteraction = new UserInteraction(context);
     
+    let panelInitialised: Boolean = false;
+    let localJupyter: Boolean = false;
+
     let cardManager: CardManager = new CardManager();
     webview.onMoveCardUp(index => cardManager.moveCardUp(index));
     webview.onMoveCardDown(index => cardManager.moveCardDown(index));
@@ -25,8 +28,17 @@ export function activate(context: vscode.ExtensionContext) {
     webview.onAddCustomCard(card => cardManager.addCustomCard(card, ContentHelpers.assignId()));
     webview.onEditCustomCard(data => cardManager.editCustomCard(data.index, data.card));
     webview.onJupyterExport(indexes => cardManager.exportToJupyter(indexes));
-
-    let panelInitialised: Boolean = false;
+    webview.onOpenInBrowser(index => {
+        let cardId = cardManager.getCardId(index);
+        let fileName = 'exportedCardTmp_' + cardId + '.ipynb';
+        cardManager.exportToJupyter([index], fileName);
+        if(this.localJupyter){
+            vscode.commands.executeCommand('vscode.open', vscode.Uri.parse(interpreter.getBaseAddress() + 'notebooks/' + fileName + '?token=' + interpreter.getToken()));
+        } else{
+            vscode.window.showInformationMessage('Please open ' + fileName + ' in the Jupyter window');
+            vscode.commands.executeCommand('vscode.open', vscode.Uri.parse(interpreter.getBaseAddress() + '?token=' + interpreter.getToken()));
+        }
+    });
 
     let interpreter = new Interpreter();
     ContentHelpers.onStatusChanged(status => {
@@ -71,7 +83,10 @@ export function activate(context: vscode.ExtensionContext) {
             else {
                 let jupyterManager = new JupyterManager();
                 jupyterManager.getJupyterAddressAndToken()
-                    .then(initialisePanel)
+                    .then(info => {
+                        initialisePanel(info);
+                        this.localJupyter = true;
+                    })
                     .catch(() => vscode.window.showErrorMessage('Could not start a notebook automatically'));
             }
         
@@ -97,7 +112,10 @@ export function activate(context: vscode.ExtensionContext) {
                     if (choice === 'Create a new notebook') {
                         let jupyterManager = new JupyterManager();
                         jupyterManager.getJupyterAddressAndToken()
-                            .then(initialisePanel)
+                            .then(info => {
+                                initialisePanel(info);
+                                this.localJupyter = true;
+                            })
                             .catch(() => vscode.window.showErrorMessage('Could not start a notebook automatically'));
                     }
                     else if (choice === 'Enter details manually') {

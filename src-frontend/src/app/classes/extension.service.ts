@@ -19,6 +19,7 @@ export class ExtensionService {
   onAddCustomCard: EventEmitter<Card> = new EventEmitter();
   onEditCustomCard: EventEmitter<{index: number, card: Card}> = new EventEmitter();
   onJupyterExport: EventEmitter<number[]> = new EventEmitter();
+  onOpenInBrowser: EventEmitter<number> = new EventEmitter();
 
   constructor() {
     window.addEventListener('message', event => {
@@ -74,6 +75,10 @@ export class ExtensionService {
     this.onJupyterExport.subscribe(indexes => this.vscode.postMessage({
       command: 'jupyterExport',
       indexes: indexes
+    }));
+    this.onOpenInBrowser.subscribe(index => this.vscode.postMessage({
+      command: 'openInBrowser',
+      index: index
     }));
   }
 }

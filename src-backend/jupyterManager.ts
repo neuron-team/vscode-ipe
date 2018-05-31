@@ -9,7 +9,7 @@ export class JupyterManager {
     private static timeout = 10; // 10 seconds
 
     constructor() {
-        JupyterManager.process = spawn('jupyter', ['notebook', '--no-browser'], {detached: false});
+        JupyterManager.process = spawn('jupyter', ['notebook', '--no-browser', '--notebook-dir=' + vscode.workspace.workspaceFolders[0].uri.fsPath], {detached: false});
         JupyterManager.process.stderr.on('data', (data: string) => this.extractJupyterInfos(data));
     }
 
@@ -52,7 +52,7 @@ export class JupyterManager {
     }
 
     public getJupyterAddressAndToken() {
-        return new Promise((resolve, reject) => {
+        return new Promise<{ baseUrl: string, token: string}>((resolve, reject) => {
             this.defineTimeout(JupyterManager.timeout, resolve, reject);
         });
     }

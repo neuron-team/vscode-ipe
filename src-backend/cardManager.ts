@@ -47,23 +47,28 @@ export class CardManager {
         }
     };
 
-    private writeToFile(jupyterFileData: JSONObject, kernelName: string) {
+    private writeToFile(jupyterFileData: JSONObject, kernelName: string, fileName: string) {
         if (!vscode.workspace.workspaceFolders) throw "You must have a workspace open to export the files";
         let fullPath = vscode.workspace.workspaceFolders[0].uri.fsPath;
-
-        let fileName = path.join(fullPath, 'output_' + kernelName + '.ipynb');
+        let filePath = '';
+        if(!fileName){
+            filePath = path.join(fullPath, 'output_' + kernelName + '.ipynb');
+        }
+        else{
+            filePath = path.join(fullPath, fileName)
+        }
 
         if((jupyterFileData['cells'] as JSONArray).length > 0) {
             try {
-                fs.writeFileSync(fileName, JSON.stringify(jupyterFileData), {encoding: 'utf8', flag: 'w'});
-                vscode.window.showInformationMessage(`Exported ${kernelName} cards to ${fileName}`);
+                fs.writeFileSync(filePath, JSON.stringify(jupyterFileData), {encoding: 'utf8', flag: 'w'});
+                vscode.window.showInformationMessage(`Exported ${kernelName} cards to ${filePath}`);
             } catch {
                 throw "Unable to save exported Jupyter file";
             }
         }
     }
 
-    exportToJupyter(indexes: number[] = null) {
+    exportToJupyter(indexes: number[] = null, fileName: string = null) {
         let cardsToExport: Card[];
         
         if (indexes) {
@@ -72,7 +77,6 @@ export class CardManager {
             cardsToExport = this.cards;
         }
 
-        
         let pythonData: JSONObject = {
             "nbformat": 4,
             "nbformat_minor": 2,
@@ -92,14 +96,18 @@ export class CardManager {
         };
 
         try {
-            this.writeToFile(pythonData, 'python3');
-            this.writeToFile(rData, 'r');
+            this.writeToFile(pythonData, 'python3', fileName);
+            this.writeToFile(rData, 'r', fileName);
         } catch (err) {
             vscode.window.showErrorMessage(err);
         }
 
         // let everyone know we're done
         this._onExportComplete.fire();
+    }
+
+    getCardId(index: number){
+        return this.cards[index].id;
     }
 
     addCard(card: Card) {
