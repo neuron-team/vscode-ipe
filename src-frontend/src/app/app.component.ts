@@ -143,7 +143,7 @@ export class AppComponent implements AfterViewInit {
     this.extension.onJupyterExport.next(indexes);
   }
 
-  openBrowser() {
+  openBrowser(card: Card) {
     // Insert open Browser code
   }
 
