@@ -44,7 +44,7 @@ describe('ToolbarComponent', () => {
           rich: true,
           error: false
         };
-        component.onSearchChanged.subscribe(g => {
+        component.onSearchChange.subscribe(g => {
             expect(g).toEqual({
               search:"testing search query",
               filters: {
@@ -122,7 +122,7 @@ describe('ToolbarComponent', () => {
 
         const searchInputText: string = 'test';
         const searchField: HTMLInputElement = hostElement.querySelector('input');
-        component.onSearchChanged.subscribe(g => {
+        component.onSearchChange.subscribe(g => {
           expect(g).toEqual(({
             search:'test',
             filters: {
