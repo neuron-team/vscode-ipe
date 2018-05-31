@@ -11,7 +11,7 @@
         "sourceMap": true,
         "target": "es5",
         "lib": ["es5", "es6", "dom"],
-        "outDir": "src-frontend/out",
+        "outDir": "out",
         "rootDir": "src-frontend"
     },
     "include": ["src-frontend/test/*.test.ts"]

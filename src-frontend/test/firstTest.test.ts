@@ -12,7 +12,7 @@ import 'mocha';
 // import * as myExtension from '../extension';
 
 // Defines a Mocha test suite to group tests of similar kind together
-suite("Extension Tests", function () {
+suite("Testing Tests", function () {
 
     // Defines a Mocha unit test
     test("This is a front-end Mocha Test", function() {
