@@ -14,8 +14,8 @@ export function activate(context: vscode.ExtensionContext) {
     let interpreter = new Interpreter();
     let userInteraction: UserInteraction = new UserInteraction(context);
     
-    let panelInitialised: Boolean = false;
-    let localJupyter: Boolean = false;
+    let panelInitialised: boolean = false;
+    let localJupyter: boolean = false;
 
     let cardManager: CardManager = new CardManager();
     webview.onMoveCardUp(index => cardManager.moveCardUp(index));
@@ -32,15 +32,15 @@ export function activate(context: vscode.ExtensionContext) {
         let cardId = cardManager.getCardId(index);
         let fileName = 'exportedCardTmp_' + cardId + '.ipynb';
         cardManager.exportToJupyter([index], fileName);
-        if (this.localJupyter) {
-            vscode.commands.executeCommand('vscode.open', vscode.Uri.parse(interpreter.getBaseAddress() + 'notebooks/' + fileName + '?token=' + interpreter.getToken()));
+        if (localJupyter) {
+            interpreter.openNotebookInBrowser(fileName);
         } else {
             vscode.window.showInformationMessage('Please open ' + fileName + ' in the Jupyter window');
-            vscode.commands.executeCommand('vscode.open', vscode.Uri.parse(interpreter.getBaseAddress() + '?token=' + interpreter.getToken()));
+            interpreter.openNotebookInBrowser(null);
         }
     });
 
-    cardManager.onOpenNotebook(fileName => fileName);
+    cardManager.onOpenNotebook(fileName => interpreter.openNotebookInBrowser(fileName));
 
     ContentHelpers.onStatusChanged(status => {
         userInteraction.updateStatus(`Jupyter: ${status}`);
@@ -69,7 +69,7 @@ export function activate(context: vscode.ExtensionContext) {
 
         panelInitialised = true;
 
-        if (UserInteraction.determineKernel()==="python3") {
+        if (UserInteraction.determineKernel() === 'python3') {
             interpreter.autoImportModules();
         }
     }
@@ -85,7 +85,7 @@ export function activate(context: vscode.ExtensionContext) {
                 jupyterManager.getJupyterAddressAndToken()
                     .then(info => {
                         initialisePanel(info);
-                        this.localJupyter = true;
+                        localJupyter = true;
                     })
                     .catch(() => vscode.window.showErrorMessage('Could not start a notebook automatically'));
             }
@@ -112,15 +112,13 @@ export function activate(context: vscode.ExtensionContext) {
                         jupyterManager.getJupyterAddressAndToken()
                             .then(info => {
                                 initialisePanel(info);
-                                this.localJupyter = true;
+                                localJupyter = true;
                             })
                             .catch(() => vscode.window.showErrorMessage('Could not start a notebook automatically'));
-                    }
-                    else if (choice === 'Enter details manually') {
+                    } else if (choice === 'Enter details manually') {
                         vscode.window.showErrorMessage('Could not create a Jupyter instance, enter the server details manually');
                         UserInteraction.askJupyterInfo().then(initialisePanel);
-                    }
-                    else if(choice){
+                    } else if(choice) {
                         initialisePanel(runningNotebooks.filter(input => input.url === choice)[0].info);
                     }
                 });

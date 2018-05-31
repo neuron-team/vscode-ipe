@@ -41,23 +41,33 @@ export class Interpreter {
         }
     }
 
-    restartKernels(){
-        let activeKernels: string[] = Object.keys(this.kernelPromise)
+    restartKernels() {
+        let activeKernels: string[] = Object.keys(this.kernelPromise);
 
         for(let key in this.kernelPromise) {
             this.kernelPromise[key].then(kernel => kernel.shutdown());
         }
         this.kernelPromise = {};
 
-        activeKernels.map(el => this.startKernel(el));
+        activeKernels.forEach(el => this.startKernel(el));
     }
 
-    getBaseAddress(){
+    getBaseAddress() {
         return this.serverSettings.baseUrl;
     }
 
-    getToken(){
+    getToken() {
         return this.serverSettings.token;
+    }
+
+    openNotebookInBrowser(filename: string = null) {
+        let uri;
+        if (filename) {
+            uri = vscode.Uri.parse(this.getBaseAddress() + 'notebooks/' + filename + '?token=' + this.getToken());
+        } else {
+            uri = vscode.Uri.parse(this.getBaseAddress() + '?token=' + this.getToken());
+        }
+        vscode.commands.executeCommand('vscode.open', uri);
     }
 
     // // Get list of running kernels and maintain the internal list

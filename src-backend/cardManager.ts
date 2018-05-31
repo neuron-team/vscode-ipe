@@ -64,7 +64,7 @@ export class CardManager {
                 vscode.window.showInformationMessage(`Exported ${kernelName} cards to ${filePath}`, 'Open in browser')
                     .then(selection => {
                         if (selection === 'Open in browser') {
-                            this._onOpenNotebook.fire(fileName);
+                            this._onOpenNotebook.fire(path.basename(filePath));
                         }
                     });
             } catch {
