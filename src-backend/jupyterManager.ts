@@ -92,17 +92,12 @@ export class JupyterManager {
     public static isJupyterInPath() {
         try{
             let jupyterHelpOutput = 
-            execSync(
-                'jupyter -h',
-                { stdio: 'pipe', encoding: 'utf8'}
-            );
+                execSync(
+                    'jupyter -h',
+                    { stdio: 'pipe', encoding: 'utf8'}
+                );
 
-            if(jupyterHelpOutput.match(/Jupyter/g)){
-                return true;
-            }
-            else{
-                return false;
-            }
+            return !!jupyterHelpOutput.match(/Jupyter/g);
         }
         catch{
             return false;

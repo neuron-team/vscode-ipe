@@ -11,7 +11,7 @@ import {CardManager} from './CardManager';
 
 export function activate(context: vscode.ExtensionContext) {    
     let webview: WebviewController = new WebviewController(context);
-
+    let interpreter = new Interpreter();
     let userInteraction: UserInteraction = new UserInteraction(context);
     
     let panelInitialised: Boolean = false;
@@ -32,15 +32,16 @@ export function activate(context: vscode.ExtensionContext) {
         let cardId = cardManager.getCardId(index);
         let fileName = 'exportedCardTmp_' + cardId + '.ipynb';
         cardManager.exportToJupyter([index], fileName);
-        if(this.localJupyter){
+        if (this.localJupyter) {
             vscode.commands.executeCommand('vscode.open', vscode.Uri.parse(interpreter.getBaseAddress() + 'notebooks/' + fileName + '?token=' + interpreter.getToken()));
-        } else{
+        } else {
             vscode.window.showInformationMessage('Please open ' + fileName + ' in the Jupyter window');
             vscode.commands.executeCommand('vscode.open', vscode.Uri.parse(interpreter.getBaseAddress() + '?token=' + interpreter.getToken()));
         }
     });
 
-    let interpreter = new Interpreter();
+    cardManager.onOpenNotebook(fileName => fileName);
+
     ContentHelpers.onStatusChanged(status => {
         userInteraction.updateStatus(`Jupyter: ${status}`);
     });
@@ -68,19 +69,18 @@ export function activate(context: vscode.ExtensionContext) {
 
         panelInitialised = true;
 
-        if(UserInteraction.determineKernel()==="python3") {
+        if (UserInteraction.determineKernel()==="python3") {
             interpreter.autoImportModules();
         }
     }
 
     userInteraction.onShowPane(() => {
-        if(!panelInitialised) {
+        if (!panelInitialised) {
 
-            if(!JupyterManager.isJupyterInPath()) {
+            if (!JupyterManager.isJupyterInPath()) {
                 vscode.window.showInformationMessage('The IPE extension requires Jupyter to be installed. Install now?', 'Install')
                     .then(data => JupyterManager.installJupyter(data));
-            }
-            else {
+            } else {
                 let jupyterManager = new JupyterManager();
                 jupyterManager.getJupyterAddressAndToken()
                     .then(info => {
@@ -90,19 +90,17 @@ export function activate(context: vscode.ExtensionContext) {
                     .catch(() => vscode.window.showErrorMessage('Could not start a notebook automatically'));
             }
         
-        }
-        else {
+        } else {
             webview.show();
         }
     });
 
     userInteraction.onFullSetup(() => {
-        if(!panelInitialised) {
-            if(!JupyterManager.isJupyterInPath()) {
+        if (!panelInitialised) {
+            if (!JupyterManager.isJupyterInPath()) {
                 vscode.window.showInformationMessage('The IPE extension requires Jupyter to be installed. Install now?', 'Install')
                     .then(data => JupyterManager.installJupyter(data));
-            }
-            else{
+            } else {
                 let choices = ['Create a new notebook', 'Enter details manually'];
                 let runningNotebooks = JupyterManager.getRunningNotebooks();
                 runningNotebooks.map(input => {
@@ -131,20 +129,19 @@ export function activate(context: vscode.ExtensionContext) {
     });
 
     userInteraction.onRestartKernels(() => {
-        if(panelInitialised) {
+        if (panelInitialised) {
             interpreter.restartKernels();
-        }
-        else{
+        } else {
             vscode.window.showInformationMessage("Output pane has not been initialised!");
         }
     });
 
     vscode.window.onDidChangeActiveTextEditor(input => {
-        if(panelInitialised) {
+        if (panelInitialised) {
             // Open new kernel if new file is in a different language
             let kernel = UserInteraction.determineKernel();
             interpreter.startKernel(kernel);
-            if(kernel==="python3") {
+            if (kernel==="python3") {
                 interpreter.autoImportModules();
             }
         }

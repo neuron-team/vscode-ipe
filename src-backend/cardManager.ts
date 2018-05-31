@@ -6,8 +6,8 @@ import { Event, EventEmitter } from "vscode";
 import { JSONObject, JSONArray } from '@phosphor/coreutils';
 
 export class CardManager {
-    private _onExportComplete : EventEmitter<void> = new EventEmitter();
-    get onExportComplete(): Event<void> { return this._onExportComplete.event; }
+    private _onOpenNotebook : EventEmitter<string> = new EventEmitter();
+    get onOpenNotebook(): Event<string> { return this._onOpenNotebook.event; }
     
     private cards: Card[] = [];
 
@@ -50,18 +50,23 @@ export class CardManager {
     private writeToFile(jupyterFileData: JSONObject, kernelName: string, fileName: string) {
         if (!vscode.workspace.workspaceFolders) throw "You must have a workspace open to export the files";
         let fullPath = vscode.workspace.workspaceFolders[0].uri.fsPath;
+
         let filePath = '';
-        if(!fileName){
+        if (!fileName) {
             filePath = path.join(fullPath, 'output_' + kernelName + '.ipynb');
-        }
-        else{
+        } else {
             filePath = path.join(fullPath, fileName)
         }
 
         if((jupyterFileData['cells'] as JSONArray).length > 0) {
             try {
                 fs.writeFileSync(filePath, JSON.stringify(jupyterFileData), {encoding: 'utf8', flag: 'w'});
-                vscode.window.showInformationMessage(`Exported ${kernelName} cards to ${filePath}`);
+                vscode.window.showInformationMessage(`Exported ${kernelName} cards to ${filePath}`, 'Open in browser')
+                    .then(selection => {
+                        if (selection === 'Open in browser') {
+                            this._onOpenNotebook.fire(fileName);
+                        }
+                    });
             } catch {
                 throw "Unable to save exported Jupyter file";
             }
@@ -77,6 +82,7 @@ export class CardManager {
             cardsToExport = this.cards;
         }
 
+        
         let pythonData: JSONObject = {
             "nbformat": 4,
             "nbformat_minor": 2,
@@ -101,12 +107,9 @@ export class CardManager {
         } catch (err) {
             vscode.window.showErrorMessage(err);
         }
-
-        // let everyone know we're done
-        this._onExportComplete.fire();
     }
 
-    getCardId(index: number){
+    getCardId(index: number) {
         return this.cards[index].id;
     }
 

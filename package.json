@@ -2,7 +2,8 @@
   "name": "vscode-ipe",
   "displayName": "vscode-ipe",
   "description": "Interactive programming experience for data scientists.",
-  "version": "0.0.1",
+  "version": "0.2.0",
+  "repository": "https://github.com/lorenzo2897/vscode-ipe",
   "publisher": "ImperialCollege",
   "engines": {
     "vscode": "^1.23.0"
@@ -108,8 +109,6 @@
     "test": "npm run compile && node ./node_modules/vscode/bin/test"
   },
   "devDependencies": {
-    "child-process": "^1.0.2",
-    "@jupyterlab/services": "^2.0.3",
     "@types/mocha": "^2.2.42",
     "@types/node": "^7.0.43",
     "shx": "^0.2.2",
@@ -117,6 +116,8 @@
     "vscode": "^1.1.6"
   },
   "dependencies": {
-    "ansi_up": "^3.0.0"
+    "@jupyterlab/services": "^2.0.3",
+    "ansi_up": "^3.0.0",
+    "child-process": "^1.0.2"
   }
 }
