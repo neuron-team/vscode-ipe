@@ -2,12 +2,14 @@
 
 import * as vscode from 'vscode';
 
-import {Card} from 'vscode-ipe-types';
-import {WebviewController} from "./webviewController";
-import {Interpreter, ContentHelpers} from "./interpreter";
-import {UserInteraction} from "./userInteraction";
-import {JupyterManager} from './jupyterManager';
-import {CardManager} from './CardManager';
+import { Card } from 'vscode-ipe-types';
+import { WebviewController } from "./webviewController";
+import { Interpreter } from "./interpreter";
+import { UserInteraction } from "./userInteraction";
+import { JupyterManager } from './jupyterManager';
+import { CardManager } from './CardManager';
+import { JSONObject } from '@phosphor/coreutils';
+import {ContentHelpers} from './contentHelpers';
 
 export function activate(context: vscode.ExtensionContext) {    
     let webview: WebviewController = new WebviewController(context);
@@ -25,7 +27,7 @@ export function activate(context: vscode.ExtensionContext) {
     webview.onCollapseCode(data => cardManager.collapseCode(data.index, data.value));
     webview.onCollapseOutput(data => cardManager.collapseOutput(data.index, data.value));
     webview.onCollapseCard(data => cardManager.collapseCard(data.index, data.value));
-    webview.onAddCustomCard(card => cardManager.addCustomCard(card, ContentHelpers.assignId()));
+    webview.onAddCustomCard(card => cardManager.addCustomCard(card));
     webview.onEditCustomCard(data => cardManager.editCustomCard(data.index, data.card));
     webview.onJupyterExport(indexes => cardManager.exportToJupyter(indexes));
     webview.onOpenInBrowser(index => {
@@ -135,10 +137,20 @@ export function activate(context: vscode.ExtensionContext) {
     });
 
     userInteraction.onImportNotebook(() => {
-        let options: vscode.OpenDialogOptions = { canSelectMany : true, filters : { 'Jupyter Notebook': ['pynb'] } };
-        vscode.window.showOpenDialog(options).then(fileUri => {
-            console.log(fileUri);
-        });
+        if(panelInitialised){
+            let options: vscode.OpenDialogOptions = { canSelectMany : true, filters : { 'Jupyter Notebook': ['ipynb'] } };
+            vscode.window.showOpenDialog(options).then(fileUris => {
+                fileUris.map(fileUri => {
+                    vscode.window.showTextDocument(fileUri).then(textEditor => {
+                        let jsonContent: JSONObject = JSON.parse(textEditor.document.getText());
+                        cardManager.importJupyter(jsonContent);
+                    })
+                })
+            });
+        } else {
+            vscode.window.showInformationMessage("Output pane has not been initialised!");
+        }
+
     });
 
     vscode.window.onDidChangeActiveTextEditor(input => {

@@ -1,9 +1,10 @@
-import {Card} from 'vscode-ipe-types';
+import { Card, CardOutput } from 'vscode-ipe-types';
 import * as path from "path";
 import * as fs from "fs";
 import * as vscode from 'vscode';
 import { Event, EventEmitter } from "vscode";
 import { JSONObject, JSONArray } from '@phosphor/coreutils';
+import { ContentHelpers } from './contentHelpers';
 
 export class CardManager {
     private _onOpenNotebook : EventEmitter<string> = new EventEmitter();
@@ -161,9 +162,9 @@ export class CardManager {
         }
     }
 
-    addCustomCard(card: Card, id: number) {
+    addCustomCard(card: Card) {
         let cardToAdd = card;
-        cardToAdd.id = id;
+        cardToAdd.id = ContentHelpers.assignId();
         if(cardToAdd.isCustomMarkdown) {
             cardToAdd.kernel = 'python3';
             cardToAdd.jupyterData = 
@@ -190,6 +191,65 @@ export class CardManager {
             }
             this.cards[index] = cardEdited;
         }
+    }
+
+    importJupyter(jsonContent: JSONObject) {
+        try{
+            (jsonContent['cells'] as JSONArray)
+                .map(cell => {
+                    let newCard = new Card(   
+                        ContentHelpers.assignId(),
+                        ContentHelpers.makeCardTitle(cell['source'].join('')),
+                        cell['source'].join(''),
+                        this.processJupyterOutputs(cell['outputs'] as JSONArray),
+                        cell as object,
+                        jsonContent['metadata']['kernelspec']['name'] as string
+                    );
+                    
+                    if(cell['cell_type'] == 'markdown'){
+                        newCard.isCustomMarkdown = true;
+                    }
+                    console.log(newCard);
+                    return newCard;
+                })
+                .map(newCard => ContentHelpers.addNewCard(newCard));
+
+        }
+        catch(err){
+            vscode.window.showInformationMessage('The Jupyter notebook file entered is in an unknown format');
+        }
+    }
+
+    processJupyterOutputs(outputs: JSONArray): CardOutput[] {
+        return outputs.map(output => {
+            let keys = Object.keys(output);
+
+            if(keys.indexOf('name') > -1) {
+                let value = '';
+                if(typeof output['text'] === 'string') {
+                    value = output['text'];
+                } else {
+                    value = output['text'].join('');
+                }
+
+                return new CardOutput(
+                    'stdout',
+                    value
+                )
+            } else if(keys.indexOf('traceback') > -1) {
+                return new CardOutput(
+                    'error',
+                    (output['traceback'] as string[]).join('\n')
+                )
+            } else {
+                let type = ContentHelpers.chooseTypeFromComplexData(output['data']);
+                console.log(type);
+                return new CardOutput(
+                    type,
+                    output['data'][type]
+                )
+            }
+        })
     }
 }
 
