@@ -1,0 +1,17 @@
+{
+    "extends": "./tsconfig.json",
+    "compilerOptions": {
+        "experimentalDecorators": true,
+        "forceConsistentCasingInFileNames": true,
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "noEmitOnError": true,
+        "noFallthroughCasesInSwitch": true,
+        "sourceMap": true,
+        "target": "es6",
+        "lib": ["es6", "dom"],
+        "outDir": "out",
+        "rootDir": "src-frontend"
+    },
+    "include": ["src-frontend/test/*.test.ts"]
+}
