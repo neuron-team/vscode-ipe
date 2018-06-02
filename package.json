@@ -42,6 +42,11 @@
         "command": "ipe.exportToJupyter",
         "title": "Export to Jupyter",
         "category": "IPE"
+      },
+      {
+        "command": "ipe.restartKernels",
+        "title": "Restart active kernels",
+        "category": "IPE"
       }
     ],
     "keybindings": [
