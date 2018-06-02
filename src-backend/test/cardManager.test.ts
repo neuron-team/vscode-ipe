@@ -36,5 +36,22 @@ describe("CardManager Tests", function () {
         cardManager.moveCardUp(1);
         assert.equal(cardManager["cards"][0],card2);  
     });
+    it("Move cards up works even with 1 card ", function() {
+        let card1 = new Card(0,"Hello","source",[],{},'');
+        cardManager.addCard(card1);
+        assert.equal(cardManager["cards"][0],card1);  
+        cardManager.moveCardUp(0);
+        assert.equal(cardManager["cards"][0],card1);  
+    });
+    it("Move cards down works", function() {
+        let card1 = new Card(0,"Hello","source",[],{},'');
+        let card2 = new Card(1,"Hello","source",[],{},'');
+        cardManager.addCard(card1);
+        cardManager.addCard(card2);
+        assert.equal(cardManager["cards"][0],card1);  
+        cardManager.moveCardDown(0);
+        assert.equal(cardManager["cards"][1],card1);  
+    });
+
 
 });
