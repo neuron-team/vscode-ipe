@@ -26,4 +26,15 @@ describe("CardManager Tests", function () {
         // To access private member data in unit test
         assert.equal(cardManager["cards"].length,1);  
     });
+
+    it("Move cards up works ", function() {
+        let card1 = new Card(0,"Hello","source",[],{},'');
+        let card2 = new Card(1,"Hello","source",[],{},'');
+        cardManager.addCard(card1);
+        cardManager.addCard(card2);
+        assert.equal(cardManager["cards"][0],card1);  
+        cardManager.moveCardUp(1);
+        assert.equal(cardManager["cards"][0],card2);  
+    });
+
 });
