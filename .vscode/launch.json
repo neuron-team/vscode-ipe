@@ -31,20 +31,6 @@
                 "${workspaceFolder}/out/test/**/*.js"
             ],
             "preLaunchTask": "npm: watch"
-        },
-        {
-            "name": "Extension Frontend Tests",
-            "type": "extensionHost",
-            "request": "launch",
-            "runtimeExecutable": "${execPath}",
-            "args": [
-                "--extensionDevelopmentPath=${workspaceFolder}",
-                "--extensionTestsPath=${workspaceFolder}/out/test"
-            ],
-            "outFiles": [
-                "${workspaceFolder}/out/test/**/*.js"
-            ],
-            "preLaunchTask": "npm: test:build-frontend"
         }
     ]
 }

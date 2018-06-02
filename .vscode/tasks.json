@@ -15,11 +15,6 @@
                 "kind": "build",
                 "isDefault": true
             }
-        },
-        {
-            "type": "npm",
-            "script": "test:build-frontend",
-            "problemMatcher": []
         }
     ]
 }
