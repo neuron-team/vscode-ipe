@@ -5,7 +5,9 @@ out/**/*.map
 src-backend/**
 src-frontend/**
 src-common/**
+!src-backend/media/**
 .gitignore
 tsconfig.json
 vsc-extension-quickstart.md
 tslint.json
+.idea/**
