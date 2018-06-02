@@ -15,6 +15,9 @@ export class UserInteraction {
     private _onRestartKernels: EventEmitter<void> = new EventEmitter();
     get onRestartKernels(): Event<void> { return this._onRestartKernels.event; }
 
+    private _onImportNotebook: EventEmitter<void> = new EventEmitter();
+    get onImportNotebook(): Event<void> { return this._onImportNotebook.event; }
+
     private statusIndicator: StatusBarItem;
 
     constructor(private context: vscode.ExtensionContext) {
@@ -36,6 +39,10 @@ export class UserInteraction {
             this.restartKernels();
         }));   
 
+        context.subscriptions.push(vscode.commands.registerCommand('ipe.importNotebook', () => {
+            this.importNotebook();
+        }));   
+
         this.statusIndicator = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right);
         this.statusIndicator.show();
     }
@@ -50,6 +57,10 @@ export class UserInteraction {
 
     private restartKernels() {
         this._onRestartKernels.fire();
+    }
+
+    private importNotebook() {
+        this._onImportNotebook.fire();
     }
 
     private newCard() {

@@ -47,6 +47,11 @@
         "command": "ipe.restartKernels",
         "title": "Restart active kernels",
         "category": "IPE"
+      },
+      {
+        "command": "ipe.importNotebook",
+        "title": "Import Jupyter notebook",
+        "category": "IPE"
       }
     ],
     "keybindings": [

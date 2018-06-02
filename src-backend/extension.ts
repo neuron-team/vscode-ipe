@@ -134,6 +134,13 @@ export function activate(context: vscode.ExtensionContext) {
         }
     });
 
+    userInteraction.onImportNotebook(() => {
+        let options: vscode.OpenDialogOptions = { canSelectMany : true, filters : { 'Jupyter Notebook': ['pynb'] } };
+        vscode.window.showOpenDialog(options).then(fileUri => {
+            console.log(fileUri);
+        });
+    });
+
     vscode.window.onDidChangeActiveTextEditor(input => {
         if (panelInitialised) {
             // Open new kernel if new file is in a different language
