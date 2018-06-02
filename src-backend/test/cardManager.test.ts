@@ -53,5 +53,29 @@ describe("CardManager Tests", function () {
         assert.equal(cardManager["cards"][1],card1);  
     });
 
+    it("Move cards down works with one card", function() {
+        let card1 = new Card(0,"Hello","source",[],{},'');
+        cardManager.addCard(card1);
+        assert.equal(cardManager["cards"][0],card1);  
+        cardManager.moveCardDown(0);
+        assert.equal(cardManager["cards"][0],card1);  
+    });
+
+    it("Delete card works", function() {
+        let card1 = new Card(0,"Hello","source",[],{},'');
+        cardManager.addCard(card1);
+        assert.equal(cardManager["cards"][0],card1);  
+        cardManager.deleteCard(0);
+        assert.equal(cardManager["cards"].length,0);  
+    });
+
+    it("Change title test", function() {
+        let card1 = new Card(0,"Hello","source",[],{},'');
+        cardManager.addCard(card1);
+        assert.equal(cardManager["cards"][0],card1);  
+        cardManager.changeTitle(0,"ThisisanewTitle");
+        assert.equal(cardManager["cards"][0].title,"ThisisanewTitle");  
+    });
+
 
 });
