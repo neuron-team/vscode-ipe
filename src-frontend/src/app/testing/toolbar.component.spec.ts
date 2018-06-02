@@ -59,7 +59,7 @@ describe('ToolbarComponent', () => {
 
       it('Toolbar should contain text: plain text ', () => {
         const toolbarElement: HTMLElement = fixture.nativeElement;
-        expect(toolbarElement.textContent).toContain('Plain text');
+        expect(toolbarElement.textContent).toContain('Plain Text');
       });
       
 

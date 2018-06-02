@@ -1,4 +1,5 @@
 <div class="card-container" *ngIf="visible" 
+    id = "SelectCard"
     [@cardState]="selected ? 'selected' : 'notSelected'"
     (click)="selectCard()"
     [style.cursor]="isSelecting ? 'pointer' : 'default'">
@@ -127,7 +128,7 @@
       </button>
     </div>
     <div *ngIf="editingMarkdown && !isSelecting">
-      <textarea #markdownEditor Autofocus>{{card.sourceCode}}</textarea>
+      <textarea id = "markdownTextArea" #markdownEditor Autofocus>{{card.sourceCode}}</textarea>
       <button id = "finishedMarkdownButton" class="react" (click)="card.sourceCode = markdownEditor.value; editCustomCard()">
         <i title="Accept" class="ms-Icon ms-Icon--Accept" aria-label="Accept"></i>
       </button>

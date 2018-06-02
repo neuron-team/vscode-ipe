@@ -63,7 +63,8 @@ describe('CardComponent', () => {
     it('Selecting card should emit true via onSelect event emitter', () => {
       spyOn(component.onSelect, 'emit');
       const hostElement = fixture.nativeElement;
-      const selectButton = hostElement.querySelector('#selectButton');
+      const selectButton = hostElement.querySelector('#SelectCard');
+      component.isSelecting = true;
       sendClick(selectButton).then(()=> {
         expect(component.onSelect.emit).toHaveBeenCalledTimes(1);
       });
@@ -72,7 +73,7 @@ describe('CardComponent', () => {
     it('When select button is clicked select function should be called',async( () => {
       spyOn(component, 'selectCard');
       let hostElement = fixture.nativeElement;
-      let selectButton = hostElement.querySelector('#selectButton');
+      let selectButton = hostElement.querySelector('#SelectCard');
       sendClick(selectButton).then(()=> {
         expect(component.selectCard).toHaveBeenCalledTimes(1);
       });
@@ -119,7 +120,7 @@ describe('CardComponent', () => {
       });
     });
 
-    it('After editing title, pressing enter should set editing title to false ', () => {
+    it('Clicking collapse button should set ediing title to be false', () => {
     const hostElement = fixture.nativeElement;
     const Button = hostElement.querySelector('#collapseButton');
     //Button clicked
@@ -131,21 +132,24 @@ describe('CardComponent', () => {
   it('After editing title, pressing enter should set editing title to false ', () => {
     const hostElement = fixture.nativeElement;
     component.editingTitle = true;
+    component.isSelecting = false;
     fixture.detectChanges();
     let debugElement = fixture.debugElement.query(By.css('input'));
-    debugElement.triggerEventHandler('keyup.enter', {});
+    debugElement.triggerEventHandler('keydown.enter', {});
     fixture.detectChanges();
     fixture.whenStable().then(()=> {
-      expect(component.editingTitle).toBe(false);
+      expect(component.changeTitle).toHaveBeenCalledTimes(1);
     })
 
   });
   it('After editing title, pressing esc should set editing title to false ', () => {
     const hostElement = fixture.nativeElement;
+    component.card.isCustomMarkdown = false;
     component.editingTitle = true;
+    component.isSelecting = false;
     fixture.detectChanges();
     let debugElement = fixture.debugElement.query(By.css('input'));
-    debugElement.triggerEventHandler('keyup.esc', {});
+    debugElement.triggerEventHandler('keydown.esc', {});
     fixture.detectChanges();
     fixture.whenStable().then(()=> {
       expect(component.editingTitle).toBe(false);
