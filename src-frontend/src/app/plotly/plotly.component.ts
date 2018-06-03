@@ -16,7 +16,7 @@ export class PlotlyComponent {
 
     let guid = PlotlyComponent.generateGuid();
     content +=
-      '<div id="' + guid + '" style="height: 525px; width: 100%;" class="plotly-graph-div">'
+      '<div id="' + guid + '" style="height: 500px; width: 100%;" class="plotly-graph-div">'
       + '</div><script type="text/javascript">require(["plotly"], function(Plotly)'
       + '{ window.PLOTLYENV=window.PLOTLYENV || {};window.PLOTLYENV.BASE_URL="https://plot.ly";Plotly.newPlot("'
       + guid + '",' + JSON.stringify(value) + ', {}, {"showLink": true, "linkText": "Export to plot.ly"})});</script>';
