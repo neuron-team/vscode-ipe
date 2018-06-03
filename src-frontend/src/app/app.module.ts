@@ -18,6 +18,7 @@ import { MathComponent } from './math/math.component';
 import { KatexModule } from 'ng-katex';
 import { VDOMComponent } from './vdom/vdom.component';
 import { MarkdownModule } from 'ngx-markdown';
+import { PlotlyComponent } from './plotly/plotly.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { MarkdownModule } from 'ngx-markdown';
     ToolbarComponent,
     MapComponent,
     MathComponent,
+    PlotlyComponent,
     VDOMComponent
   ],
   imports: [
