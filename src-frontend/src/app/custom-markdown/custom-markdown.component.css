@@ -1,0 +1,39 @@
+/* Markdown */
+:host {
+  padding: 0 6px;
+}
+textarea {
+  color: var(--color);
+  background-color: transparent;
+  border-style: solid;
+  border-color: rgba(170, 170, 170, 0.3);
+  font-family: Menlo, Monaco, "Courier New", monospace;
+  font-size: 12px;
+  margin: 5px 0;
+  width: 100%;
+  resize: vertical;
+  height: 100px;
+  max-height: 200px;
+  box-sizing: border-box;
+}
+
+.react:hover {
+  color: rgb(0, 119, 198);
+}
+.red:hover {
+  color: rgb(231, 69, 69);
+}
+
+.full-left {
+  width: 100%;
+  text-align: left;
+}
+
+button {
+  cursor: pointer;
+  color: inherit;
+  background-color: transparent;
+  box-sizing: border-box;
+  border-style: none;
+  outline: none;
+}

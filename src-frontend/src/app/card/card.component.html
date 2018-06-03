@@ -122,22 +122,10 @@
   </div>
 
 
-  <div *ngIf="card.isCustomMarkdown" class="custom-markdown">
-
-    <div *ngIf="!editingMarkdown || isSelecting">
-      <button class="react full-left" (click)="editingMarkdown = true" [disabled]="isSelecting">
-        <markdown [data]="card.sourceCode"></markdown>
-      </button>
-    </div>
-    <div *ngIf="editingMarkdown && !isSelecting">
-      <textarea #markdownEditor Autofocus>{{card.sourceCode}}</textarea>
-      <button class="react" (click)="card.sourceCode = markdownEditor.value; editCustomCard()">
-        <i title="Accept" class="ms-Icon ms-Icon--Accept" aria-label="Accept"></i>
-      </button>
-      <button class="red" (click)="editingMarkdown = false">
-        <i title="Cancel" class="ms-Icon ms-Icon--Clear" aria-label="Cancel"></i>
-      </button>
-    </div>
-  </div>
+  <app-custom-markdown *ngIf="card.isCustomMarkdown"
+                       [markdownSource]="card.sourceCode"
+                       [disableMouseEvents]="isSelecting"
+                       (markdownChanged)="editCustomMarkdown($event)">
+  </app-custom-markdown>
 
 </div>

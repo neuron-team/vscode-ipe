@@ -19,6 +19,7 @@ import { KatexModule } from 'ng-katex';
 import { VDOMComponent } from './vdom/vdom.component';
 import { MarkdownModule } from 'ngx-markdown';
 import { Base64ImageComponent } from './base64-image/base64-image.component';
+import { CustomMarkdownComponent } from './custom-markdown/custom-markdown.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { Base64ImageComponent } from './base64-image/base64-image.component';
     MapComponent,
     MathComponent,
     VDOMComponent,
-    Base64ImageComponent
+    Base64ImageComponent,
+    CustomMarkdownComponent
   ],
   imports: [
     BrowserModule,
