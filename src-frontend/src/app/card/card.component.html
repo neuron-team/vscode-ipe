@@ -129,7 +129,7 @@
     </div>
     <div *ngIf="editingMarkdown && !isSelecting">
       <textarea id="markdownTextArea" #markdownEditor Autofocus>{{card.sourceCode}}</textarea>
-      <button id = "finishedMarkdownButton" class="react" (click)="card.sourceCode = markdownEditor.value; editCustomCard()">
+      <button id="finishedMarkdownButton" class="react" (click)="card.sourceCode = markdownEditor.value; editCustomCard()">
         <i title="Accept" class="ms-Icon ms-Icon--Accept" aria-label="Accept"></i>
       </button>
       <button id="cancelMarkdownButton" class="red" (click)="editingMarkdown = false">
