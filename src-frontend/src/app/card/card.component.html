@@ -1,4 +1,4 @@
-<div class="card-container" *ngIf="visible" 
+<div class="card-container" *ngIf="visible"
     [@cardState]="selected ? 'selected' : 'notSelected'"
     (click)="selectCard()"
     [style.cursor]="isSelecting ? 'pointer' : 'default'">
@@ -77,11 +77,11 @@
       <div class="card-output" *ngFor="let output of card.outputs">
         <div *ngIf="!card.outputCollapsed" [ngSwitch]="output.type">
           <div *ngSwitchCase="'image/png'">
-            <img [src]="sanitizer.bypassSecurityTrustUrl('data:image/png;base64,'+output.output)">
+            <app-base64-image [imageType]="'png'" [base64src]="output.output"></app-base64-image>
           </div>
 
           <div *ngSwitchCase="'image/jpeg'">
-            <img [src]="sanitizer.bypassSecurityTrustUrl('data:image/jpeg;base64,'+output.output)">
+            <app-base64-image [imageType]="'jpeg'" [base64src]="output.output"></app-base64-image>
           </div>
 
           <div *ngSwitchCase="'text/html'">
