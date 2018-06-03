@@ -23,9 +23,9 @@ function testArrayEqual(a, b){
 
 describe("CardManager Tests", function () {
     let cardManager: CardManager;
-    const card0 = new Card(0,"Hello","source",[],{},'');
-    const card1 = new Card(1,"Hello","source",[],{},'');
-    const card2 = new Card(2,"Hello","source",[],{},'');
+    const card0 = new Card(0, "Hello", "source", [], {}, '');
+    const card1 = new Card(1, "Hello", "source", [], {}, '');
+    const card2 = new Card(2, "Hello", "source", [], {}, '');
 
     beforeEach(function(done) {
         cardManager = new CardManager();
@@ -45,8 +45,8 @@ describe("CardManager Tests", function () {
     it("Move cards up works - moveCardUp() ", function() {
         cardManager["cards"] = [card0, card1];
 
-        cardManager.moveCardUp(8); //move something not existed -> no change
-        testArrayEqual(cardManager["cards"], [card0, card1]);
+        // cardManager.moveCardUp(8); //move something not existed -> no change
+        // testArrayEqual(cardManager["cards"], [card0, card1]);
 
         cardManager.moveCardUp(1);
         testArrayEqual(cardManager["cards"], [card1, card0]);
@@ -93,12 +93,63 @@ describe("CardManager Tests", function () {
         cardManager["cards"] = [card0];
         testArrayEqual(cardManager["cards"], [card0]);
 
-        cardManager.changeTitle(8, "ThisisanewTitle"); //change something not existed -> no change
-        testArrayEqual(cardManager["cards"], [card0]);
+        // cardManager.changeTitle(8, "ThisisanewTitle"); //change something not existed -> no change
+        // testArrayEqual(cardManager["cards"], [card0]);
 
         cardManager.changeTitle(0, "ThisisanewTitle");
-        assert.equal(cardManager["cards"][0].title,"ThisisanewTitle");
+        assert.equal(cardManager["cards"][0].title, "ThisisanewTitle");
     });
 
+    it("collapseCode()", function() {
+        cardManager["cards"] = [card0];
+        assert.equal(cardManager["cards"][0].codeCollapsed, true);
+        testArrayEqual(cardManager["cards"], [card0]);
+
+        // cardManager.collapseCode(8, false); //change something not existed -> no change
+        // testArrayEqual(cardManager["cards"], [card0]);
+
+        cardManager.collapseCode(0, false);
+        assert.equal(cardManager["cards"][0].codeCollapsed, false);
+    });
+
+    it("collapseOutput()", function() {
+        cardManager["cards"] = [card0];
+        assert.equal(cardManager["cards"][0].outputCollapsed, false);
+        testArrayEqual(cardManager["cards"], [card0]);
+
+        // cardManager.collapseOutput(8, true); //change something not existed -> no change
+        // testArrayEqual(cardManager["cards"], [card0]);
+
+        cardManager.collapseOutput(0, true);
+        assert.equal(cardManager["cards"][0].outputCollapsed, true);
+    });
+
+    it("collapseCard()", function() {
+        cardManager["cards"] = [card0];
+        assert.equal(cardManager["cards"][0].collapsed, false);
+        testArrayEqual(cardManager["cards"], [card0]);
+
+        // cardManager.collapseCard(8, true); //change something not existed -> no change
+        // testArrayEqual(cardManager["cards"], [card0]);
+
+        cardManager.collapseCard(0, true);
+        assert.equal(cardManager["cards"][0].collapsed, true);
+    });
+
+    it("getCardId()", function() {
+        cardManager["cards"] = [card0, card1];
+        testArrayEqual(cardManager["cards"], [card0, card1]);
+
+        assert.equal(cardManager.getCardId(0), 0);
+        assert.equal(cardManager.getCardId(1), 1);
+    });
+
+    it("addCustomCard()", function() {
+        
+    });
+
+    it("editCustomCard()", function() {
+        
+    });
 
 });
