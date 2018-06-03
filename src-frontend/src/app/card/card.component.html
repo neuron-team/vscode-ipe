@@ -92,6 +92,10 @@
             <app-map [geojson]="output.output"></app-map>
           </div>
 
+          <div *ngSwitchCase="'application/vdom.v1+json'">
+            <app-vdom [vdom]="output.output"></app-vdom>
+          </div>
+
           <div *ngSwitchCase="'text/latex'">
             <app-math [mathExpr]="output.output"></app-math>
           </div>
