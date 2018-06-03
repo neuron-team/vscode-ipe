@@ -18,7 +18,6 @@ import { MathComponent } from './math/math.component';
 import { KatexModule } from 'ng-katex';
 import { MarkdownModule } from 'ngx-markdown';
 import { PlotlyComponent } from './plotly/plotly.component';
-import { SafeHtmlPipe } from './classes/safe-html.pipe';
 
 @NgModule({
   declarations: [
@@ -32,8 +31,7 @@ import { SafeHtmlPipe } from './classes/safe-html.pipe';
     ToolbarComponent,
     MapComponent,
     MathComponent,
-    PlotlyComponent,
-    SafeHtmlPipe
+    PlotlyComponent
   ],
   imports: [
     BrowserModule,
