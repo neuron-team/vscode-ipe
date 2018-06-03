@@ -106,7 +106,8 @@
     "compile": "npm run build-types && npm run compile-frontend && npm run compile-backend",
     "watch": "npm run build-types && npm run watch-backend",
     "postinstall": "node ./node_modules/vscode/bin/install",
-    "test": "npm run compile && node ./node_modules/vscode/bin/test"
+    "test": "npm run compile && node ./node_modules/vscode/bin/test",
+    "test-frontend": "cd src-frontend && npm run test"
   },
   "devDependencies": {
     "@types/mocha": "^2.2.42",
