@@ -32,12 +32,12 @@ export class CardComponent {
   @Input() card: Card;
   @Input() isSelecting: boolean = false;
   @Input() selected: boolean = false;
-  //Movement of cards up/down
+
   @Output() onMove = new EventEmitter();
-  //Select a card
   @Output() onSelect = new EventEmitter<boolean>();
-  //Delete
   @Output() onDelete = new EventEmitter<void>();
+  @Output() onOpenBrowser = new EventEmitter<void>();
+
   @Output() onChangeTitle = new EventEmitter();
   @Output() onCollapseCode = new EventEmitter();
   @Output() onCollapseOutput = new EventEmitter();
@@ -45,7 +45,6 @@ export class CardComponent {
   @Output() onEditCustomCard = new EventEmitter();
 
   editingTitle: boolean = false;
-  editingMarkdown: boolean = false;
 
   constructor(public sanitizer: DomSanitizer) { }
 

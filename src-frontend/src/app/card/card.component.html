@@ -127,6 +127,7 @@
 
 
   <app-custom-markdown *ngIf="card.isCustomMarkdown"
+                       [collapsed]="card.collapsed"
                        [markdownSource]="card.sourceCode"
                        [disableMouseEvents]="isSelecting"
                        (markdownChanged)="editCustomMarkdown($event)">

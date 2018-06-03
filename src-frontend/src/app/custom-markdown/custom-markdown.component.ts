@@ -8,6 +8,7 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 export class CustomMarkdownComponent {
   editingMarkdown: boolean = false;
 
+  @Input() collapsed: boolean = false;
   @Input() disableMouseEvents: boolean = false;
   @Input() markdownSource: string = '';
 
