@@ -12,69 +12,92 @@ import { Card } from 'vscode-ipe-types';
 // import * as vscode from 'vscode';
 // import * as myExtension from '../extension';
 
-// Defines a Mocha test suite to group tests of similar kind together
+function testArrayEqual(a, b){
+    assert.equal(a.length, b.length);
+
+    let i: number;
+    for (i = 0; i < b.length; i++){
+        assert.equal(a[i], b[i]);
+    }
+}
+
 describe("CardManager Tests", function () {
-    let cardManager:CardManager;
+    let cardManager: CardManager;
+    const card0 = new Card(0,"Hello","source",[],{},'');
+    const card1 = new Card(1,"Hello","source",[],{},'');
+    const card2 = new Card(2,"Hello","source",[],{},'');
+
     beforeEach(function(done) {
         cardManager = new CardManager();
         done();
     });
-    // Defines a Mocha unit test
-    it("Adding card to cards array works", function() {
-        let card = new Card(0,"Hello","source",[],{},'');
-        cardManager.addCard(card);
-        // To access private member data in unit test
-        assert.equal(cardManager["cards"].length,1);  
+
+    it("Adding card to cards array works - addCard()", function() {
+        testArrayEqual(cardManager["cards"], []);
+
+        cardManager.addCard(card0);
+        testArrayEqual(cardManager["cards"], [card0]);
+
+        cardManager.addCard(card1);
+        testArrayEqual(cardManager["cards"], [card0, card1]);
     });
 
-    it("Move cards up works ", function() {
-        let card1 = new Card(0,"Hello","source",[],{},'');
-        let card2 = new Card(1,"Hello","source",[],{},'');
-        cardManager.addCard(card1);
-        cardManager.addCard(card2);
-        assert.equal(cardManager["cards"][0],card1);  
+    it("Move cards up works - moveCardUp() ", function() {
+        cardManager["cards"] = [card0, card1];
+
+        cardManager.moveCardUp(8); //move something not existed -> no change
+        testArrayEqual(cardManager["cards"], [card0, card1]);
+
         cardManager.moveCardUp(1);
-        assert.equal(cardManager["cards"][0],card2);  
+        testArrayEqual(cardManager["cards"], [card1, card0]);
     });
-    it("Move cards up works even with 1 card ", function() {
-        let card1 = new Card(0,"Hello","source",[],{},'');
-        cardManager.addCard(card1);
-        assert.equal(cardManager["cards"][0],card1);  
+
+    it("Move cards up works even with 1 card -moveCardUp()", function() {
+        cardManager.addCard(card0);
+        assert.equal(cardManager["cards"][0], card0);  
         cardManager.moveCardUp(0);
-        assert.equal(cardManager["cards"][0],card1);  
+        assert.equal(cardManager["cards"][0], card0);
     });
-    it("Move cards down works", function() {
-        let card1 = new Card(0,"Hello","source",[],{},'');
-        let card2 = new Card(1,"Hello","source",[],{},'');
-        cardManager.addCard(card1);
-        cardManager.addCard(card2);
-        assert.equal(cardManager["cards"][0],card1);  
+
+    it("Move cards down works - moveCardDown()", function() {
+        cardManager["cards"] = [card0, card1];
+        testArrayEqual(cardManager["cards"], [card0, card1]);
+
+        cardManager.moveCardDown(8); //move something not existed -> no change
+        testArrayEqual(cardManager["cards"], [card0, card1]);
+
         cardManager.moveCardDown(0);
-        assert.equal(cardManager["cards"][1],card1);  
+        testArrayEqual(cardManager["cards"], [card1, card0]);  
     });
 
-    it("Move cards down works with one card", function() {
-        let card1 = new Card(0,"Hello","source",[],{},'');
-        cardManager.addCard(card1);
-        assert.equal(cardManager["cards"][0],card1);  
+    it("Move cards down works with one card - moveCardDown()", function() {
+        cardManager["cards"] = [card0];
+        testArrayEqual(cardManager["cards"], [card0]);
+
         cardManager.moveCardDown(0);
-        assert.equal(cardManager["cards"][0],card1);  
+        testArrayEqual(cardManager["cards"], [card0]); 
     });
 
-    it("Delete card works", function() {
-        let card1 = new Card(0,"Hello","source",[],{},'');
-        cardManager.addCard(card1);
-        assert.equal(cardManager["cards"][0],card1);  
-        cardManager.deleteCard(0);
-        assert.equal(cardManager["cards"].length,0);  
+    it("Delete card works - deleteCard()", function() {
+        cardManager["cards"] = [card0];
+        testArrayEqual(cardManager["cards"], [card0]);
+
+        cardManager.deleteCard(8); //delete something not existed -> no change
+        testArrayEqual(cardManager["cards"], [card0]);
+
+        cardManager.deleteCard(0); //normal delete
+        testArrayEqual(cardManager["cards"], []);
     });
 
-    it("Change title test", function() {
-        let card1 = new Card(0,"Hello","source",[],{},'');
-        cardManager.addCard(card1);
-        assert.equal(cardManager["cards"][0],card1);  
-        cardManager.changeTitle(0,"ThisisanewTitle");
-        assert.equal(cardManager["cards"][0].title,"ThisisanewTitle");  
+    it("Change title test - changeTitle()", function() {
+        cardManager["cards"] = [card0];
+        testArrayEqual(cardManager["cards"], [card0]);
+
+        cardManager.changeTitle(8, "ThisisanewTitle"); //change something not existed -> no change
+        testArrayEqual(cardManager["cards"], [card0]);
+
+        cardManager.changeTitle(0, "ThisisanewTitle");
+        assert.equal(cardManager["cards"][0].title,"ThisisanewTitle");
     });
 
 
