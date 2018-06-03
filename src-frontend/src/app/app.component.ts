@@ -41,7 +41,7 @@ export class AppComponent implements AfterViewInit {
     this.checkVisible();
   }
 
-// Visable Cards
+  /* Visable Cards */
   cardMatchesSearchQuery(card: Card): boolean {
     if (this.searchQuery === '') { return true; }
 
@@ -70,13 +70,14 @@ export class AppComponent implements AfterViewInit {
     }
     return false;
   }
+
   checkVisible() {
     for (let card of this.cards) {
       this.visibleCards.set(card, this.cardMatchesFilter(card) && this.cardMatchesSearchQuery(card));
     }
   }
 
-  /* Selecting - will remove/add element if it's in/not_in array */
+  /* Selecting */
   cardSelected(card: Card) {
     if (this.selectedCards.has(card)) {
       this.selectedCards.delete(card);
@@ -106,7 +107,6 @@ export class AppComponent implements AfterViewInit {
     }
   }
 
-
   /* Ordering */
   cardMoved(card: Card, direction: string) {
     if (direction === "up") this.moveUp(card);
@@ -133,44 +133,6 @@ export class AppComponent implements AfterViewInit {
     }
   }
 
-  addCard(card: Card) {
-    this.cards.push(card);
-    this.scrollToBottom();
-  }
-
-  deleteCard(card: Card) {
-    const index: number = this.cards.indexOf(card);
-    if (index > -1) { 
-      this.cards.splice(index, 1); 
-      this.extension.onDeleteCard.next(index);
-    }
-  }
-
-  collapseOutput(card: Card, value: boolean){
-    const index: number = this.cards.indexOf(card);
-    this.extension.onCollapseOutput.next({index: index, value: value});
-  }
-
-  collapseCode(card: Card, value: boolean){
-    const index: number = this.cards.indexOf(card);
-    this.extension.onCollapseCode.next({index: index, value: value});
-  }
-
-  collapseCard(card: Card, value: boolean){
-    const index: number = this.cards.indexOf(card);
-    this.extension.onCollapseCard.next({index: index, value: value});
-  }
-
-  changeTitle(card: Card, newTitle: string){
-    const index: number = this.cards.indexOf(card);
-    this.extension.onChangeTitle.next({index: index, newTitle: newTitle});
-  }
-
-  editCustomCard(card: Card){
-    const index: number = this.cards.indexOf(card);
-    this.extension.onEditCustomCard.next({index: index, card: card});
-  }
-
   export() {
     let indexes = null;
     if (this.isSelecting) {
@@ -180,6 +142,52 @@ export class AppComponent implements AfterViewInit {
     }
     this.extension.onJupyterExport.next(indexes);
   }
+
+  openBrowser(card: Card) {
+    const index: number = this.cards.indexOf(card);
+    this.extension.onOpenInBrowser.next(index);
+  }
+
+
+  addCard(card: Card) {
+    this.cards.push(card);
+    this.scrollToBottom();
+  }
+
+  deleteCard(card: Card) {
+    const index: number = this.cards.indexOf(card);
+    if (index > -1) {
+      this.cards.splice(index, 1);
+      this.extension.onDeleteCard.next(index);
+    }
+  }
+
+  /* Backend Communication */
+  collapseOutput(card: Card, value: boolean) {
+    const index: number = this.cards.indexOf(card);
+    this.extension.onCollapseOutput.next({index: index, value: value});
+  }
+
+  collapseCode(card: Card, value: boolean) {
+    const index: number = this.cards.indexOf(card);
+    this.extension.onCollapseCode.next({index: index, value: value});
+  }
+
+  collapseCard(card: Card, value: boolean) {
+    const index: number = this.cards.indexOf(card);
+    this.extension.onCollapseCard.next({index: index, value: value});
+  }
+
+  changeTitle(card: Card, newTitle: string) {
+    const index: number = this.cards.indexOf(card);
+    this.extension.onChangeTitle.next({index: index, newTitle: newTitle});
+  }
+
+  editCustomCard(card: Card) {
+    const index: number = this.cards.indexOf(card);
+    this.extension.onEditCustomCard.next({index: index, card: card});
+  }
+
 
   private windowResizeThrottle;
   onWindowResize() {

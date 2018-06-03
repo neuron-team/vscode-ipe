@@ -42,6 +42,9 @@ export class WebviewController {
     private _onJupyterExport: EventEmitter<number[]> = new EventEmitter();
     get onJupyterExport(): Event<number[]> { return this._onJupyterExport.event; }
 
+    private _onOpenInBrowser: EventEmitter<number> = new EventEmitter();
+    get onOpenInBrowser(): Event<number> { return this._onOpenInBrowser.event; }
+
     constructor(private context: vscode.ExtensionContext) {}
 
     show() {
@@ -103,6 +106,9 @@ export class WebviewController {
                         break;
                     case 'jupyterExport':
                         this._onJupyterExport.fire(message.indexes);
+                        break;
+                    case 'openInBrowser':
+                        this._onOpenInBrowser.fire(message.index);
                 }
             })
         }

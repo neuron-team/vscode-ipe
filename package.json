@@ -21,7 +21,7 @@
     "commands": [
       {
         "command": "ipe.showWebview",
-        "title": "Show Output Pane",
+        "title": "Open Output Pane",
         "category": "IPE",
         "icon": {
           "light": "/src-backend/media/light_browser.svg",
@@ -30,17 +30,27 @@
       },
       {
         "command": "ipe.fullSetup",
-        "title": "Open output pane with existing Jupyter notebook",
+        "title": "Open Output Pane with Existing Jupyter Notebook",
         "category": "IPE"
       },
       {
         "command": "ipe.newCard",
-        "title": "Send Code to Output Window",
+        "title": "Send Code to Output Pane",
         "category": "IPE"
       },
       {
         "command": "ipe.exportToJupyter",
         "title": "Export to Jupyter",
+        "category": "IPE"
+      },
+      {
+        "command": "ipe.restartKernels",
+        "title": "Restart Active Kernels",
+        "category": "IPE"
+      },
+      {
+        "command": "ipe.importNotebook",
+        "title": "Import Jupyter Notebook",
         "category": "IPE"
       }
     ],
@@ -117,8 +127,8 @@
     "vscode": "^1.1.6"
   },
   "dependencies": {
+    "@jupyterlab/services": "^2.0.3",
     "ansi_up": "^3.0.0",
-    "child-process": "^1.0.2",
-    "@jupyterlab/services": "^2.0.3"
+    "child-process": "^1.0.2"
   }
 }
