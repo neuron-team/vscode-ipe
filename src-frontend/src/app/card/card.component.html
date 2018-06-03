@@ -1,4 +1,4 @@
-<div class="card-container" *ngIf="visible" 
+<div class="card-container" *ngIf="visible"
     [@cardState]="selected ? 'selected' : 'notSelected'"
     (click)="selectCard()"
     [style.cursor]="isSelecting ? 'pointer' : 'default'">
@@ -13,11 +13,11 @@
     <button class="red right" (click)="deleteCard()">
       <i title="Delete" class="ms-Icon ms-Icon--Clear" aria-label="Delete"></i>
     </button>
-    <button class="react toolbar-icon right">
-      <i title="Open in Browser" class="ms-Icon ms-Icon--MiniExpand" aria-label="Open in Browser"></i>
-    </button>
-    <button class="react toolbar-icon right" (click)="collapseCard()">
+    <button class="react toolbar-icon right" (click)="collapseCard()" [style.opacity]="card.collapsed ? '1' : ''">
       <i title="Minimize" class="ms-Icon ms-Icon--ChromeMinimize" aria-label="Minimize"></i>
+    </button>
+    <button *ngIf="!card.isCustomMarkdown" class="react toolbar-icon right" (click)="openIn()">
+      <i title="Open in Browser" class="ms-Icon ms-Icon--MiniExpand" aria-label="Open in Browser"></i>
     </button>
   </span>
 
@@ -88,8 +88,16 @@
             <div class="output-rich" [innerHTML]="output.output" runScripts></div>
           </div>
 
+          <div *ngSwitchCase="'application/vnd.plotly.v1+json'">
+            <app-plotly [plotlyJson]="output.output"></app-plotly>
+          </div>
+
           <div *ngSwitchCase="'application/geo+json'">
             <app-map [geojson]="output.output"></app-map>
+          </div>
+
+          <div *ngSwitchCase="'application/vdom.v1+json'">
+            <app-vdom [vdom]="output.output"></app-vdom>
           </div>
 
           <div *ngSwitchCase="'text/latex'">
@@ -120,19 +128,23 @@
 
   <div *ngIf="card.isCustomMarkdown" class="custom-markdown">
 
-    <div *ngIf="!editingMarkdown || isSelecting">
-      <button class="react full-left" (click)="editingMarkdown = true" [disabled]="isSelecting">
-        <markdown [data]="card.sourceCode"></markdown>
-      </button>
-    </div>
-    <div *ngIf="editingMarkdown && !isSelecting">
-      <textarea #markdownEditor Autofocus>{{card.sourceCode}}</textarea>
-      <button class="react" (click)="card.sourceCode = markdownEditor.value; editCustomCard()">
-        <i title="Accept" class="ms-Icon ms-Icon--Accept" aria-label="Accept"></i>
-      </button>
-      <button class="red" (click)="editingMarkdown = false">
-        <i title="Cancel" class="ms-Icon ms-Icon--Clear" aria-label="Cancel"></i>
-      </button>
+    <div *ngIf="card.collapsed" class="title" (click)="collapseCard()">Markdown</div>
+
+    <div *ngIf="!card.collapsed">
+      <div *ngIf="!editingMarkdown || isSelecting">
+        <button class="react full-left" (click)="editingMarkdown = true" [disabled]="isSelecting">
+          <markdown [data]="card.sourceCode"></markdown>
+        </button>
+      </div>
+      <div *ngIf="editingMarkdown && !isSelecting">
+        <textarea #markdownEditor Autofocus>{{card.sourceCode}}</textarea>
+        <button class="react" (click)="card.sourceCode = markdownEditor.value; editCustomCard()">
+          <i title="Accept" class="ms-Icon ms-Icon--Accept" aria-label="Accept"></i>
+        </button>
+        <button class="red" (click)="editingMarkdown = false">
+          <i title="Cancel" class="ms-Icon ms-Icon--Clear" aria-label="Cancel"></i>
+        </button>
+      </div>
     </div>
   </div>
 
