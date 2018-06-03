@@ -193,7 +193,7 @@ export class CardManager {
         }
     }
 
-    importJupyter(jsonContent: JSONObject) {
+    importJupyter(jsonContent: JSONObject, fileName: string) {
         try{
             (jsonContent['cells'] as JSONArray)
                 .map(cell => {
@@ -213,7 +213,22 @@ export class CardManager {
                     return newCard;
                 })
                 .map(newCard => ContentHelpers.addNewCard(newCard));
+            
+            let language: string;
+            switch(jsonContent['metadata']['kernelspec']['name']) {
+                case 'python3': 
+                    language = 'python';
+                    break
+                case 'ir':
+                    language = 'r';
+            }
+            let content =
+                (jsonContent['cells'] as JSONArray)
+                    .map(cell => cell['source'].join(''))
+                    .join('\n')
 
+            vscode.workspace.openTextDocument({language: language, content: content})
+                .then(textDocument => vscode.window.showTextDocument(textDocument));
         }
         catch(err){
             vscode.window.showInformationMessage('The Jupyter notebook file entered is in an unknown format');
