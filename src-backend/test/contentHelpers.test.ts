@@ -2,7 +2,7 @@
 
 import * as assert from 'assert';
 import {ContentHelpers} from "../contentHelpers"
-import { Card } from 'vscode-ipe-types';
+import { Card,CardOutput } from 'vscode-ipe-types';
 var sinon = require('sinon');
 let vscode = require('vscode');
 
@@ -29,16 +29,23 @@ describe("ContentHelper Tests", function () {
     });
 
     it("Install module calls terminal correctly", function() {
-
         var mock = sinon.mock(vscode.window);
         ContentHelpers.installMissingModule("help");
         mock.expects("createTerminal").once();
     });
 
     it("Increment ID works", function() {
-
         ContentHelpers.assignId();
         assert.equal(ContentHelpers.id,1);
+        ContentHelpers.id --;
+        assert.equal(ContentHelpers.id,0);
+    });
+
+    it("Checking interpret rich function", function() {
+        let result = ContentHelpers.interpretRich({'text/plain': "hello"});
+        let testObj = new CardOutput("text/plain", "hello");
+        assert.equal(result.type,testObj.type);
+        assert.equal(result.output,testObj.output);
     });
 
 });
