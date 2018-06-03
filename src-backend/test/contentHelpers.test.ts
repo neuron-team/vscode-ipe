@@ -34,4 +34,11 @@ describe("ContentHelper Tests", function () {
         ContentHelpers.installMissingModule("help");
         mock.expects("createTerminal").once();
     });
+
+    it("Increment ID works", function() {
+
+        ContentHelpers.assignId();
+        assert.equal(ContentHelpers.id,1);
+    });
+
 });
