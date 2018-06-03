@@ -13,11 +13,11 @@
     <button class="red right" (click)="deleteCard()">
       <i title="Delete" class="ms-Icon ms-Icon--Clear" aria-label="Delete"></i>
     </button>
-    <button class="react toolbar-icon right">
-      <i title="Open in Browser" class="ms-Icon ms-Icon--MiniExpand" aria-label="Open in Browser"></i>
-    </button>
-    <button class="react toolbar-icon right" (click)="collapseCard()">
+    <button class="react toolbar-icon right" (click)="collapseCard()" [style.opacity]="card.collapsed ? '1' : ''">
       <i title="Minimize" class="ms-Icon ms-Icon--ChromeMinimize" aria-label="Minimize"></i>
+    </button>
+    <button *ngIf="!card.isCustomMarkdown" class="react toolbar-icon right" (click)="openIn()">
+      <i title="Open in Browser" class="ms-Icon ms-Icon--MiniExpand" aria-label="Open in Browser"></i>
     </button>
   </span>
 
@@ -86,6 +86,10 @@
 
           <div *ngSwitchCase="'text/html'">
             <div class="output-rich" [innerHTML]="output.output" runScripts></div>
+          </div>
+
+          <div *ngSwitchCase="'application/vnd.plotly.v1+json'">
+            <app-plotly [plotlyJson]="output.output"></app-plotly>
           </div>
 
           <div *ngSwitchCase="'application/geo+json'">

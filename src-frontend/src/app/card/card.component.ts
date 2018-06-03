@@ -45,6 +45,7 @@ export class CardComponent {
   @Output() onEditCustomCard = new EventEmitter();
 
   editingTitle: boolean = false;
+  editingMarkdown: boolean = false;
 
   constructor(public sanitizer: DomSanitizer) { }
 
@@ -61,6 +62,10 @@ export class CardComponent {
 
   deleteCard() {
     this.onDelete.emit();
+  }
+
+  openIn() {
+    this.onOpenBrowser.emit()
   }
 
   collapseOutput() {
