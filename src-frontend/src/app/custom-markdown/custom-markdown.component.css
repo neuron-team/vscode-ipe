@@ -1,7 +1,19 @@
-/* Markdown */
-:host {
+
+.title {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: 16px;
+  font-weight: bold;
+  -webkit-margin-before: 0.4em;
+  -webkit-margin-after: 0.4em;
+  -webkit-margin-start: 5px;
+}
+
+.custom-markdown {
   padding: 0 6px;
 }
+
 textarea {
   color: var(--color);
   background-color: transparent;
@@ -15,6 +27,12 @@ textarea {
   height: 100px;
   max-height: 200px;
   box-sizing: border-box;
+}
+
+textarea:focus {
+  border-color: rgba(0, 119, 198, 0.7);
+  outline: rgba(0, 119, 198, 0.7);
+  background-color: rgba(170, 170, 170, 0.05);
 }
 
 .react:hover {
@@ -36,4 +54,10 @@ button {
   box-sizing: border-box;
   border-style: none;
   outline: none;
+}
+
+button:disabled,
+button:disabled:hover {
+  user-select: none;
+  color: var(--color) !important;
 }

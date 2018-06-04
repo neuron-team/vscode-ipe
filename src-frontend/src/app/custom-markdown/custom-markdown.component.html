@@ -1,7 +1,7 @@
-<div *ngIf="collapsed">
-  &nbsp; Markdown card
+<div *ngIf="collapsed" class="title">
+  &nbsp; Markdown Card
 </div>
-<div *ngIf="!collapsed">
+<div *ngIf="!collapsed" class="custom-markdown">
   <div *ngIf="!editingMarkdown || disableMouseEvents">
     <button class="react full-left" (click)="startEditing()" [disabled]="disableMouseEvents">
       <markdown [data]="markdownSource"></markdown>

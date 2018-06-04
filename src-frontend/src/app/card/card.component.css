@@ -106,8 +106,7 @@ input {
   -webkit-margin-after: 0.4em;
   -webkit-margin-start: 5px;
 }
-input:focus,
-textarea:focus {
+input:focus {
   border-color: rgba(0, 119, 198, 0.7);
   outline: rgba(0, 119, 198, 0.7);
   background-color: rgba(170, 170, 170, 0.05);
