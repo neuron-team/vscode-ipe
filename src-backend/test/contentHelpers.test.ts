@@ -35,6 +35,7 @@ describe("ContentHelper Tests", function () {
     });
 
     it("Increment ID works", function() {
+        ContentHelpers.id = 0;
         ContentHelpers.assignId();
         assert.equal(ContentHelpers.id,1);
         ContentHelpers.id --;

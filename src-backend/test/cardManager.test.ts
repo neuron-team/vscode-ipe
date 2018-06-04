@@ -7,6 +7,7 @@
 import * as assert from 'assert';
 import {CardManager} from "../cardManager"
 import { Card } from 'vscode-ipe-types';
+import { ContentHelpers } from '../contentHelpers';
 // You can import and use all API from the 'vscode' module
 // as well as import your extension to test it
 // import * as vscode from 'vscode';
@@ -26,6 +27,8 @@ describe("CardManager Tests", function () {
     const card0 = new Card(0, "Hello", "source", [], {}, '');
     const card1 = new Card(1, "Hello", "source", [], {}, '');
     const card2 = new Card(2, "Hello", "source", [], {}, '');
+    let markdownCard = new Card(3, "Hello", "source", [], {}, '');
+    markdownCard.isCustomMarkdown = true;
 
     beforeEach(function(done) {
         cardManager = new CardManager();
@@ -145,11 +148,60 @@ describe("CardManager Tests", function () {
     });
 
     it("addCustomCard()", function() {
-        
+        ContentHelpers.id = 0;
+        assert.equal(ContentHelpers.id, 0);
+
+        cardManager["cards"] = [];
+        testArrayEqual(cardManager["cards"], []);
+
+        cardManager.addCustomCard(card1); // normal card
+        assert.equal(cardManager["cards"][0].id, 0);
+        assert.equal(cardManager["cards"].length, 1);
+
+        cardManager.addCustomCard(markdownCard); // custom markdown card
+        assert.equal(cardManager["cards"][1].id, 1);
+        assert.equal(cardManager["cards"][1].kernel, 'python3');
+        assert.equal(cardManager["cards"][1].jupyterData["cell_type"],"markdown");
+        assert.equal(JSON.stringify(cardManager["cards"][1].jupyterData["metadata"]), JSON.stringify({}));
+        assert.equal(cardManager["cards"][1].jupyterData["source"], "source");
+        assert.equal(cardManager["cards"].length, 2);
+
+        ContentHelpers.id++;
+        cardManager.addCustomCard(card1);
+        assert.equal(cardManager["cards"][2].id, 3);
+        assert.equal(cardManager["cards"].length, 3);
     });
 
     it("editCustomCard()", function() {
-        
+        let tmpCard = new Card(8, "newHello", "newsource", [], {}, '')
+
+        ContentHelpers.id = 0;
+        assert.equal(ContentHelpers.id, 0);
+
+        cardManager["cards"] = [];
+        testArrayEqual(cardManager["cards"], []);
+
+        cardManager["cards"] = [card1, card2];
+        testArrayEqual(cardManager["cards"], [card1, card2]);
+
+        cardManager.editCustomCard(0, tmpCard);
+        assert.equal(cardManager["cards"][0].id, 8);
+        assert.equal(cardManager["cards"][0].title, "newHello");
+        assert.equal(cardManager["cards"][0].sourceCode, "newsource");
+        assert.equal(JSON.stringify(cardManager["cards"][0].jupyterData), JSON.stringify({}));
+
+        tmpCard.id = 9;
+        tmpCard.isCustomMarkdown = true;
+
+        cardManager.editCustomCard(1, tmpCard);
+        assert.equal(cardManager["cards"][1].id, 9);
+        assert.equal(cardManager["cards"][1].title, "newHello");
+        assert.equal(cardManager["cards"][1].sourceCode, "newsource");
+        assert.equal(cardManager["cards"][1].kernel, 'python3');
+
+        assert.equal(cardManager["cards"][1].jupyterData["cell_type"],"markdown");
+        assert.equal(JSON.stringify(cardManager["cards"][1].jupyterData["metadata"]), JSON.stringify({}));
+        assert.equal(cardManager["cards"][1].jupyterData["source"], "newsource"); 
     });
 
 });
