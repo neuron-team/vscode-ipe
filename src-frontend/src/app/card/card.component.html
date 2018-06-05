@@ -79,11 +79,11 @@
       <div class="card-output" *ngFor="let output of card.outputs">
         <div *ngIf="!card.outputCollapsed" [ngSwitch]="output.type">
           <div *ngSwitchCase="'image/png'">
-            <img [src]="sanitizer.bypassSecurityTrustUrl('data:image/png;base64,'+output.output)">
+            <app-base64-image [imageType]="'png'" [base64src]="output.output"></app-base64-image>
           </div>
 
           <div *ngSwitchCase="'image/jpeg'">
-            <img [src]="sanitizer.bypassSecurityTrustUrl('data:image/jpeg;base64,'+output.output)">
+            <app-base64-image [imageType]="'jpeg'" [base64src]="output.output"></app-base64-image>
           </div>
 
           <div *ngSwitchCase="'text/html'">
@@ -128,26 +128,11 @@
   </div>
 
 
-  <div *ngIf="card.isCustomMarkdown" class="custom-markdown">
-
-    <div *ngIf="card.collapsed" class="title" (click)="collapseCard()">Markdown</div>
-
-    <div *ngIf="!card.collapsed">
-      <div *ngIf="!editingMarkdown || isSelecting">
-        <button class="react full-left" (click)="editingMarkdown = true" [disabled]="isSelecting">
-          <markdown [data]="card.sourceCode"></markdown>
-        </button>
-      </div>
-      <div *ngIf="editingMarkdown && !isSelecting">
-        <textarea id="markdownTextArea" #markdownEditor Autofocus>{{card.sourceCode}}</textarea>
-        <button id="finishedMarkdownButton" class="react" (click)="card.sourceCode = markdownEditor.value; editCustomCard()">
-          <i title="Accept" class="ms-Icon ms-Icon--Accept" aria-label="Accept"></i>
-        </button>
-        <button id="cancelMarkdownButton" class="red" (click)="editingMarkdown = false">
-          <i title="Cancel" class="ms-Icon ms-Icon--Clear" aria-label="Cancel"></i>
-        </button>
-      </div>
-    </div>
-  </div>
+  <app-custom-markdown *ngIf="card.isCustomMarkdown"
+                       [collapsed]="card.collapsed"
+                       [markdownSource]="card.sourceCode"
+                       [disableMouseEvents]="isSelecting"
+                       (markdownChanged)="editCustomMarkdown($event)">
+  </app-custom-markdown>
 
 </div>
