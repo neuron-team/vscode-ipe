@@ -19,13 +19,13 @@
 
   <div class="extra-toolbar" [style.display]="(filter || isSelecting) ? 'block' : 'none'">
     <span class="filter" [style.display]="filter ? 'inline-block' : 'none'">
-      <label><input type="checkbox" [(ngModel)]="filterState.text" name="text" (change)="updateFilter()">
+      <label><input id="text-checkbox" type="checkbox" [(ngModel)]="filterState.text" name="text" (change)="updateFilter()">
         <span>Plain Text</span><i title="Plain Text" class="ms-Icon ms-Icon--AlignLeft" aria-label="Plain Text"></i>
       </label>
-      <label><input type="checkbox" [(ngModel)]="filterState.rich" name="rich" (change)="updateFilter()">
+      <label><input id="rich-checkbox" type="checkbox" [(ngModel)]="filterState.rich" name="rich" (change)="updateFilter()">
         <span>Rich Output</span><i title="Rich Output" class="ms-Icon ms-Icon--BarChartVertical" aria-label="Rich Output"></i>
       </label>
-      <label><input type="checkbox" [(ngModel)]="filterState.error" name="error" (change)="updateFilter()">
+      <label><input id="error-checkbox" type="checkbox" [(ngModel)]="filterState.error" name="error" (change)="updateFilter()">
         <span>Errors</span><i title="Errors" class="ms-Icon ms-Icon--Error" aria-label="Errors"></i>
       </label>
     </span>
