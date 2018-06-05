@@ -7,6 +7,7 @@ declare var acquireVsCodeApi;
 export class ExtensionService {
 
   onAddCard: EventEmitter<Card> = new EventEmitter();
+  onShowUndoButton: EventEmitter<void> = new EventEmitter();
   private vscode = acquireVsCodeApi();
 
   onMoveCardUp: EventEmitter<number> = new EventEmitter();
@@ -32,7 +33,7 @@ export class ExtensionService {
       }
 
       else if (message.command === 'show-undo') {
-        // STUB
+        this.onShowUndoButton.next();
       }
     });
 
