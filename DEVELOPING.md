@@ -26,6 +26,11 @@
 * Execute `npm run compile`
 * Find the outputs in `/out` and `/html`
 
+## Testing
+
+* To run **backend** tests, execute `npm run test`
+* To run **frontend** tests, execute `npm run test-frontend`
+
 ## List of all build commands
 * `npm install` - Installs node dependencies.
 * `npm run clean` - Cleans the build output.

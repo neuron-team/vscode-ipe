@@ -45,7 +45,6 @@ export class CardComponent {
   @Output() onEditCustomCard = new EventEmitter();
 
   editingTitle: boolean = false;
-  editingMarkdown: boolean = false;
 
   constructor(public sanitizer: DomSanitizer) { }
 
@@ -79,7 +78,7 @@ export class CardComponent {
   }
 
   collapseCard() {
-    this.card.collapsed = !this.card.collapsed; 
+    this.card.collapsed = !this.card.collapsed;
     this.editingTitle = false;
     this.onCollapseCard.emit({value: this.card.collapsed});
   }
@@ -89,8 +88,8 @@ export class CardComponent {
     this.onChangeTitle.emit({newTitle: this.card.title});
   }
 
-  editCustomCard() {
-    this.editingMarkdown = false;
+  editCustomMarkdown(newSource: string) {
+    this.card.sourceCode = newSource;
     this.onEditCustomCard.emit();
   }
 }
