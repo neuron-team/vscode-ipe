@@ -20,6 +20,7 @@ export class ExtensionService {
   onEditCustomCard: EventEmitter<{index: number, card: Card}> = new EventEmitter();
   onJupyterExport: EventEmitter<number[]> = new EventEmitter();
   onOpenInBrowser: EventEmitter<number> = new EventEmitter();
+  onUndoClicked: EventEmitter<number> = new EventEmitter();
 
   constructor() {
     window.addEventListener('message', event => {
@@ -28,6 +29,10 @@ export class ExtensionService {
 
       if (message.command === 'add-card') {
         this.onAddCard.next(message.card);
+      }
+
+      else if (message.command === 'show-undo') {
+        // STUB
       }
     });
 
@@ -79,6 +84,9 @@ export class ExtensionService {
     this.onOpenInBrowser.subscribe(index => this.vscode.postMessage({
       command: 'openInBrowser',
       index: index
+    }));
+    this.onUndoClicked.subscribe(() => this.vscode.postMessage({
+      command: 'undoClicked'
     }));
   }
 }

@@ -45,6 +45,9 @@ export class WebviewController {
     private _onOpenInBrowser: EventEmitter<number> = new EventEmitter();
     get onOpenInBrowser(): Event<number> { return this._onOpenInBrowser.event; }
 
+    private _undoClicked: EventEmitter<number> = new EventEmitter();
+    get undoClicked(): Event<number> { return this._undoClicked.event; }
+
     constructor(private context: vscode.ExtensionContext) {}
 
     show() {
@@ -109,6 +112,10 @@ export class WebviewController {
                         break;
                     case 'openInBrowser':
                         this._onOpenInBrowser.fire(message.index);
+                        break;
+                    case 'undoClicked':
+                        this._undoClicked.fire();
+                        break;
                 }
             })
         }
@@ -118,6 +125,12 @@ export class WebviewController {
         if (this.panel) this.panel.webview.postMessage({
             command: 'add-card',
             card: card
+        });
+    }
+
+    showUndoButton() {
+        if (this.panel) this.panel.webview.postMessage({
+            command: 'show-undo'
         });
     }
     
