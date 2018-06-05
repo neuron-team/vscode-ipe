@@ -87,7 +87,9 @@ export function activate(context: vscode.ExtensionContext) {
                 jupyterManager.getJupyterAddressAndToken()
                     .then(info => {
                         initialisePanel(info);
-                        localJupyter = true;
+                        if(jupyterManager.workspaceSet) {
+                            localJupyter = true;
+                        }
                     })
                     .catch(() => vscode.window.showErrorMessage('Could not start a notebook automatically'));
             }
@@ -114,7 +116,9 @@ export function activate(context: vscode.ExtensionContext) {
                         jupyterManager.getJupyterAddressAndToken()
                             .then(info => {
                                 initialisePanel(info);
-                                localJupyter = true;
+                                if(jupyterManager.workspaceSet) {
+                                    localJupyter = true;
+                                }
                             })
                             .catch(() => vscode.window.showErrorMessage('Could not start a notebook automatically'));
                     } else if (choice === 'Enter details manually') {
