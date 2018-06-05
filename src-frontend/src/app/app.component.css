@@ -19,6 +19,13 @@ app-toolbar {
   z-index: 9999;
 }
 
+app-snackbar {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  z-index: 9999;
+}
+
 @media screen and (max-width: 220px){
   .cards-list {
     padding: 0 10px 0 0;
