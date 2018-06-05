@@ -19,6 +19,8 @@ import { KatexModule } from 'ng-katex';
 import { VDOMComponent } from './vdom/vdom.component';
 import { MarkdownModule } from 'ngx-markdown';
 import { PlotlyComponent } from './plotly/plotly.component';
+import { Base64ImageComponent } from './base64-image/base64-image.component';
+import { CustomMarkdownComponent } from './custom-markdown/custom-markdown.component';
 
 @NgModule({
   declarations: [
@@ -32,8 +34,10 @@ import { PlotlyComponent } from './plotly/plotly.component';
     ToolbarComponent,
     MapComponent,
     MathComponent,
-    PlotlyComponent,
-    VDOMComponent
+    VDOMComponent,
+    Base64ImageComponent,
+    CustomMarkdownComponent,
+    PlotlyComponent
   ],
   imports: [
     BrowserModule,

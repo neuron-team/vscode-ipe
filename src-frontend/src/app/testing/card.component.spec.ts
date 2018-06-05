@@ -13,6 +13,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MathComponent} from '../math/math.component'
 import { MarkdownModule } from 'ngx-markdown';
 import { KatexModule } from 'ng-katex';
+import {Base64ImageComponent} from '../base64-image/base64-image.component'
+import {PlotlyComponent} from '../plotly/plotly.component'
+import {VDOMComponent} from '../vdom/vdom.component'
+import {CustomMarkdownComponent } from '../custom-markdown/custom-markdown.component'
 describe('CardComponent', () => {
     let component:CardComponent;
     let fixture: ComponentFixture<CardComponent>;
@@ -20,7 +24,8 @@ describe('CardComponent', () => {
     beforeEach(async(() => {
       TestBed.configureTestingModule({
         imports: [ FormsModule,BrowserAnimationsModule,MarkdownModule.forRoot(),KatexModule],
-        declarations: [CardComponent,HighlightPipe,PreviewPipe,MapComponent,AnsiColorizePipe,MathComponent],
+        declarations: [CardComponent,HighlightPipe,PreviewPipe,MapComponent,AnsiColorizePipe,MathComponent,Base64ImageComponent,
+          PlotlyComponent,VDOMComponent,CustomMarkdownComponent],
         providers: [RegexService]
       })
       .compileComponents();
@@ -179,50 +184,5 @@ describe('CardComponent', () => {
     expect(component.card.codeCollapsed).toEqual(false);
   });
 });
-
-it('Clicking cancel button should set editing markdown to false  ', () => {
-  component.card.isCustomMarkdown = true;
-  component.editingMarkdown = true;
-  fixture.detectChanges();
-  const hostElement = fixture.nativeElement;
-  const Button = hostElement.querySelector('#cancelMarkdownButton');
-  sendClick(Button).then(()=> {
-    expect(component.editingMarkdown).toEqual(false);
-  });
-});
-
-it('Clicking cancel button should keep card source code  ', () => {
-  component.card.isCustomMarkdown = true;
-  component.editingMarkdown = true;
-  component.card.sourceCode= "print('hello world')";
-  fixture.detectChanges();
-  const hostElement = fixture.nativeElement;
-  const Button = hostElement.querySelector('#cancelMarkdownButton');
-  sendClick(Button).then(()=> {
-    expect(component.editingMarkdown).toEqual(false);
-    expect(component.card.sourceCode).toEqual("print('hello world')");
-  });
-});
-it('Clicking finished markdown button should set editing markdown to false and modifies source code  ', () => {
-  component.card.isCustomMarkdown = true;
-  component.editingMarkdown = true;
-  fixture.detectChanges();
-  const hostElement = fixture.nativeElement;
-  const Button = hostElement.querySelector('#finishedMarkdownButton');
-  const MarkdownTextarea =hostElement.querySelector('#markdownTextArea'); 
-  let mdString = "# This is a header in markdown";
-  MarkdownTextarea.value = mdString;
-  fixture.detectChanges();
-  sendClick(Button).then(()=> {
-    expect(component.editingMarkdown).toEqual(false);
-  });
-  
-  expect(component.card.sourceCode).toEqual(mdString);
-});
-
-
-
-
-  
 
 });
