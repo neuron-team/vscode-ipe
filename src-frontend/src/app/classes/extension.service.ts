@@ -10,19 +10,6 @@ export class ExtensionService {
   onShowUndoButton: EventEmitter<void> = new EventEmitter();
   private vscode = acquireVsCodeApi();
 
-  onMoveCardUp: EventEmitter<number> = new EventEmitter();
-  onMoveCardDown: EventEmitter<number> = new EventEmitter();
-  onDeleteCard: EventEmitter<number> = new EventEmitter();
-  onChangeTitle: EventEmitter<{index: number, newTitle: string}> = new EventEmitter();
-  onCollapseCode: EventEmitter<{index: number, value: boolean}> = new EventEmitter();
-  onCollapseOutput: EventEmitter<{index: number, value: boolean}> = new EventEmitter();
-  onCollapseCard: EventEmitter<{index: number, value: boolean}> = new EventEmitter();
-  onAddCustomCard: EventEmitter<Card> = new EventEmitter();
-  onEditCustomCard: EventEmitter<{index: number, card: Card}> = new EventEmitter();
-  onJupyterExport: EventEmitter<number[]> = new EventEmitter();
-  onOpenInBrowser: EventEmitter<number> = new EventEmitter();
-  onUndoClicked: EventEmitter<number> = new EventEmitter();
-
   constructor() {
     window.addEventListener('message', event => {
 
@@ -36,58 +23,53 @@ export class ExtensionService {
         this.onShowUndoButton.next();
       }
     });
+  }
 
-    this.onMoveCardUp.subscribe(index => this.vscode.postMessage({
-      command: 'moveCardUp',
-      index: index
-    }));
-    this.onMoveCardDown.subscribe(index => this.vscode.postMessage({
-      command: 'moveCardDown',
-      index: index
-    }));
-    this.onDeleteCard.subscribe(index => this.vscode.postMessage({
-      command: 'deleteCard',
-      index: index
-    }));
-    this.onChangeTitle.subscribe(data => this.vscode.postMessage({
-      command: 'changeTitle',
-      index: data.index,
-      newTitle: data.newTitle
-    }));
-    this.onCollapseCode.subscribe(data => this.vscode.postMessage({
-      command: 'collapseCode',
-      index: data.index,
-      value: data.value
-    }));
-    this.onCollapseOutput.subscribe(data => this.vscode.postMessage({
-      command: 'collapseOutput',
-      index: data.index,
-      value: data.value
-    }));
-    this.onCollapseCard.subscribe(data => this.vscode.postMessage({
-      command: 'collapseCard',
-      index: data.index,
-      value: data.value
-    }));
-    this.onAddCustomCard.subscribe(card => this.vscode.postMessage({
-      command: 'addCustomCard',
-      card: card
-    }));
-    this.onEditCustomCard.subscribe(data => this.vscode.postMessage({
-      command: 'editCustomCard',
-      index: data.index,
-      card: data.card
-    }));
-    this.onJupyterExport.subscribe(indexes => this.vscode.postMessage({
-      command: 'jupyterExport',
-      indexes: indexes
-    }));
-    this.onOpenInBrowser.subscribe(index => this.vscode.postMessage({
-      command: 'openInBrowser',
-      index: index
-    }));
-    this.onUndoClicked.subscribe(() => this.vscode.postMessage({
-      command: 'undoClicked'
-    }));
+  moveCardUp(index: number) {
+    this.vscode.postMessage({command: 'moveCardUp', index: index})
+  }
+
+  moveCardDown(index: number) {
+    this.vscode.postMessage({command: 'moveCardDown', index: index})
+  }
+
+  deleteCard(index: number) {
+    this.vscode.postMessage({command: 'deleteCard', index: index})
+  }
+
+  changeCardTitle(index: number, newTitle: string) {
+    this.vscode.postMessage({command: 'changeTitle', index: index, newTitle: newTitle})
+  }
+
+  collapseCode(index: number, value: boolean) {
+    this.vscode.postMessage({command: 'collapseCode', index: index, value: value})
+  }
+
+  collapseOutput(index: number, value: boolean) {
+    this.vscode.postMessage({command: 'collapseOutput', index: index, value: value})
+  }
+
+  collapseCard(index: number, value: boolean) {
+    this.vscode.postMessage({command: 'collapseCard', index: index, value: value})
+  }
+
+  addCustomCard(card: Card) {
+    this.vscode.postMessage({command: 'addCustomCard', card: card})
+  }
+
+  editCustomCard(index: number, newCard: Card) {
+    this.vscode.postMessage({command: 'editCustomCard', index: index, card: newCard})
+  }
+
+  jupyterExport(indexes: number[]) {
+    this.vscode.postMessage({command: 'jupyterExport', indexes: indexes})
+  }
+
+  openInBrowser(index: number) {
+    this.vscode.postMessage({command: 'openInBrowser', index: index})
+  }
+
+  undoClicked() {
+    this.vscode.postMessage({command: 'undoClicked'})
   }
 }
