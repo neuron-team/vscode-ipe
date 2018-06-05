@@ -3,16 +3,16 @@
 </div>
 <div *ngIf="!collapsed" class="custom-markdown">
   <div *ngIf="!editingMarkdown || disableMouseEvents">
-    <button class="react full-left" (click)="startEditing()" [disabled]="disableMouseEvents">
+    <button id="startEditButton" class="react full-left" (click)="startEditing()" [disabled]="disableMouseEvents">
       <markdown [data]="markdownSource"></markdown>
     </button>
   </div>
   <div *ngIf="editingMarkdown && !disableMouseEvents">
     <textarea #markdownEditor Autofocus>{{markdownSource}}</textarea>
-    <button class="react" (click)="doneEditing(markdownEditor.value)">
+    <button id="doneEditButton" class="react" (click)="doneEditing(markdownEditor.value)">
       <i title="Accept" class="ms-Icon ms-Icon--Accept" aria-label="Accept"></i>
     </button>
-    <button class="red" (click)="cancelEditing()">
+    <button id="cancelEditButton"class="red" (click)="cancelEditing()">
       <i title="Cancel" class="ms-Icon ms-Icon--Clear" aria-label="Cancel"></i>
     </button>
   </div>
