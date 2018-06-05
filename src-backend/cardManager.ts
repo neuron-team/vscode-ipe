@@ -119,7 +119,7 @@ export class CardManager {
     }
 
     moveCardUp(index: number) {
-        if (index > -1) {
+        if (index > 0) {
             const tmp: Card = this.cards[index - 1];
             this.cards[index - 1] = this.cards[index];
             this.cards[index] = tmp;
