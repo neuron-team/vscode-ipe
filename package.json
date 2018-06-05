@@ -117,14 +117,15 @@
     "watch": "npm run build-types && npm run watch-backend",
     "postinstall": "node ./node_modules/vscode/bin/install",
     "test": "npm run compile && node ./node_modules/vscode/bin/test",
-    "clean-tests":"shx rm -rf out/test/*.*"
+    "clean-tests": "shx rm -rf out/test/*.*"
   },
   "devDependencies": {
     "@types/mocha": "^2.2.42",
     "@types/node": "^7.0.43",
     "shx": "^0.2.2",
     "typescript": "^2.6.1",
-    "vscode": "^1.1.6"
+    "vscode": "^1.1.6",
+    "sinon": "^5.0.10"
   },
   "dependencies": {
     "@jupyterlab/services": "^2.0.3",
