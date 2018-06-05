@@ -127,11 +127,5 @@ export class WebviewController {
             card: card
         });
     }
-
-    showUndoButton() {
-        if (this.panel) this.panel.webview.postMessage({
-            command: 'show-undo'
-        });
-    }
     
 }

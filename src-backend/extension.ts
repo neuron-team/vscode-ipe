@@ -44,7 +44,7 @@ export function activate(context: vscode.ExtensionContext) {
     webview.undoClicked(() => {
         cardManager.addCard(cardManager.lastDeletedCard);
         webview.addCard(cardManager.lastDeletedCard);
-    })
+    });
 
     cardManager.onOpenNotebook(fileName => interpreter.openNotebookInBrowser(fileName));
 

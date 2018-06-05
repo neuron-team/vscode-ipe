@@ -2,6 +2,7 @@ import { AfterViewInit, Component, QueryList, ViewChild, ViewChildren } from '@a
 import { ExtensionService } from './classes/extension.service';
 import { Card, CardOutput } from 'vscode-ipe-types';
 import { RegexService } from './classes/regex.service';
+import Timer = NodeJS.Timer;
 
 @Component({
   selector: 'app-root',
@@ -25,10 +26,25 @@ export class AppComponent implements AfterViewInit {
     error: true
   };
 
+  /* Undo button */
+  showingUndoButton: boolean = false;
+  undoButtonTimer: Timer = null;
+
   constructor(private extension: ExtensionService, private regexService: RegexService) {
     extension.onAddCard.subscribe(card => {
       this.addCard(card);
     });
+  }
+
+  showUndoButton() {
+    this.showingUndoButton = true;
+    if (this.undoButtonTimer) {
+      clearTimeout(this.undoButtonTimer);
+    }
+    setTimeout(() => {
+      this.undoButtonTimer = null;
+      this.showingUndoButton = false;
+    }, 8000);
   }
 
   updateFilters(filters: any): void {
@@ -41,7 +57,7 @@ export class AppComponent implements AfterViewInit {
     this.checkVisible();
   }
 
-  /* Visable Cards */
+  /* Visible cards */
   cardMatchesSearchQuery(card: Card): boolean {
     if (this.searchQuery === '') { return true; }
 
@@ -159,6 +175,7 @@ export class AppComponent implements AfterViewInit {
     if (index > -1) {
       this.cards.splice(index, 1);
       this.extension.deleteCard(index);
+      this.showUndoButton();
     }
   }
 
@@ -186,6 +203,11 @@ export class AppComponent implements AfterViewInit {
   editCustomCard(card: Card) {
     const index: number = this.cards.indexOf(card);
     this.extension.editCustomCard(index, card);
+  }
+
+  undoClicked() {
+    this.extension.undoClicked();
+    this.showingUndoButton = false;
   }
 
 

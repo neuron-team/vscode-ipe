@@ -1,0 +1,9 @@
+:host {
+  position: fixed;
+  bottom: 0;
+
+  background-color: #444444;
+  width: 100%;
+  padding: 12px;
+  color: white;
+}
