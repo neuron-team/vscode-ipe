@@ -8,7 +8,7 @@
     </button>
   </div>
   <div *ngIf="editingMarkdown && !disableMouseEvents">
-    <textarea #markdownEditor Autofocus>{{markdownSource}}</textarea>
+    <textarea id="markdownTextArea" #markdownEditor Autofocus>{{markdownSource}}</textarea>
     <button id="doneEditButton" class="react" (click)="doneEditing(markdownEditor.value)">
       <i title="Accept" class="ms-Icon ms-Icon--Accept" aria-label="Accept"></i>
     </button>
