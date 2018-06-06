@@ -197,10 +197,15 @@ export class CardManager {
         try{
             (jsonContent['cells'] as JSONArray)
                 .map(cell => {
+                    let source = cell['source'];
+                    if(Array.isArray(source)){
+                        source = source.join('');
+                    }
+
                     let newCard = new Card(   
                         ContentHelpers.assignId(),
-                        ContentHelpers.makeCardTitle(cell['source'].join('')),
-                        cell['source'].join(''),
+                        ContentHelpers.makeCardTitle(source),
+                        source,
                         this.processJupyterOutputs(cell['outputs'] as JSONArray),
                         cell as object,
                         jsonContent['metadata']['kernelspec']['name'] as string
@@ -209,7 +214,6 @@ export class CardManager {
                     if(cell['cell_type'] == 'markdown'){
                         newCard.isCustomMarkdown = true;
                     }
-                    console.log(newCard);
                     return newCard;
                 })
                 .map(newCard => ContentHelpers.addNewCard(newCard));
@@ -224,7 +228,13 @@ export class CardManager {
             }
             let content =
                 (jsonContent['cells'] as JSONArray)
-                    .map(cell => cell['source'].join(''))
+                    .map(cell => {
+                        let source = cell['source'];
+                        if(Array.isArray(source)){
+                            source = source.join('');
+                        }
+                        return source;
+                    })
                     .join('\n')
 
             vscode.workspace.openTextDocument({language: language, content: content})
@@ -232,39 +242,46 @@ export class CardManager {
         }
         catch(err){
             vscode.window.showInformationMessage('The Jupyter notebook file entered is in an unknown format');
+            console.log(err);
         }
     }
 
     processJupyterOutputs(outputs: JSONArray): CardOutput[] {
-        return outputs.map(output => {
-            let keys = Object.keys(output);
-
-            if(keys.indexOf('name') > -1) {
-                let value = '';
-                if(typeof output['text'] === 'string') {
-                    value = output['text'];
+        if(!outputs){
+            return null
+        }
+        else{
+            return outputs.map(output => {
+                let keys = Object.keys(output);
+    
+                if(keys.indexOf('name') > -1) {
+                    let value = '';
+                    if(typeof output['text'] === 'string') {
+                        value = output['text'];
+                    } else {
+                        value = output['text'].join('');
+                    }
+    
+                    return new CardOutput(
+                        'stdout',
+                        value
+                    )
+                } else if(keys.indexOf('traceback') > -1) {
+                    return new CardOutput(
+                        'error',
+                        (output['traceback'] as string[]).join('\n')
+                    )
                 } else {
-                    value = output['text'].join('');
+                    let type = ContentHelpers.chooseTypeFromComplexData(output['data']);
+                    console.log(type);
+                    return new CardOutput(
+                        type,
+                        output['data'][type]
+                    )
                 }
-
-                return new CardOutput(
-                    'stdout',
-                    value
-                )
-            } else if(keys.indexOf('traceback') > -1) {
-                return new CardOutput(
-                    'error',
-                    (output['traceback'] as string[]).join('\n')
-                )
-            } else {
-                let type = ContentHelpers.chooseTypeFromComplexData(output['data']);
-                console.log(type);
-                return new CardOutput(
-                    type,
-                    output['data'][type]
-                )
-            }
-        })
+            })
+        }
+        
     }
 }
 
