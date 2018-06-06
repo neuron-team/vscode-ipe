@@ -48,8 +48,8 @@ describe("CardManager Tests", function () {
     it("Move cards up works - moveCardUp() ", function() {
         cardManager["cards"] = [card0, card1];
 
-        // cardManager.moveCardUp(8); //move something not existed -> no change
-        // testArrayEqual(cardManager["cards"], [card0, card1]);
+        cardManager.moveCardUp(8); //move something not existed -> no change
+        testArrayEqual(cardManager["cards"], [card0, card1]);
 
         cardManager.moveCardUp(1);
         testArrayEqual(cardManager["cards"], [card1, card0]);
@@ -96,8 +96,8 @@ describe("CardManager Tests", function () {
         cardManager["cards"] = [card0];
         testArrayEqual(cardManager["cards"], [card0]);
 
-        // cardManager.changeTitle(8, "ThisisanewTitle"); //change something not existed -> no change
-        // testArrayEqual(cardManager["cards"], [card0]);
+        cardManager.changeTitle(8, "ThisisanewTitle"); //change something not existed -> no change
+        testArrayEqual(cardManager["cards"], [card0]);
 
         cardManager.changeTitle(0, "ThisisanewTitle");
         assert.equal(cardManager["cards"][0].title, "ThisisanewTitle");
@@ -108,8 +108,8 @@ describe("CardManager Tests", function () {
         assert.equal(cardManager["cards"][0].codeCollapsed, true);
         testArrayEqual(cardManager["cards"], [card0]);
 
-        // cardManager.collapseCode(8, false); //change something not existed -> no change
-        // testArrayEqual(cardManager["cards"], [card0]);
+        cardManager.collapseCode(8, false); //change something not existed -> no change
+        testArrayEqual(cardManager["cards"], [card0]);
 
         cardManager.collapseCode(0, false);
         assert.equal(cardManager["cards"][0].codeCollapsed, false);
@@ -120,8 +120,8 @@ describe("CardManager Tests", function () {
         assert.equal(cardManager["cards"][0].outputCollapsed, false);
         testArrayEqual(cardManager["cards"], [card0]);
 
-        // cardManager.collapseOutput(8, true); //change something not existed -> no change
-        // testArrayEqual(cardManager["cards"], [card0]);
+        cardManager.collapseOutput(8, true); //change something not existed -> no change
+        testArrayEqual(cardManager["cards"], [card0]);
 
         cardManager.collapseOutput(0, true);
         assert.equal(cardManager["cards"][0].outputCollapsed, true);
@@ -132,8 +132,8 @@ describe("CardManager Tests", function () {
         assert.equal(cardManager["cards"][0].collapsed, false);
         testArrayEqual(cardManager["cards"], [card0]);
 
-        // cardManager.collapseCard(8, true); //change something not existed -> no change
-        // testArrayEqual(cardManager["cards"], [card0]);
+        cardManager.collapseCard(8, true); //change something not existed -> no change
+        testArrayEqual(cardManager["cards"], [card0]);
 
         cardManager.collapseCard(0, true);
         assert.equal(cardManager["cards"][0].collapsed, true);
