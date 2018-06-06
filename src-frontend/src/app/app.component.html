@@ -32,3 +32,8 @@
   </div>
 </div>
 
+<app-snackbar
+  *ngIf="showingUndoButton"
+  content="Card Deleted"
+  action="Undo"
+  (actionClicked)="undoClicked()"></app-snackbar>

@@ -9,8 +9,9 @@ import { ContentHelpers } from './contentHelpers';
 export class CardManager {
     private _onOpenNotebook : EventEmitter<string> = new EventEmitter();
     get onOpenNotebook(): Event<string> { return this._onOpenNotebook.event; }
-    
+
     private cards: Card[] = [];
+    public lastDeletedCard: Card;
 
     private metadataPy = {
         "kernelspec": {
@@ -135,7 +136,10 @@ export class CardManager {
     }
 
     deleteCard(index: number) {
-        if (index > -1 && index < this.cards.length) { this.cards.splice(index, 1); }
+        if (index > -1 && index < this.cards.length) {
+            this.lastDeletedCard = this.cards[index];
+            this.cards.splice(index, 1);
+        }
     }
 
     changeTitle(index: number, newTitle: string) {
