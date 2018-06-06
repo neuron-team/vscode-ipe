@@ -7,9 +7,16 @@ export class JupyterManager {
     private static url: URL;
     private static urlPattern = /http:\/\/localhost:[0-9]+\/\?token=[a-z0-9]+/g;
     private static timeout = 10; // 10 seconds
+    public workspaceSet = false;
 
     constructor() {
-        JupyterManager.process = spawn('jupyter', ['notebook', '--no-browser', '--notebook-dir=' + vscode.workspace.workspaceFolders[0].uri.fsPath], {detached: false});
+        if(vscode.workspace.workspaceFolders) {
+            JupyterManager.process = spawn('jupyter', ['notebook', '--no-browser', '--notebook-dir=' + vscode.workspace.workspaceFolders[0].uri.fsPath], {detached: false});
+            this.workspaceSet = true;
+        }
+        else {
+            JupyterManager.process = spawn('jupyter', ['notebook', '--no-browser'], {detached: false});
+        }
         JupyterManager.process.stderr.on('data', (data: string) => this.extractJupyterInfos(data));
     }
 
