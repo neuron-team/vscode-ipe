@@ -3,44 +3,10 @@ import * as vscode from 'vscode';
 
 import { Card } from 'vscode-ipe-types';
 import { Interpreter } from '../interpreter';
-// import { ContentHelpers } from '../contentHelpers';
 import { JupyterManager } from '../jupyterManager';
 import { Kernel } from '@jupyterlab/services';
 
-// describe('Python interpreter tests', function () {
-//     this.timeout(10000);
-//     let interpreter: Interpreter;
-//     let jupyterManager: JupyterManager;
-
-//     before(async function() {
-//         // For slow computers to connect to Jupyter
-//         //this.timeout(10000);
-
-//         interpreter = new Interpreter();
-//         jupyterManager = new JupyterManager();
-
-//         // Should use await when dealing with promises
-//         await jupyterManager.getJupyterAddressAndToken()
-//             .then(({baseUrl, token}) => {
-//                 interpreter.connectToServer(baseUrl, token);
-//                 //interpreter.startKernel('python3');
-//             })
-//             .catch((errorMsg) => console.log(errorMsg));
-//     })
-
-//     // Problem: Not shutting down notebook
-//     after(function(done) {
-//         JupyterManager.disposeNotebook();
-//         done();
-//     })
-
-//     it('should start python kernel', async function () {
-//         await interpreter.startKernel('python3');
-
-//         assert.equal(interpreter['serverSettings'], 'python3');
-//     })
-// })
-
+// Requires JupyterManager to work properly
 describe('Python interpreter tests', function () {
     this.timeout(10000);
     let interpreter: Interpreter;
@@ -55,7 +21,6 @@ describe('Python interpreter tests', function () {
             .then(({ baseUrl, token }) => {
                 interpreter.connectToServer(baseUrl, token);
             })
-            .catch((errorMsg) => console.log(errorMsg));
     })
 
     // Problem: Not shutting down notebook
@@ -64,7 +29,6 @@ describe('Python interpreter tests', function () {
         done();
     })
 
-    // test that ServerConnection.makeSettings make the right interpreter.serverSettings
     it('should make the proper server settings', function () {
         let serverSettings = interpreter['serverSettings'];
         assert.equal(serverSettings.baseUrl.startsWith('http://localhost:'), true);
@@ -74,9 +38,28 @@ describe('Python interpreter tests', function () {
 
     it('should start python kernel', async function() {
         await interpreter.startKernel('python3');
-        let kernelPromise = interpreter['kernelPromise'];
+        const kernelPromise = interpreter['kernelPromise']['python3'];
+        
+        // Beware of evergreen tests when working with promises
+        const kernelResult = await kernelPromise;
+        // console.log(kernelResult);
 
-        kernelPromise['python3']
-            .then(kernel => assert.equal(kernel.isReady, true))
+        assert.equal(kernelResult.isReady, true);
+    })
+
+    it('should restart python kernel', async function() {
+        await interpreter.startKernel('python3');
+        const oriPromise = interpreter['kernelPromise']['python3'];
+        const oriResult = await oriPromise;
+
+        assert.equal(oriResult.isReady, true); // Original kernel is working
+
+        await interpreter.restartKernels();
+        const newPromise = interpreter['kernelPromise']['python3'];
+        const newResult = await newPromise;
+
+        assert.equal(oriResult.isReady, false); // Original kernel is no longer working
+        assert.equal(newResult.isReady, true); // New kernel is working
+        assert.notEqual(oriResult.id, newResult.id);
     })
 })
