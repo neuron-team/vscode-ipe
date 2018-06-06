@@ -120,7 +120,7 @@ export class CardManager {
     }
 
     moveCardUp(index: number) {
-        if (index > -1) {
+        if (index > 0 && index < this.cards.length) {
             const tmp: Card = this.cards[index - 1];
             this.cards[index - 1] = this.cards[index];
             this.cards[index] = tmp;
@@ -136,32 +136,32 @@ export class CardManager {
     }
 
     deleteCard(index: number) {
-        if (index > -1) { 
+        if (index > -1 && index < this.cards.length) {
             this.lastDeletedCard = this.cards[index];
-            this.cards.splice(index, 1); 
+            this.cards.splice(index, 1);
         }
     }
 
     changeTitle(index: number, newTitle: string) {
-        if (index > -1) {
+        if (index > -1 && index < this.cards.length) {
             this.cards[index].title = newTitle;
         }
     }
     
     collapseCode(index: number, value: boolean) {
-        if (index > -1) {
+        if (index > -1 && index < this.cards.length) {
             this.cards[index].codeCollapsed = value;
         }
     }
 
     collapseOutput(index: number, value: boolean) {
-        if (index > -1) {
+        if (index > -1 && index < this.cards.length) {
             this.cards[index].outputCollapsed = value;
         }
     }
 
     collapseCard(index: number, value: boolean) {
-        if (index > -1) {
+        if (index > -1 && index < this.cards.length) {
             this.cards[index].collapsed = value;
         }
     }
@@ -182,7 +182,7 @@ export class CardManager {
     }
 
     editCustomCard(index: number, card: Card) {
-        if (index > -1) {
+        if (index > -1 && index < this.cards.length) {
             let cardEdited = card;
             if(cardEdited.isCustomMarkdown){
                 cardEdited.kernel = 'python3';

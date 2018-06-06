@@ -6,7 +6,7 @@ import {DomSanitizer, SafeUrl} from "@angular/platform-browser";
   template: `<img [src]="imageSrc">`
 })
 export class Base64ImageComponent {
-  protected imageSrc: SafeUrl;
+  imageSrc: SafeUrl;
 
   private _base64src: string = '';
   private _imageType: string = 'png';
