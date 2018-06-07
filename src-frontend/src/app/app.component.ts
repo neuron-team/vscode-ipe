@@ -2,7 +2,6 @@ import { AfterViewInit, Component, QueryList, ViewChild, ViewChildren } from '@a
 import { ExtensionService } from './classes/extension.service';
 import { Card, CardOutput } from 'vscode-ipe-types';
 import { RegexService } from './classes/regex.service';
-import Timer = NodeJS.Timer;
 
 @Component({
   selector: 'app-root',
@@ -28,7 +27,7 @@ export class AppComponent implements AfterViewInit {
 
   /* Undo button */
   showingUndoButton: boolean = false;
-  undoButtonTimer: Timer = null;
+  undoButtonTimer = null;
 
   constructor(private extension: ExtensionService, private regexService: RegexService) {
     extension.onAddCard.subscribe(card => {
