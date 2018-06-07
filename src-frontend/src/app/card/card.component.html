@@ -86,6 +86,10 @@
             <app-base64-image [imageType]="'jpeg'" [base64src]="output.output"></app-base64-image>
           </div>
 
+          <div *ngSwitchCase="'application/pdf'">
+            <app-pdf [base64src]="output.output"></app-pdf>
+          </div>
+
           <div *ngSwitchCase="'text/html'">
             <div class="output-rich" [innerHTML]="output.output" runScripts></div>
           </div>

@@ -21,6 +21,7 @@ import { MarkdownModule } from 'ngx-markdown';
 import { PlotlyComponent } from './plotly/plotly.component';
 import { Base64ImageComponent } from './base64-image/base64-image.component';
 import { CustomMarkdownComponent } from './custom-markdown/custom-markdown.component';
+import { PdfComponent } from './pdf/pdf.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { CustomMarkdownComponent } from './custom-markdown/custom-markdown.compo
     VDOMComponent,
     Base64ImageComponent,
     CustomMarkdownComponent,
-    PlotlyComponent
+    PlotlyComponent,
+    PdfComponent
   ],
   imports: [
     BrowserModule,
