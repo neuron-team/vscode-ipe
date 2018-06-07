@@ -109,9 +109,17 @@ export class AppComponent implements AfterViewInit {
   }
 
   deleteSelectedCards() {
+    let indexes = []
+
     this.selectedCards.forEach(value => {
-      this.deleteCard(value);
+      const index: number = this.cards.indexOf(value);
+      if (index > -1) {
+        indexes.push(index)
+        this.cards.splice(index, 1);
+      }
     })
+    this.extension.deleteSelectedCards(indexes);
+    this.showUndoButton();
   }
 
   selectAll() {

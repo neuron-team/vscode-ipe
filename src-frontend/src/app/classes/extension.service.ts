@@ -32,6 +32,10 @@ export class ExtensionService {
     this.vscode.postMessage({command: 'deleteCard', index: index})
   }
 
+  deleteSelectedCards(indexes: number[]) {
+    this.vscode.postMessage({command: 'deleteSelectedCards', indexes: indexes})
+  }
+
   changeCardTitle(index: number, newTitle: string) {
     this.vscode.postMessage({command: 'changeTitle', index: index, newTitle: newTitle})
   }
