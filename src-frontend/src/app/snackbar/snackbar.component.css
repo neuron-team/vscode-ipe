@@ -10,6 +10,7 @@
   background-color: rgba(85, 85, 85, 0.3);
   color: var(--color);
   margin-right: 20px;
+  user-select: none;
 }
 
 .snack-bar span {

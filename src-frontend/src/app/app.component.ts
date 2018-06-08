@@ -27,6 +27,7 @@ export class AppComponent implements AfterViewInit {
 
   /* Undo button */
   showingUndoButton: boolean = false;
+  undoContent = 1;
   undoButtonTimer = null;
 
   constructor(private extension: ExtensionService, private regexService: RegexService) {
@@ -35,7 +36,8 @@ export class AppComponent implements AfterViewInit {
     });
   }
 
-  showUndoButton() {
+  showUndoButton(cards: number) {
+    this.undoContent = cards;
     this.showingUndoButton = true;
     if (this.undoButtonTimer) {
       clearTimeout(this.undoButtonTimer);
@@ -43,7 +45,7 @@ export class AppComponent implements AfterViewInit {
     setTimeout(() => {
       this.undoButtonTimer = null;
       this.showingUndoButton = false;
-    }, 8000);
+    }, 10000);
   }
 
   updateFilters(filters: any): void {
@@ -119,7 +121,7 @@ export class AppComponent implements AfterViewInit {
       }
     })
     this.extension.deleteSelectedCards(indexes);
-    this.showUndoButton();
+    this.showUndoButton(indexes.length);
   }
 
   selectAll() {
@@ -182,7 +184,7 @@ export class AppComponent implements AfterViewInit {
     if (index > -1) {
       this.cards.splice(index, 1);
       this.extension.deleteCard(index);
-      this.showUndoButton();
+      this.showUndoButton(1);
     }
   }
 
