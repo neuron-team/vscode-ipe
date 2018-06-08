@@ -13,7 +13,16 @@ export class MapComponent implements OnInit {
 
   constructor() {}
   ngOnInit(){
-    const map = new google.maps.Map(this.mapDiv.nativeElement);
+    const mapOptions = {
+      zoomControl: false,
+      mapTypeControl: false,
+      scaleControl: true,
+      streetViewControl: false,
+      rotateControl: true,
+      fullscreenControl: false,
+      disableDefaultUI: true
+    }
+    const map = new google.maps.Map(this.mapDiv.nativeElement, mapOptions);
     // // NOTE: This uses cross-domain XHR, and may not work on older browsers.
     map.data.addGeoJson(this.geojson);
     this.zoom(map);
