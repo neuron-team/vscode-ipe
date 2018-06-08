@@ -15,7 +15,7 @@ export class MapComponent implements OnInit {
   ngOnInit(){
     const mapOptions = {
       zoomControl: false,
-      mapTypeControl: false,
+      mapTypeControl: true,
       scaleControl: true,
       streetViewControl: false,
       rotateControl: true,
