@@ -127,14 +127,15 @@ export class UserInteraction {
         }
     }
 
-    static savePdf(pdf: string){
+    static savePdf(pdf: string) {
         vscode.window.showSaveDialog({ filters: { 'PDF File': ['pdf'] } }).then(fileUri => {
-            try{
-                fs.writeFileSync(fileUri.fsPath, pdf, 'base64');
+            if (fileUri) {
+                try{
+                    fs.writeFileSync(fileUri.fsPath, pdf, 'base64');
+                } catch(err) {
+                    vscode.window.showErrorMessage(`Could not save the PDF: ${err}`);
+                }
             }
-            catch(err){
-                vscode.window.showInformationMessage("An error has occurred while saving the pdf: " + err);
-            }   
         });
     }
 }
