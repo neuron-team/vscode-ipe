@@ -51,6 +51,9 @@ export class WebviewController {
     private _onDeleteSelectedCards: EventEmitter<number[]> = new EventEmitter();
     get onDeleteSelectedCards(): Event<number[]> { return this._onDeleteSelectedCards.event; }
 
+    private _onSavePdf: EventEmitter<string> = new EventEmitter();
+    get onSavePdf(): Event<string> { return this._onSavePdf.event; }
+
     constructor(private context: vscode.ExtensionContext) {}
 
     show() {
@@ -121,6 +124,9 @@ export class WebviewController {
                         break;
                     case 'undoClicked':
                         this._undoClicked.fire();
+                        break;
+                    case 'savePdf':
+                        this._onSavePdf.fire(message.pdf);
                         break;
                 }
             })
