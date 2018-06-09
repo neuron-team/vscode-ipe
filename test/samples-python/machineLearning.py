@@ -50,3 +50,4 @@ ax[1].legend(whitelabels, loc='best', bbox_to_anchor=(1.3, 1))
 fig.subplots_adjust(top=0.85, wspace=0.7)
 
 plt.show()
+

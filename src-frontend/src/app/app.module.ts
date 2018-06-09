@@ -19,6 +19,7 @@ import { KatexModule } from 'ng-katex';
 import { VDOMComponent } from './vdom/vdom.component';
 import { MarkdownModule } from 'ngx-markdown';
 import { PlotlyComponent } from './plotly/plotly.component';
+import { SnackbarComponent } from './snackbar/snackbar.component';
 import { Base64ImageComponent } from './base64-image/base64-image.component';
 import { CustomMarkdownComponent } from './custom-markdown/custom-markdown.component';
 import { PdfComponent } from './pdf/pdf.component';
@@ -39,7 +40,8 @@ import { PdfComponent } from './pdf/pdf.component';
     Base64ImageComponent,
     CustomMarkdownComponent,
     PlotlyComponent,
-    PdfComponent
+    PdfComponent,
+    SnackbarComponent
   ],
   imports: [
     BrowserModule,

@@ -9,8 +9,9 @@ import { ContentHelpers } from './contentHelpers';
 export class CardManager {
     private _onOpenNotebook : EventEmitter<string> = new EventEmitter();
     get onOpenNotebook(): Event<string> { return this._onOpenNotebook.event; }
-    
+
     private cards: Card[] = [];
+    public lastDeletedCards: Card[] = [];
 
     private metadataPy = {
         "kernelspec": {
@@ -135,7 +136,21 @@ export class CardManager {
     }
 
     deleteCard(index: number) {
-        if (index > -1 && index < this.cards.length) { this.cards.splice(index, 1); }
+        if (index > -1 && index < this.cards.length) {
+            this.lastDeletedCards = [this.cards[index]];
+            this.cards.splice(index, 1);
+        }
+    }
+
+    deleteSelectedCards(indexes: number[]){
+        this.lastDeletedCards =
+            indexes
+                .filter(index => index > -1)
+                .map(index => {
+                    let card = this.cards[index];
+                    this.cards.splice(index, 1);
+                    return card;
+                });
     }
 
     changeTitle(index: number, newTitle: string) {
@@ -235,7 +250,7 @@ export class CardManager {
                         }
                         return source;
                     })
-                    .join('\n')
+                    .join('\n');
 
             vscode.workspace.openTextDocument({language: language, content: content})
                 .then(textDocument => vscode.window.showTextDocument(textDocument));
@@ -247,10 +262,9 @@ export class CardManager {
     }
 
     processJupyterOutputs(outputs: JSONArray): CardOutput[] {
-        if(!outputs){
-            return null
-        }
-        else{
+        if (!outputs) {
+            return [];
+        } else {
             return outputs.map(output => {
                 let keys = Object.keys(output);
     
@@ -265,19 +279,18 @@ export class CardManager {
                     return new CardOutput(
                         'stdout',
                         value
-                    )
+                    );
                 } else if(keys.indexOf('traceback') > -1) {
                     return new CardOutput(
                         'error',
                         (output['traceback'] as string[]).join('\n')
-                    )
+                    );
                 } else {
                     let type = ContentHelpers.chooseTypeFromComplexData(output['data']);
-                    console.log(type);
                     return new CardOutput(
                         type,
                         output['data'][type]
-                    )
+                    );
                 }
             })
         }

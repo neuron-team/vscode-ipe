@@ -14,7 +14,7 @@ export class Interpreter {
     // Kernel promise used for code execution
     private kernelPromise = {};
     
-    private docUriList: vscode.Uri[] = [];
+    private alreadyImportedDocs = new Set<vscode.Uri>();
 
     constructor(){}
 
@@ -75,17 +75,22 @@ export class Interpreter {
     }
 
     autoImportModules() {
-        let docUri = vscode.window.activeTextEditor.document.uri;
-        if(this.docUriList.indexOf(docUri) === -1) {
-            this.docUriList.push(docUri);
-            let docText = vscode.window.activeTextEditor.document.getText();
+        if (!vscode.window.activeTextEditor) return;
+
+        let activeDocument = vscode.window.activeTextEditor.document;
+
+        if(!this.alreadyImportedDocs.has(activeDocument.uri)) {
+            this.alreadyImportedDocs.add(activeDocument.uri);
+            let docText = activeDocument.getText();
             let importList = docText.match(/import .+|from .+ import .+/g);
-            vscode.window.showInformationMessage(importList.length + ' imports were found in the current python file. Import now?', 'Import')
-            .then(data => {
-                if(data) { 
-                    this.executeCode(importList.join('\n'), 'python3');
-                }
-            });
+            if (importList) {
+                vscode.window.showInformationMessage(importList.length + ' imports were found in the current python file. Import now?', 'Import')
+                    .then(data => {
+                        if(data === 'Import') {
+                            this.executeCode(importList.join('\n'), 'python3');
+                        }
+                    });
+            }
         }
     }
 
