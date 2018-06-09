@@ -71,4 +71,8 @@ export class ExtensionService {
   undoClicked() {
     this.vscode.postMessage({command: 'undoClicked'})
   }
+
+  savePdf(pdf: string) {
+    this.vscode.postMessage({command: 'savePdf', pdf: pdf})
+  }
 }

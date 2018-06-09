@@ -1,6 +1,7 @@
 import * as vscode from "vscode";
 import {Event, EventEmitter} from "vscode";
 import {StatusBarItem} from 'vscode';
+import * as fs from "fs";
 
 export class UserInteraction {
     private _onShowPane: EventEmitter<void> = new EventEmitter();
@@ -124,5 +125,16 @@ export class UserInteraction {
             default: 
                 return '';
         }
+    }
+
+    static savePdf(pdf: string){
+        vscode.window.showSaveDialog({ filters: { 'PDF File': ['pdf'] } }).then(fileUri => {
+            try{
+                fs.writeFileSync(fileUri.fsPath, pdf, 'base64');
+            }
+            catch(err){
+                vscode.window.showInformationMessage("An error has occurred while saving the pdf: " + err);
+            }   
+        });
     }
 }

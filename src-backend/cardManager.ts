@@ -257,7 +257,6 @@ export class CardManager {
         }
         catch(err){
             vscode.window.showInformationMessage('The Jupyter notebook file entered is in an unknown format');
-            console.log(err);
         }
     }
 

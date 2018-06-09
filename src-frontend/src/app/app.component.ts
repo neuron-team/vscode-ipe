@@ -173,6 +173,10 @@ export class AppComponent implements AfterViewInit {
     this.extension.jupyterExport(indexes);
   }
 
+  savePdf(pdf: string) {
+    this.extension.savePdf(pdf);
+  }
+
   openBrowser(card: Card) {
     const index: number = this.cards.indexOf(card);
     this.extension.openInBrowser(index);

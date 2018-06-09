@@ -43,6 +43,7 @@ export class CardComponent {
   @Output() onCollapseOutput = new EventEmitter();
   @Output() onCollapseCard = new EventEmitter();
   @Output() onEditCustomCard = new EventEmitter();
+  @Output() onSavePdf = new EventEmitter();
 
   editingTitle: boolean = false;
 
@@ -91,5 +92,9 @@ export class CardComponent {
   editCustomMarkdown(newSource: string) {
     this.card.sourceCode = newSource;
     this.onEditCustomCard.emit();
+  }
+
+  savePdf(pdf: string) {
+    this.onSavePdf.emit({pdf: pdf});
   }
 }

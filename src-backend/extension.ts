@@ -31,6 +31,7 @@ export function activate(context: vscode.ExtensionContext) {
     webview.onAddCustomCard(card => cardManager.addCustomCard(card));
     webview.onEditCustomCard(data => cardManager.editCustomCard(data.index, data.card));
     webview.onJupyterExport(indexes => cardManager.exportToJupyter(indexes));
+    webview.onSavePdf(pdf => UserInteraction.savePdf(pdf));
     webview.onOpenInBrowser(index => {
         let cardId = cardManager.getCardId(index);
         let fileName = 'exportedCardTmp_' + cardId + '.ipynb';
