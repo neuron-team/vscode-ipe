@@ -22,7 +22,6 @@ import { PlotlyComponent } from './plotly/plotly.component';
 import { SnackbarComponent } from './snackbar/snackbar.component';
 import { Base64ImageComponent } from './base64-image/base64-image.component';
 import { CustomMarkdownComponent } from './custom-markdown/custom-markdown.component';
-import { PdfComponent } from './pdf/pdf.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +39,6 @@ import { PdfComponent } from './pdf/pdf.component';
     Base64ImageComponent,
     CustomMarkdownComponent,
     PlotlyComponent,
-    PdfComponent,
     SnackbarComponent
   ],
   imports: [
