@@ -42,7 +42,7 @@ export class AppComponent implements AfterViewInit {
     if (this.undoButtonTimer) {
       clearTimeout(this.undoButtonTimer);
     }
-    setTimeout(() => {
+    this.undoButtonTimer = setTimeout(() => {
       this.undoButtonTimer = null;
       this.showingUndoButton = false;
     }, 10000);
