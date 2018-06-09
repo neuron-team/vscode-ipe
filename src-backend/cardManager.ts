@@ -217,9 +217,11 @@ export class CardManager {
                         source = source.join('');
                     }
 
+                    let cardId = ContentHelpers.assignId();
+
                     let newCard = new Card(   
-                        ContentHelpers.assignId(),
-                        ContentHelpers.makeCardTitle(source),
+                        cardId,
+                        ContentHelpers.makeCardTitle(cardId),
                         source,
                         this.processJupyterOutputs(cell['outputs'] as JSONArray),
                         cell as object,

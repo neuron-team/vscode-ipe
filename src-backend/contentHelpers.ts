@@ -19,15 +19,8 @@ export class ContentHelpers {
     private static _onCardReady: EventEmitter<Card> = new EventEmitter();
     static get onCardReady(): Event<Card> { return this._onCardReady.event; }
 
-    static makeCardTitle(source: string) : string {
-        let firstLine = source.split('\n')[0];
-
-        let funcName = firstLine.match(/([a-z]+)\(.*\)/i);
-        if (funcName) {
-            return funcName[1] + "()";
-        }
-
-        return firstLine;
+    static makeCardTitle(id: number) : string {
+        return `Card ${id}`;
     }
 
     // Validate Json received
@@ -145,7 +138,7 @@ export class ContentHelpers {
         this._onCardReady.fire(
             new Card(
                 this.id, 
-                this.makeCardTitle(this.sourceTmp), 
+                this.makeCardTitle(this.id), 
                 this.sourceTmp, 
                 this.contentTmp, 
                 JSON.parse(JSON.stringify(this.jupyterData)),
