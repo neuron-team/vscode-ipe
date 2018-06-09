@@ -57,7 +57,7 @@ export class AppComponent implements AfterViewInit {
   }
 
   cardMatchesFilter(card: Card): boolean {
-    if (card.outputs.length === 0) return this.typeFilters.text; // treat empty cards as plain
+    if (card.outputs && card.outputs.length === 0) return this.typeFilters.text; // treat empty cards as plain
 
     for (let output of card.outputs) {
       if (output.type == 'stdout' || output.type == 'text/plain') { // plain text
