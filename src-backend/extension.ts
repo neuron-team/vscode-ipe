@@ -23,6 +23,7 @@ export function activate(context: vscode.ExtensionContext) {
     webview.onMoveCardUp(index => cardManager.moveCardUp(index));
     webview.onMoveCardDown(index => cardManager.moveCardDown(index));
     webview.onDeleteCard(index => cardManager.deleteCard(index));
+    webview.onDeleteSelectedCards(indexes => cardManager.deleteSelectedCards(indexes));
     webview.onChangeTitle(data => cardManager.changeTitle(data.index, data.newTitle));
     webview.onCollapseCode(data => cardManager.collapseCode(data.index, data.value));
     webview.onCollapseOutput(data => cardManager.collapseOutput(data.index, data.value));
@@ -40,6 +41,13 @@ export function activate(context: vscode.ExtensionContext) {
             vscode.window.showInformationMessage('Please open ' + fileName + ' in the Jupyter window');
             interpreter.openNotebookInBrowser(null);
         }
+    });
+    webview.undoClicked(() => {
+        cardManager.lastDeletedCards.map(card => {
+            cardManager.addCard(card);
+            webview.addCard(card);
+        })
+        cardManager.lastDeletedCards = [];
     });
 
     cardManager.onOpenNotebook(fileName => interpreter.openNotebookInBrowser(fileName));

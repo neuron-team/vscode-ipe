@@ -25,10 +25,27 @@ export class AppComponent implements AfterViewInit {
     error: true
   };
 
+  /* Undo button */
+  showingUndoButton: boolean = false;
+  undoContent = 1;
+  undoButtonTimer = null;
+
   constructor(private extension: ExtensionService, private regexService: RegexService) {
     extension.onAddCard.subscribe(card => {
       this.addCard(card);
     });
+  }
+
+  showUndoButton(cards: number) {
+    this.undoContent = cards;
+    this.showingUndoButton = true;
+    if (this.undoButtonTimer) {
+      clearTimeout(this.undoButtonTimer);
+    }
+    this.undoButtonTimer = setTimeout(() => {
+      this.undoButtonTimer = null;
+      this.showingUndoButton = false;
+    }, 10000);
   }
 
   updateFilters(filters: any): void {
@@ -41,7 +58,7 @@ export class AppComponent implements AfterViewInit {
     this.checkVisible();
   }
 
-  /* Visable Cards */
+  /* Visible cards */
   cardMatchesSearchQuery(card: Card): boolean {
     if (this.searchQuery === '') { return true; }
 
@@ -94,9 +111,17 @@ export class AppComponent implements AfterViewInit {
   }
 
   deleteSelectedCards() {
+    let indexes = []
+
     this.selectedCards.forEach(value => {
-      this.deleteCard(value);
+      const index: number = this.cards.indexOf(value);
+      if (index > -1) {
+        indexes.push(index)
+        this.cards.splice(index, 1);
+      }
     })
+    this.extension.deleteSelectedCards(indexes);
+    this.showUndoButton(indexes.length);
   }
 
   selectAll() {
@@ -119,7 +144,7 @@ export class AppComponent implements AfterViewInit {
       const tmp: Card = this.cards[index - 1];
       this.cards[index - 1] = this.cards[index];
       this.cards[index] = tmp;
-      this.extension.onMoveCardUp.next(index);
+      this.extension.moveCardUp(index);
     }
   }
 
@@ -129,7 +154,7 @@ export class AppComponent implements AfterViewInit {
       const tmp: Card = this.cards[index + 1];
       this.cards[index + 1] = this.cards[index];
       this.cards[index] = tmp;
-      this.extension.onMoveCardDown.next(index);
+      this.extension.moveCardDown(index);
     }
   }
 
@@ -140,12 +165,12 @@ export class AppComponent implements AfterViewInit {
           .filter(card => this.selectedCards.has(card))
           .map((card, index) => index);
     }
-    this.extension.onJupyterExport.next(indexes);
+    this.extension.jupyterExport(indexes);
   }
 
   openBrowser(card: Card) {
     const index: number = this.cards.indexOf(card);
-    this.extension.onOpenInBrowser.next(index);
+    this.extension.openInBrowser(index);
   }
 
 
@@ -158,34 +183,40 @@ export class AppComponent implements AfterViewInit {
     const index: number = this.cards.indexOf(card);
     if (index > -1) {
       this.cards.splice(index, 1);
-      this.extension.onDeleteCard.next(index);
+      this.extension.deleteCard(index);
+      this.showUndoButton(1);
     }
   }
 
   /* Backend Communication */
   collapseOutput(card: Card, value: boolean) {
     const index: number = this.cards.indexOf(card);
-    this.extension.onCollapseOutput.next({index: index, value: value});
+    this.extension.collapseOutput(index, value);
   }
 
   collapseCode(card: Card, value: boolean) {
     const index: number = this.cards.indexOf(card);
-    this.extension.onCollapseCode.next({index: index, value: value});
+    this.extension.collapseCode(index, value);
   }
 
   collapseCard(card: Card, value: boolean) {
     const index: number = this.cards.indexOf(card);
-    this.extension.onCollapseCard.next({index: index, value: value});
+    this.extension.collapseCard(index, value);
   }
 
   changeTitle(card: Card, newTitle: string) {
     const index: number = this.cards.indexOf(card);
-    this.extension.onChangeTitle.next({index: index, newTitle: newTitle});
+    this.extension.changeCardTitle(index, newTitle);
   }
 
   editCustomCard(card: Card) {
     const index: number = this.cards.indexOf(card);
-    this.extension.onEditCustomCard.next({index: index, card: card});
+    this.extension.editCustomCard(index, card);
+  }
+
+  undoClicked() {
+    this.extension.undoClicked();
+    this.showingUndoButton = false;
   }
 
 
@@ -212,7 +243,7 @@ export class AppComponent implements AfterViewInit {
     let markdownCard = new Card(0, '', '*Click to edit markdown*', [], {}, '');
     markdownCard.isCustomMarkdown = true;
     this.cards.push(markdownCard);
-    this.extension.onAddCustomCard.next(markdownCard);
+    this.extension.addCustomCard(markdownCard);
     this.scrollToBottom();
   }
 
