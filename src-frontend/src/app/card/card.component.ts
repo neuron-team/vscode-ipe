@@ -27,8 +27,6 @@ import {DomSanitizer} from "@angular/platform-browser";
 })
 
 export class CardComponent {
-  @Input() tmp: string = '';
-
   @Input() visible: boolean = true;
   @Input() searchQuery: string = '';
   @Input() card: Card;

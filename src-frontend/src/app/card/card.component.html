@@ -3,7 +3,6 @@
     [@cardState]="selected ? 'selected' : 'notSelected'"
     (click)="selectCard()"
     [style.cursor]="isSelecting ? 'pointer' : 'default'">
-  <h2>{{tmp}}</h2>
   <!-- Card toolbar -->
   <span class="card-toolbar" [style.visibility]="isSelecting ? 'hidden' : 'visible'">
     <button id="moveUpButton" class="react toolbar-icon" (click)="move('up')">
