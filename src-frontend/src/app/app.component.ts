@@ -116,7 +116,7 @@ export class AppComponent implements AfterViewInit {
   }
 
   deleteSelectedCards() {
-    let indexes = []
+    let indexes = [];
 
     this.selectedCards.forEach(value => {
       const index: number = this.cards.indexOf(value);

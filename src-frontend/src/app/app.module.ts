@@ -22,6 +22,7 @@ import { PlotlyComponent } from './plotly/plotly.component';
 import { SnackbarComponent } from './snackbar/snackbar.component';
 import { Base64ImageComponent } from './base64-image/base64-image.component';
 import { CustomMarkdownComponent } from './custom-markdown/custom-markdown.component';
+import { VirtualScrollModule } from 'angular2-virtual-scroll';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { CustomMarkdownComponent } from './custom-markdown/custom-markdown.compo
     FormsModule,
     BrowserAnimationsModule,
     KatexModule,
-    MarkdownModule.forRoot()
+    MarkdownModule.forRoot(),
+    VirtualScrollModule
   ],
   providers: [
     ExtensionService,

@@ -10,10 +10,10 @@
     (onNewMarkdown)="newMarkdownCard()"
     (onExport)="export()"></app-toolbar>
 
-  <div #scrollingList class="cards-list">
+  <virtual-scroll #scrollingList class="cards-list" [items]="cards" [childHeight]="50">
     <app-card
       #listItems
-      *ngFor="let card of cards"
+      *ngFor="let card of scrollingList.viewPortItems"
       [card]="card"
       [visible] = "visibleCards.get(card) !== false"
       [searchQuery]="searchQuery"
@@ -30,7 +30,7 @@
       (onEditCustomCard)="editCustomCard(card)"
       (onSavePdf)="savePdf($event.pdf)">
   </app-card>
-  </div>
+  </virtual-scroll>
 </div>
 
 <app-snackbar
