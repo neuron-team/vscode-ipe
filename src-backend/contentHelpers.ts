@@ -31,8 +31,8 @@ export class ContentHelpers {
 
     static interpretOutput(msg: KernelMessage.IIOPubMessage, kernelName: string) {
         // Get the Json content of the output
-        //let content = msg.content;
-        console.log(msg.content);
+        // let content = msg.content;
+        // console.log(msg.content);
         ContentHelpers.processContent(msg);
         this.currentKernel = kernelName;
     }
