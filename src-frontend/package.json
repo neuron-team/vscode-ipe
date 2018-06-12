@@ -22,7 +22,6 @@
     "@angular/platform-browser": "^5.2.0",
     "@angular/platform-browser-dynamic": "^5.2.0",
     "@angular/router": "^5.2.0",
-    "angular2-virtual-scroll": "^0.3.2",
     "core-js": "^2.4.1",
     "ng-katex": "^1.0.3",
     "ngx-markdown": "^1.6.0",

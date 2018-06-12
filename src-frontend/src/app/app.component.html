@@ -10,12 +10,14 @@
     (onNewMarkdown)="newMarkdownCard()"
     (onExport)="export()"></app-toolbar>
 
-  <virtual-scroll #scrollingList class="cards-list" [items]="cards" [childHeight]="50">
+  <div #scrollingList class="cards-list" (scroll)="onScroll()">
     <app-card
       #listItems
-      *ngFor="let card of scrollingList.viewPortItems"
+      *ngFor="let card of cards"
       [card]="card"
-      [visible] = "visibleCards.get(card) !== false"
+      [style.visibility]="(listItems.element.nativeElement.offsetTop < scrollingList.scrollTop - 2000 || listItems.element.nativeElement.offsetTop > scrollingList.scrollTop + scrollingList.offsetHeight + 2000) ? 'hidden' : 'visible'"
+
+      [visible]="visibleCards.get(card) !== false"
       [searchQuery]="searchQuery"
       [isSelecting]="isSelecting"
       [selected]="selectedCards.has(card)"
@@ -29,8 +31,8 @@
       (onChangeTitle)="changeTitle(card, $event.newTitle)"
       (onEditCustomCard)="editCustomCard(card)"
       (onSavePdf)="savePdf($event.pdf)">
-  </app-card>
-  </virtual-scroll>
+    </app-card>
+  </div>
 </div>
 
 <app-snackbar

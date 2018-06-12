@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, QueryList, ViewChild, ViewChildren} from '@angular/core';
 import { ExtensionService } from './classes/extension.service';
 import { Card, CardOutput } from 'vscode-ipe-types';
 import { RegexService } from './classes/regex.service';
@@ -30,7 +30,7 @@ export class AppComponent implements AfterViewInit {
   undoContent: string = 'Card deleted';
   undoButtonTimer = null;
 
-  constructor(private extension: ExtensionService, private regexService: RegexService) {
+  constructor(private extension: ExtensionService, private regexService: RegexService, private cd: ChangeDetectorRef) {
     extension.onAddCard.subscribe(card => {
       this.addCard(card);
     });
@@ -226,6 +226,10 @@ export class AppComponent implements AfterViewInit {
   undoClicked() {
     this.extension.undoClicked();
     this.showingUndoButton = false;
+  }
+
+  onScroll() {
+    this.cd.markForCheck();
   }
 
 

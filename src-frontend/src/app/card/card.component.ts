@@ -1,4 +1,4 @@
-import {Component, Input, Output, EventEmitter} from '@angular/core';
+import {Component, Input, Output, EventEmitter, ElementRef} from '@angular/core';
 import { Card } from 'vscode-ipe-types';
 
 import {
@@ -27,6 +27,8 @@ import {DomSanitizer} from "@angular/platform-browser";
 })
 
 export class CardComponent {
+  @Input() tmp: string = '';
+
   @Input() visible: boolean = true;
   @Input() searchQuery: string = '';
   @Input() card: Card;
@@ -47,8 +49,7 @@ export class CardComponent {
 
   editingTitle: boolean = false;
 
-  constructor(public sanitizer: DomSanitizer) { }
-
+  constructor(public sanitizer: DomSanitizer, public element: ElementRef) { }
 
   move(direction: string) {
     this.onMove.emit({direction: direction});
