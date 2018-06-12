@@ -27,7 +27,7 @@ export class AppComponent implements AfterViewInit {
 
   /* Undo button */
   showingUndoButton: boolean = false;
-  undoContent: string = 'Card deleted';
+  undoContent: string = 'Card Deleted';
   undoButtonTimer = null;
 
   constructor(private extension: ExtensionService, private regexService: RegexService) {
@@ -38,9 +38,9 @@ export class AppComponent implements AfterViewInit {
 
   showUndoButton(cards: number) {
     if (cards == 1) {
-      this.undoContent = `Card deleted`
+      this.undoContent = `Card Deleted`
     } else {
-      this.undoContent = `${cards} cards deleted`
+      this.undoContent = `${cards} Cards Deleted`
     }
 
     this.showingUndoButton = true;

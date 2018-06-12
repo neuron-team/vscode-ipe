@@ -87,7 +87,7 @@
           </div>
 
           <div *ngSwitchCase="'application/pdf'">
-            <a href="#" (click)="savePdf(output.output)">Click here to download the generated pdf</a>
+            <a href="#" (click)="savePdf(output.output)">Click Here to Download the Generated PDF</a>
           </div>
 
           <div *ngSwitchCase="'text/html'">
@@ -123,7 +123,7 @@
           </div>
 
           <div *ngSwitchDefault>
-            <pre class="output-plain">This type of content cannot be displayed.</pre>
+            <pre class="output-plain">{{output.output}}</pre>
           </div>
         </div>
       </div>
