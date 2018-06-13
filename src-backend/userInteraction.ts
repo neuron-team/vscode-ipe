@@ -88,7 +88,7 @@ export class UserInteraction {
         }
     }
 
-    updateStatus(status: string){
+    updateStatus(status: string) {
         this.statusIndicator.text = status;
     }
 
@@ -111,8 +111,8 @@ export class UserInteraction {
         });
     }
 
-    static determineKernel(){
-        if(!vscode.window.activeTextEditor){
+    static determineKernel() {
+        if (!vscode.window.activeTextEditor) {
             return '';
         }
 

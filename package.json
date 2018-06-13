@@ -2,7 +2,8 @@
   "name": "vscode-ipe",
   "displayName": "vscode-ipe",
   "description": "Interactive programming experience for data scientists.",
-  "version": "0.2.0",
+  "version": "1.0.0",
+  "license": "MIT",
   "repository": "https://github.com/lorenzo2897/vscode-ipe",
   "publisher": "ImperialCollege",
   "engines": {
