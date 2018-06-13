@@ -1,8 +1,8 @@
-# Neuron for Visual Studio Code
+# neuron for Visual Studio Code
 
 ### An interactive programming experience for data scientists
 
-Neuron is a robust application that seamlessly combines the power of
+**neuron** is a robust application that seamlessly combines the power of
 Visual Studio Code with the interactivity of Jupyter Notebook.
 
 ![Screenshot](screenshot.png)
