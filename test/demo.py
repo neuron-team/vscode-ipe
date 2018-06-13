@@ -126,6 +126,6 @@ GeoJSON(
 # ---------------------------------------------------------------------------
 
 # Thank you for trying neuron!
-# Available in the VS Code extension marketplace soon TM
+# Available in the VS Code extension marketplace soon
 
 # ---------------------------------------------------------------------------
