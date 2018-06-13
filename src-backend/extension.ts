@@ -105,6 +105,7 @@ export function activate(context: vscode.ExtensionContext) {
         
         } else {
             webview.show();
+            cardManager.resetState();
         }
     });
 

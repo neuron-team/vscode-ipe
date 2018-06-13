@@ -157,5 +157,9 @@ export class ContentHelpers {
 	
 	static assignId() {
 		return this.id++;
-	}
+    }
+    
+    static resetId(){
+        this.id = 0;
+    }
 }
