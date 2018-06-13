@@ -7,12 +7,13 @@
 # Let's get started by learning the basics
 
 # Highlight the code below and send it to the output pane
-# either by pressing ALT+ENTER or from the right-click drop-down menu
+# either by pressing ALT+ENTER
+# or by selecting Send to output from the right-click drop-down menu
 
 pattern = [('.|.'*(2*i + 1)).center(30, '-') for i in range(10//2)]
 print('\n'.join(pattern + ['I LOVE DATA'.center(30, '-')] + pattern[::-1]))
 
-# If you did everything right you will see a cool design on the right!
+# If everything worked well, you will see a cool design on the right!
 
 # -------------------------------------------------------------------------
 
@@ -28,7 +29,7 @@ from plotly.graph_objs import Scatter, Figure, Layout
 
 iplot([{"x": [1, 2, 3, 4, 5, 6, 7, 8], "y": [0, 1, 1, 2, 2, 3, 3, 4]}])
 
-# If you're feeling adventerous try changing the x and y coordinates!
+# If you're feeling adventurous try changing the x and y coordinates!
 
 # -------------------------------------------------------------------------
 
@@ -57,7 +58,7 @@ iplot(fig)
 
 # -------------------------------------------------------------------------
 
-# Data scientists use all kind of data, some even use geographical data
+# Data scientists use all kind of data, some even use geographical data.
 # We wanted to make their job easier
 
 from IPython.display import GeoJSON
@@ -101,11 +102,13 @@ GeoJSON(
     },
 )
 
+# The coordinates listed in the code above will be represented on a map.
 # Explore the map generated!
 
 # ---------------------------------------------------------------------------
 
-# You geeks out there can even render your maths equations right from here!
+# And for the math geeks amongst you, 
+# try rendering your favourite math equations using LaTeX right here
 
 %%latex
 \frac{1}{\Bigl(\sqrt{\phi \sqrt{5}}-\phi\Bigr) e^{\frac25 \pi}} = 1+\frac{e^{-2\pi}} {1+\frac{e^{-4\pi}} {1+\frac{e^{-6\pi}} {1+\frac{e^{-8\pi}} {1+\cdots} } } }
@@ -115,10 +118,10 @@ GeoJSON(
 
 # ---------------------------------------------------------------------------
 
-# Those cards are starting to accumulate on the right!
-# Luckily you can use the intuitive user interface to organise them
+# Those cards on the right are starting to get cluttered!
+# Luckily you can use the intuitive user interface to organise them:
 # Use the search bar, filter and move the cards up and down,
-# add markdown comments, delete what you don't need anymore!
+# add markdown comments, and delete the cards you no longer need.
 
 # ---------------------------------------------------------------------------
 
