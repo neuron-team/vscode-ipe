@@ -238,7 +238,7 @@ export class AppComponent implements AfterViewInit {
     this.windowResizeThrottle = setTimeout(() => {
       for (let card of this.cards) {
         for (let output of card.outputs) {
-          if (output.type === 'text/html') {
+          if (output.type == 'text/html' || output.type == 'application/vnd.plotly.v1+json') {
             const o = output.output;
             output.output = '';
             setTimeout(() => { output.output = o; });
