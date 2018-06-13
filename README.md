@@ -1,9 +1,9 @@
-# Microsoft VS Code IPE
-## An interactive programming experience for Python in VS Code
+# Neuron for Visual Studio Code
 
-This is the public README for vscode-ipe.
+### An interactive programming experience for data scientists
 
-To get started on developing this extension, visit [the guide for developers](DEVELOPING.md).
+Neuron is a robust application that seamlessly combines the power of
+Visual Studio Code with the interactivity of Jupyter Notebook.
 
 ![Screenshot](screenshot.png)
 
@@ -24,3 +24,6 @@ To add a card, select some Python code and run the `Send code to output` command
 ### 1.0.0
 
 Initial release
+
+
+For information about building upon this extension, visit [the guide for developers](DEVELOPING.md).
