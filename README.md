@@ -7,7 +7,9 @@ Visual Studio Code with the interactivity of Jupyter Notebook.
 
 ![Screenshot](screenshot.png)
 
-## How to use
+## Getting started
+
+Download the latest release from [the releases page](https://github.com/lorenzo2897/vscode-ipe/releases).
 
 This extension makes available several commands starting with `IPE:` to control the behaviour.
 
