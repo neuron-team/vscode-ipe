@@ -66,7 +66,11 @@ export class Interpreter {
     executeCode(source : string, kernelName: string) {
         if(kernelName in this.kernelPromise){
             this.kernelPromise[kernelName]
-                .then(kernel => kernel.requestExecute({code : source, stop_on_error: false, allow_stdin: false}).onIOPub = (msg: KernelMessage.IIOPubMessage) => ContentHelpers.interpretOutput(msg, kernelName))
+                .then(kernel => kernel.requestExecute({
+                    code : source.replace('\r\n', '\n'),
+                    stop_on_error: false,
+                    allow_stdin: false
+                }).onIOPub = (msg: KernelMessage.IIOPubMessage) => ContentHelpers.interpretOutput(msg, kernelName))
                 .catch(reason => vscode.window.showErrorMessage(String(reason)));
         }
         else{
