@@ -228,7 +228,7 @@ export class CardManager {
                         jsonContent['metadata']['kernelspec']['name'] as string
                     );
                     
-                    if(cell['cell_type'] == 'markdown'){
+                    if(cell['cell_type'] == 'markdown') {
                         newCard.isCustomMarkdown = true;
                     }
                     return newCard;
@@ -243,16 +243,30 @@ export class CardManager {
                 case 'ir':
                     language = 'r';
             }
-            let content =
-                (jsonContent['cells'] as JSONArray)
-                    .map(cell => {
-                        let source = cell['source'];
-                        if(Array.isArray(source)){
+
+            let content = (jsonContent['cells'] as JSONArray)
+                .map(cell => {
+                    let source = '';
+                    source = cell['source'];
+
+                    if(Array.isArray(source)) {
+                        if(cell['cell_type'] == 'markdown') {
+                            source = source.map(el => `# ${el}`).join('');
+                        }
+                        else {
                             source = source.join('');
                         }
-                        return source;
-                    })
-                    .join('\n');
+                    }
+                    else {
+                        if(cell['cell_type'] == 'markdown') {
+                            source = `# ${source}`;
+                        }
+                    }
+
+                    return source;
+                })
+                .join('\n');
+
 
             vscode.workspace.openTextDocument({language: language, content: content})
                 .then(textDocument => vscode.window.showTextDocument(textDocument));
@@ -296,6 +310,11 @@ export class CardManager {
             })
         }
         
+    }
+
+    resetState() {
+        this.cards = [];
+        ContentHelpers.resetId();
     }
 }
 
