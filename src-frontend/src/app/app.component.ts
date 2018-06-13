@@ -40,7 +40,7 @@ export class AppComponent implements AfterViewInit {
     if (cards == 1) {
       this.undoContent = `Card deleted`
     } else {
-      this.undoContent = `${cards} Cards deleted`
+      this.undoContent = `${cards} cards deleted`
     }
 
     this.showingUndoButton = true;
