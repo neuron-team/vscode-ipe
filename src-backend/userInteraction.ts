@@ -3,6 +3,16 @@ import {Event, EventEmitter} from "vscode";
 import {StatusBarItem} from 'vscode';
 import * as fs from "fs";
 
+/**
+ * Class containing the events which guide the user interaction with vscode.
+ * These interactions include:
+ * - The creation of a new card.
+ * - The import of a notebook file.
+ * - The initialisation of the output pane.
+ * - The full setup of a Jupyter Notebook instance.
+ * - The saving of a pdf output.
+ * - The visualisation of the Jupyter Notebook status.
+ */
 export class UserInteraction {
     private _onShowPane: EventEmitter<void> = new EventEmitter();
     get onShowPane(): Event<void> { return this._onShowPane.event; }
@@ -19,6 +29,9 @@ export class UserInteraction {
     private _onImportNotebook: EventEmitter<void> = new EventEmitter();
     get onImportNotebook(): Event<void> { return this._onImportNotebook.event; }
 
+    /**
+     * Contains the status bar item which indicates the status of the Jupyter Notebook instance being used.
+     */
     private statusIndicator: StatusBarItem;
 
     constructor(private context: vscode.ExtensionContext) {
@@ -42,8 +55,9 @@ export class UserInteraction {
 
         context.subscriptions.push(vscode.commands.registerCommand('ipe.importNotebook', () => {
             this.importNotebook();
-        }));   
+        }));
 
+        // Create an status bar item in vscode to indicate the status of the Jupyter Notebook instance being used.
         this.statusIndicator = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right);
         this.statusIndicator.show();
     }
@@ -64,6 +78,10 @@ export class UserInteraction {
         this._onImportNotebook.fire();
     }
 
+    /**
+     * Get the selection from the file edited and send it to interpreter for execution
+     * and processing.
+     */
     private newCard() {
         let trimNewlines = s => s.replace(/^(\r?\n)+|(\r?\n)+$/g,'');
 
@@ -88,10 +106,18 @@ export class UserInteraction {
         }
     }
 
+    /**
+     * Update the Jupyter Notebook displayed status on the statusIndicator component.
+     * @param status    The Jupyter Notebook status to display.
+     */
     updateStatus(status: string) {
         this.statusIndicator.text = status;
     }
 
+    /**
+     * Ask the user to manually enter the Jupyter Notebook infos if required.
+     * @returns A promise which resolves into the infos (url and token) of a Jupyter Notebook.
+     */
     static askJupyterInfo() : Promise<{baseUrl: string, token: string}> {
         return new Promise(resolve => {
             vscode.window.showInputBox({
@@ -111,6 +137,12 @@ export class UserInteraction {
         });
     }
 
+    /**
+     * Analyse the source file being currently edited and
+     * determine the right kernel for execution.
+     * Currently python3 and r are the only kernel supported.
+     * New kernels can be added here.
+     */
     static determineKernel() {
         if (!vscode.window.activeTextEditor) {
             return '';
@@ -127,6 +159,10 @@ export class UserInteraction {
         }
     }
 
+    /**
+     * Saves a base64 encoded pdf to file. A save dialog with the user is created.
+     * @param pdf   The base64 encoded pdf.
+     */
     static savePdf(pdf: string) {
         vscode.window.showSaveDialog({ filters: { 'PDF File': ['pdf'] } }).then(fileUri => {
             if (fileUri) {
