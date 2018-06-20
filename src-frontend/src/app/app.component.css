@@ -26,6 +26,7 @@ app-snackbar {
   z-index: 9999;
 }
 
+/* Display Size */
 @media screen and (max-width: 220px){
   .cards-list {
     padding: 0 10px 0 0;
