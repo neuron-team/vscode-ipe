@@ -256,6 +256,10 @@ export class AppComponent implements AfterViewInit {
     this.extension.jupyterExport(indexes);
   }
 
+  /**
+   * Save pdf output.
+   * @param pdf pdf file encoded in base64.
+   */
   savePdf(pdf: string) {
     this.extension.savePdf(pdf);
   }
