@@ -20,7 +20,6 @@ hr {
   float:right;
 }
 
-
 button {
   cursor: pointer;
   color: inherit;
@@ -29,6 +28,7 @@ button {
   border-style: none;
   outline: none;
 }
+
 /* Toolbar Icons */
 .toolbar-icon {
   opacity: 0;
@@ -62,7 +62,6 @@ pre {
   font-family: Menlo, Monaco, "Courier New", monospace;
 }
 
-
 /* Output */
 .card-output {
   padding: 0 6px;
@@ -81,7 +80,6 @@ pre {
 :host ::ng-deep .card-output img {
   background-color: rgba(255, 255, 255, 0.96);
 }
-
 
 /* Title Edit Box */
 .title {

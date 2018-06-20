@@ -1,5 +1,4 @@
-/* Always set the map height explicitly to define the size of the div
-* element that contains the map. */
+/* Always set the map height explicitly to define the size of the div element that contains the map. */
 .map {
   width: 100%;
   height: 380px;
@@ -9,6 +8,7 @@
   width: 100%;
 }
 
+/* Remove White background */
 :host ::ng-deep img {
   background-color: transparent !important;
   max-height: none !important;
