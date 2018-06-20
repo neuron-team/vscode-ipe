@@ -67,7 +67,7 @@ export class WebviewController {
     get onCollapseCard(): Event<{index: number, value: boolean}> { return this._onCollapseCard.event; }
 
     /**
-     * Event triggered when a custom card (markdown or imported cards in the current implementation)
+     * Event triggered when a custom card (markdown cards in the current implementation)
      * is added.
      */
     private _onAddCustomCard: EventEmitter<Card> = new EventEmitter();

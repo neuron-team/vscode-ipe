@@ -14,18 +14,33 @@ import * as fs from "fs";
  * - The visualisation of the Jupyter Notebook status.
  */
 export class UserInteraction {
+    /**
+     * Event triggered when the user opened the output pane.
+     */
     private _onShowPane: EventEmitter<void> = new EventEmitter();
     get onShowPane(): Event<void> { return this._onShowPane.event; }
 
+    /**
+     * Event triggered when a new card is created.
+     */
     private _onNewCard: EventEmitter<string> = new EventEmitter();
     get onNewCard(): Event<string> { return this._onNewCard.event; }
 
+    /**
+     * Event triggered when the user requests a full setup of a Jupyter Notebook instance.
+     */
     private _onFullSetup: EventEmitter<string> = new EventEmitter();
     get onFullSetup(): Event<string> { return this._onFullSetup.event; }
 
+    /**
+     * Event triggered when the user requests a restart of the kernels.
+     */
     private _onRestartKernels: EventEmitter<void> = new EventEmitter();
     get onRestartKernels(): Event<void> { return this._onRestartKernels.event; }
 
+    /**
+     * Event triggered when an .ipynb file is imported.
+     */
     private _onImportNotebook: EventEmitter<void> = new EventEmitter();
     get onImportNotebook(): Event<void> { return this._onImportNotebook.event; }
 
@@ -34,6 +49,10 @@ export class UserInteraction {
      */
     private statusIndicator: StatusBarItem;
 
+    /**
+     * Link callback functions to commands and initialise status bar item.
+     * @param context   The vscode extension context.
+     */
     constructor(private context: vscode.ExtensionContext) {
 
         context.subscriptions.push(vscode.commands.registerCommand('ipe.showWebview', () => {

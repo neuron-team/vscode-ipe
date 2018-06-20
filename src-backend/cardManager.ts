@@ -6,13 +6,32 @@ import { Event, EventEmitter } from "vscode";
 import { JSONObject, JSONArray } from '@phosphor/coreutils';
 import { ContentHelpers } from './contentHelpers';
 
+/**
+ * Class maintaining an array of the exising cards in the backend.
+ * Member functions allow the reordering and modification of cards.
+ * It includes utilities to import and export to a Jupyter Notebook file.
+ */
 export class CardManager {
+    /**
+     * Event triggared when a Jupyter Notebook file (.ipynb) is imported by the user.
+     */
     private _onOpenNotebook : EventEmitter<string> = new EventEmitter();
     get onOpenNotebook(): Event<string> { return this._onOpenNotebook.event; }
 
+    /**
+     * Array of existing cards.
+     */
     private cards: Card[] = [];
+
+    /**
+     * Array containing the previously deleted cards.
+     * Allows restore if the user decides to undo the deletion.
+     */
     public lastDeletedCards: Card[] = [];
 
+    /**
+     * Holds the metadata required for python3 Jupyter Notebooks.
+     */
     private metadataPy = {
         "kernelspec": {
             "display_name": "Python 3",
@@ -33,6 +52,9 @@ export class CardManager {
         }
     };
 
+    /**
+     * Holds the metadata required for r Jupyter Notebooks.
+     */
     private metadataR = {
         "kernelspec": {
             "display_name": "R",
@@ -49,6 +71,16 @@ export class CardManager {
         }
     };
 
+    // Add additional metadata here to support more kernels.
+
+    /**
+     * Write the Jupyter Notebook exported in json format to file.
+     * After export is completed ask the user to open the exported file in the browser
+     * through the exising Jupyter Notebook instance.
+     * @param jupyterFileData   Json object containing the jupyter data exported.
+     * @param kernelName        The name of the kernel for the current file being exported (python3 and r supported).
+     * @param fileName 
+     */
     private writeToFile(jupyterFileData: JSONObject, kernelName: string, fileName: string) {
         if (!vscode.workspace.workspaceFolders) throw "You must have a workspace open to export the files";
         let fullPath = vscode.workspace.workspaceFolders[0].uri.fsPath;
@@ -75,6 +107,11 @@ export class CardManager {
         }
     }
 
+    /**
+     * Export cards to a Jupyter file (.ipynb).
+     * @param indexes   Array containing the indexes of the cards to export.
+     * @param fileName  Filename of the Jupyter file (does not include the extension) to which the cards are exported.
+     */
     exportToJupyter(indexes: number[] = null, fileName: string = null) {
         let cardsToExport: Card[];
         
@@ -84,7 +121,7 @@ export class CardManager {
             cardsToExport = this.cards;
         }
 
-        
+        // Process python cards
         let pythonData: JSONObject = {
             "nbformat": 4,
             "nbformat_minor": 2,
@@ -94,6 +131,7 @@ export class CardManager {
                 .map(card => card.jupyterData as JSONObject)
         };
 
+        // Process r cards
         let rData: JSONObject = {
             "nbformat": 4,
             "nbformat_minor": 2,
@@ -103,6 +141,9 @@ export class CardManager {
                 .map(card => card.jupyterData as JSONObject)
         };
 
+        // If a new kernel is added, add export processing here
+
+        // Write cards to file
         try {
             this.writeToFile(pythonData, 'python3', fileName);
             this.writeToFile(rData, 'r', fileName);
@@ -111,14 +152,26 @@ export class CardManager {
         }
     }
 
+    /**
+     * Get the id of the card from its index.
+     * @param index Index of the card.
+     */
     getCardId(index: number) {
         return this.cards[index].id;
     }
 
+    /**
+     * Add a card to the backend array.
+     * @param card  Card to add.
+     */
     addCard(card: Card) {
         this.cards.push(card);
     }
 
+    /**
+     * Move a card up in the backend array.
+     * @param index Index of the card to move up.
+     */
     moveCardUp(index: number) {
         if (index > 0 && index < this.cards.length) {
             const tmp: Card = this.cards[index - 1];
@@ -127,6 +180,10 @@ export class CardManager {
         }
     }
 
+    /**
+     * Move a card down in the backend array.
+     * @param index Index of the card to move down.
+     */
     moveCardDown(index: number) {
         if (index > -1 && index < this.cards.length - 1) {
             const tmp: Card = this.cards[index + 1];
@@ -135,6 +192,10 @@ export class CardManager {
         }
     }
 
+    /**
+     * Delete a card from the backend array.
+     * @param index Index of the card to delete.
+     */
     deleteCard(index: number) {
         if (index > -1 && index < this.cards.length) {
             this.lastDeletedCards = [this.cards[index]];
@@ -142,6 +203,10 @@ export class CardManager {
         }
     }
 
+    /**
+     * Delete multiple cards from the backend array.
+     * @param indexes   Array containing the indexes of the cards to delete.
+     */
     deleteSelectedCards(indexes: number[]){
         this.lastDeletedCards =
             indexes
@@ -153,35 +218,63 @@ export class CardManager {
                 });
     }
 
+    /**
+     * Change the title of a card in the backend array.
+     * @param index     Index of the card whose title is changed.
+     * @param newTitle  New title set for the card.
+     */
     changeTitle(index: number, newTitle: string) {
         if (index > -1 && index < this.cards.length) {
             this.cards[index].title = newTitle;
         }
     }
     
+    /**
+     * Collpase or expand the code of card in the backend array.
+     * @param index Index of the card whose code is collapsed or expanded.
+     * @param value Boolean, true for collapse, false for expand.
+     */
     collapseCode(index: number, value: boolean) {
         if (index > -1 && index < this.cards.length) {
             this.cards[index].codeCollapsed = value;
         }
     }
 
+    /**
+    * Collpase or expand the output of card in the backend array.
+    * @param index Index of the card whose code is collapsed or expanded.
+    * @param value Boolean, true for collapse, false for expand.
+    */
     collapseOutput(index: number, value: boolean) {
         if (index > -1 && index < this.cards.length) {
             this.cards[index].outputCollapsed = value;
         }
     }
 
+    /**
+     * Collapse or expand a card in the backend array.
+     * @param index Index of the card to collapse or expand.
+     * @param value Boolean, true for collapse, false for expand.
+     */
     collapseCard(index: number, value: boolean) {
         if (index > -1 && index < this.cards.length) {
             this.cards[index].collapsed = value;
         }
     }
 
+    /**
+     * Add custom card to the backend array.
+     * Called when a card is added in the frontend.
+     * This includes custom markdown cards in the
+     * current implementation.
+     * @param card  Card that was added from the frontend.
+     */
     addCustomCard(card: Card) {
         let cardToAdd = card;
         cardToAdd.id = ContentHelpers.assignId();
         if(cardToAdd.isCustomMarkdown) {
             cardToAdd.kernel = 'python3';
+            // Add relevant jupyter data
             cardToAdd.jupyterData = 
                 {
                     "cell_type": "markdown",
@@ -192,11 +285,19 @@ export class CardManager {
         this.cards.push(cardToAdd);
     }
 
+    /**
+     * Edit a custom card in the backend array.
+     * Called when a custom card is modified in the frontend.
+     * E.g. the markdown content is changed. 
+     * @param index Index of the card whose content is changed.
+     * @param card  New version of the card.
+     */
     editCustomCard(index: number, card: Card) {
         if (index > -1 && index < this.cards.length) {
             let cardEdited = card;
             if(cardEdited.isCustomMarkdown){
                 cardEdited.kernel = 'python3';
+                // Add relevant jupyter data
                 cardEdited.jupyterData = 
                     {
                         "cell_type": "markdown",
@@ -208,8 +309,16 @@ export class CardManager {
         }
     }
 
-    importJupyter(jsonContent: JSONObject, fileName: string) {
+    /**
+     * Import a Jupyter Notebook in json format.
+     * @param jsonContent   The content of the Jupyter Notebook to import in json format.
+     */
+    importJupyter(jsonContent: JSONObject) {
         try{
+            /**
+             * Convert every cell in the Jupyter Notebook imported to a card
+             * and add it to the backend and frontend arrays.
+             */
             (jsonContent['cells'] as JSONArray)
                 .map(cell => {
                     let source = cell['source'];
@@ -244,6 +353,10 @@ export class CardManager {
                     language = 'r';
             }
 
+            /**
+             * Generate a source file from the source fields of the
+             * Jupyter Notebook imported.
+             */
             let content = (jsonContent['cells'] as JSONArray)
                 .map(cell => {
                     let source = '';
@@ -267,7 +380,9 @@ export class CardManager {
                 })
                 .join('\n');
 
-
+            /**
+             * Show the source file reconstructed to the user in a new pane.
+             */
             vscode.workspace.openTextDocument({language: language, content: content})
                 .then(textDocument => vscode.window.showTextDocument(textDocument));
         }
@@ -276,6 +391,11 @@ export class CardManager {
         }
     }
 
+    /**
+     * Convert the outputs of the Jupyter Notebook imported
+     * to CardOutput objects.
+     * @param outputs   Jupyter Notebook outputs to convert.
+     */
     processJupyterOutputs(outputs: JSONArray): CardOutput[] {
         if (!outputs) {
             return [];
@@ -312,6 +432,10 @@ export class CardManager {
         
     }
 
+    /**
+     * Reset the state of the backend array and of the id assignment.
+     * Called when the webview is closed by the user.
+     */
     resetState() {
         this.cards = [];
         ContentHelpers.resetId();

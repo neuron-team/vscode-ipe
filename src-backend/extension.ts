@@ -157,7 +157,7 @@ export function activate(context: vscode.ExtensionContext) {
                 fileUris.map(fileUri => {
                     vscode.window.showTextDocument(fileUri).then(textEditor => {
                         let jsonContent: JSONObject = JSON.parse(textEditor.document.getText());
-                        cardManager.importJupyter(jsonContent, textEditor.document.fileName);
+                        cardManager.importJupyter(jsonContent);
                     })
                 })
             });
