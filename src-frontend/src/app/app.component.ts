@@ -3,6 +3,10 @@ import { ExtensionService } from './classes/extension.service';
 import { Card, CardOutput } from 'vscode-ipe-types';
 import { RegexService } from './classes/regex.service';
 
+
+/**
+ * Manages the entire app in the Output Panel.
+ */
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -13,22 +17,57 @@ import { RegexService } from './classes/regex.service';
 })
 export class AppComponent implements AfterViewInit {
 
+  /**
+   * Array of all Cards.
+   */
   cards: Card[] = [];
 
+
+  /**
+   * Status of Selecting. True if user is selecting (in Select Mode).
+   */
   isSelecting = false;
+
+  /**
+   * Set of Selected Cards.
+   */
   selectedCards = new Set<Card>();
+
+  /**
+   * Map of Cards and there visibility.
+   */
   visibleCards = new Map<Card, boolean>();
+
+  /**
+   * Search query in search box.
+   */
   searchQuery = '';
+
+  /**
+   * Status of Filters
+   */
   typeFilters = {
     text: true,
     rich: true,
     error: true
   };
 
-  /* Undo button */
+
+  /**
+   * Indicates if the Undo Snackbar is displayed.
+   */
   showingUndoButton: boolean = false;
+
+  /**
+   * String to be displayed on Undo Snackbar
+   */
   undoContent: string = 'Card deleted';
+
+  /**
+   * Timer for Undo Snackbar
+   */
   undoButtonTimer = null;
+
 
   constructor(private extension: ExtensionService, private regexService: RegexService) {
     extension.onAddCard.subscribe(card => {
@@ -36,6 +75,10 @@ export class AppComponent implements AfterViewInit {
     });
   }
 
+  /**
+   * Displays the Undo Snackbar for 10 seconds when a card is deleted.
+   * @param cards Number of deleted cards
+   */
   showUndoButton(cards: number) {
     if (cards == 1) {
       this.undoContent = `Card deleted`
@@ -53,17 +96,24 @@ export class AppComponent implements AfterViewInit {
     }, 10000);
   }
 
+  /**
+   * Updates selected filters and calls checkVisible to updates visible cards.
+   * @param filters typeFilters
+   */
   updateFilters(filters: any): void {
     this.typeFilters = filters;
     this.checkVisible();
   }
 
+  /**
+   * Updates search query and calls checkVisible to updates visible cards.
+   * @param search SearchQuery
+   */
   updateSearch(search: string): void {
     this.searchQuery = search;
     this.checkVisible();
   }
 
-  /* Visible cards */
   cardMatchesSearchQuery(card: Card): boolean {
     if (this.searchQuery === '') { return true; }
 
@@ -93,13 +143,19 @@ export class AppComponent implements AfterViewInit {
     return false;
   }
 
+  /**
+   * Updates the map visibleCards so that only cards matching searcg and filters are displayed.
+   */
   checkVisible() {
     for (let card of this.cards) {
       this.visibleCards.set(card, this.cardMatchesFilter(card) && this.cardMatchesSearchQuery(card));
     }
   }
 
-  /* Selecting */
+/**
+ * Toggles a cards selected state and updates the set of selectedCards.
+ * @param card Selected Card
+ */
   cardSelected(card: Card) {
     if (this.selectedCards.has(card)) {
       this.selectedCards.delete(card);
@@ -108,6 +164,10 @@ export class AppComponent implements AfterViewInit {
     }
   }
 
+/**
+ * Toggles isSelecting (Selection Mode).
+ * Resets selectedCards if toggling off.
+ */
   updateSelecting() {
     this.isSelecting = !this.isSelecting;
     if (!this.isSelecting) {
@@ -115,6 +175,9 @@ export class AppComponent implements AfterViewInit {
     }
   }
 
+/**
+ * Deletes cards in the selectedCards set.
+ */
   deleteSelectedCards() {
     let indexes = []
 
@@ -125,10 +188,14 @@ export class AppComponent implements AfterViewInit {
         this.cards.splice(index, 1);
       }
     })
-    this.extension.deleteSelectedCards(indexes);
+    this.extension.deleteSelectedCards(indexes); // Informs backend of card deletion
     this.showUndoButton(indexes.length);
   }
 
+  /**
+   * Selects all cards and adds them to selectedCards.
+   * If selectedCards already includes all cards then selectedCards is reset.
+   */
   selectAll() {
     if (this.selectedCards.size == this.cards.length) {
       this.selectedCards = new Set<Card>();
@@ -137,12 +204,20 @@ export class AppComponent implements AfterViewInit {
     }
   }
 
-  /* Ordering */
+  /**
+   * Moves card in direction.
+   * @param card Card being moved
+   * @param direction "up" or "down"
+   */
   cardMoved(card: Card, direction: string) {
     if (direction === "up") this.moveUp(card);
     else if (direction === "down") this.moveDown(card);
   }
 
+  /**
+   * Moves card position up on display.
+   * @param card Card being moved
+   */
   moveUp(card: Card) {
     const index: number = this.cards.indexOf(card, 1);
     if (index > -1) {
@@ -153,6 +228,10 @@ export class AppComponent implements AfterViewInit {
     }
   }
 
+  /**
+   * Moves card position down on display.
+   * @param card Card being moved
+   */
   moveDown(card: Card) {
     const index: number = this.cards.indexOf(card);
     if (index > -1 && index < this.cards.length - 1) {
@@ -163,6 +242,10 @@ export class AppComponent implements AfterViewInit {
     }
   }
 
+  /**
+   * Exports cards. 
+   * If isSelecting is true only exports cards in selectedCards.
+   */
   export() {
     let indexes = null;
     if (this.isSelecting) {
@@ -177,17 +260,27 @@ export class AppComponent implements AfterViewInit {
     this.extension.savePdf(pdf);
   }
 
+  /**
+   * Opens card in broswer.
+   * @param card Card to be viewed
+   */
   openBrowser(card: Card) {
     const index: number = this.cards.indexOf(card);
     this.extension.openInBrowser(index);
   }
 
-
+/**
+ * Creates a new card at the buttom of the Output Pane and scrolls to it.
+ * @param card 
+ */
   addCard(card: Card) {
     this.cards.push(card);
     this.scrollToBottom();
   }
-
+/**
+ * Deletes Card.
+ * @param card Card to be deleted
+ */
   deleteCard(card: Card) {
     const index: number = this.cards.indexOf(card);
     if (index > -1) {
