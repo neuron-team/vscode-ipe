@@ -5,30 +5,77 @@ import { Kernel, ServerConnection, KernelMessage } from '@jupyterlab/services';
 import * as vscode from 'vscode';
 import {Event, EventEmitter} from "vscode";
 
+/**
+ * Static class which handles the processing of the responses from the Jupyter Notebook instance
+ * and the consequent creation of the corresponding cards.
+ * It also includes utilities for modules import, installation of missing modules and status update.
+ */
 export class ContentHelpers {
-    // Used to store temporary card data
+
+    /**
+     * Stores the source code of the card being created.
+     */
     static sourceTmp = '';
+
+    /**
+     * Stores the outputs of the card being created.
+     */
     static contentTmp: Array<CardOutput> = [];
+
+    /**
+     * Keeps track of the id to assign to new cards.
+     */
     static id = 0;
+
+    /**
+     * Stores the Jupyter Data (used for export to Jupyter Notebook file)
+     * of the card being created.
+     */
     static jupyterData: JSONObject = {};
+
+    /**
+     * Stores the current kernel being used for code execution.
+     * It is changed when the execution of a source code in a 
+     * different language is required.
+     */
     static currentKernel: string;
 
+    /**
+     * Event triggered when the status of the Jupyter Notebook instance changes.
+     */
     private static _onStatusChanged: EventEmitter<string> = new EventEmitter();
     static get onStatusChanged(): Event<string> { return this._onStatusChanged.event; }
 
+    /**
+     * Event triggered when a card is ready to be send over to the frontend and stored.
+     */
     private static _onCardReady: EventEmitter<Card> = new EventEmitter();
     static get onCardReady(): Event<Card> { return this._onCardReady.event; }
 
+    /**
+     * Generate a title for a new card based on its id.
+     * @param id    Id of the card whose title has to be generated.
+     */
     static makeCardTitle(id: number) : string {
         return `Card ${id}`;
     }
 
-    // Validate Json received
+    /**
+     * Validate json received checking if the fields needed are present.
+     * Necessary if strict mode is being used in typescript.
+     * @param inputData Input json object. 
+     * @param field     Field to check in the json object.
+     */
     static validateData(inputData : JSONValue, field : string): inputData is JSONObject
     {
         return (<JSONObject>inputData)[field] !== undefined;
     }
 
+    /**
+     * Interpret the message received by the Jupyter Notebook kernel.
+     * @param msg           Message received from the kernel.
+     * @param kernelName    Name of the kernel being used for code execution.
+     */
     static interpretOutput(msg: KernelMessage.IIOPubMessage, kernelName: string) {
         // Get the Json content of the output
         // let content = msg.content;
@@ -37,6 +84,10 @@ export class ContentHelpers {
         this.currentKernel = kernelName;
     }
 
+    /**
+     * Process the content present in the kernel message.
+     * @param msg   Message received from the Jupyter Notebook kernel.
+     */
     static processContent(msg: KernelMessage.IIOPubMessage) {
         // Process execution state ['busy', 'idle']
         if('execution_state' in msg.content) {
@@ -73,7 +124,7 @@ export class ContentHelpers {
             let traceback = (msg.content['traceback'] as string[]).join('\n');
             this.contentTmp.push(new CardOutput('error', traceback));
         }
-
+        // Generate jupyter data (required for card export) when necessary
         if(!('execution_state' in msg.content) && !('code' in msg.content)) {
             this.jupyterData['metadata'] = msg.metadata;
             let output = msg.content;
@@ -90,12 +141,21 @@ export class ContentHelpers {
         }
     }
 
+    /**
+     * Process the rich content received.
+     * @param data  Json rich data received.
+     * @returns     Card output corresponding to the rich data.
+     */
     static interpretRich(data: JSONValue): CardOutput {
         let chosenType = this.chooseTypeFromComplexData(data);
         let output: string = data[chosenType];
         return new CardOutput(chosenType, output);
     }
 
+    /**
+     * Ask the user to install missing module if detected in error.
+     * @param evalue    Error value received from the kernel.
+     */
     static getMissingModule(evalue: string) {
         let moduleMatch = evalue.match(/No module named \'(.+?)\'/);
         if(moduleMatch){
@@ -109,6 +169,10 @@ export class ContentHelpers {
         }
     }
 
+    /**
+     * Install missing module through pip.
+     * @param module    Missing module to install.
+     */
     static installMissingModule(module: string) {
         if (module) {
             let terminal = vscode.window.createTerminal('pip');
@@ -117,6 +181,10 @@ export class ContentHelpers {
         }
     }
 
+    /**
+     * Determine the type of the rich data received from the kernel.
+     * @param data  Json rich data received from the kernel.
+     */
     static chooseTypeFromComplexData(data: JSONValue) {
         let validDataTypes = 
             ['application/vnd.jupyter', 'application/vnd.jupyter.cells',
@@ -129,6 +197,10 @@ export class ContentHelpers {
         return validDataTypes[0];
     }
 
+    /**
+     * Create a new card using the class static fields generated
+     * and fire the events necessary to send it to the frontend and store it.
+     */
     static makeCard() {
         if(!("metadata" in this.jupyterData) && !("outputs" in this.jupyterData)) {
             this.jupyterData['metadata'] = {};
@@ -146,19 +218,32 @@ export class ContentHelpers {
             )
         );
 
+        // Reset static fields after card creation
         this.contentTmp = [];
         this.jupyterData = {};
         this.id++;
     }
     
+    /**
+     * Call the addNewCard event with the created card.
+     * @param card  Card created.
+     */
     static addNewCard(card: Card) {
         this._onCardReady.fire(card);
     }
-	
+    
+    /**
+     * Assign id to a newly created card.
+     * @returns Id assigned to card.
+     */
 	static assignId() {
 		return this.id++;
     }
     
+    /**
+     * Reset the id field.
+     * Called when the output pane is closed and the card arrays are deleted.
+     */
     static resetId(){
         this.id = 0;
     }
