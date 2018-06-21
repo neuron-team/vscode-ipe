@@ -2,12 +2,12 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export class RegexService {
-    /**
-     * Checks if user inputs a regex expression
-     * Defined as anything enclosed between /.../flags
-     * @param search    User inputted string in search box
-     * @param returns   A regex expression object with appropriate flags
-     */
+  /**
+   * Checks if user inputs a regex expression
+   * Defined as anything enclosed between /.../flags
+   * @param search  User inputted string in search box
+   * @returns       A regex expression object with appropriate flags
+   */
   regexQuery(search: string): RegExp {
     //If there is match between slash
     if (/\/([\s\S]*?)\//.test(search)) {
