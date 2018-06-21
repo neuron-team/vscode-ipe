@@ -114,7 +114,7 @@ export class AppComponent implements AfterViewInit {
     this.checkVisible();
   }
   /**
-   * Checks if the card has any characters matching the search query
+   * Checks if the card title/sourceCode has any characters matching the search query
    * @param card    Card to investigate
    * @returns       Returns true if title/source code of card matches regex/normal search
    */
