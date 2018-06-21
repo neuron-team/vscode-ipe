@@ -113,30 +113,43 @@ export class AppComponent implements AfterViewInit {
     this.searchQuery = search;
     this.checkVisible();
   }
-
+  /**
+   * Checks if the card has any characters matching the search query
+   * @param card    Card to investigate
+   * @returns       Returns true if title/source code of card matches regex/normal search
+   */
   cardMatchesSearchQuery(card: Card): boolean {
     if (this.searchQuery === '') { return true; }
 
     let regexResult = this.regexService.regexQuery(this.searchQuery);
-    if (regexResult) { // Regex search
+    // Regex search
+    if (regexResult) { 
       if (regexResult.test(card.title) || regexResult.test(card.sourceCode)) { return true; }
     }
-    else { // Normal search
+    // Normal search
+    else { 
       let pattern = this.searchQuery.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/gi, '\\$&');
       if (new RegExp(pattern, 'gi').test(card.title) || new RegExp(pattern, 'gi').test(card.sourceCode)) { return true; }
     }
     return false;
   }
-
+  /**
+   * Checks if card has matching output to user selected filter
+   * @param card    Card to investigate
+   * @returns       Returns true if any of the card output matches any of the filters
+   */
   cardMatchesFilter(card: Card): boolean {
-    if (card.outputs && card.outputs.length === 0) return this.typeFilters.text; // treat empty cards as plain
+    if (card.outputs && card.outputs.length === 0) return this.typeFilters.text; 
 
     for (let output of card.outputs) {
-      if (output.type == 'stdout' || output.type == 'text/plain') { // plain text
+      // plain text
+      if (output.type == 'stdout' || output.type == 'text/plain') { 
         if (this.typeFilters.text) return true;
-      } else if (output.type == 'error') { // code errors
+      // code errors
+      } else if (output.type == 'error') { 
         if (this.typeFilters.error) return true;
-      } else { // anything else is rich output
+      // anything else is rich output (e.g. graphs)
+      } else { 
         if (this.typeFilters.rich) return true;
       }
     }
