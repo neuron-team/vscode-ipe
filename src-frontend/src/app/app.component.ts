@@ -123,11 +123,11 @@ export class AppComponent implements AfterViewInit {
 
     let regexResult = this.regexService.regexQuery(this.searchQuery);
     // Regex search
-    if (regexResult) { 
+    if (regexResult) {
       if (regexResult.test(card.title) || regexResult.test(card.sourceCode)) { return true; }
     }
     // Normal search
-    else { 
+    else {
       let pattern = this.searchQuery.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/gi, '\\$&');
       if (new RegExp(pattern, 'gi').test(card.title) || new RegExp(pattern, 'gi').test(card.sourceCode)) { return true; }
     }
@@ -139,17 +139,17 @@ export class AppComponent implements AfterViewInit {
    * @returns       Returns true if any of the card output matches any of the filters
    */
   cardMatchesFilter(card: Card): boolean {
-    if (card.outputs && card.outputs.length === 0) return this.typeFilters.text; 
+    if (card.outputs && card.outputs.length === 0) return this.typeFilters.text;
 
     for (let output of card.outputs) {
       // plain text
-      if (output.type == 'stdout' || output.type == 'text/plain') { 
+      if (output.type == 'stdout' || output.type == 'text/plain') {
         if (this.typeFilters.text) return true;
       // code errors
-      } else if (output.type == 'error') { 
+      } else if (output.type == 'error') {
         if (this.typeFilters.error) return true;
       // anything else is rich output (e.g. graphs)
-      } else { 
+      } else {
         if (this.typeFilters.rich) return true;
       }
     }
@@ -165,10 +165,10 @@ export class AppComponent implements AfterViewInit {
     }
   }
 
-/**
- * Toggles a cards selected state and updates the set of selectedCards.
- * @param card Selected Card
- */
+  /**
+   * Toggles a cards selected state and updates the set of selectedCards.
+   * @param card Selected Card
+   */
   cardSelected(card: Card) {
     if (this.selectedCards.has(card)) {
       this.selectedCards.delete(card);
@@ -177,10 +177,10 @@ export class AppComponent implements AfterViewInit {
     }
   }
 
-/**
- * Toggles isSelecting (Selection Mode).
- * Resets selectedCards if toggling off.
- */
+  /**
+   * Toggles isSelecting (Selection Mode).
+   * Resets selectedCards if toggling off.
+   */
   updateSelecting() {
     this.isSelecting = !this.isSelecting;
     if (!this.isSelecting) {
@@ -188,9 +188,9 @@ export class AppComponent implements AfterViewInit {
     }
   }
 
-/**
- * Deletes cards in the selectedCards set.
- */
+  /**
+   * Deletes cards in the selectedCards set.
+   */
   deleteSelectedCards() {
     let indexes = []
 
@@ -256,7 +256,7 @@ export class AppComponent implements AfterViewInit {
   }
 
   /**
-   * Exports cards. 
+   * Exports cards.
    * If isSelecting is true only exports cards in selectedCards.
    */
   export() {
@@ -271,7 +271,7 @@ export class AppComponent implements AfterViewInit {
 
   /**
    * Save pdf output.
-   * @param pdf pdf file encoded in base64.
+   * @param pdf PDF file encoded in base64.
    */
   savePdf(pdf: string) {
     this.extension.savePdf(pdf);
@@ -286,18 +286,19 @@ export class AppComponent implements AfterViewInit {
     this.extension.openInBrowser(index);
   }
 
-/**
- * Creates a new card at the buttom of the Output Pane and scrolls to it.
- * @param card 
- */
+  /**
+   * Creates a new card at the bottom of the Output Pane and scrolls to it.
+   * @param card
+   */
   addCard(card: Card) {
     this.cards.push(card);
     this.scrollToBottom();
   }
-/**
- * Deletes Card.
- * @param card Card to be deleted
- */
+
+  /**
+   * Deletes the specified card.
+   * @param card Card to be deleted
+   */
   deleteCard(card: Card) {
     const index: number = this.cards.indexOf(card);
     if (index > -1) {
@@ -308,31 +309,50 @@ export class AppComponent implements AfterViewInit {
   }
 
   /* Backend Communication */
+  /**
+   * Tell the backend that the outputCollapsed property of a card has changed.
+   */
   collapseOutput(card: Card, value: boolean) {
     const index: number = this.cards.indexOf(card);
     this.extension.collapseOutput(index, value);
   }
 
+  /**
+   * Tell the backend that the codeCollapsed property of a card has changed.
+   */
   collapseCode(card: Card, value: boolean) {
     const index: number = this.cards.indexOf(card);
     this.extension.collapseCode(index, value);
   }
 
+  /**
+   * Tell the backend that the collapsed property of a card has changed.
+   */
   collapseCard(card: Card, value: boolean) {
     const index: number = this.cards.indexOf(card);
     this.extension.collapseCard(index, value);
   }
 
+  /**
+   * Tell the backend that the title property of a card has changed.
+   */
   changeTitle(card: Card, newTitle: string) {
     const index: number = this.cards.indexOf(card);
     this.extension.changeCardTitle(index, newTitle);
   }
 
+  /**
+   * Sync an entire card with the backend by sending its contents in full.
+   * This is useful when editing markdown cards from the frontend, for example.
+   */
   editCustomCard(card: Card) {
     const index: number = this.cards.indexOf(card);
     this.extension.editCustomCard(index, card);
   }
 
+  /**
+   * Tell the backend that the undo button was clicked.
+   */
   undoClicked() {
     this.extension.undoClicked();
     this.showingUndoButton = false;
@@ -340,6 +360,10 @@ export class AppComponent implements AfterViewInit {
 
 
   private windowResizeThrottle;
+  /**
+   * Called when the onresize DOM event is fired.
+   * It reloads plotly graphs to make sure that they resize appropriately.
+   */
   onWindowResize() {
     // make sure all scripted HTML fragments are re-sized appropriately.
     // this can be a bit inefficient, but it's only executed on window resize,
@@ -358,6 +382,9 @@ export class AppComponent implements AfterViewInit {
     }, 400);
   }
 
+  /**
+   * Creates a blank markdown-only card and appends it to the array
+   */
   newMarkdownCard() {
     let markdownCard = new Card(0, '', '*Click to edit markdown*', [], {}, '');
     markdownCard.isCustomMarkdown = true;
@@ -366,18 +393,19 @@ export class AppComponent implements AfterViewInit {
     this.scrollToBottom();
   }
 
-  /* this code ensures that the list always scrolls to the bottom when new elements are added */
-  @ViewChildren('listItems') listItems: QueryList<any>;
   @ViewChild('scrollingList') scrollContainer;
-  ngAfterViewInit() {
-    //this.listItems.changes.subscribe(() => this.scrollToBottom());
-    this.scrollToBottom();
-  }
+  /**
+   * Scroll the cards list to the bottom.
+   */
   scrollToBottom() {
     setTimeout(() => {
       try {
         this.scrollContainer.nativeElement.scrollTop = this.scrollContainer.nativeElement.scrollHeight;
       } catch (err) { }
     }, 0);
+  }
+
+  ngAfterViewInit() {
+    this.scrollToBottom();
   }
 }
