@@ -1,8 +1,8 @@
 import {Directive, Input, ElementRef, AfterViewInit} from '@angular/core';
 
 /**
- * The Autofocus custom Directive allows elements to be auto-focused even after page load.
- * This allows toggleable fields to be auto-focused
+ * Auto-focuses and auto-selects fields created after page load.
+ * @example <input Autofocus [value]="card.title">
  */
 @Directive({
   selector: '[Autofocus]'
@@ -10,12 +10,18 @@ import {Directive, Input, ElementRef, AfterViewInit} from '@angular/core';
 export class AutofocusDirective implements AfterViewInit {
   @Input() Autofocus: boolean;
 
+  /**
+   * Element to be autofocused
+   */
   private el: any;
 
   constructor(private elementRef: ElementRef) {
     this.el = this.elementRef.nativeElement;
   }
 
+  /**
+   * Focuses and Selects Element
+   */
   ngAfterViewInit(): void {
     this.el.focus();
     this.el.select();

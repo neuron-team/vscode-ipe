@@ -4,6 +4,9 @@ import { default as AnsiUp } from 'ansi_up';
 @Pipe({
   name: 'ansiColorize'
 })
+/**
+ * Parse ANSI-style terminal escape characters and turn them into HTML colour tags
+ */
 export class AnsiColorizePipe implements PipeTransform {
 
   ansi_up = new AnsiUp();

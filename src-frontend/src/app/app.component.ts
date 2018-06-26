@@ -3,6 +3,10 @@ import { ExtensionService } from './classes/extension.service';
 import { Card, CardOutput } from 'vscode-ipe-types';
 import { RegexService } from './classes/regex.service';
 
+
+/**
+ * Manages the entire app in the Output Panel.
+ */
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -13,22 +17,57 @@ import { RegexService } from './classes/regex.service';
 })
 export class AppComponent implements AfterViewInit {
 
+  /**
+   * Array of all Cards.
+   */
   cards: Card[] = [];
 
+
+  /**
+   * Status of Selecting. True if user is selecting (in Select Mode).
+   */
   isSelecting = false;
+
+  /**
+   * Set of Selected Cards.
+   */
   selectedCards = new Set<Card>();
+
+  /**
+   * Map of Cards and there visibility.
+   */
   visibleCards = new Map<Card, boolean>();
+
+  /**
+   * Search query in search box.
+   */
   searchQuery = '';
+
+  /**
+   * Status of Filters
+   */
   typeFilters = {
     text: true,
     rich: true,
     error: true
   };
 
-  /* Undo button */
+
+  /**
+   * Indicates if the Undo Snackbar is displayed.
+   */
   showingUndoButton: boolean = false;
+
+  /**
+   * String to be displayed on Undo Snackbar
+   */
   undoContent: string = 'Card deleted';
+
+  /**
+   * Timer for Undo Snackbar
+   */
   undoButtonTimer = null;
+
 
   constructor(private extension: ExtensionService, private regexService: RegexService) {
     extension.onAddCard.subscribe(card => {
@@ -36,6 +75,10 @@ export class AppComponent implements AfterViewInit {
     });
   }
 
+  /**
+   * Displays the Undo Snackbar for 10 seconds when a card is deleted.
+   * @param cards Number of deleted cards
+   */
   showUndoButton(cards: number) {
     if (cards == 1) {
       this.undoContent = `Card deleted`
@@ -53,53 +96,79 @@ export class AppComponent implements AfterViewInit {
     }, 10000);
   }
 
+  /**
+   * Updates selected filters and calls checkVisible to updates visible cards.
+   * @param filters typeFilters
+   */
   updateFilters(filters: any): void {
     this.typeFilters = filters;
     this.checkVisible();
   }
 
+  /**
+   * Updates search query and calls checkVisible to updates visible cards.
+   * @param search SearchQuery
+   */
   updateSearch(search: string): void {
     this.searchQuery = search;
     this.checkVisible();
   }
-
-  /* Visible cards */
+  /**
+   * Checks if the card title/sourceCode has any characters matching the search query
+   * @param card    Card to investigate
+   * @returns       Returns true if title/source code of card matches regex/normal search
+   */
   cardMatchesSearchQuery(card: Card): boolean {
     if (this.searchQuery === '') { return true; }
 
     let regexResult = this.regexService.regexQuery(this.searchQuery);
-    if (regexResult) { // Regex search
+    // Regex search
+    if (regexResult) {
       if (regexResult.test(card.title) || regexResult.test(card.sourceCode)) { return true; }
     }
-    else { // Normal search
+    // Normal search
+    else {
       let pattern = this.searchQuery.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/gi, '\\$&');
       if (new RegExp(pattern, 'gi').test(card.title) || new RegExp(pattern, 'gi').test(card.sourceCode)) { return true; }
     }
     return false;
   }
-
+  /**
+   * Checks if card has matching output to user selected filter
+   * @param card    Card to investigate
+   * @returns       Returns true if any of the card output matches any of the filters
+   */
   cardMatchesFilter(card: Card): boolean {
-    if (card.outputs && card.outputs.length === 0) return this.typeFilters.text; // treat empty cards as plain
+    if (card.outputs && card.outputs.length === 0) return this.typeFilters.text;
 
     for (let output of card.outputs) {
-      if (output.type == 'stdout' || output.type == 'text/plain') { // plain text
+      // plain text
+      if (output.type == 'stdout' || output.type == 'text/plain') {
         if (this.typeFilters.text) return true;
-      } else if (output.type == 'error') { // code errors
+      // code errors
+      } else if (output.type == 'error') {
         if (this.typeFilters.error) return true;
-      } else { // anything else is rich output
+      // anything else is rich output (e.g. graphs)
+      } else {
         if (this.typeFilters.rich) return true;
       }
     }
     return false;
   }
 
+  /**
+   * Updates the map visibleCards so that only cards matching searcg and filters are displayed.
+   */
   checkVisible() {
     for (let card of this.cards) {
       this.visibleCards.set(card, this.cardMatchesFilter(card) && this.cardMatchesSearchQuery(card));
     }
   }
 
-  /* Selecting */
+  /**
+   * Toggles a cards selected state and updates the set of selectedCards.
+   * @param card Selected Card
+   */
   cardSelected(card: Card) {
     if (this.selectedCards.has(card)) {
       this.selectedCards.delete(card);
@@ -108,6 +177,10 @@ export class AppComponent implements AfterViewInit {
     }
   }
 
+  /**
+   * Toggles isSelecting (Selection Mode).
+   * Resets selectedCards if toggling off.
+   */
   updateSelecting() {
     this.isSelecting = !this.isSelecting;
     if (!this.isSelecting) {
@@ -115,6 +188,9 @@ export class AppComponent implements AfterViewInit {
     }
   }
 
+  /**
+   * Deletes cards in the selectedCards set.
+   */
   deleteSelectedCards() {
     let indexes = []
 
@@ -125,10 +201,14 @@ export class AppComponent implements AfterViewInit {
         this.cards.splice(index, 1);
       }
     })
-    this.extension.deleteSelectedCards(indexes);
+    this.extension.deleteSelectedCards(indexes); // Informs backend of card deletion
     this.showUndoButton(indexes.length);
   }
 
+  /**
+   * Selects all cards and adds them to selectedCards.
+   * If selectedCards already includes all cards then selectedCards is reset.
+   */
   selectAll() {
     if (this.selectedCards.size == this.cards.length) {
       this.selectedCards = new Set<Card>();
@@ -137,12 +217,20 @@ export class AppComponent implements AfterViewInit {
     }
   }
 
-  /* Ordering */
+  /**
+   * Moves card in direction.
+   * @param card Card being moved
+   * @param direction "up" or "down"
+   */
   cardMoved(card: Card, direction: string) {
     if (direction === "up") this.moveUp(card);
     else if (direction === "down") this.moveDown(card);
   }
 
+  /**
+   * Moves card position up on display.
+   * @param card Card being moved
+   */
   moveUp(card: Card) {
     const index: number = this.cards.indexOf(card, 1);
     if (index > -1) {
@@ -153,6 +241,10 @@ export class AppComponent implements AfterViewInit {
     }
   }
 
+  /**
+   * Moves card position down on display.
+   * @param card Card being moved
+   */
   moveDown(card: Card) {
     const index: number = this.cards.indexOf(card);
     if (index > -1 && index < this.cards.length - 1) {
@@ -163,6 +255,10 @@ export class AppComponent implements AfterViewInit {
     }
   }
 
+  /**
+   * Exports cards.
+   * If isSelecting is true only exports cards in selectedCards.
+   */
   export() {
     let indexes = null;
     if (this.isSelecting) {
@@ -173,21 +269,36 @@ export class AppComponent implements AfterViewInit {
     this.extension.jupyterExport(indexes);
   }
 
+  /**
+   * Save pdf output.
+   * @param pdf PDF file encoded in base64.
+   */
   savePdf(pdf: string) {
     this.extension.savePdf(pdf);
   }
 
+  /**
+   * Opens card in broswer.
+   * @param card Card to be viewed
+   */
   openBrowser(card: Card) {
     const index: number = this.cards.indexOf(card);
     this.extension.openInBrowser(index);
   }
 
-
+  /**
+   * Creates a new card at the bottom of the Output Pane and scrolls to it.
+   * @param card
+   */
   addCard(card: Card) {
     this.cards.push(card);
     this.scrollToBottom();
   }
 
+  /**
+   * Deletes the specified card.
+   * @param card Card to be deleted
+   */
   deleteCard(card: Card) {
     const index: number = this.cards.indexOf(card);
     if (index > -1) {
@@ -198,31 +309,50 @@ export class AppComponent implements AfterViewInit {
   }
 
   /* Backend Communication */
+  /**
+   * Tell the backend that the outputCollapsed property of a card has changed.
+   */
   collapseOutput(card: Card, value: boolean) {
     const index: number = this.cards.indexOf(card);
     this.extension.collapseOutput(index, value);
   }
 
+  /**
+   * Tell the backend that the codeCollapsed property of a card has changed.
+   */
   collapseCode(card: Card, value: boolean) {
     const index: number = this.cards.indexOf(card);
     this.extension.collapseCode(index, value);
   }
 
+  /**
+   * Tell the backend that the collapsed property of a card has changed.
+   */
   collapseCard(card: Card, value: boolean) {
     const index: number = this.cards.indexOf(card);
     this.extension.collapseCard(index, value);
   }
 
+  /**
+   * Tell the backend that the title property of a card has changed.
+   */
   changeTitle(card: Card, newTitle: string) {
     const index: number = this.cards.indexOf(card);
     this.extension.changeCardTitle(index, newTitle);
   }
 
+  /**
+   * Sync an entire card with the backend by sending its contents in full.
+   * This is useful when editing markdown cards from the frontend, for example.
+   */
   editCustomCard(card: Card) {
     const index: number = this.cards.indexOf(card);
     this.extension.editCustomCard(index, card);
   }
 
+  /**
+   * Tell the backend that the undo button was clicked.
+   */
   undoClicked() {
     this.extension.undoClicked();
     this.showingUndoButton = false;
@@ -230,6 +360,10 @@ export class AppComponent implements AfterViewInit {
 
 
   private windowResizeThrottle;
+  /**
+   * Called when the onresize DOM event is fired.
+   * It reloads plotly graphs to make sure that they resize appropriately.
+   */
   onWindowResize() {
     // make sure all scripted HTML fragments are re-sized appropriately.
     // this can be a bit inefficient, but it's only executed on window resize,
@@ -248,6 +382,9 @@ export class AppComponent implements AfterViewInit {
     }, 400);
   }
 
+  /**
+   * Creates a blank markdown-only card and appends it to the array
+   */
   newMarkdownCard() {
     let markdownCard = new Card(0, '', '*Click to edit markdown*', [], {}, '');
     markdownCard.isCustomMarkdown = true;
@@ -256,18 +393,19 @@ export class AppComponent implements AfterViewInit {
     this.scrollToBottom();
   }
 
-  /* this code ensures that the list always scrolls to the bottom when new elements are added */
-  @ViewChildren('listItems') listItems: QueryList<any>;
   @ViewChild('scrollingList') scrollContainer;
-  ngAfterViewInit() {
-    //this.listItems.changes.subscribe(() => this.scrollToBottom());
-    this.scrollToBottom();
-  }
+  /**
+   * Scroll the cards list to the bottom.
+   */
   scrollToBottom() {
     setTimeout(() => {
       try {
         this.scrollContainer.nativeElement.scrollTop = this.scrollContainer.nativeElement.scrollHeight;
       } catch (err) { }
     }, 0);
+  }
+
+  ngAfterViewInit() {
+    this.scrollToBottom();
   }
 }

@@ -17,6 +17,9 @@ export class RunScriptsDirective implements OnChanges {
     });
   }
 
+  /**
+   * Travel the DOM tree and re-insert any <script> elements so that they are run again by the browser
+   */
   reinsertScripts(): void {
     const scripts = <HTMLScriptElement[]>this.elementRef.nativeElement.getElementsByTagName('script');
     const scriptsInitialLength = scripts.length;

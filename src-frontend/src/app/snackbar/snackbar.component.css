@@ -45,7 +45,7 @@ button:active {
   background-color: rgba(0, 119, 198, 1.0) !important;
 }
 
-
+/* Display Size */
 @media screen and (max-width: 220px){
   #undo {
     width: 35px;
