@@ -106,7 +106,7 @@
             <app-vdom [vdom]="output.output"></app-vdom>
           </div>
 
-          <div *ngSwitchCase="'text/latex'">
+          <div *ngSwitchCase="'text/latex'" class="output-math">
             <app-math [mathExpr]="output.output"></app-math>
           </div>
 
