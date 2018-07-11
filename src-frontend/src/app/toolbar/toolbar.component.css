@@ -5,12 +5,14 @@
   border: 0 solid rgba(200, 200, 200, 0.5);
   border-bottom-width: 1px;
   user-select: none;
+  box-shadow: 0px 7px 20px -8px black;
 }
 
 .main-bar {
   display: flex;
   flex-wrap: nowrap;
   margin-right: 10px;
+  padding-left: 10px;
 }
 .main-bar input {
   flex-basis: 400px;
@@ -72,6 +74,8 @@ input:focus {
   height: 26px;
   border: 0 solid rgba(200, 200, 200, 0.5);
   border-bottom-width: 1px;
+  padding-left: 10px;
+  box-shadow: 0px 7px 20px -8px black;
 }
 
 .filter {
