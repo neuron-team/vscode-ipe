@@ -1,6 +1,6 @@
 {
-  "name": "vscode-ipe-types",
-  "version": "0.0.0",
+  "name": "neuron-ipe-types",
+  "version": "1.0.0",
   "private": true,
   "main": "out/types.js",
   "types": "out/types.d.ts"

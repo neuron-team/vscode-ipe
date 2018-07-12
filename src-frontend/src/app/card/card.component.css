@@ -77,6 +77,10 @@ pre {
   overflow-x: scroll;
   white-space: pre;
 }
+.output-math {
+  flex: 1;
+  overflow-x: scroll;
+}
 :host ::ng-deep .card-output img {
   background-color: rgba(255, 255, 255, 0.96);
 }

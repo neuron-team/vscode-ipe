@@ -17,6 +17,7 @@ app-toolbar {
   top: 0;
   width: 100%;
   z-index: 9999;
+  margin-left: -10px;
 }
 
 app-snackbar {
@@ -24,6 +25,7 @@ app-snackbar {
   bottom: 0;
   width: 100%;
   z-index: 9999;
+  margin-left: -10px;
 }
 
 /* Display Size */
