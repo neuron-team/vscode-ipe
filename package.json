@@ -1,7 +1,7 @@
 {
   "name": "neuron-IPE",
   "displayName": "neuron",
-  "description": "Interactive programming experience for data scientists",
+  "description": "Interactive Programming Experience for Data Scientists",
   "version": "1.0.1",
   "license": "MIT",
   "repository": "https://github.com/lorenzo2897/vscode-ipe",
@@ -12,6 +12,14 @@
   "categories": [
     "Other"
   ],
+  "keywords": [
+    "python",
+    "jupyter",
+    "ipython",
+    "data science",
+    "r"
+  ],
+  "icon": "logo.png",
   "activationEvents": [
     "onCommand:ipe.showWebview",
     "onLanguage:python",
