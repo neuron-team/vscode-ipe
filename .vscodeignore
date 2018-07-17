@@ -4,7 +4,6 @@ out/test/**
 out/**/*.map
 src-backend/**
 src-frontend/**
-src-common/**
 !src-backend/media/**
 .gitignore
 tsconfig.json

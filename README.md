@@ -25,7 +25,7 @@ To add a card, select some Python code and run the `Send code to output` command
 
 ## Release Notes
 
-### 1.0.1
+### 1.0.2
 
 Initial Release on VS Code Marketplace
 
