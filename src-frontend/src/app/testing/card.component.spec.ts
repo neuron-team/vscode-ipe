@@ -8,7 +8,7 @@ import { PreviewPipe } from '../classes/preview.pipe'
 import { MapComponent } from '../map/map.component';
 import { AnsiColorizePipe } from '../classes/ansi-colorize.pipe';
 import { RegexService } from '../classes/regex.service';
-import { Card } from 'vscode-ipe-types';
+import { Card } from 'neuron-ipe-types';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MathComponent} from '../math/math.component'
 import { MarkdownModule } from 'ngx-markdown';

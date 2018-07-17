@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { ExtensionService } from './classes/extension.service';
-import { Card, CardOutput } from 'vscode-ipe-types';
+import { Card, CardOutput } from 'neuron-ipe-types';
 import { RegexService } from './classes/regex.service';
 
 
