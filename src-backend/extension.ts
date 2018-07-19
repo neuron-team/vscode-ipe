@@ -7,7 +7,7 @@ import { WebviewController } from "./webviewController";
 import { Interpreter } from "./interpreter";
 import { UserInteraction } from "./userInteraction";
 import { JupyterManager } from './jupyterManager';
-import { CardManager } from './CardManager';
+import { CardManager } from './cardManager';
 import { JSONObject } from '@phosphor/coreutils';
 import {ContentHelpers} from './contentHelpers';
 

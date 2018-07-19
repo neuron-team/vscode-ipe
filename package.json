@@ -2,7 +2,7 @@
   "name": "neuron-IPE",
   "displayName": "neuron",
   "description": "Interactive Programming Experience for Data Scientists",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "license": "MIT",
   "repository": "https://github.com/lorenzo2897/vscode-ipe",
   "publisher": "neuron",
