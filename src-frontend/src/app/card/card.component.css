@@ -66,6 +66,7 @@ pre {
 .card-output {
   padding: 0 6px;
   user-select: text;
+  overflow-x: scroll;
 }
 .output-plain {
   word-wrap: break-word;
