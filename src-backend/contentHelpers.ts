@@ -1,5 +1,5 @@
 import { JSONValue, JSONObject, JSONArray } from '@phosphor/coreutils';
-import {Card, CardOutput} from 'vscode-ipe-types';
+import {Card, CardOutput} from 'neuron-ipe-types';
 import { Kernel, ServerConnection, KernelMessage } from '@jupyterlab/services';
 
 import * as vscode from 'vscode';

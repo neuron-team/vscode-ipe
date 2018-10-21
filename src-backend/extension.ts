@@ -2,7 +2,7 @@
 
 import * as vscode from 'vscode';
 
-import { Card } from 'vscode-ipe-types';
+import { Card } from 'neuron-ipe-types';
 import { WebviewController } from "./webviewController";
 import { Interpreter } from "./interpreter";
 import { UserInteraction } from "./userInteraction";
