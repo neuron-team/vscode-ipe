@@ -1,6 +1,6 @@
 # neuron for Visual Studio Code
 
-### An interactive programming experience for data scientists
+### An Interactive Programming Experience for Data Scientists
 
 **neuron** is a robust application that seamlessly combines the power of
 Visual Studio Code with the interactivity of Jupyter Notebook.
@@ -23,11 +23,13 @@ To add a card, select some Python code and run the `Send code to output` command
 
 * You must have at least Visual Studio Code version 1.23.0
 
-## Release Notes
+## 1.0.3 Release Notes
 
-### 1.0.1
+Release on VS Code Marketplace with Linux Support
 
-Initial Release on VS Code Marketplace
+### Known Issue - 500 Internal Server Error
+
+When running you may receive a '500 Internal Server Error' message, this usually occurs due to the installation of Jupyter. neuron will try to install it for you however this may not be enough. A simple solution is to run `pip3 install jupyter` in the terminal. For more help go to [Installing Jupyter Notebook](https://jupyter.readthedocs.io/en/latest/install.html)
 
 
 For information about building upon this extension, visit [the guide for developers](DEVELOPING.md).

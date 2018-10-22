@@ -1,6 +1,6 @@
 import { EventEmitter, Injectable} from '@angular/core';
 
-import { Card } from 'vscode-ipe-types';
+import { Card } from 'neuron-ipe-types';
 declare var acquireVsCodeApi;
 
 @Injectable()
