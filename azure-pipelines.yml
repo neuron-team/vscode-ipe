@@ -17,5 +17,6 @@ steps:
     cd src-frontend
     npm install
     cd ..
+    npm run build-types
     npm run publish
   displayName: 'npm install and publish'
