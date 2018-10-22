@@ -1,4 +1,6 @@
-# neuron for Visual Studio Code
+# VSNotebooks - New Fork
+
+This is a fork from https://github.com/lorenzo2897/vscode-ipe. Hopefully I'll have time to add some cooler features!
 
 ### An Interactive Programming Experience for Data Scientists
 
