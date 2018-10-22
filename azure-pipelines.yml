@@ -14,5 +14,8 @@ steps:
 
 - script: |
     npm install
+    cd src-frontend
+    npm install
+    cd ..
     npm run publish
   displayName: 'npm install and publish'
