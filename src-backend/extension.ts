@@ -144,7 +144,7 @@ export function activate(context: vscode.ExtensionContext) {
                             localJupyter = true;
                         }
                     })
-                    .catch(error => vscode.window.showErrorMessage('Error could not start' + error));
+                    .catch(error => vscode.window.showErrorMessage('Error could not start: ' + error));
             }
         
         } else {
