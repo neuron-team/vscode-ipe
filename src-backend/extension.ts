@@ -144,7 +144,7 @@ export function activate(context: vscode.ExtensionContext) {
                             localJupyter = true;
                         }
                     })
-                    .catch(() => vscode.window.showErrorMessage('Could not start a notebook automatically'));
+                    .catch(error => vscode.window.showErrorMessage('Error could not start' + error));
             }
         
         } else {
