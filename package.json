@@ -118,7 +118,7 @@
     "clean": "shx rm -rf html/ out/",
     "vscode:prepublish": "npm run publish",
     "publish": "npm run compile-frontend && npm run compile-backend",
-    "build-types": "npm install ./src-common",
+    "build-types": "npm install ./src-common && tsc -p src-common/ && shx cp -r src-common/ node_modules/neuron-ipe-types/",
     "compile-frontend": "cd src-frontend && npm run build",
     "watch-frontend": "npm run build-types && cd src-frontend && npm run watch",
     "compile-backend": "tsc -p ./",
