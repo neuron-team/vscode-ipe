@@ -2,7 +2,7 @@ import * as vscode from "vscode";
 import * as path from "path";
 import * as fs from "fs";
 
-import { Card } from 'vscode-ipe-types';
+import { Card } from 'neuron-ipe-types';
 import {Event, EventEmitter} from "vscode";
 
 /**

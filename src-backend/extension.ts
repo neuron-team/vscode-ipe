@@ -2,12 +2,12 @@
 
 import * as vscode from 'vscode';
 
-import { Card } from 'vscode-ipe-types';
+import { Card } from 'neuron-ipe-types';
 import { WebviewController } from "./webviewController";
 import { Interpreter } from "./interpreter";
 import { UserInteraction } from "./userInteraction";
 import { JupyterManager } from './jupyterManager';
-import { CardManager } from './CardManager';
+import { CardManager } from './cardManager';
 import { JSONObject } from '@phosphor/coreutils';
 import {ContentHelpers} from './contentHelpers';
 
@@ -144,7 +144,7 @@ export function activate(context: vscode.ExtensionContext) {
                             localJupyter = true;
                         }
                     })
-                    .catch(() => vscode.window.showErrorMessage('Could not start a notebook automatically'));
+                    .catch(error => vscode.window.showErrorMessage('Could not start a notebook automatically: ' + error));
             }
         
         } else {

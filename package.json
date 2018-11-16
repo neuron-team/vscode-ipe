@@ -2,9 +2,9 @@
   "name": "neuron-IPE",
   "displayName": "neuron",
   "description": "Interactive Programming Experience for Data Scientists",
-  "version": "1.0.1",
+  "version": "1.0.4",
   "license": "MIT",
-  "repository": "https://github.com/lorenzo2897/vscode-ipe",
+  "repository": "https://github.com/neuron-team/vscode-ipe",
   "publisher": "neuron",
   "engines": {
     "vscode": "^1.23.0"
@@ -116,8 +116,9 @@
   },
   "scripts": {
     "clean": "shx rm -rf html/ out/",
-    "vscode:prepublish": "npm run compile",
-    "build-types": "tsc -p src-common/ && shx cp -r src-common/ node_modules/neuron-ipe-types/",
+    "vscode:prepublish": "npm run publish",
+    "publish": "npm run compile-frontend && npm run compile-backend",
+    "build-types": "npm install ./src-common",
     "compile-frontend": "cd src-frontend && npm run build",
     "watch-frontend": "npm run build-types && cd src-frontend && npm run watch",
     "compile-backend": "tsc -p ./",
@@ -138,6 +139,7 @@
   "dependencies": {
     "@jupyterlab/services": "^2.0.3",
     "ansi_up": "^3.0.0",
-    "child-process": "^1.0.2"
+    "child-process": "^1.0.2",
+    "neuron-ipe-types": "file:src-common"
   }
 }
