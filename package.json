@@ -138,7 +138,7 @@
   },
   "dependencies": {
     "@jupyterlab/services": "^2.0.3",
-    "ansi_up": "^3.0.0",
+    "ansi_up": "^5.0.0",
     "child-process": "^1.0.2",
     "neuron-ipe-types": "file:src-common"
   }
